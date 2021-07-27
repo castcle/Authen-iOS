@@ -7,9 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B7910DE726AFC9E60097C94E /* Authen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7910DE626AFC9E60097C94E /* Authen.swift */; };
+		B7910DEC26AFCD880097C94E /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7910DEB26AFCD880097C94E /* Core.framework */; };
+		B7910DED26AFCD880097C94E /* Core.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B7910DEB26AFCD880097C94E /* Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B7B1E3D226A92C48006E2FF6 /* Authen.h in Headers */ = {isa = PBXBuildFile; fileRef = B7B1E3D026A92C48006E2FF6 /* Authen.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BC5260F1309A4FF47F9F790D /* Pods_Authen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CA00CC88894B8F1AC8E622D /* Pods_Authen.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B7910DEE26AFCD880097C94E /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				B7910DED26AFCD880097C94E /* Core.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		03401DFA18E8D2774768D177 /* Pods-Authen.release (staging).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Authen.release (staging).xcconfig"; path = "Target Support Files/Pods-Authen/Pods-Authen.release (staging).xcconfig"; sourceTree = "<group>"; };
@@ -19,6 +36,8 @@
 		4F720079B4589EF5D8B64517 /* Pods-Authen.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Authen.release.xcconfig"; path = "Target Support Files/Pods-Authen/Pods-Authen.release.xcconfig"; sourceTree = "<group>"; };
 		9CA00CC88894B8F1AC8E622D /* Pods_Authen.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Authen.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2BDEC0B7E0B08D056D09388 /* Pods-Authen.debug (staging).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Authen.debug (staging).xcconfig"; path = "Target Support Files/Pods-Authen/Pods-Authen.debug (staging).xcconfig"; sourceTree = "<group>"; };
+		B7910DE626AFC9E60097C94E /* Authen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authen.swift; sourceTree = "<group>"; };
+		B7910DEB26AFCD880097C94E /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7B1E3CD26A92C48006E2FF6 /* Authen.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Authen.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7B1E3D026A92C48006E2FF6 /* Authen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Authen.h; sourceTree = "<group>"; };
 		B7B1E3D126A92C48006E2FF6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -32,6 +51,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BC5260F1309A4FF47F9F790D /* Pods_Authen.framework in Frameworks */,
+				B7910DEC26AFCD880097C94E /* Core.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -41,9 +61,18 @@
 		A415FAB31D24B516439D4B0D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B7910DEB26AFCD880097C94E /* Core.framework */,
 				9CA00CC88894B8F1AC8E622D /* Pods_Authen.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B7910DE326AFC9A40097C94E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B7910DE626AFC9E60097C94E /* Authen.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		B7B1E3C326A92C48006E2FF6 = {
@@ -69,6 +98,7 @@
 			children = (
 				B7B1E3D026A92C48006E2FF6 /* Authen.h */,
 				B7B1E3D126A92C48006E2FF6 /* Info.plist */,
+				B7910DE326AFC9A40097C94E /* Model */,
 			);
 			path = Authen;
 			sourceTree = "<group>";
@@ -112,6 +142,7 @@
 				B7B1E3C926A92C48006E2FF6 /* Sources */,
 				B7B1E3CA26A92C48006E2FF6 /* Frameworks */,
 				B7B1E3CB26A92C48006E2FF6 /* Resources */,
+				B7910DEE26AFCD880097C94E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -132,6 +163,7 @@
 				TargetAttributes = {
 					B7B1E3CC26A92C48006E2FF6 = {
 						CreatedOnToolsVersion = 12.5.1;
+						LastSwiftMigration = 1250;
 					};
 				};
 			};
@@ -193,6 +225,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B7910DE726AFC9E60097C94E /* Authen.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -327,6 +360,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 148E726A74640118FE9A6E49 /* Pods-Authen.debug (production).xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -343,6 +377,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.castcle.Authen;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -352,6 +387,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3E8AA106DCE324482693694F /* Pods-Authen.release (production).xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -442,6 +478,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B2BDEC0B7E0B08D056D09388 /* Pods-Authen.debug (staging).xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -458,6 +495,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.castcle.Authen;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -532,6 +570,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E21C1573E8BC3B1378D38243 /* Pods-Authen.debug (development).xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -548,6 +587,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.castcle.Authen;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -616,6 +656,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 03401DFA18E8D2774768D177 /* Pods-Authen.release (staging).xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -700,6 +741,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2E2238E7DB19EB3E432298AD /* Pods-Authen.release (development).xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
