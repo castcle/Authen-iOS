@@ -10,6 +10,10 @@
 		B7910DE726AFC9E60097C94E /* Authen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7910DE626AFC9E60097C94E /* Authen.swift */; };
 		B7910DEC26AFCD880097C94E /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7910DEB26AFCD880097C94E /* Core.framework */; };
 		B7910DED26AFCD880097C94E /* Core.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B7910DEB26AFCD880097C94E /* Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B7910E0526B126090097C94E /* Authen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B7910E0426B126090097C94E /* Authen.storyboard */; };
+		B7910E0726B1264F0097C94E /* SignUpMethodViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7910E0626B1264F0097C94E /* SignUpMethodViewController.swift */; };
+		B7910E0A26B1268E0097C94E /* AuthenNibVars.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7910E0926B1268E0097C94E /* AuthenNibVars.swift */; };
+		B7910E0C26B126A80097C94E /* AuthenOpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7910E0B26B126A80097C94E /* AuthenOpener.swift */; };
 		B7B1E3D226A92C48006E2FF6 /* Authen.h in Headers */ = {isa = PBXBuildFile; fileRef = B7B1E3D026A92C48006E2FF6 /* Authen.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BC5260F1309A4FF47F9F790D /* Pods_Authen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CA00CC88894B8F1AC8E622D /* Pods_Authen.framework */; };
 /* End PBXBuildFile section */
@@ -38,6 +42,10 @@
 		B2BDEC0B7E0B08D056D09388 /* Pods-Authen.debug (staging).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Authen.debug (staging).xcconfig"; path = "Target Support Files/Pods-Authen/Pods-Authen.debug (staging).xcconfig"; sourceTree = "<group>"; };
 		B7910DE626AFC9E60097C94E /* Authen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authen.swift; sourceTree = "<group>"; };
 		B7910DEB26AFCD880097C94E /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B7910E0426B126090097C94E /* Authen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Authen.storyboard; sourceTree = "<group>"; };
+		B7910E0626B1264F0097C94E /* SignUpMethodViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpMethodViewController.swift; sourceTree = "<group>"; };
+		B7910E0926B1268E0097C94E /* AuthenNibVars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenNibVars.swift; sourceTree = "<group>"; };
+		B7910E0B26B126A80097C94E /* AuthenOpener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenOpener.swift; sourceTree = "<group>"; };
 		B7B1E3CD26A92C48006E2FF6 /* Authen.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Authen.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7B1E3D026A92C48006E2FF6 /* Authen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Authen.h; sourceTree = "<group>"; };
 		B7B1E3D126A92C48006E2FF6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -75,6 +83,15 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		B7910E0826B1266C0097C94E /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				B7910E0926B1268E0097C94E /* AuthenNibVars.swift */,
+				B7910E0B26B126A80097C94E /* AuthenOpener.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		B7B1E3C326A92C48006E2FF6 = {
 			isa = PBXGroup;
 			children = (
@@ -98,6 +115,9 @@
 			children = (
 				B7B1E3D026A92C48006E2FF6 /* Authen.h */,
 				B7B1E3D126A92C48006E2FF6 /* Info.plist */,
+				B7910E0426B126090097C94E /* Authen.storyboard */,
+				B7910E0626B1264F0097C94E /* SignUpMethodViewController.swift */,
+				B7910E0826B1266C0097C94E /* Utilities */,
 				B7910DE326AFC9A40097C94E /* Model */,
 			);
 			path = Authen;
@@ -190,6 +210,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B7910E0526B126090097C94E /* Authen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -225,7 +246,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B7910E0A26B1268E0097C94E /* AuthenNibVars.swift in Sources */,
+				B7910E0726B1264F0097C94E /* SignUpMethodViewController.swift in Sources */,
 				B7910DE726AFC9E60097C94E /* Authen.swift in Sources */,
+				B7910E0C26B126A80097C94E /* AuthenOpener.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
