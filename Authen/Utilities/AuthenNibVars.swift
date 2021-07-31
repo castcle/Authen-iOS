@@ -29,6 +29,7 @@ public struct AuthenNibVars {
     // MARK: - View Controller
     public struct ViewController {
         public static let signUpMethod = "SignUpMethodViewController"
+        public static let signIn = "SignInViewController"
     }
     
     // MARK: - View
@@ -42,5 +43,6 @@ public struct AuthenNibVars {
     
     // MARK: - CollectionViewCell
     public struct CollectionViewCell {
+        public static let signIn = "SignInCell"
     }
 }

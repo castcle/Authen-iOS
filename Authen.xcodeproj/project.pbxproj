@@ -14,6 +14,12 @@
 		B7910E0726B1264F0097C94E /* SignUpMethodViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7910E0626B1264F0097C94E /* SignUpMethodViewController.swift */; };
 		B7910E0A26B1268E0097C94E /* AuthenNibVars.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7910E0926B1268E0097C94E /* AuthenNibVars.swift */; };
 		B7910E0C26B126A80097C94E /* AuthenOpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7910E0B26B126A80097C94E /* AuthenOpener.swift */; };
+		B7910E1A26B3B83D0097C94E /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7910E1926B3B83D0097C94E /* SignInViewController.swift */; };
+		B7910E1C26B3BB700097C94E /* Component.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7910E1B26B3BB700097C94E /* Component.framework */; };
+		B7910E1D26B3BB700097C94E /* Component.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B7910E1B26B3BB700097C94E /* Component.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B7910E2026B411030097C94E /* SignInSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7910E1F26B411030097C94E /* SignInSectionController.swift */; };
+		B7910E2426B4185D0097C94E /* SignInCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7910E2226B4185D0097C94E /* SignInCell.swift */; };
+		B7910E2526B4185D0097C94E /* SignInCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7910E2326B4185D0097C94E /* SignInCell.xib */; };
 		B7B1E3D226A92C48006E2FF6 /* Authen.h in Headers */ = {isa = PBXBuildFile; fileRef = B7B1E3D026A92C48006E2FF6 /* Authen.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BC5260F1309A4FF47F9F790D /* Pods_Authen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CA00CC88894B8F1AC8E622D /* Pods_Authen.framework */; };
 /* End PBXBuildFile section */
@@ -25,6 +31,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				B7910E1D26B3BB700097C94E /* Component.framework in Embed Frameworks */,
 				B7910DED26AFCD880097C94E /* Core.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -46,6 +53,11 @@
 		B7910E0626B1264F0097C94E /* SignUpMethodViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpMethodViewController.swift; sourceTree = "<group>"; };
 		B7910E0926B1268E0097C94E /* AuthenNibVars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenNibVars.swift; sourceTree = "<group>"; };
 		B7910E0B26B126A80097C94E /* AuthenOpener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenOpener.swift; sourceTree = "<group>"; };
+		B7910E1926B3B83D0097C94E /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		B7910E1B26B3BB700097C94E /* Component.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Component.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B7910E1F26B411030097C94E /* SignInSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInSectionController.swift; sourceTree = "<group>"; };
+		B7910E2226B4185D0097C94E /* SignInCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInCell.swift; sourceTree = "<group>"; };
+		B7910E2326B4185D0097C94E /* SignInCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SignInCell.xib; sourceTree = "<group>"; };
 		B7B1E3CD26A92C48006E2FF6 /* Authen.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Authen.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7B1E3D026A92C48006E2FF6 /* Authen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Authen.h; sourceTree = "<group>"; };
 		B7B1E3D126A92C48006E2FF6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -58,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B7910E1C26B3BB700097C94E /* Component.framework in Frameworks */,
 				BC5260F1309A4FF47F9F790D /* Pods_Authen.framework in Frameworks */,
 				B7910DEC26AFCD880097C94E /* Core.framework in Frameworks */,
 			);
@@ -69,6 +82,7 @@
 		A415FAB31D24B516439D4B0D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B7910E1B26B3BB700097C94E /* Component.framework */,
 				B7910DEB26AFCD880097C94E /* Core.framework */,
 				9CA00CC88894B8F1AC8E622D /* Pods_Authen.framework */,
 			);
@@ -90,6 +104,23 @@
 				B7910E0B26B126A80097C94E /* AuthenOpener.swift */,
 			);
 			path = Utilities;
+			sourceTree = "<group>";
+		};
+		B7910E1E26B410910097C94E /* Session */ = {
+			isa = PBXGroup;
+			children = (
+				B7910E1F26B411030097C94E /* SignInSectionController.swift */,
+			);
+			path = Session;
+			sourceTree = "<group>";
+		};
+		B7910E2126B418340097C94E /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				B7910E2226B4185D0097C94E /* SignInCell.swift */,
+				B7910E2326B4185D0097C94E /* SignInCell.xib */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		B7B1E3C326A92C48006E2FF6 = {
@@ -117,6 +148,9 @@
 				B7B1E3D126A92C48006E2FF6 /* Info.plist */,
 				B7910E0426B126090097C94E /* Authen.storyboard */,
 				B7910E0626B1264F0097C94E /* SignUpMethodViewController.swift */,
+				B7910E1926B3B83D0097C94E /* SignInViewController.swift */,
+				B7910E2126B418340097C94E /* Cell */,
+				B7910E1E26B410910097C94E /* Session */,
 				B7910E0826B1266C0097C94E /* Utilities */,
 				B7910DE326AFC9A40097C94E /* Model */,
 			);
@@ -211,6 +245,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B7910E0526B126090097C94E /* Authen.storyboard in Resources */,
+				B7910E2526B4185D0097C94E /* SignInCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -247,9 +282,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				B7910E0A26B1268E0097C94E /* AuthenNibVars.swift in Sources */,
+				B7910E2426B4185D0097C94E /* SignInCell.swift in Sources */,
 				B7910E0726B1264F0097C94E /* SignUpMethodViewController.swift in Sources */,
 				B7910DE726AFC9E60097C94E /* Authen.swift in Sources */,
+				B7910E1A26B3B83D0097C94E /* SignInViewController.swift in Sources */,
 				B7910E0C26B126A80097C94E /* AuthenOpener.swift in Sources */,
+				B7910E2026B411030097C94E /* SignInSectionController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

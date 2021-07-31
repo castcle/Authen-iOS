@@ -19,31 +19,38 @@
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
 //
-//  AuthenOpener.swift
+//  SignInSectionController.swift
 //  Authen
 //
-//  Created by Tanakorn Phoochaliaw on 28/7/2564 BE.
+//  Created by Tanakorn Phoochaliaw on 30/7/2564 BE.
 //
 
-import UIKit
 import Core
+import IGListKit
 
-public enum AuthenScene {
-    case signUpMethod
-    case signIn
+class SignInSectionController: ListSectionController {
+    override init() {
+        super.init()
+        inset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    }
 }
 
-public struct AuthenOpener {
-    public static func open(_ authenScene: AuthenScene) -> UIViewController {
-        switch authenScene {
-        case .signUpMethod:
-            let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.authen, bundle: ConfigBundle.authen)
-            let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.signUpMethod)
-            return vc
-        case .signIn:
-            let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.authen, bundle: ConfigBundle.authen)
-            let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.signIn)
-            return vc
+// MARK: - Data Provider
+extension SignInSectionController {
+    override func numberOfItems() -> Int {
+        return 1
+    }
+    
+    override func sizeForItem(at index: Int) -> CGSize {
+        guard let context = collectionContext else {
+            return .zero
         }
+        return SignInCell.cellSize(width: context.containerSize.width)
+    }
+    
+    override func cellForItem(at index: Int) -> UICollectionViewCell {
+        let cell = collectionContext?.dequeueReusableCell(withNibName: AuthenNibVars.CollectionViewCell.signIn, bundle: ConfigBundle.authen, for: self, at: index) ?? SignInCell()
+        cell.backgroundColor = UIColor.clear
+        return cell
     }
 }
