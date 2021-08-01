@@ -32,7 +32,9 @@ public class Authen: NSObject {
     public static let shared = Authen()
     
     public var isLogin: Bool {
-        if Defaults[.accessToken].isEmpty {
+        if Defaults[.userRole] == "GUEST" {
+            return false
+        } else if Defaults[.accessToken].isEmpty {
             return false
         } else {
             return true
