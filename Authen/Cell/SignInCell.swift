@@ -67,7 +67,8 @@ class SignInCell: UICollectionViewCell {
                 label.customSelectedColor[signUpType] = UIColor.Asset.lightBlue
                 
                 label.handleCustomTap(for: signUpType) { element in
-                    
+                    let vc = AuthenOpener.open(.email)
+                    Utility.currentViewController().navigationController?.pushViewController(vc, animated: true)
                 }
             }
         }
@@ -90,5 +91,4 @@ class SignInCell: UICollectionViewCell {
     static func cellSize(width: CGFloat) -> CGSize {
         return CGSize(width: width, height: 620)
     }
-
 }

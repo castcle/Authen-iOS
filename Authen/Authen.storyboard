@@ -359,6 +359,21 @@
             </objects>
             <point key="canvasLocation" x="763" y="70"/>
         </scene>
+        <!--Email View Controller-->
+        <scene sceneID="qAG-9O-did">
+            <objects>
+                <viewController storyboardIdentifier="EmailViewController" hidesBottomBarWhenPushed="YES" id="Zqw-64-gbV" customClass="EmailViewController" customModule="Authen" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="n3P-h7-PJU">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="xJS-s0-sZC"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2ir-iW-JYg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1421" y="70"/>
+        </scene>
     </scenes>
     <designables>
         <designable name="0Ed-j4-Mvp">

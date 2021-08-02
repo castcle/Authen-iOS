@@ -39,19 +39,19 @@
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dWA-Pn-K6F">
-                        <rect key="frame" x="15" y="319" width="290" height="60"/>
+                        <rect key="frame" x="15" y="309" width="290" height="60"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="60" id="Fbq-wy-RuA"/>
                         </constraints>
                     </view>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8fK-23-DEK">
-                        <rect key="frame" x="174" y="409" width="116" height="29"/>
+                        <rect key="frame" x="174" y="399" width="116" height="29"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <state key="normal" title="Forgot Password?"/>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ljX-CY-V42">
-                        <rect key="frame" x="20" y="468" width="280" height="50"/>
+                        <rect key="frame" x="20" y="458" width="280" height="50"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="50" id="5sN-AF-Nrd"/>
                         </constraints>
@@ -59,7 +59,7 @@
                         <state key="normal" title="Login"/>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New to Castcle? sign up" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="leL-T9-82a" customClass="ActiveLabel" customModule="ActiveLabel">
-                        <rect key="frame" x="63" y="548" width="194" height="22"/>
+                        <rect key="frame" x="63" y="538" width="194" height="22"/>
                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -78,7 +78,7 @@
                 <constraint firstItem="Y8Q-ka-Go5" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="50" id="baf-bv-Xur"/>
                 <constraint firstItem="Y8Q-ka-Go5" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="cCx-HH-hfC"/>
                 <constraint firstItem="1UB-pU-qmg" firstAttribute="top" secondItem="l5k-7y-zhx" secondAttribute="bottom" constant="30" id="cDm-tm-Gm2"/>
-                <constraint firstItem="dWA-Pn-K6F" firstAttribute="top" secondItem="1UB-pU-qmg" secondAttribute="bottom" constant="20" id="eoU-17-GWH"/>
+                <constraint firstItem="dWA-Pn-K6F" firstAttribute="top" secondItem="1UB-pU-qmg" secondAttribute="bottom" constant="10" id="eoU-17-GWH"/>
                 <constraint firstAttribute="trailing" secondItem="8fK-23-DEK" secondAttribute="trailing" constant="30" id="kIG-6P-YcZ"/>
                 <constraint firstItem="8fK-23-DEK" firstAttribute="top" secondItem="dWA-Pn-K6F" secondAttribute="bottom" constant="30" id="nKe-O9-Xf0"/>
                 <constraint firstItem="l5k-7y-zhx" firstAttribute="top" secondItem="Y8Q-ka-Go5" secondAttribute="bottom" constant="30" id="p8Z-KS-UJs"/>
@@ -99,6 +99,14 @@
             <point key="canvasLocation" x="214.49275362318843" y="274.55357142857139"/>
         </collectionViewCell>
     </objects>
+    <designables>
+        <designable name="l5k-7y-zhx">
+            <size key="intrinsicContentSize" width="205.5" height="29"/>
+        </designable>
+        <designable name="leL-T9-82a">
+            <size key="intrinsicContentSize" width="193.5" height="21.5"/>
+        </designable>
+    </designables>
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

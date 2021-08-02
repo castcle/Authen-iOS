@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="EmailCell" customModule="Authen" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="500"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="500"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What's Your Email Address ?" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JDU-Vb-qfa">
+                        <rect key="frame" x="15" y="30" width="290" height="72"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to Castcle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ee8-Ur-2t1">
+                        <rect key="frame" x="15" y="122" width="290" height="22"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gFt-LC-62n">
+                        <rect key="frame" x="15" y="174" width="290" height="60"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="60" id="Vh0-y8-RFb"/>
+                        </constraints>
+                    </view>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hn2-Ka-sdx">
+                        <rect key="frame" x="20" y="367.5" width="280" height="50"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="50" id="V3j-Un-mwK"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                        <state key="normal" title="Next"/>
+                        <connections>
+                            <action selector="nextAction:" destination="gTV-IL-0wX" eventType="touchUpInside" id="Egh-ri-Wn7"/>
+                        </connections>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You'll use this email when you login and when you lose your password." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jTe-Jp-4OK">
+                        <rect key="frame" x="25" y="254" width="270" height="33.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gut-7J-XJ2">
+                        <rect key="frame" x="77" y="427.5" width="166" height="29"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <state key="normal" title="Already have an account?"/>
+                        <connections>
+                            <action selector="loginAction:" destination="gTV-IL-0wX" eventType="touchUpInside" id="Jee-nI-N1b"/>
+                        </connections>
+                    </button>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="ee8-Ur-2t1" secondAttribute="trailing" constant="15" id="0wP-V9-6qT"/>
+                <constraint firstAttribute="trailing" secondItem="JDU-Vb-qfa" secondAttribute="trailing" constant="15" id="8RN-8K-QFk"/>
+                <constraint firstItem="gFt-LC-62n" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="15" id="ApR-9q-nGB"/>
+                <constraint firstAttribute="trailing" secondItem="jTe-Jp-4OK" secondAttribute="trailing" constant="25" id="BHz-gx-8MP"/>
+                <constraint firstAttribute="trailing" secondItem="hn2-Ka-sdx" secondAttribute="trailing" constant="20" id="BwZ-SI-nbT"/>
+                <constraint firstItem="JDU-Vb-qfa" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="15" id="CDm-fd-fb3"/>
+                <constraint firstItem="JDU-Vb-qfa" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="30" id="DcG-hX-s61"/>
+                <constraint firstItem="Gut-7J-XJ2" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="EQu-iR-G0J"/>
+                <constraint firstItem="jTe-Jp-4OK" firstAttribute="top" secondItem="gFt-LC-62n" secondAttribute="bottom" constant="20" id="Opq-rW-ZOD"/>
+                <constraint firstItem="ee8-Ur-2t1" firstAttribute="top" secondItem="JDU-Vb-qfa" secondAttribute="bottom" constant="20" id="PoP-vJ-dS3"/>
+                <constraint firstItem="gFt-LC-62n" firstAttribute="top" secondItem="ee8-Ur-2t1" secondAttribute="bottom" constant="30" id="VsF-hz-rIm"/>
+                <constraint firstAttribute="trailing" secondItem="gFt-LC-62n" secondAttribute="trailing" constant="15" id="WD5-Cy-I46"/>
+                <constraint firstItem="hn2-Ka-sdx" firstAttribute="top" secondItem="jTe-Jp-4OK" secondAttribute="bottom" constant="80" id="crq-gs-L1Q"/>
+                <constraint firstItem="jTe-Jp-4OK" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="25" id="hFj-SW-z6L"/>
+                <constraint firstItem="ee8-Ur-2t1" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="15" id="i8T-1y-tcs"/>
+                <constraint firstItem="Gut-7J-XJ2" firstAttribute="top" secondItem="hn2-Ka-sdx" secondAttribute="bottom" constant="10" id="rVA-Es-am2"/>
+                <constraint firstItem="hn2-Ka-sdx" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="20" id="xmI-6E-lqH"/>
+            </constraints>
+            <size key="customSize" width="320" height="503"/>
+            <connections>
+                <outlet property="alertLabel" destination="jTe-Jp-4OK" id="mOL-4H-Tg5"/>
+                <outlet property="emailView" destination="gFt-LC-62n" id="tVx-J2-mFK"/>
+                <outlet property="headlineLabel" destination="JDU-Vb-qfa" id="eyG-Ds-26D"/>
+                <outlet property="loginButton" destination="Gut-7J-XJ2" id="uXo-uX-7u0"/>
+                <outlet property="nextButton" destination="hn2-Ka-sdx" id="pPJ-3m-t9u"/>
+                <outlet property="welcomeLabel" destination="ee8-Ur-2t1" id="sju-CX-gRL"/>
+            </connections>
+            <point key="canvasLocation" x="333.33333333333337" y="282.58928571428572"/>
+        </collectionViewCell>
+    </objects>
+    <designables>
+        <designable name="JDU-Vb-qfa">
+            <size key="intrinsicContentSize" width="368" height="36"/>
+        </designable>
+    </designables>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

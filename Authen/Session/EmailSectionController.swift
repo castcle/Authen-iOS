@@ -19,32 +19,38 @@
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
 //
-//  AuthenNibVars.swift
+//  EmailSectionController.swift
 //  Authen
 //
-//  Created by Tanakorn Phoochaliaw on 28/7/2564 BE.
+//  Created by Tanakorn Phoochaliaw on 2/8/2564 BE.
 //
 
-public struct AuthenNibVars {
-    // MARK: - View Controller
-    public struct ViewController {
-        public static let signUpMethod = "SignUpMethodViewController"
-        public static let signIn = "SignInViewController"
-        public static let email = "EmailViewController"
+import Core
+import IGListKit
+
+class EmailSectionController: ListSectionController {
+    override init() {
+        super.init()
+        inset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    }
+}
+
+// MARK: - Data Provider
+extension EmailSectionController {
+    override func numberOfItems() -> Int {
+        return 1
     }
     
-    // MARK: - View
-    public struct Storyboard {
-        public static let authen = "Authen"
+    override func sizeForItem(at index: Int) -> CGSize {
+        guard let context = collectionContext else {
+            return .zero
+        }
+        return EmailCell.cellSize(width: context.containerSize.width)
     }
     
-    // MARK: - TableViewCell
-    public struct TableViewCell {
-    }
-    
-    // MARK: - CollectionViewCell
-    public struct CollectionViewCell {
-        public static let signIn = "SignInCell"
-        public static let email = "EmailCell"
+    override func cellForItem(at index: Int) -> UICollectionViewCell {
+        let cell = collectionContext?.dequeueReusableCell(withNibName: AuthenNibVars.CollectionViewCell.email, bundle: ConfigBundle.authen, for: self, at: index) ?? EmailCell()
+        cell.backgroundColor = UIColor.clear
+        return cell
     }
 }
