@@ -33,6 +33,7 @@ public struct AuthenNibVars {
         public static let email = "EmailViewController"
         public static let createPassword = "CreatePasswordViewController"
         public static let createDisplayName = "CreateDisplayNameViewController"
+        public static let verifyEmail = "VerifyEmailViewController"
     }
     
     // MARK: - View

@@ -404,6 +404,107 @@
             </objects>
             <point key="canvasLocation" x="2719" y="70"/>
         </scene>
+        <!--Verify Email View Controller-->
+        <scene sceneID="9We-gl-h7i">
+            <objects>
+                <viewController storyboardIdentifier="VerifyEmailViewController" hidesBottomBarWhenPushed="YES" id="F08-Rc-43L" customClass="VerifyEmailViewController" customModule="Authen" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="3xa-Oi-r21">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Verify Email" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qmu-vS-Nms">
+                                <rect key="frame" x="15" y="230" width="290" height="36"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please verify your email by clicking on the activation link sent to your inbox." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z7J-o3-6sN">
+                                <rect key="frame" x="15" y="276" width="290" height="38.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="If you can't get an email, please click the link below." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6RW-7m-haG">
+                                <rect key="frame" x="15" y="344.5" width="290" height="38.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8dr-B8-exf">
+                                <rect key="frame" x="20" y="445" width="280" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="ila-iK-cR7"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <state key="normal" title="Go to Feed"/>
+                                <connections>
+                                    <action selector="feedAction:" destination="F08-Rc-43L" eventType="touchUpInside" id="L8Q-vK-yu5"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zsd-tG-nTV">
+                                <rect key="frame" x="20" y="510" width="280" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="DTU-gZ-q10"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <state key="normal" title="Go to Profile Setting"/>
+                                <connections>
+                                    <action selector="profileAction:" destination="F08-Rc-43L" eventType="touchUpInside" id="TR3-hs-xeL"/>
+                                </connections>
+                            </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="verify-email" translatesAutoresizingMaskIntoConstraints="NO" id="u40-cA-IiG">
+                                <rect key="frame" x="60" y="50" width="200" height="150"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="150" id="dJN-8w-jF4"/>
+                                    <constraint firstAttribute="width" constant="200" id="gv1-rv-7rK"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ykz-ja-Ckr">
+                                <rect key="frame" x="60.5" y="398" width="199" height="32"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <state key="normal" title="Haven't received email yet?"/>
+                                <connections>
+                                    <action selector="resendAction:" destination="F08-Rc-43L" eventType="touchUpInside" id="7iA-28-GpX"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="OFL-H2-rq3"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Ykz-ja-Ckr" firstAttribute="top" secondItem="6RW-7m-haG" secondAttribute="bottom" constant="15" id="3ZQ-aT-eQ2"/>
+                            <constraint firstItem="8dr-B8-exf" firstAttribute="top" secondItem="Ykz-ja-Ckr" secondAttribute="bottom" constant="15" id="3xY-UD-R5X"/>
+                            <constraint firstItem="u40-cA-IiG" firstAttribute="top" secondItem="OFL-H2-rq3" secondAttribute="top" constant="50" id="6EY-sQ-mLw"/>
+                            <constraint firstItem="6RW-7m-haG" firstAttribute="top" secondItem="z7J-o3-6sN" secondAttribute="bottom" constant="30" id="73H-z1-qlT"/>
+                            <constraint firstItem="8dr-B8-exf" firstAttribute="leading" secondItem="OFL-H2-rq3" secondAttribute="leading" constant="20" id="8wM-5L-6bc"/>
+                            <constraint firstItem="qmu-vS-Nms" firstAttribute="leading" secondItem="OFL-H2-rq3" secondAttribute="leading" constant="15" id="BY7-7k-kYj"/>
+                            <constraint firstItem="Zsd-tG-nTV" firstAttribute="leading" secondItem="OFL-H2-rq3" secondAttribute="leading" constant="20" id="C9G-Hs-ji6"/>
+                            <constraint firstItem="z7J-o3-6sN" firstAttribute="leading" secondItem="OFL-H2-rq3" secondAttribute="leading" constant="15" id="EyF-Sb-ltG"/>
+                            <constraint firstItem="Ykz-ja-Ckr" firstAttribute="centerX" secondItem="3xa-Oi-r21" secondAttribute="centerX" id="Gf3-jy-5aS"/>
+                            <constraint firstItem="z7J-o3-6sN" firstAttribute="top" secondItem="qmu-vS-Nms" secondAttribute="bottom" constant="10" id="JaV-cv-RTZ"/>
+                            <constraint firstItem="OFL-H2-rq3" firstAttribute="trailing" secondItem="Zsd-tG-nTV" secondAttribute="trailing" constant="20" id="M2E-rf-IZI"/>
+                            <constraint firstItem="OFL-H2-rq3" firstAttribute="trailing" secondItem="6RW-7m-haG" secondAttribute="trailing" constant="15" id="NVC-PQ-D5a"/>
+                            <constraint firstItem="Zsd-tG-nTV" firstAttribute="top" secondItem="8dr-B8-exf" secondAttribute="bottom" constant="15" id="OKr-WO-e9H"/>
+                            <constraint firstItem="u40-cA-IiG" firstAttribute="centerX" secondItem="3xa-Oi-r21" secondAttribute="centerX" id="UNq-9d-Fob"/>
+                            <constraint firstItem="qmu-vS-Nms" firstAttribute="top" secondItem="u40-cA-IiG" secondAttribute="bottom" constant="30" id="Wne-tU-SJ7"/>
+                            <constraint firstItem="OFL-H2-rq3" firstAttribute="trailing" secondItem="8dr-B8-exf" secondAttribute="trailing" constant="20" id="hCI-h6-PvY"/>
+                            <constraint firstItem="6RW-7m-haG" firstAttribute="leading" secondItem="OFL-H2-rq3" secondAttribute="leading" constant="15" id="lhg-sJ-UEo"/>
+                            <constraint firstItem="OFL-H2-rq3" firstAttribute="trailing" secondItem="qmu-vS-Nms" secondAttribute="trailing" constant="15" id="nMZ-G4-iBf"/>
+                            <constraint firstItem="OFL-H2-rq3" firstAttribute="trailing" secondItem="z7J-o3-6sN" secondAttribute="trailing" constant="15" id="uZ0-Hu-uSH"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="feedButton" destination="8dr-B8-exf" id="p7i-Kz-MZ3"/>
+                        <outlet property="getNewEmailLabel" destination="6RW-7m-haG" id="s2U-ZY-HAc"/>
+                        <outlet property="headlineLabel" destination="qmu-vS-Nms" id="Eke-jj-cbY"/>
+                        <outlet property="profileButton" destination="Zsd-tG-nTV" id="pDA-PD-Syu"/>
+                        <outlet property="resendButton" destination="Ykz-ja-Ckr" id="AAo-Br-H6n"/>
+                        <outlet property="subTitleLabel" destination="z7J-o3-6sN" id="1Te-Ol-kbw"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Rgr-w3-ENM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3395.625" y="69.718309859154928"/>
+        </scene>
     </scenes>
     <designables>
         <designable name="0Ed-j4-Mvp">
@@ -417,6 +518,7 @@
         </designable>
     </designables>
     <resources>
+        <image name="verify-email" width="218" height="150"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

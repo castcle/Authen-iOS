@@ -26,6 +26,7 @@
 //
 
 import UIKit
+import Core
 
 class CreateDisplayNameCell: UICollectionViewCell {
 
@@ -72,8 +73,8 @@ class CreateDisplayNameCell: UICollectionViewCell {
     }
     
     @IBAction func nextAction(_ sender: Any) {
-//        let vc = AuthenOpener.open(.createPassword)
-//        Utility.currentViewController().navigationController?.pushViewController(vc, animated: true)
+        let vc = AuthenOpener.open(.verifyEmail)
+        Utility.currentViewController().navigationController?.pushViewController(vc, animated: true)
     }
 
 }
