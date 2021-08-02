@@ -19,36 +19,38 @@
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
 //
-//  AuthenNibVars.swift
+//  CreateDisplayNameSectionController.swift
 //  Authen
 //
-//  Created by Tanakorn Phoochaliaw on 28/7/2564 BE.
+//  Created by Tanakorn Phoochaliaw on 2/8/2564 BE.
 //
 
-public struct AuthenNibVars {
-    // MARK: - View Controller
-    public struct ViewController {
-        public static let signUpMethod = "SignUpMethodViewController"
-        public static let signIn = "SignInViewController"
-        public static let email = "EmailViewController"
-        public static let createPassword = "CreatePasswordViewController"
-        public static let createDisplayName = "CreateDisplayNameViewController"
+import Core
+import IGListKit
+
+class CreateDisplayNameSectionController: ListSectionController {
+    override init() {
+        super.init()
+        inset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    }
+}
+
+// MARK: - Data Provider
+extension CreateDisplayNameSectionController {
+    override func numberOfItems() -> Int {
+        return 1
     }
     
-    // MARK: - View
-    public struct Storyboard {
-        public static let authen = "Authen"
+    override func sizeForItem(at index: Int) -> CGSize {
+        guard let context = collectionContext else {
+            return .zero
+        }
+        return CreateDisplayNameCell.cellSize(width: context.containerSize.width)
     }
     
-    // MARK: - TableViewCell
-    public struct TableViewCell {
-    }
-    
-    // MARK: - CollectionViewCell
-    public struct CollectionViewCell {
-        public static let signIn = "SignInCell"
-        public static let email = "EmailCell"
-        public static let createPassword = "CreatePasswordCell"
-        public static let createDisplayName = "CreateDisplayNameCell"
+    override func cellForItem(at index: Int) -> UICollectionViewCell {
+        let cell = collectionContext?.dequeueReusableCell(withNibName: AuthenNibVars.CollectionViewCell.createDisplayName, bundle: ConfigBundle.authen, for: self, at: index) ?? CreateDisplayNameCell()
+        cell.backgroundColor = UIColor.clear
+        return cell
     }
 }

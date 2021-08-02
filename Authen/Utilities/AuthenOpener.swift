@@ -32,6 +32,8 @@ public enum AuthenScene {
     case signUpMethod
     case signIn
     case email
+    case createPassword
+    case createDisplayName
 }
 
 public struct AuthenOpener {
@@ -48,6 +50,14 @@ public struct AuthenOpener {
         case .email:
             let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.authen, bundle: ConfigBundle.authen)
             let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.email)
+            return vc
+        case .createPassword:
+            let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.authen, bundle: ConfigBundle.authen)
+            let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.createPassword)
+            return vc
+        case .createDisplayName:
+            let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.authen, bundle: ConfigBundle.authen)
+            let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.createDisplayName)
             return vc
         }
     }

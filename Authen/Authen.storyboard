@@ -357,7 +357,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9I5-Bc-c7V" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="763" y="70"/>
+            <point key="canvasLocation" x="720" y="70"/>
         </scene>
         <!--Email View Controller-->
         <scene sceneID="qAG-9O-did">
@@ -372,7 +372,37 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2ir-iW-JYg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1421" y="70"/>
+            <point key="canvasLocation" x="1395" y="70"/>
+        </scene>
+        <!--Create Password View Controller-->
+        <scene sceneID="NXe-0c-rs4">
+            <objects>
+                <viewController storyboardIdentifier="CreatePasswordViewController" hidesBottomBarWhenPushed="YES" id="tDd-qb-bJ8" customClass="CreatePasswordViewController" customModule="Authen" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="UoW-hi-K2g">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="Rwc-sI-hc2"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lk2-vI-t4E" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2059" y="70"/>
+        </scene>
+        <!--Create Display Name View Controller-->
+        <scene sceneID="Scf-bR-Oft">
+            <objects>
+                <viewController storyboardIdentifier="CreateDisplayNameViewController" hidesBottomBarWhenPushed="YES" id="AlJ-7W-8xy" customClass="CreateDisplayNameViewController" customModule="Authen" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="DBE-PR-5D0">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="8wy-PS-a8x"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XL4-Zr-fiW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2719" y="70"/>
         </scene>
     </scenes>
     <designables>

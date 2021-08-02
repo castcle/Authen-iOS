@@ -24,6 +24,14 @@
 		B7910E4726B7F34C0097C94E /* EmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7910E4626B7F34C0097C94E /* EmailViewController.swift */; };
 		B7910E4A26B7FD090097C94E /* EmailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7910E4826B7FD090097C94E /* EmailCell.swift */; };
 		B7910E4B26B7FD090097C94E /* EmailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7910E4926B7FD090097C94E /* EmailCell.xib */; };
+		B7910E4D26B82C690097C94E /* CreatePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7910E4C26B82C690097C94E /* CreatePasswordViewController.swift */; };
+		B7910E5026B82CC40097C94E /* CreatePasswordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7910E4E26B82CC40097C94E /* CreatePasswordCell.swift */; };
+		B7910E5126B82CC40097C94E /* CreatePasswordCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7910E4F26B82CC40097C94E /* CreatePasswordCell.xib */; };
+		B7910E5326B82EE00097C94E /* CreatePasswordSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7910E5226B82EE00097C94E /* CreatePasswordSectionController.swift */; };
+		B7910E5526B835DB0097C94E /* CreateDisplayNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7910E5426B835DB0097C94E /* CreateDisplayNameViewController.swift */; };
+		B7910E5826B836100097C94E /* CreateDisplayNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7910E5626B836100097C94E /* CreateDisplayNameCell.swift */; };
+		B7910E5926B836100097C94E /* CreateDisplayNameCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7910E5726B836100097C94E /* CreateDisplayNameCell.xib */; };
+		B7910E5B26B8368B0097C94E /* CreateDisplayNameSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7910E5A26B8368B0097C94E /* CreateDisplayNameSectionController.swift */; };
 		B7B1E3D226A92C48006E2FF6 /* Authen.h in Headers */ = {isa = PBXBuildFile; fileRef = B7B1E3D026A92C48006E2FF6 /* Authen.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BC5260F1309A4FF47F9F790D /* Pods_Authen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CA00CC88894B8F1AC8E622D /* Pods_Authen.framework */; };
 /* End PBXBuildFile section */
@@ -66,6 +74,14 @@
 		B7910E4626B7F34C0097C94E /* EmailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailViewController.swift; sourceTree = "<group>"; };
 		B7910E4826B7FD090097C94E /* EmailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailCell.swift; sourceTree = "<group>"; };
 		B7910E4926B7FD090097C94E /* EmailCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmailCell.xib; sourceTree = "<group>"; };
+		B7910E4C26B82C690097C94E /* CreatePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePasswordViewController.swift; sourceTree = "<group>"; };
+		B7910E4E26B82CC40097C94E /* CreatePasswordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePasswordCell.swift; sourceTree = "<group>"; };
+		B7910E4F26B82CC40097C94E /* CreatePasswordCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreatePasswordCell.xib; sourceTree = "<group>"; };
+		B7910E5226B82EE00097C94E /* CreatePasswordSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePasswordSectionController.swift; sourceTree = "<group>"; };
+		B7910E5426B835DB0097C94E /* CreateDisplayNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateDisplayNameViewController.swift; sourceTree = "<group>"; };
+		B7910E5626B836100097C94E /* CreateDisplayNameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateDisplayNameCell.swift; sourceTree = "<group>"; };
+		B7910E5726B836100097C94E /* CreateDisplayNameCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateDisplayNameCell.xib; sourceTree = "<group>"; };
+		B7910E5A26B8368B0097C94E /* CreateDisplayNameSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateDisplayNameSectionController.swift; sourceTree = "<group>"; };
 		B7B1E3CD26A92C48006E2FF6 /* Authen.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Authen.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7B1E3D026A92C48006E2FF6 /* Authen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Authen.h; sourceTree = "<group>"; };
 		B7B1E3D126A92C48006E2FF6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -119,6 +135,8 @@
 			children = (
 				B7910E1F26B411030097C94E /* SignInSectionController.swift */,
 				B7910E4426B7EE6E0097C94E /* EmailSectionController.swift */,
+				B7910E5226B82EE00097C94E /* CreatePasswordSectionController.swift */,
+				B7910E5A26B8368B0097C94E /* CreateDisplayNameSectionController.swift */,
 			);
 			path = Session;
 			sourceTree = "<group>";
@@ -130,6 +148,10 @@
 				B7910E2326B4185D0097C94E /* SignInCell.xib */,
 				B7910E4826B7FD090097C94E /* EmailCell.swift */,
 				B7910E4926B7FD090097C94E /* EmailCell.xib */,
+				B7910E4E26B82CC40097C94E /* CreatePasswordCell.swift */,
+				B7910E4F26B82CC40097C94E /* CreatePasswordCell.xib */,
+				B7910E5626B836100097C94E /* CreateDisplayNameCell.swift */,
+				B7910E5726B836100097C94E /* CreateDisplayNameCell.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -161,6 +183,8 @@
 				B7910E0626B1264F0097C94E /* SignUpMethodViewController.swift */,
 				B7910E1926B3B83D0097C94E /* SignInViewController.swift */,
 				B7910E4626B7F34C0097C94E /* EmailViewController.swift */,
+				B7910E4C26B82C690097C94E /* CreatePasswordViewController.swift */,
+				B7910E5426B835DB0097C94E /* CreateDisplayNameViewController.swift */,
 				B7910E2126B418340097C94E /* Cell */,
 				B7910E1E26B410910097C94E /* Session */,
 				B7910E0826B1266C0097C94E /* Utilities */,
@@ -258,7 +282,9 @@
 			files = (
 				B7910E4B26B7FD090097C94E /* EmailCell.xib in Resources */,
 				B7910E0526B126090097C94E /* Authen.storyboard in Resources */,
+				B7910E5126B82CC40097C94E /* CreatePasswordCell.xib in Resources */,
 				B7910E2526B4185D0097C94E /* SignInCell.xib in Resources */,
+				B7910E5926B836100097C94E /* CreateDisplayNameCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -294,14 +320,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B7910E5526B835DB0097C94E /* CreateDisplayNameViewController.swift in Sources */,
 				B7910E0A26B1268E0097C94E /* AuthenNibVars.swift in Sources */,
 				B7910E4A26B7FD090097C94E /* EmailCell.swift in Sources */,
+				B7910E5326B82EE00097C94E /* CreatePasswordSectionController.swift in Sources */,
+				B7910E5826B836100097C94E /* CreateDisplayNameCell.swift in Sources */,
+				B7910E5026B82CC40097C94E /* CreatePasswordCell.swift in Sources */,
 				B7910E2426B4185D0097C94E /* SignInCell.swift in Sources */,
+				B7910E5B26B8368B0097C94E /* CreateDisplayNameSectionController.swift in Sources */,
 				B7910E4526B7EE6E0097C94E /* EmailSectionController.swift in Sources */,
 				B7910E0726B1264F0097C94E /* SignUpMethodViewController.swift in Sources */,
 				B7910DE726AFC9E60097C94E /* Authen.swift in Sources */,
 				B7910E1A26B3B83D0097C94E /* SignInViewController.swift in Sources */,
 				B7910E0C26B126A80097C94E /* AuthenOpener.swift in Sources */,
+				B7910E4D26B82C690097C94E /* CreatePasswordViewController.swift in Sources */,
 				B7910E2026B411030097C94E /* SignInSectionController.swift in Sources */,
 				B7910E4726B7F34C0097C94E /* EmailViewController.swift in Sources */,
 			);
