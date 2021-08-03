@@ -175,7 +175,12 @@ public class SignUpMethodViewController: UIViewController {
         self.appleView.custom(color: UIColor.Asset.apple, cornerRadius: 10)
         self.emailView.custom(color: UIColor.Asset.black, cornerRadius: 10)
         
+        self.telegramImage.image = UIImage.init(icon: .castcle(.direct), size: CGSize(width: 23, height: 23), textColor: UIColor.Asset.white)
+        self.facebookImage.image = UIImage.init(icon: .castcle(.facebook), size: CGSize(width: 23, height: 23), textColor: UIColor.Asset.white)
+        self.twitterImage.image = UIImage.init(icon: .castcle(.twitter), size: CGSize(width: 23, height: 23), textColor: UIColor.Asset.white)
         self.googleImage.image = UIImage.Asset.googleLogo
+        self.appleImage.image = UIImage.init(icon: .castcle(.apple), size: CGSize(width: 23, height: 23), textColor: UIColor.Asset.white)
+        self.emailImage.image = UIImage.init(icon: .castcle(.email), size: CGSize(width: 23, height: 23), textColor: UIColor.Asset.white)
     }
     
     private func openWebView(urlString: String) {
