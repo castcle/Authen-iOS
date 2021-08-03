@@ -73,8 +73,7 @@ class CreateDisplayNameCell: UICollectionViewCell {
     }
     
     @IBAction func nextAction(_ sender: Any) {
-        let vc = AuthenOpener.open(.verifyEmail)
-        Utility.currentViewController().navigationController?.pushViewController(vc, animated: true)
+        Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.verifyEmail), animated: true)
     }
 
 }

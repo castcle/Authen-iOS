@@ -70,7 +70,6 @@ class CreatePasswordCell: UICollectionViewCell {
     }
     
     @IBAction func nextAction(_ sender: Any) {
-        let vc = AuthenOpener.open(.createDisplayName)
-        Utility.currentViewController().navigationController?.pushViewController(vc, animated: true)
+        Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.createDisplayName), animated: true)
     }
 }

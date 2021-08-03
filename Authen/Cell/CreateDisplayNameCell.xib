@@ -67,7 +67,7 @@
                             <constraint firstAttribute="height" constant="60" id="S6f-d5-WfD"/>
                         </constraints>
                     </view>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6rb-2h-WGD">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="display-name" translatesAutoresizingMaskIntoConstraints="NO" id="6rb-2h-WGD">
                         <rect key="frame" x="10" y="30" width="300" height="150"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="150" id="4I2-R7-6ep"/>
@@ -116,6 +116,7 @@
         </collectionViewCell>
     </objects>
     <resources>
+        <image name="display-name" width="262" height="110"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

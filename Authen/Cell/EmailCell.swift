@@ -51,8 +51,7 @@ class EmailCell: UICollectionViewCell {
     }
     
     @IBAction func nextAction(_ sender: Any) {
-        let vc = AuthenOpener.open(.createPassword)
-        Utility.currentViewController().navigationController?.pushViewController(vc, animated: true)
+        Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.createPassword), animated: true)
     }
     
     @IBAction func loginAction(_ sender: Any) {
