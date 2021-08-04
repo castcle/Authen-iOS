@@ -71,6 +71,7 @@ class VerifyEmailViewController: UIViewController {
     }
     
     @IBAction func resendAction(_ sender: Any) {
+        Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.resendEmail), animated: true)
     }
     
     @IBAction func feedAction(_ sender: Any) {
@@ -78,6 +79,5 @@ class VerifyEmailViewController: UIViewController {
     }
     
     @IBAction func profileAction(_ sender: Any) {
-        Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.resendEmail), animated: true)
     }
 }

@@ -34,6 +34,7 @@ class EmailViewController: UIViewController {
         self.collectionView.alwaysBounceVertical = true
         self.collectionView.showsHorizontalScrollIndicator = false
         self.collectionView.showsVerticalScrollIndicator = false
+        self.collectionView.backgroundColor = UIColor.clear
         self.view.addSubview(self.collectionView)
         self.adapter.collectionView = self.collectionView
         self.adapter.dataSource = self
