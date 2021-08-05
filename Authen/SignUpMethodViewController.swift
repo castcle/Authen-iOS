@@ -185,7 +185,7 @@ public class SignUpMethodViewController: UIViewController {
     
     private func openWebView(urlString: String) {
         self.dismiss(animated: true)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 ) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(URL(string: urlString)!)), animated: true)
         }
     }

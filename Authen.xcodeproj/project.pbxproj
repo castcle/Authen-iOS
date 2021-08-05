@@ -39,6 +39,8 @@
 		B7910E6826B8FC340097C94E /* AuthenticationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7910E6726B8FC340097C94E /* AuthenticationRepository.swift */; };
 		B7910E6B26B932C40097C94E /* AuthenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7910E6A26B932C40097C94E /* AuthenRequest.swift */; };
 		B7910E6D26B93C1A0097C94E /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7910E6C26B93C1A0097C94E /* LoginRequest.swift */; };
+		B7910E7E26BBDCD40097C94E /* Profile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7910E7D26BBDCD30097C94E /* Profile.framework */; };
+		B7910E7F26BBDCD40097C94E /* Profile.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B7910E7D26BBDCD30097C94E /* Profile.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B7B1E3D226A92C48006E2FF6 /* Authen.h in Headers */ = {isa = PBXBuildFile; fileRef = B7B1E3D026A92C48006E2FF6 /* Authen.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BC5260F1309A4FF47F9F790D /* Pods_Authen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CA00CC88894B8F1AC8E622D /* Pods_Authen.framework */; };
 /* End PBXBuildFile section */
@@ -50,6 +52,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				B7910E7F26BBDCD40097C94E /* Profile.framework in Embed Frameworks */,
 				B7910E1D26B3BB700097C94E /* Component.framework in Embed Frameworks */,
 				B7910DED26AFCD880097C94E /* Core.framework in Embed Frameworks */,
 			);
@@ -96,6 +99,7 @@
 		B7910E6726B8FC340097C94E /* AuthenticationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationRepository.swift; sourceTree = "<group>"; };
 		B7910E6A26B932C40097C94E /* AuthenRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenRequest.swift; sourceTree = "<group>"; };
 		B7910E6C26B93C1A0097C94E /* LoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequest.swift; sourceTree = "<group>"; };
+		B7910E7D26BBDCD30097C94E /* Profile.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Profile.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7B1E3CD26A92C48006E2FF6 /* Authen.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Authen.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7B1E3D026A92C48006E2FF6 /* Authen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Authen.h; sourceTree = "<group>"; };
 		B7B1E3D126A92C48006E2FF6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -110,6 +114,7 @@
 			files = (
 				B7910E1C26B3BB700097C94E /* Component.framework in Frameworks */,
 				BC5260F1309A4FF47F9F790D /* Pods_Authen.framework in Frameworks */,
+				B7910E7E26BBDCD40097C94E /* Profile.framework in Frameworks */,
 				B7910DEC26AFCD880097C94E /* Core.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -120,6 +125,7 @@
 		A415FAB31D24B516439D4B0D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B7910E7D26BBDCD30097C94E /* Profile.framework */,
 				B7910E1B26B3BB700097C94E /* Component.framework */,
 				B7910DEB26AFCD880097C94E /* Core.framework */,
 				9CA00CC88894B8F1AC8E622D /* Pods_Authen.framework */,
