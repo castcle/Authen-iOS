@@ -29,6 +29,7 @@ class EmailViewController: UIViewController {
         super.viewDidLoad()
 
         self.view.backgroundColor = UIColor.Asset.darkGraphiteBlue
+        self.hideKeyboardWhenTapped()
         self.setupNavBar()
         
         self.collectionView.alwaysBounceVertical = true

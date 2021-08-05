@@ -37,6 +37,8 @@ class CreateDisplayNameCell: UICollectionViewCell {
     @IBOutlet var displayNameView: UIView!
     @IBOutlet var castcleIdPasswordView: UIView!
     @IBOutlet var nextButton: UIButton!
+    @IBOutlet var displayNameTextfield: UITextField!
+    @IBOutlet var idTextField: UITextField!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -52,6 +54,16 @@ class CreateDisplayNameCell: UICollectionViewCell {
         self.castcleIdLabel.font = UIFont.asset(.regular, fontSize: .body)
         self.castcleIdLabel.textColor = UIColor.Asset.white
         self.setupNextButton(isActive: false)
+        
+        self.displayNameTextfield.font = UIFont.asset(.regular, fontSize: .body)
+        self.displayNameTextfield.textColor = UIColor.Asset.white
+        self.idTextField.font = UIFont.asset(.regular, fontSize: .body)
+        self.idTextField.textColor = UIColor.Asset.white
+        
+        self.displayNameTextfield.tag = 0
+        self.displayNameTextfield.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
+        self.idTextField.tag = 1
+        self.idTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
     }
     
     private func setupNextButton(isActive: Bool) {
@@ -68,12 +80,23 @@ class CreateDisplayNameCell: UICollectionViewCell {
         }
     }
     
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        if displayNameTextfield.text!.isEmpty || idTextField.text!.isEmpty {
+            self.setupNextButton(isActive: false)
+        } else {
+            self.setupNextButton(isActive: true)
+        }
+    }
+    
     static func cellSize(width: CGFloat) -> CGSize {
         return CGSize(width: width, height: 650)
     }
     
     @IBAction func nextAction(_ sender: Any) {
-        Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.verifyEmail), animated: true)
+        self.endEditing(true)
+        if !(displayNameTextfield.text!.isEmpty) && !(idTextField.text!.isEmpty) {
+            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.verifyEmail), animated: true)
+        }
     }
 
 }

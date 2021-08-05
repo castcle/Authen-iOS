@@ -27,6 +27,7 @@
 
 import UIKit
 import Core
+import JVFloatLabeledTextField
 
 class CreatePasswordCell: UICollectionViewCell {
 
@@ -36,6 +37,33 @@ class CreatePasswordCell: UICollectionViewCell {
     @IBOutlet var passwordView: UIView!
     @IBOutlet var confirmPasswordView: UIView!
     @IBOutlet var nextButton: UIButton!
+    @IBOutlet var showPasswordButton: UIButton!
+    @IBOutlet var showConfirmPasswordButton: UIButton!
+    
+    @IBOutlet var passwordTextField: JVFloatLabeledTextField! {
+        didSet {
+            self.passwordTextField.font = UIFont.asset(.regular, fontSize: .body)
+            self.passwordTextField.placeholder = "Password"
+            self.passwordTextField.placeholderColor = UIColor.Asset.gray
+            self.passwordTextField.floatingLabelTextColor = UIColor.Asset.gray
+            self.passwordTextField.floatingLabelActiveTextColor = UIColor.Asset.gray
+            self.passwordTextField.floatingLabelFont = UIFont.asset(.regular, fontSize: .small)
+            self.passwordTextField.textColor = UIColor.Asset.white
+            self.passwordTextField.isSecureTextEntry = true
+        }
+    }
+    @IBOutlet var confirmPasswordTextField: JVFloatLabeledTextField! {
+        didSet {
+            self.confirmPasswordTextField.font = UIFont.asset(.regular, fontSize: .body)
+            self.confirmPasswordTextField.placeholder = "Re-type Password"
+            self.confirmPasswordTextField.placeholderColor = UIColor.Asset.gray
+            self.confirmPasswordTextField.floatingLabelTextColor = UIColor.Asset.gray
+            self.confirmPasswordTextField.floatingLabelActiveTextColor = UIColor.Asset.gray
+            self.confirmPasswordTextField.floatingLabelFont = UIFont.asset(.regular, fontSize: .small)
+            self.confirmPasswordTextField.textColor = UIColor.Asset.white
+            self.confirmPasswordTextField.isSecureTextEntry = true
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -48,7 +76,14 @@ class CreatePasswordCell: UICollectionViewCell {
         self.welcomeLabel.textColor = UIColor.Asset.white
         self.alertLabel.font = UIFont.asset(.regular, fontSize: .overline)
         self.alertLabel.textColor = UIColor.Asset.white
+        self.showPasswordButton.setImage(UIImage.init(icon: .castcle(.show), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.white).withRenderingMode(.alwaysOriginal), for: .normal)
+        self.showConfirmPasswordButton.setImage(UIImage.init(icon: .castcle(.show), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.white).withRenderingMode(.alwaysOriginal), for: .normal)
         self.setupNextButton(isActive: false)
+        
+        self.passwordTextField.tag = 0
+        self.passwordTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
+        self.confirmPasswordTextField.tag = 1
+        self.confirmPasswordTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
     }
     
     private func setupNextButton(isActive: Bool) {
@@ -65,11 +100,44 @@ class CreatePasswordCell: UICollectionViewCell {
         }
     }
     
+    private func validatePassword() -> Bool {
+        let password = NSPredicate(format: "SELF MATCHES %@ ", "^(?=.*[a-z])(?=.*[0-9])(?=.*[$@$#%*?]).{6,}$")
+        
+        if password.evaluate(with: self.passwordTextField.text) {
+            if self.passwordTextField.text == self.confirmPasswordTextField.text {
+                return true
+            } else {
+                return false
+            }
+        } else {
+            return false
+        }
+    }
+    
     static func cellSize(width: CGFloat) -> CGSize {
         return CGSize(width: width, height: 500)
     }
     
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        if self.validatePassword() {
+            self.setupNextButton(isActive: true)
+        } else {
+            self.setupNextButton(isActive: false)
+        }
+    }
+    
+    @IBAction func showPasswordAction(_ sender: Any) {
+        self.passwordTextField.isSecureTextEntry.toggle()
+    }
+    
+    @IBAction func showConfirmPasswordAction(_ sender: Any) {
+        self.confirmPasswordTextField.isSecureTextEntry.toggle()
+    }
+    
     @IBAction func nextAction(_ sender: Any) {
-        Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.createDisplayName), animated: true)
+        self.endEditing(true)
+        if self.validatePassword() {
+            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.createDisplayName), animated: true)
+        }
     }
 }

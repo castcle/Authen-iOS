@@ -7,6 +7,7 @@
 
 import UIKit
 import Core
+import JVFloatLabeledTextField
 
 class EmailCell: UICollectionViewCell {
 
@@ -16,6 +17,18 @@ class EmailCell: UICollectionViewCell {
     @IBOutlet var emailView: UIView!
     @IBOutlet var nextButton: UIButton!
     @IBOutlet var loginButton: UIButton!
+    
+    @IBOutlet var emailTextField: JVFloatLabeledTextField! {
+        didSet {
+            self.emailTextField.font = UIFont.asset(.regular, fontSize: .body)
+            self.emailTextField.placeholder = "Email"
+            self.emailTextField.placeholderColor = UIColor.Asset.gray
+            self.emailTextField.floatingLabelTextColor = UIColor.Asset.gray
+            self.emailTextField.floatingLabelActiveTextColor = UIColor.Asset.gray
+            self.emailTextField.floatingLabelFont = UIFont.asset(.regular, fontSize: .small)
+            self.emailTextField.textColor = UIColor.Asset.white
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -30,6 +43,8 @@ class EmailCell: UICollectionViewCell {
         self.loginButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .overline)
         self.loginButton.setTitleColor(UIColor.Asset.white, for: .normal)
         self.setupNextButton(isActive: false)
+        
+        self.emailTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
     }
     
     private func setupNextButton(isActive: Bool) {
@@ -50,11 +65,23 @@ class EmailCell: UICollectionViewCell {
         return CGSize(width: width, height: 500)
     }
     
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        if textField.text!.isEmpty {
+            self.setupNextButton(isActive: false)
+        } else {
+            self.setupNextButton(isActive: true)
+        }
+    }
+    
     @IBAction func nextAction(_ sender: Any) {
-        Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.createPassword), animated: true)
+        if !(self.emailTextField.text!.isEmpty) {
+            self.endEditing(true)
+            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.createPassword), animated: true)
+        }
     }
     
     @IBAction func loginAction(_ sender: Any) {
+        self.endEditing(true)
         Utility.currentViewController().navigationController?.popViewController(animated: true)
     }
 }
