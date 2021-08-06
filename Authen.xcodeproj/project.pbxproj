@@ -151,7 +151,7 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
-		B7910E1E26B410910097C94E /* Session */ = {
+		B7910E1E26B410910097C94E /* Section */ = {
 			isa = PBXGroup;
 			children = (
 				B7910E1F26B411030097C94E /* SignInSectionController.swift */,
@@ -159,7 +159,7 @@
 				B7910E5226B82EE00097C94E /* CreatePasswordSectionController.swift */,
 				B7910E5A26B8368B0097C94E /* CreateDisplayNameSectionController.swift */,
 			);
-			path = Session;
+			path = Section;
 			sourceTree = "<group>";
 		};
 		B7910E2126B418340097C94E /* Cell */ = {
@@ -210,6 +210,20 @@
 			path = Request;
 			sourceTree = "<group>";
 		};
+		B7910EB626BD0C030097C94E /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				B7910E0626B1264F0097C94E /* SignUpMethodViewController.swift */,
+				B7910E1926B3B83D0097C94E /* SignInViewController.swift */,
+				B7910E4626B7F34C0097C94E /* EmailViewController.swift */,
+				B7910E4C26B82C690097C94E /* CreatePasswordViewController.swift */,
+				B7910E5426B835DB0097C94E /* CreateDisplayNameViewController.swift */,
+				B7910E5C26B83FEB0097C94E /* VerifyEmailViewController.swift */,
+				B7910E6126B8F52B0097C94E /* ResendEmailViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
 		B7B1E3C326A92C48006E2FF6 = {
 			isa = PBXGroup;
 			children = (
@@ -237,15 +251,9 @@
 				B7910E6326B8FBB20097C94E /* Provider */,
 				B7910E5E26B842560097C94E /* Assets */,
 				B7910E0426B126090097C94E /* Authen.storyboard */,
-				B7910E0626B1264F0097C94E /* SignUpMethodViewController.swift */,
-				B7910E1926B3B83D0097C94E /* SignInViewController.swift */,
-				B7910E4626B7F34C0097C94E /* EmailViewController.swift */,
-				B7910E4C26B82C690097C94E /* CreatePasswordViewController.swift */,
-				B7910E5426B835DB0097C94E /* CreateDisplayNameViewController.swift */,
-				B7910E5C26B83FEB0097C94E /* VerifyEmailViewController.swift */,
-				B7910E6126B8F52B0097C94E /* ResendEmailViewController.swift */,
+				B7910EB626BD0C030097C94E /* ViewController */,
 				B7910E2126B418340097C94E /* Cell */,
-				B7910E1E26B410910097C94E /* Session */,
+				B7910E1E26B410910097C94E /* Section */,
 				B7910E0826B1266C0097C94E /* Utilities */,
 				B7910DE326AFC9A40097C94E /* Model */,
 			);

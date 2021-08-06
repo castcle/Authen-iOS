@@ -42,6 +42,7 @@ public class Authen: NSObject {
     }
     
     public func login() {
+        Defaults[.userRole] = "USER"
         Defaults[.accessToken] = "0000000000"
     }
     

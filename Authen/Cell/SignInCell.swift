@@ -158,6 +158,7 @@ class SignInCell: UICollectionViewCell {
     @IBAction func loginAction(_ sender: Any) {
         if self.isCanLogin {
             self.endEditing(true)
+            Authen.shared.login()
             Utility.currentViewController().navigationController?.popToRootViewController(animated: true)
         }
     }

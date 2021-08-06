@@ -72,7 +72,7 @@ class ResendEmailViewController: UIViewController {
     }
     
     func setupNavBar() {
-        self.customNavigationBar(.secondary, title: "", textColor: UIColor.Asset.lightBlue)
+        self.customNavigationBar(.secondary, title: "")
     }
     
     @IBAction func resendAction(_ sender: Any) {

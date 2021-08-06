@@ -67,7 +67,7 @@ class CreatePasswordViewController: UIViewController {
     }
     
     func setupNavBar() {
-        self.customNavigationBar(.secondary, title: "", textColor: UIColor.Asset.lightBlue)
+        self.customNavigationBar(.secondary, title: "")
     }
 }
 
