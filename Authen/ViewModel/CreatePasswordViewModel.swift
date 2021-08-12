@@ -19,29 +19,25 @@
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
 //
-//  ResendEmailViewModel.swift
+//  CreatePasswordViewModel.swift
 //  Authen
 //
-//  Created by Tanakorn Phoochaliaw on 11/8/2564 BE.
+//  Created by Tanakorn Phoochaliaw on 10/8/2564 BE.
 //
 
 import Core
+import Networking
 
-class ResendEmailViewModel {
+class CreatePasswordViewModel {
     
     //MARK: Private
-    var authenticationRepository: AuthenticationRepository
+    var authenRequest: AuthenRequest = AuthenRequest()
 
     //MARK: Input
-    public init(authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()) {
-        self.authenticationRepository = authenticationRepository
-    }
-    
-    func requestLinkVerify() {
-        self.authenticationRepository.requestLinkVerify() { (success) in
-            print("Verification Email : \(success)")
-        }
-    }
     
     //MARK: Output
+    
+    public init(authenRequest: AuthenRequest = AuthenRequest()) {
+        self.authenRequest = authenRequest
+    }
 }

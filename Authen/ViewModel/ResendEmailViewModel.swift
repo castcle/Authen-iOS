@@ -19,25 +19,30 @@
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
 //
-//  LoginRequest.swift
+//  ResendEmailViewModel.swift
 //  Authen
 //
-//  Created by Tanakorn Phoochaliaw on 3/8/2564 BE.
+//  Created by Tanakorn Phoochaliaw on 11/8/2564 BE.
 //
 
-public struct LoginRequest {
-    enum LoginRequestKey: String {
-        case username
-        case password
+import Core
+import Networking
+
+class ResendEmailViewModel {
+    
+    //MARK: Private
+    var authenticationRepository: AuthenticationRepository
+
+    //MARK: Input
+    public init(authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()) {
+        self.authenticationRepository = authenticationRepository
     }
     
-    public var username: AuthenChannelKey
-    public var password: AuthenPayloadRequest
-    
-    public var paramLogin: [String: Any] {
-        return [
-            LoginRequestKey.username.rawValue: self.username,
-            LoginRequestKey.password.rawValue: self.password
-        ]
+    func requestLinkVerify() {
+        self.authenticationRepository.requestLinkVerify() { (success) in
+            print("Verification Email : \(success)")
+        }
     }
+    
+    //MARK: Output
 }

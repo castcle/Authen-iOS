@@ -19,24 +19,27 @@
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
 //
-//  CreatePasswordViewModel.swift
+//  CreateDisplayNameViewModel.swift
 //  Authen
 //
 //  Created by Tanakorn Phoochaliaw on 10/8/2564 BE.
 //
 
 import Core
+import Networking
 
-class CreatePasswordViewModel {
+class CreateDisplayNameViewModel {
     
     //MARK: Private
+    var authenticationRepository: AuthenticationRepository
     var authenRequest: AuthenRequest = AuthenRequest()
+    var isCastcleIdExist: Bool = true
 
     //MARK: Input
+    public init(authenRequest: AuthenRequest = AuthenRequest(), authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()) {
+        self.authenRequest = authenRequest
+        self.authenticationRepository = authenticationRepository
+    }
     
     //MARK: Output
-    
-    public init(authenRequest: AuthenRequest = AuthenRequest()) {
-        self.authenRequest = authenRequest
-    }
 }

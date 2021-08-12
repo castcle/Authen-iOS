@@ -26,6 +26,7 @@
 //
 
 import Core
+import Networking
 
 class EmailViewModel {
     
