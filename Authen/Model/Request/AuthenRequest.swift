@@ -39,6 +39,11 @@ public struct AuthenRequest {
     public var channel: AuthenChannelKey
     public var payload: AuthenPayloadRequest
     
+    init() {
+        self.channel = .email
+        self.payload = AuthenPayloadRequest()
+    }
+    
     public var paramRegister: [String: Any] {
         return [
             AuthenRequestKey.channel.rawValue: self.channel.rawValue,
@@ -63,6 +68,15 @@ public struct AuthenPayloadRequest {
     public var mobileNumber: String
     public var displayName: String
     public var castcleId: String
+    
+    init() {
+        self.email = ""
+        self.password = ""
+        self.countryCode = ""
+        self.mobileNumber = ""
+        self.displayName = ""
+        self.castcleId = ""
+    }
     
     public var paramCheckEmailExists: [String: Any] {
         return [

@@ -9,7 +9,7 @@ import UIKit
 import Core
 import JVFloatLabeledTextField
 
-class EmailCell: UICollectionViewCell {
+class EmailCell: UICollectionViewCell, UITextFieldDelegate {
 
     @IBOutlet var headlineLabel: UILabel!
     @IBOutlet var welcomeLabel: UILabel!
@@ -17,6 +17,8 @@ class EmailCell: UICollectionViewCell {
     @IBOutlet var emailView: UIView!
     @IBOutlet var nextButton: UIButton!
     @IBOutlet var loginButton: UIButton!
+    @IBOutlet var checkImage: UIImageView!
+    @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
     @IBOutlet var emailTextField: JVFloatLabeledTextField! {
         didSet {
@@ -28,6 +30,13 @@ class EmailCell: UICollectionViewCell {
             self.emailTextField.floatingLabelFont = UIFont.asset(.regular, fontSize: .small)
             self.emailTextField.textColor = UIColor.Asset.white
         }
+    }
+    
+    var viewModel = EmailViewModel()
+    var multiplyImage: UIImage {
+        let symbolConfiguration = UIImage.SymbolConfiguration(pointSize: 20, weight: .bold)
+        let homeImage = UIImage(systemName: "multiply", withConfiguration: symbolConfiguration) ?? UIImage()
+        return homeImage
     }
     
     override func awakeFromNib() {
@@ -42,9 +51,34 @@ class EmailCell: UICollectionViewCell {
         self.alertLabel.textColor = UIColor.Asset.white
         self.loginButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .overline)
         self.loginButton.setTitleColor(UIColor.Asset.white, for: .normal)
+        self.activityIndicator.color = UIColor.Asset.lightBlue
+        self.activityIndicator.isHidden = true
         self.setupNextButton(isActive: false)
         
-        self.emailTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
+        self.checkImage.isHidden = true
+        self.checkImage.tintColor = UIColor.Asset.denger
+        self.emailTextField.delegate = self
+        
+        self.viewModel.didCheckEmailExistsFinish = {
+            self.emailTextField.isEnabled = true
+            self.activityIndicator.isHidden = true
+            self.activityIndicator.stopAnimating()
+            if self.viewModel.isEmailExist {
+                self.setupNextButton(isActive: false)
+                self.checkImage.isHidden = false
+                self.checkImage.image = self.multiplyImage
+                self.alertLabel.text  = "Someone already has this email address.\nTry another name."
+                self.alertLabel.textColor = UIColor.Asset.denger
+                self.emailTextField.textColor = UIColor.Asset.denger
+            } else {
+                self.setupNextButton(isActive: true)
+                self.checkImage.isHidden = false
+                self.checkImage.image = UIImage.init(icon: .castcle(.checkmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.lightBlue)
+                self.alertLabel.text  = "This email address is valid."
+                self.alertLabel.textColor = UIColor.Asset.lightBlue
+                self.emailTextField.textColor = UIColor.Asset.white
+            }
+        }
     }
     
     private func setupNextButton(isActive: Bool) {
@@ -65,18 +99,50 @@ class EmailCell: UICollectionViewCell {
         return CGSize(width: width, height: 500)
     }
     
-    @objc func textFieldDidChange(_ textField: UITextField) {
-        if textField.text!.isEmpty {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        self.setupNextButton(isActive: false)
+        self.checkImage.isHidden = true
+        self.alertLabel.text  = "You'll use this email when you login and when you lose your password."
+        self.alertLabel.textColor = UIColor.Asset.white
+        self.emailTextField.textColor = UIColor.Asset.white
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        let email: String = textField.text ?? ""
+        if email.isEmpty {
             self.setupNextButton(isActive: false)
+            self.checkImage.isHidden = true
+            self.alertLabel.text  = "You'll use this email when you login and when you lose your password."
+            self.alertLabel.textColor = UIColor.Asset.white
+            self.emailTextField.textColor = UIColor.Asset.white
+        } else if email.isEmail {
+            textField.isEnabled = false
+            self.activityIndicator.isHidden = false
+            self.checkImage.isHidden = true
+            self.activityIndicator.startAnimating()
+            self.viewModel.authenRequest.payload.email = textField.text!
+            self.viewModel.checkEmailExists()
         } else {
-            self.setupNextButton(isActive: true)
+            self.setupNextButton(isActive: false)
+            self.checkImage.isHidden = false
+            self.checkImage.image = self.multiplyImage
+            self.alertLabel.text  = "Email wrong format."
+            self.alertLabel.textColor = UIColor.Asset.denger
+            self.emailTextField.textColor = UIColor.Asset.denger
         }
     }
     
     @IBAction func nextAction(_ sender: Any) {
-        if !(self.emailTextField.text!.isEmpty) {
+        if !self.viewModel.isEmailExist {
             self.endEditing(true)
-            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.createPassword), animated: true)
+            let vc = AuthenOpener.open(.createPassword) as? CreatePasswordViewController
+            vc?.viewModel = CreatePasswordViewModel(authenRequest: self.viewModel.authenRequest)
+            Utility.currentViewController().navigationController?.pushViewController(vc ?? CreatePasswordViewController(), animated: true)
         }
     }
     

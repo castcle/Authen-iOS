@@ -45,6 +45,8 @@ class CreatePasswordViewController: UIViewController {
         case password = 0
     }
     
+    var viewModel = CreatePasswordViewModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -79,7 +81,9 @@ extension CreatePasswordViewController: ListAdapterDataSource {
     }
     
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
-        return CreatePasswordSectionController()
+        let section = CreatePasswordSectionController()
+        section.viewModel = self.viewModel
+        return section
     }
     
     func emptyView(for listAdapter: ListAdapter) -> UIView? {

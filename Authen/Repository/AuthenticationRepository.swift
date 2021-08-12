@@ -25,20 +25,29 @@
 //  Created by Tanakorn Phoochaliaw on 3/8/2564 BE.
 //
 
+import Core
 import Moya
 import SwiftyJSON
+import Defaults
 
 protocol AuthenticationRepository {
     func login(loginRequest: LoginRequest, _ completion: @escaping (Bool) -> ())
-    func checkEmailExists(authenRequest: AuthenRequest, _ completion: @escaping (Bool) -> ())
-    func checkDisplayNameExists(authenRequest: AuthenRequest, _ completion: @escaping (Bool) -> ())
-    func checkCastcleIdExists(authenRequest: AuthenRequest, _ completion: @escaping (Bool) -> ())
+    func checkEmailExists(authenRequest: AuthenRequest, _ completion: @escaping (Bool, Bool) -> ())
+    func checkCastcleIdExists(authenRequest: AuthenRequest, _ completion: @escaping (Bool, Bool) -> ())
     func register(authenRequest: AuthenRequest, _ completion: @escaping (Bool) -> ())
+    func verificationEmail(_ completion: @escaping (Bool) -> ())
     func requestLinkVerify(_ completion: @escaping (Bool) -> ())
 }
 
 final class AuthenticationRepositoryImpl: AuthenticationRepository {
-    private let authenticationApi = MoyaProvider<AuthenticationApi>(stubClosure: MoyaProvider.delayedStub(1.0))
+    private let authenticationApi = MoyaProvider<AuthenticationApi>()
+    
+    enum AuthenticationApiKey: String {
+        case accessToken
+        case refreshToken
+        case exist
+        case payload
+    }
     
     func login(loginRequest: LoginRequest, _ completion: @escaping (Bool) -> ()) {
         self.authenticationApi.request(.login(loginRequest)) { result in
@@ -51,35 +60,54 @@ final class AuthenticationRepositoryImpl: AuthenticationRepository {
         }
     }
     
-    func checkEmailExists(authenRequest: AuthenRequest, _ completion: @escaping (Bool) -> ()) {
+    func checkEmailExists(authenRequest: AuthenRequest, _ completion: @escaping (Bool, Bool) -> ()) {
         self.authenticationApi.request(.checkEmailExists(authenRequest)) { result in
             switch result {
-            case .success:
-                print("Success")
+            case .success(let response):
+                do {
+                    let rawJson = try response.mapJSON()
+                    let json = JSON(rawJson)
+                    if response.statusCode < 300 {
+                        let payload = JSON(json[AuthenticationApiKey.payload.rawValue].dictionaryValue)
+                        let exist = payload[AuthenticationApiKey.exist.rawValue].boolValue
+                        completion(true, exist)
+                    } else {
+                        ApiHelper.displayError(error: "\(json[ResponseErrorKey.code.rawValue].stringValue) : \(json[ResponseErrorKey.message.rawValue].stringValue)")
+                        completion(false, false)
+                    }
+                } catch {
+                    ApiHelper.displayError(error: "Something Went wrong")
+                    completion(false, false)
+                }
             case .failure:
-                print("Failure")
+                ApiHelper.displayError(error: "Something Went wrong")
+                completion(false, false)
             }
         }
     }
     
-    func checkDisplayNameExists(authenRequest: AuthenRequest, _ completion: @escaping (Bool) -> ()) {
-        self.authenticationApi.request(.checkDisplayNameExists(authenRequest)) { result in
-            switch result {
-            case .success:
-                print("Success")
-            case .failure:
-                print("Failure")
-            }
-        }
-    }
-    
-    func checkCastcleIdExists(authenRequest: AuthenRequest, _ completion: @escaping (Bool) -> ()) {
+    func checkCastcleIdExists(authenRequest: AuthenRequest, _ completion: @escaping (Bool, Bool) -> ()) {
         self.authenticationApi.request(.checkCastcleIdExists(authenRequest)) { result in
             switch result {
-            case .success:
-                print("Success")
+            case .success(let response):
+                do {
+                    let rawJson = try response.mapJSON()
+                    let json = JSON(rawJson)
+                    if response.statusCode < 300 {
+                        let payload = JSON(json[AuthenticationApiKey.payload.rawValue].dictionaryValue)
+                        let exist = payload[AuthenticationApiKey.exist.rawValue].boolValue
+                        completion(true, exist)
+                    } else {
+                        ApiHelper.displayError(error: "\(json[ResponseErrorKey.code.rawValue].stringValue) : \(json[ResponseErrorKey.message.rawValue].stringValue)")
+                        completion(false, false)
+                    }
+                } catch {
+                    ApiHelper.displayError(error: "Something Went wrong")
+                    completion(false, false)
+                }
             case .failure:
-                print("Failure")
+                ApiHelper.displayError(error: "Something Went wrong")
+                completion(false, false)
             }
         }
     }
@@ -87,10 +115,56 @@ final class AuthenticationRepositoryImpl: AuthenticationRepository {
     func register(authenRequest: AuthenRequest, _ completion: @escaping (Bool) -> ()) {
         self.authenticationApi.request(.register(authenRequest)) { result in
             switch result {
-            case .success:
-                print("Success")
+            case .success(let response):
+                do {
+                    let rawJson = try response.mapJSON()
+                    let json = JSON(rawJson)
+                    if response.statusCode < 300 {
+                        let accessToken = json[AuthenticationApiKey.accessToken.rawValue].stringValue
+                        let refreshToken = json[AuthenticationApiKey.refreshToken.rawValue].stringValue
+                        Defaults[.userRole] = "USER"
+                        Defaults[.accessToken] = accessToken
+                        Defaults[.refreshToken] = refreshToken
+                        completion(true)
+                    } else {
+                        ApiHelper.displayError(error: "\(json[ResponseErrorKey.code.rawValue].stringValue) : \(json[ResponseErrorKey.message.rawValue].stringValue)")
+                        completion(false)
+                    }
+                } catch {
+                    ApiHelper.displayError(error: "Something Went wrong")
+                    completion(false)
+                }
             case .failure:
-                print("Failure")
+                ApiHelper.displayError(error: "Something Went wrong")
+                completion(false)
+            }
+        }
+    }
+    
+    func verificationEmail(_ completion: @escaping (Bool) -> ()) {
+        self.authenticationApi.request(.requestLinkVerify) { result in
+            switch result {
+            case .success(let response):
+                do {
+                    if response.statusCode < 204 {
+                        completion(true)
+                    }
+                    
+                    let rawJson = try response.mapJSON()
+                    let json = JSON(rawJson)
+                    if response.statusCode < 300 {
+                        completion(true)
+                    } else {
+                        ApiHelper.displayError(error: "\(json[ResponseErrorKey.code.rawValue].stringValue) : \(json[ResponseErrorKey.message.rawValue].stringValue)")
+                        completion(false)
+                    }
+                } catch {
+                    ApiHelper.displayError(error: "Something Went wrong")
+                    completion(false)
+                }
+            case .failure:
+                ApiHelper.displayError(error: "Something Went wrong")
+                completion(false)
             }
         }
     }
@@ -98,10 +172,27 @@ final class AuthenticationRepositoryImpl: AuthenticationRepository {
     func requestLinkVerify(_ completion: @escaping (Bool) -> ()) {
         self.authenticationApi.request(.requestLinkVerify) { result in
             switch result {
-            case .success:
-                print("Success")
+            case .success(let response):
+                do {
+                    if response.statusCode < 204 {
+                        completion(true)
+                    }
+                    
+                    let rawJson = try response.mapJSON()
+                    let json = JSON(rawJson)
+                    if response.statusCode < 300 {
+                        completion(true)
+                    } else {
+                        ApiHelper.displayError(error: "\(json[ResponseErrorKey.code.rawValue].stringValue) : \(json[ResponseErrorKey.message.rawValue].stringValue)")
+                        completion(false)
+                    }
+                } catch {
+                    ApiHelper.displayError(error: "Something Went wrong")
+                    completion(false)
+                }
             case .failure:
-                print("Failure")
+                ApiHelper.displayError(error: "Something Went wrong")
+                completion(false)
             }
         }
     }

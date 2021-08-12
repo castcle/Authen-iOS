@@ -65,6 +65,8 @@ class CreatePasswordCell: UICollectionViewCell {
         }
     }
     
+    var viewModel = CreatePasswordViewModel()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -137,7 +139,10 @@ class CreatePasswordCell: UICollectionViewCell {
     @IBAction func nextAction(_ sender: Any) {
         self.endEditing(true)
         if self.validatePassword() {
-            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.createDisplayName), animated: true)
+            self.viewModel.authenRequest.payload.password = self.passwordTextField.text!
+            let vc = AuthenOpener.open(.createDisplayName) as? CreateDisplayNameViewController
+            vc?.viewModel = CreateDisplayNameViewModel(authenRequest: self.viewModel.authenRequest)
+            Utility.currentViewController().navigationController?.pushViewController(vc ?? CreateDisplayNameViewController(), animated: true)
         }
     }
 }

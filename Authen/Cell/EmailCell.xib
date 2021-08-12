@@ -34,18 +34,36 @@
                         <rect key="frame" x="15" y="174" width="290" height="60"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YNA-wd-lxl" customClass="JVFloatLabeledTextField">
-                                <rect key="frame" x="15" y="10" width="260" height="40"/>
+                                <rect key="frame" x="15" y="10" width="230" height="40"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress" returnKeyType="send"/>
                             </textField>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ifA-8z-zHa">
+                                <rect key="frame" x="255" y="20" width="20" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="MAE-1J-XfI"/>
+                                    <constraint firstAttribute="width" constant="20" id="fMN-PO-ysV"/>
+                                </constraints>
+                            </imageView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="fIb-3N-cVs">
+                                <rect key="frame" x="255" y="20" width="20" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="Epa-ai-99b"/>
+                                    <constraint firstAttribute="width" constant="20" id="b7y-1m-3Li"/>
+                                </constraints>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="YNA-wd-lxl" firstAttribute="top" secondItem="gFt-LC-62n" secondAttribute="top" constant="10" id="Cha-E8-uIb"/>
                             <constraint firstItem="YNA-wd-lxl" firstAttribute="leading" secondItem="gFt-LC-62n" secondAttribute="leading" constant="15" id="GtY-pF-YPN"/>
+                            <constraint firstAttribute="trailing" secondItem="ifA-8z-zHa" secondAttribute="trailing" constant="15" id="Jfc-jd-S0B"/>
                             <constraint firstAttribute="height" constant="60" id="Vh0-y8-RFb"/>
                             <constraint firstAttribute="bottom" secondItem="YNA-wd-lxl" secondAttribute="bottom" constant="10" id="WEX-sm-8S5"/>
-                            <constraint firstAttribute="trailing" secondItem="YNA-wd-lxl" secondAttribute="trailing" constant="15" id="XcK-zu-Hcl"/>
+                            <constraint firstAttribute="trailing" secondItem="fIb-3N-cVs" secondAttribute="trailing" constant="15" id="mas-Md-2OO"/>
+                            <constraint firstItem="ifA-8z-zHa" firstAttribute="centerY" secondItem="YNA-wd-lxl" secondAttribute="centerY" id="txa-gG-3HC"/>
+                            <constraint firstItem="ifA-8z-zHa" firstAttribute="leading" secondItem="YNA-wd-lxl" secondAttribute="trailing" constant="10" id="wTZ-Cc-wRl"/>
+                            <constraint firstItem="fIb-3N-cVs" firstAttribute="centerY" secondItem="YNA-wd-lxl" secondAttribute="centerY" id="zbe-aA-9OD"/>
                         </constraints>
                     </view>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hn2-Ka-sdx">
@@ -97,7 +115,9 @@
             </constraints>
             <size key="customSize" width="320" height="503"/>
             <connections>
+                <outlet property="activityIndicator" destination="fIb-3N-cVs" id="ZLn-wq-AFY"/>
                 <outlet property="alertLabel" destination="jTe-Jp-4OK" id="mOL-4H-Tg5"/>
+                <outlet property="checkImage" destination="ifA-8z-zHa" id="jx8-E4-nOU"/>
                 <outlet property="emailTextField" destination="YNA-wd-lxl" id="FfL-qi-zSN"/>
                 <outlet property="emailView" destination="gFt-LC-62n" id="tVx-J2-mFK"/>
                 <outlet property="headlineLabel" destination="JDU-Vb-qfa" id="eyG-Ds-26D"/>

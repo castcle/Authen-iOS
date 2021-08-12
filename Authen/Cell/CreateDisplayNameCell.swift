@@ -28,7 +28,7 @@
 import UIKit
 import Core
 
-class CreateDisplayNameCell: UICollectionViewCell {
+class CreateDisplayNameCell: UICollectionViewCell, UITextFieldDelegate {
 
     @IBOutlet var headlineLabel: UILabel!
     @IBOutlet var subTitleLabel: UILabel!
@@ -39,6 +39,16 @@ class CreateDisplayNameCell: UICollectionViewCell {
     @IBOutlet var nextButton: UIButton!
     @IBOutlet var displayNameTextfield: UITextField!
     @IBOutlet var idTextField: UITextField!
+    @IBOutlet var checkImage: UIImageView!
+    @IBOutlet var activityIndicator: UIActivityIndicatorView!
+    
+    var viewModel = CreateDisplayNameViewModel()
+    
+    var multiplyImage: UIImage {
+        let symbolConfiguration = UIImage.SymbolConfiguration(pointSize: 20, weight: .bold)
+        let homeImage = UIImage(systemName: "multiply", withConfiguration: symbolConfiguration) ?? UIImage()
+        return homeImage
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -55,15 +65,42 @@ class CreateDisplayNameCell: UICollectionViewCell {
         self.castcleIdLabel.textColor = UIColor.Asset.white
         self.setupNextButton(isActive: false)
         
+        self.activityIndicator.color = UIColor.Asset.lightBlue
+        self.activityIndicator.isHidden = true
+        self.checkImage.isHidden = true
+        self.checkImage.tintColor = UIColor.Asset.denger
+        
         self.displayNameTextfield.font = UIFont.asset(.regular, fontSize: .body)
         self.displayNameTextfield.textColor = UIColor.Asset.white
         self.idTextField.font = UIFont.asset(.regular, fontSize: .body)
         self.idTextField.textColor = UIColor.Asset.white
         
+        self.displayNameTextfield.delegate = self
         self.displayNameTextfield.tag = 0
-        self.displayNameTextfield.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
+        self.idTextField.delegate = self
         self.idTextField.tag = 1
-        self.idTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
+    }
+    
+    func didCheckCastcleIdExistsFinish() {
+        self.idTextField.isEnabled = true
+        self.activityIndicator.isHidden = true
+        self.activityIndicator.stopAnimating()
+
+        if self.viewModel.isCastcleIdExist {
+            self.setupNextButton(isActive: false)
+            self.checkImage.isHidden = false
+            self.checkImage.image = self.multiplyImage
+            self.idTextField.textColor = UIColor.Asset.denger
+        } else {
+            if self.displayNameTextfield.text!.isEmpty {
+                self.setupNextButton(isActive: false)
+            } else {
+                self.setupNextButton(isActive: true)
+            }
+            self.checkImage.isHidden = false
+            self.checkImage.image = UIImage.init(icon: .castcle(.checkmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.lightBlue)
+            self.idTextField.textColor = UIColor.Asset.white
+        }
     }
     
     private func setupNextButton(isActive: Bool) {
@@ -80,11 +117,51 @@ class CreateDisplayNameCell: UICollectionViewCell {
         }
     }
     
-    @objc func textFieldDidChange(_ textField: UITextField) {
-        if displayNameTextfield.text!.isEmpty || idTextField.text!.isEmpty {
-            self.setupNextButton(isActive: false)
-        } else {
-            self.setupNextButton(isActive: true)
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        self.setupNextButton(isActive: false)
+        
+        if textField.tag == 1 {
+            self.checkImage.isHidden = true
+            self.idTextField.textColor = UIColor.Asset.white
+        }
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField.tag == 0 {
+            let displayName = textField.text ?? ""
+            if !displayName.isEmpty && !self.viewModel.isCastcleIdExist  {
+                self.setupNextButton(isActive: true)
+            } else {
+                self.setupNextButton(isActive: false)
+            }
+        } else if textField.tag == 1 {
+            let idCastcle = textField.text ?? ""
+            if idCastcle.isEmpty {
+                self.setupNextButton(isActive: false)
+                self.checkImage.isHidden = true
+                textField.textColor = UIColor.Asset.white
+            } else {
+                textField.isEnabled = false
+                self.activityIndicator.isHidden = false
+                self.checkImage.isHidden = true
+                self.activityIndicator.startAnimating()
+                self.viewModel.authenRequest.payload.castcleId = textField.text!
+                self.viewModel.authenticationRepository.checkCastcleIdExists(authenRequest: self.viewModel.authenRequest) { (success, exist) in
+                    self.viewModel.isCastcleIdExist = exist
+                    self.didCheckCastcleIdExistsFinish()
+                }
+            }
+//            } else {
+//                self.setupNextButton(isActive: false)
+//                self.checkImage.isHidden = false
+//                self.checkImage.image = self.multiplyImage
+//                self.idTextField.textColor = UIColor.Asset.denger
+//            }
         }
     }
     
@@ -94,8 +171,13 @@ class CreateDisplayNameCell: UICollectionViewCell {
     
     @IBAction func nextAction(_ sender: Any) {
         self.endEditing(true)
-        if !(displayNameTextfield.text!.isEmpty) && !(idTextField.text!.isEmpty) {
-            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.verifyEmail), animated: true)
+        if !self.displayNameTextfield.text!.isEmpty && !self.viewModel.isCastcleIdExist {
+            self.viewModel.authenRequest.payload.displayName = self.displayNameTextfield.text ?? ""
+            self.viewModel.authenticationRepository.register(authenRequest: self.viewModel.authenRequest) { (success) in
+                if success {
+                    Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.verifyEmail), animated: true)
+                }
+            }
         }
     }
 

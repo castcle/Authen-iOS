@@ -48,7 +48,7 @@
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Display name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Pzd-n5-B78">
                                 <rect key="frame" x="15" y="10" width="260" height="40"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -75,18 +75,36 @@
                         <rect key="frame" x="15" y="458" width="290" height="60"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="@CastcleId" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="y0a-UN-U3B">
-                                <rect key="frame" x="15" y="10" width="260" height="40"/>
+                                <rect key="frame" x="15" y="10" width="230" height="40"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="send"/>
                             </textField>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YkH-Go-zNC">
+                                <rect key="frame" x="255" y="20" width="20" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="LIh-SV-YSf"/>
+                                    <constraint firstAttribute="width" constant="20" id="fOD-YV-o9b"/>
+                                </constraints>
+                            </imageView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="mi8-b8-upe">
+                                <rect key="frame" x="255" y="20" width="20" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="OA5-s5-b9i"/>
+                                    <constraint firstAttribute="width" constant="20" id="PuR-RI-ttd"/>
+                                </constraints>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="mi8-b8-upe" secondAttribute="trailing" constant="15" id="5kL-hO-jFK"/>
+                            <constraint firstAttribute="trailing" secondItem="YkH-Go-zNC" secondAttribute="trailing" constant="15" id="CAN-dd-jB6"/>
                             <constraint firstItem="y0a-UN-U3B" firstAttribute="leading" secondItem="Tn3-0G-M5j" secondAttribute="leading" constant="15" id="CPa-dh-mPH"/>
+                            <constraint firstItem="YkH-Go-zNC" firstAttribute="centerY" secondItem="y0a-UN-U3B" secondAttribute="centerY" id="IK2-mi-NUe"/>
+                            <constraint firstItem="YkH-Go-zNC" firstAttribute="leading" secondItem="y0a-UN-U3B" secondAttribute="trailing" constant="10" id="KZt-pb-PHS"/>
                             <constraint firstItem="y0a-UN-U3B" firstAttribute="top" secondItem="Tn3-0G-M5j" secondAttribute="top" constant="10" id="LRg-0G-fFh"/>
                             <constraint firstAttribute="bottom" secondItem="y0a-UN-U3B" secondAttribute="bottom" constant="10" id="N0w-is-EWo"/>
                             <constraint firstAttribute="height" constant="60" id="S6f-d5-WfD"/>
-                            <constraint firstAttribute="trailing" secondItem="y0a-UN-U3B" secondAttribute="trailing" constant="15" id="Yp0-he-Ve9"/>
+                            <constraint firstItem="mi8-b8-upe" firstAttribute="centerY" secondItem="y0a-UN-U3B" secondAttribute="centerY" id="gIN-nS-vI6"/>
                         </constraints>
                     </view>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="display-name" translatesAutoresizingMaskIntoConstraints="NO" id="6rb-2h-WGD">
@@ -126,8 +144,10 @@
             </constraints>
             <size key="customSize" width="320" height="650"/>
             <connections>
+                <outlet property="activityIndicator" destination="mi8-b8-upe" id="ydy-tY-lbl"/>
                 <outlet property="castcleIdLabel" destination="06f-hF-fP9" id="szT-cB-Tel"/>
                 <outlet property="castcleIdPasswordView" destination="Tn3-0G-M5j" id="47L-Ut-wwj"/>
+                <outlet property="checkImage" destination="YkH-Go-zNC" id="w6C-9i-Pbp"/>
                 <outlet property="displayNameLabel" destination="KOa-0B-9Qj" id="OCT-jR-nMK"/>
                 <outlet property="displayNameTextfield" destination="Pzd-n5-B78" id="AVN-a4-PiE"/>
                 <outlet property="displayNameView" destination="Xxs-c9-PmB" id="5fw-U8-hn0"/>

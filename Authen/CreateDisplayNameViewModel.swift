@@ -19,42 +19,26 @@
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
 //
-//  CreatePasswordSectionController.swift
+//  CreateDisplayNameViewModel.swift
 //  Authen
 //
-//  Created by Tanakorn Phoochaliaw on 2/8/2564 BE.
+//  Created by Tanakorn Phoochaliaw on 10/8/2564 BE.
 //
 
 import Core
-import IGListKit
 
-class CreatePasswordSectionController: ListSectionController {
+class CreateDisplayNameViewModel {
     
-    var viewModel = CreatePasswordViewModel()
-    
-    override init() {
-        super.init()
-        inset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-    }
-}
+    //MARK: Private
+    var authenticationRepository: AuthenticationRepository
+    var authenRequest: AuthenRequest = AuthenRequest()
+    var isCastcleIdExist: Bool = true
 
-// MARK: - Data Provider
-extension CreatePasswordSectionController {
-    override func numberOfItems() -> Int {
-        return 1
+    //MARK: Input
+    public init(authenRequest: AuthenRequest = AuthenRequest(), authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()) {
+        self.authenRequest = authenRequest
+        self.authenticationRepository = authenticationRepository
     }
     
-    override func sizeForItem(at index: Int) -> CGSize {
-        guard let context = collectionContext else {
-            return .zero
-        }
-        return CreatePasswordCell.cellSize(width: context.containerSize.width)
-    }
-    
-    override func cellForItem(at index: Int) -> UICollectionViewCell {
-        let cell = collectionContext?.dequeueReusableCell(withNibName: AuthenNibVars.CollectionViewCell.createPassword, bundle: ConfigBundle.authen, for: self, at: index) as? CreatePasswordCell
-        cell?.backgroundColor = UIColor.clear
-        cell?.viewModel = self.viewModel
-        return cell ?? CreatePasswordCell()
-    }
+    //MARK: Output
 }

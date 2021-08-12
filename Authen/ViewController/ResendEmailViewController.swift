@@ -51,6 +51,8 @@ class ResendEmailViewController: UIViewController {
     @IBOutlet var thirdLabel: UILabel!
     @IBOutlet var resendButton: UIButton!
     
+    var viewModel = ResendEmailViewModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -76,5 +78,6 @@ class ResendEmailViewController: UIViewController {
     }
     
     @IBAction func resendAction(_ sender: Any) {
+        self.viewModel.requestLinkVerify()
     }
 }

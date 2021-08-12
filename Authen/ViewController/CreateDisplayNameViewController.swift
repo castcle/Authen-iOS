@@ -45,6 +45,8 @@ class CreateDisplayNameViewController: UIViewController {
         case displayName = 0
     }
     
+    var viewModel = CreateDisplayNameViewModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -79,7 +81,9 @@ extension CreateDisplayNameViewController: ListAdapterDataSource {
     }
     
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
-        return CreateDisplayNameSectionController()
+        let section = CreateDisplayNameSectionController()
+        section.viewModel = self.viewModel
+        return section
     }
     
     func emptyView(for listAdapter: ListAdapter) -> UIView? {

@@ -19,42 +19,24 @@
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
 //
-//  CreateDisplayNameSectionController.swift
+//  CreatePasswordViewModel.swift
 //  Authen
 //
-//  Created by Tanakorn Phoochaliaw on 2/8/2564 BE.
+//  Created by Tanakorn Phoochaliaw on 10/8/2564 BE.
 //
 
 import Core
-import IGListKit
 
-class CreateDisplayNameSectionController: ListSectionController {
+class CreatePasswordViewModel {
     
-    var viewModel = CreateDisplayNameViewModel()
-    
-    override init() {
-        super.init()
-        inset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-    }
-}
+    //MARK: Private
+    var authenRequest: AuthenRequest = AuthenRequest()
 
-// MARK: - Data Provider
-extension CreateDisplayNameSectionController {
-    override func numberOfItems() -> Int {
-        return 1
-    }
+    //MARK: Input
     
-    override func sizeForItem(at index: Int) -> CGSize {
-        guard let context = collectionContext else {
-            return .zero
-        }
-        return CreateDisplayNameCell.cellSize(width: context.containerSize.width)
-    }
+    //MARK: Output
     
-    override func cellForItem(at index: Int) -> UICollectionViewCell {
-        let cell = collectionContext?.dequeueReusableCell(withNibName: AuthenNibVars.CollectionViewCell.createDisplayName, bundle: ConfigBundle.authen, for: self, at: index) as? CreateDisplayNameCell
-        cell?.backgroundColor = UIColor.clear
-        cell?.viewModel = self.viewModel
-        return cell ?? CreateDisplayNameCell()
+    public init(authenRequest: AuthenRequest = AuthenRequest()) {
+        self.authenRequest = authenRequest
     }
 }

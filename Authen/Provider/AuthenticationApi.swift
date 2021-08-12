@@ -31,9 +31,9 @@ import Moya
 enum AuthenticationApi {
     case login(LoginRequest)
     case checkEmailExists(AuthenRequest)
-    case checkDisplayNameExists(AuthenRequest)
     case checkCastcleIdExists(AuthenRequest)
     case register(AuthenRequest)
+    case verificationEmail
     case requestLinkVerify
 }
 
@@ -48,12 +48,12 @@ extension AuthenticationApi: TargetType {
             return "/authentications/login"
         case .checkEmailExists:
             return "/authentications/checkEmailExists"
-        case .checkDisplayNameExists:
-            return "/authentications/checkDisplayNameExists"
         case .checkCastcleIdExists:
             return "/authentications/checkCastcleIdExists"
         case .register:
             return "/authentications/register"
+        case .verificationEmail:
+            return "/authentications/verificationEmail"
         case .requestLinkVerify:
             return "/authentications/requestLinkVerify"
         }
@@ -73,8 +73,6 @@ extension AuthenticationApi: TargetType {
             return .requestParameters(parameters: loginRequest.paramLogin, encoding: JSONEncoding.default)
         case .checkEmailExists(let authenRequest):
             return .requestParameters(parameters: authenRequest.payload.paramCheckEmailExists, encoding: JSONEncoding.default)
-        case .checkDisplayNameExists(let authenRequest):
-            return .requestParameters(parameters: authenRequest.payload.paramCheckDisplayNameExists, encoding: JSONEncoding.default)
         case .checkCastcleIdExists(let authenRequest):
             return .requestParameters(parameters: authenRequest.payload.paramCheckCastcleIdExists, encoding: JSONEncoding.default)
         case .register(let authenRequest):
@@ -85,6 +83,6 @@ extension AuthenticationApi: TargetType {
     }
     
     var headers: [String : String]? {
-        return nil
+        return ApiHelper.header
     }
 }
