@@ -27,6 +27,7 @@
 
 import UIKit
 import Core
+import Share
 import ActiveLabel
 import SwiftColor
 import JVFloatLabeledTextField
@@ -158,7 +159,7 @@ class SignInCell: UICollectionViewCell {
     @IBAction func loginAction(_ sender: Any) {
         if self.isCanLogin {
             self.endEditing(true)
-            Authen.shared.login()
+            UserState.shared.login()
             Utility.currentViewController().navigationController?.popToRootViewController(animated: true)
         }
     }

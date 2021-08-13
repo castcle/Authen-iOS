@@ -10,6 +10,8 @@
 		B74CEF1626C50733006B1F2C /* Networking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B74CEF1526C50733006B1F2C /* Networking.framework */; };
 		B74CEF1726C50733006B1F2C /* Networking.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B74CEF1526C50733006B1F2C /* Networking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B768499C26C3EC5100C438C5 /* ResendEmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768499B26C3EC5100C438C5 /* ResendEmailViewModel.swift */; };
+		B787962C26C6623E00FECC21 /* Share.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B787962B26C6623E00FECC21 /* Share.framework */; };
+		B787962D26C6623E00FECC21 /* Share.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B787962B26C6623E00FECC21 /* Share.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B7910DE726AFC9E60097C94E /* Authen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7910DE626AFC9E60097C94E /* Authen.swift */; };
 		B7910DEC26AFCD880097C94E /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7910DEB26AFCD880097C94E /* Core.framework */; };
 		B7910DED26AFCD880097C94E /* Core.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B7910DEB26AFCD880097C94E /* Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -54,6 +56,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				B787962D26C6623E00FECC21 /* Share.framework in Embed Frameworks */,
 				B74CEF1726C50733006B1F2C /* Networking.framework in Embed Frameworks */,
 				B7910E7F26BBDCD40097C94E /* Profile.framework in Embed Frameworks */,
 				B7910E1D26B3BB700097C94E /* Component.framework in Embed Frameworks */,
@@ -74,6 +77,7 @@
 		B2BDEC0B7E0B08D056D09388 /* Pods-Authen.debug (staging).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Authen.debug (staging).xcconfig"; path = "Target Support Files/Pods-Authen/Pods-Authen.debug (staging).xcconfig"; sourceTree = "<group>"; };
 		B74CEF1526C50733006B1F2C /* Networking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Networking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B768499B26C3EC5100C438C5 /* ResendEmailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResendEmailViewModel.swift; sourceTree = "<group>"; };
+		B787962B26C6623E00FECC21 /* Share.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Share.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7910DE626AFC9E60097C94E /* Authen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authen.swift; sourceTree = "<group>"; };
 		B7910DEB26AFCD880097C94E /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7910E0426B126090097C94E /* Authen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Authen.storyboard; sourceTree = "<group>"; };
@@ -120,6 +124,7 @@
 				BC5260F1309A4FF47F9F790D /* Pods_Authen.framework in Frameworks */,
 				B7910E7E26BBDCD40097C94E /* Profile.framework in Frameworks */,
 				B74CEF1626C50733006B1F2C /* Networking.framework in Frameworks */,
+				B787962C26C6623E00FECC21 /* Share.framework in Frameworks */,
 				B7910DEC26AFCD880097C94E /* Core.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -130,6 +135,7 @@
 		A415FAB31D24B516439D4B0D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B787962B26C6623E00FECC21 /* Share.framework */,
 				B74CEF1526C50733006B1F2C /* Networking.framework */,
 				B7910E7D26BBDCD30097C94E /* Profile.framework */,
 				B7910E1B26B3BB700097C94E /* Component.framework */,

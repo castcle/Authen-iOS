@@ -25,28 +25,6 @@
 //  Created by Tanakorn Phoochaliaw on 27/7/2564 BE.
 //
 
-import Core
-import Defaults
-
 public class Authen: NSObject {
-    public static let shared = Authen()
     
-    public var isLogin: Bool {
-        if Defaults[.userRole] == "GUEST" {
-            return false
-        } else if Defaults[.accessToken].isEmpty {
-            return false
-        } else {
-            return true
-        }
-    }
-    
-    public func login() {
-        Defaults[.userRole] = "USER"
-        Defaults[.accessToken] = "0000000000"
-    }
-    
-    public func logout() {
-        Defaults[.accessToken] = ""
-    }
 }
