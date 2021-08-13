@@ -27,7 +27,6 @@
 
 import UIKit
 import Core
-import Share
 import ActiveLabel
 import SwiftColor
 import JVFloatLabeledTextField
