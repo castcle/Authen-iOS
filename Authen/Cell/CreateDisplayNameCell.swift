@@ -134,7 +134,7 @@ class CreateDisplayNameCell: UICollectionViewCell, UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         if textField.tag == 0 {
             let displayName = textField.text ?? ""
-            if !displayName.isEmpty && !self.viewModel.isCastcleIdExist  {
+            if !displayName.isEmpty && !self.viewModel.isCastcleIdExist {
                 self.setupNextButton(isActive: true)
             } else {
                 self.setupNextButton(isActive: false)
