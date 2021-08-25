@@ -28,14 +28,16 @@
 import Core
 import Networking
 
-class ResendEmailViewModel {
+public class ResendEmailViewModel {
     
     //MARK: Private
     var authenticationRepository: AuthenticationRepository
+    var title: String = ""
 
     //MARK: Input
-    public init(authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()) {
+    public init(authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl(), title: String = "") {
         self.authenticationRepository = authenticationRepository
+        self.title = title
     }
     
     func requestLinkVerify() {

@@ -74,7 +74,7 @@ class ResendEmailViewController: UIViewController {
     }
     
     func setupNavBar() {
-        self.customNavigationBar(.secondary, title: "")
+        self.customNavigationBar(.secondary, title: self.viewModel.title)
     }
     
     @IBAction func resendAction(_ sender: Any) {

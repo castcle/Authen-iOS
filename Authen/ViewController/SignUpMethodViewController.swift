@@ -59,11 +59,11 @@ public class SignUpMethodViewController: UIViewController {
                 label.customSelectedColor[policyType] = UIColor.Asset.lightBlue
                 
                 label.handleCustomTap(for: agreementType) { element in
-                    self.openWebView(urlString: "https://ethereum.org/en/terms-of-use/")
+                    self.openWebView(urlString: Environment.userAgreement)
                 }
                 
                 label.handleCustomTap(for: policyType) { element in
-                    self.openWebView(urlString: "https://ethereum.org/en/privacy-policy/")
+                    self.openWebView(urlString: Environment.privacyPolicy)
                 }
             }
         }
@@ -114,14 +114,17 @@ public class SignUpMethodViewController: UIViewController {
                 label.customSelectedColor[versionType] = UIColor.Asset.gray
                 
                 label.handleCustomTap(for: joinUsType) { element in
+                    // To do : Mock
                     self.openWebView(urlString: "https://ethereum.org/en/terms-of-use/")
                 }
                 
                 label.handleCustomTap(for: manifestoType) { element in
+                    // To do : Mock
                     self.openWebView(urlString: "https://ethereum.org/en/privacy-policy/")
                 }
                 
                 label.handleCustomTap(for: whitepaperType) { element in
+                    // To do : Mock
                     self.openWebView(urlString: "https://ethereum.org/en/privacy-policy/")
                 }
             }
