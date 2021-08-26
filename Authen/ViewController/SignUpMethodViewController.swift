@@ -98,34 +98,31 @@ public class SignUpMethodViewController: UIViewController {
                 label.textColor = UIColor.Asset.white
                 
                 let joinUsType = ActiveType.custom(pattern: "Join us")
-                let manifestoType = ActiveType.custom(pattern: "Manifesto")
+                let docsType = ActiveType.custom(pattern: "Docs")
                 let whitepaperType = ActiveType.custom(pattern: "Whitepaper")
                 let versionType = ActiveType.custom(pattern: "V.1")
                 
-                label.enabledTypes = [joinUsType, manifestoType, whitepaperType, versionType]
+                label.enabledTypes = [joinUsType, docsType, whitepaperType, versionType]
                 
                 label.customColor[joinUsType] = UIColor.Asset.white
                 label.customSelectedColor[joinUsType] = UIColor.Asset.white
-                label.customColor[manifestoType] = UIColor.Asset.white
-                label.customSelectedColor[manifestoType] = UIColor.Asset.white
+                label.customColor[docsType] = UIColor.Asset.white
+                label.customSelectedColor[docsType] = UIColor.Asset.white
                 label.customColor[whitepaperType] = UIColor.Asset.white
                 label.customSelectedColor[whitepaperType] = UIColor.Asset.white
                 label.customColor[versionType] = UIColor.Asset.gray
                 label.customSelectedColor[versionType] = UIColor.Asset.gray
                 
                 label.handleCustomTap(for: joinUsType) { element in
-                    // To do : Mock
-                    self.openWebView(urlString: "https://ethereum.org/en/terms-of-use/")
+                    self.openWebView(urlString: Environment.joinUs)
                 }
                 
-                label.handleCustomTap(for: manifestoType) { element in
-                    // To do : Mock
-                    self.openWebView(urlString: "https://ethereum.org/en/privacy-policy/")
+                label.handleCustomTap(for: docsType) { element in
+                    self.openWebView(urlString: Environment.docs)
                 }
                 
                 label.handleCustomTap(for: whitepaperType) { element in
-                    // To do : Mock
-                    self.openWebView(urlString: "https://ethereum.org/en/privacy-policy/")
+                    self.openWebView(urlString: Environment.whitepaper)
                 }
             }
         }
