@@ -36,6 +36,9 @@ public enum AuthenScene {
     case createDisplayName
     case verifyEmail
     case resendEmail(ResendEmailViewModel)
+    case oldPassword
+    case changePassword
+    case changePasswordSuccess
 }
 
 public struct AuthenOpener {
@@ -70,6 +73,18 @@ public struct AuthenOpener {
             let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.resendEmail) as? ResendEmailViewController
             vc?.viewModel = viewModel
             return vc ?? ResendEmailViewController()
+        case .oldPassword:
+            let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.password, bundle: ConfigBundle.authen)
+            let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.oldPassword)
+            return vc
+        case .changePassword:
+            let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.password, bundle: ConfigBundle.authen)
+            let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.changePassword)
+            return vc
+        case .changePasswordSuccess:
+            let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.password, bundle: ConfigBundle.authen)
+            let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.changePasswordSuccess)
+            return vc
         }
     }
 }

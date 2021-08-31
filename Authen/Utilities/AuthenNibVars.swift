@@ -35,15 +35,21 @@ public struct AuthenNibVars {
         public static let createDisplayName = "CreateDisplayNameViewController"
         public static let verifyEmail = "VerifyEmailViewController"
         public static let resendEmail = "ResendEmailViewController"
+        public static let oldPassword = "OldPasswordViewController"
+        public static let changePassword = "ChangePasswordViewController"
+        public static let changePasswordSuccess = "ChangePasswordSuccessViewController"
     }
     
     // MARK: - View
     public struct Storyboard {
         public static let authen = "Authen"
+        public static let password = "Password"
     }
     
     // MARK: - TableViewCell
     public struct TableViewCell {
+        public static let oldPassword = "OldPasswordTableViewCell"
+        public static let changePassword = "ChangePasswordTableViewCell"
     }
     
     // MARK: - CollectionViewCell

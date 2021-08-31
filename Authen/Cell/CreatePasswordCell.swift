@@ -103,9 +103,7 @@ class CreatePasswordCell: UICollectionViewCell {
     }
     
     private func validatePassword() -> Bool {
-        let password = NSPredicate(format: "SELF MATCHES %@ ", "^(?=.*[a-z])(?=.*[0-9])(?=.*[$@$#%*?]).{6,}$")
-        
-        if password.evaluate(with: self.passwordTextField.text) {
+        if self.passwordTextField.text!.isPassword {
             if self.passwordTextField.text == self.confirmPasswordTextField.text {
                 return true
             } else {
