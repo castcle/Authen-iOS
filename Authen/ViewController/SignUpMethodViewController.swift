@@ -54,9 +54,9 @@ public class SignUpMethodViewController: UIViewController {
                 
                 label.enabledTypes = [agreementType, policyType]
                 label.customColor[agreementType] = UIColor.Asset.lightBlue
-                label.customSelectedColor[agreementType] = UIColor.Asset.lightBlue
+                label.customSelectedColor[agreementType] = UIColor.Asset.gray
                 label.customColor[policyType] = UIColor.Asset.lightBlue
-                label.customSelectedColor[policyType] = UIColor.Asset.lightBlue
+                label.customSelectedColor[policyType] = UIColor.Asset.gray
                 
                 label.handleCustomTap(for: agreementType) { element in
                     self.openWebView(urlString: Environment.userAgreement)
@@ -79,7 +79,7 @@ public class SignUpMethodViewController: UIViewController {
                 
                 label.enabledTypes = [logType]
                 label.customColor[logType] = UIColor.Asset.lightBlue
-                label.customSelectedColor[logType] = UIColor.Asset.lightBlue
+                label.customSelectedColor[logType] = UIColor.Asset.gray
                 
                 label.handleCustomTap(for: logType) { element in
                     self.dismiss(animated: true)
@@ -105,11 +105,11 @@ public class SignUpMethodViewController: UIViewController {
                 label.enabledTypes = [joinUsType, docsType, whitepaperType, versionType]
                 
                 label.customColor[joinUsType] = UIColor.Asset.white
-                label.customSelectedColor[joinUsType] = UIColor.Asset.white
+                label.customSelectedColor[joinUsType] = UIColor.Asset.gray
                 label.customColor[docsType] = UIColor.Asset.white
-                label.customSelectedColor[docsType] = UIColor.Asset.white
+                label.customSelectedColor[docsType] = UIColor.Asset.gray
                 label.customColor[whitepaperType] = UIColor.Asset.white
-                label.customSelectedColor[whitepaperType] = UIColor.Asset.white
+                label.customSelectedColor[whitepaperType] = UIColor.Asset.gray
                 label.customColor[versionType] = UIColor.Asset.gray
                 label.customSelectedColor[versionType] = UIColor.Asset.gray
                 
