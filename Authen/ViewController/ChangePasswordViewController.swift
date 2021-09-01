@@ -32,6 +32,8 @@ class ChangePasswordViewController: UIViewController {
 
     @IBOutlet var tableView: UITableView!
     
+    var viewModel = ChangePasswordViewModel(.changePassword)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.Asset.darkGraphiteBlue
@@ -67,6 +69,7 @@ extension ChangePasswordViewController: UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: AuthenNibVars.TableViewCell.changePassword, for: indexPath as IndexPath) as? ChangePasswordTableViewCell
         cell?.backgroundColor = UIColor.clear
+        cell?.configCell(viewModel: self.viewModel)
         return cell ?? ChangePasswordTableViewCell()
     }
 }

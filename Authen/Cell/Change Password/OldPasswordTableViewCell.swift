@@ -94,7 +94,7 @@ class OldPasswordTableViewCell: UITableViewCell {
     @IBAction func applyAction(_ sender: Any) {
         self.endEditing(true)
         if self.isCanContinue {
-            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.changePassword), animated: true)
+            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.changePassword(ChangePasswordViewModel(.changePassword))), animated: true)
         }
     }
 }

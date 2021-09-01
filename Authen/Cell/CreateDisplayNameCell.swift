@@ -44,12 +44,6 @@ class CreateDisplayNameCell: UICollectionViewCell, UITextFieldDelegate {
     
     var viewModel = CreateDisplayNameViewModel()
     
-    var multiplyImage: UIImage {
-        let symbolConfiguration = UIImage.SymbolConfiguration(pointSize: 20, weight: .bold)
-        let homeImage = UIImage(systemName: "multiply", withConfiguration: symbolConfiguration) ?? UIImage()
-        return homeImage
-    }
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -89,7 +83,7 @@ class CreateDisplayNameCell: UICollectionViewCell, UITextFieldDelegate {
         if self.viewModel.isCastcleIdExist {
             self.setupNextButton(isActive: false)
             self.checkImage.isHidden = false
-            self.checkImage.image = self.multiplyImage
+            self.checkImage.image = UIImage.init(icon: .castcle(.incorrect), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.denger)
             self.idTextField.textColor = UIColor.Asset.denger
         } else {
             if self.displayNameTextfield.text!.isEmpty {

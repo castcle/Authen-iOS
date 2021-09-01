@@ -15,9 +15,13 @@
 		B74338A026DE2FAF004BBC05 /* OldPasswordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B743389826DE2FAE004BBC05 /* OldPasswordTableViewCell.swift */; };
 		B74338A126DE2FAF004BBC05 /* ChangePasswordTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B743389926DE2FAE004BBC05 /* ChangePasswordTableViewCell.xib */; };
 		B74338A226DE2FAF004BBC05 /* ChangePasswordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B743389A26DE2FAE004BBC05 /* ChangePasswordTableViewCell.swift */; };
+		B74338A826DE4794004BBC05 /* CheckEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74338A726DE4794004BBC05 /* CheckEmailViewController.swift */; };
+		B74338AA26DE5689004BBC05 /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74338A926DE5689004BBC05 /* ForgotPasswordViewController.swift */; };
+		B74338AC26DE765B004BBC05 /* EnterCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74338AB26DE765B004BBC05 /* EnterCodeViewController.swift */; };
 		B74CEF1626C50733006B1F2C /* Networking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B74CEF1526C50733006B1F2C /* Networking.framework */; };
 		B74CEF1726C50733006B1F2C /* Networking.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B74CEF1526C50733006B1F2C /* Networking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B768499C26C3EC5100C438C5 /* ResendEmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768499B26C3EC5100C438C5 /* ResendEmailViewModel.swift */; };
+		B789821626DF49530057D7CC /* ChangePasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B789821526DF49530057D7CC /* ChangePasswordViewModel.swift */; };
 		B7910DE726AFC9E60097C94E /* Authen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7910DE626AFC9E60097C94E /* Authen.swift */; };
 		B7910DEC26AFCD880097C94E /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7910DEB26AFCD880097C94E /* Core.framework */; };
 		B7910DED26AFCD880097C94E /* Core.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B7910DEB26AFCD880097C94E /* Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -88,9 +92,13 @@
 		B743389826DE2FAE004BBC05 /* OldPasswordTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OldPasswordTableViewCell.swift; sourceTree = "<group>"; };
 		B743389926DE2FAE004BBC05 /* ChangePasswordTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChangePasswordTableViewCell.xib; sourceTree = "<group>"; };
 		B743389A26DE2FAE004BBC05 /* ChangePasswordTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePasswordTableViewCell.swift; sourceTree = "<group>"; };
+		B74338A726DE4794004BBC05 /* CheckEmailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckEmailViewController.swift; sourceTree = "<group>"; };
+		B74338A926DE5689004BBC05 /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
+		B74338AB26DE765B004BBC05 /* EnterCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterCodeViewController.swift; sourceTree = "<group>"; };
 		B74CEF1526C50733006B1F2C /* Networking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Networking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B768499B26C3EC5100C438C5 /* ResendEmailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResendEmailViewModel.swift; sourceTree = "<group>"; };
 		B787962B26C6623E00FECC21 /* Share.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Share.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B789821526DF49530057D7CC /* ChangePasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewModel.swift; sourceTree = "<group>"; };
 		B7910DE626AFC9E60097C94E /* Authen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authen.swift; sourceTree = "<group>"; };
 		B7910DEB26AFCD880097C94E /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7910E0426B126090097C94E /* Authen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Authen.storyboard; sourceTree = "<group>"; };
@@ -160,10 +168,10 @@
 		B743389626DE2FAE004BBC05 /* Change Password */ = {
 			isa = PBXGroup;
 			children = (
-				B743389726DE2FAE004BBC05 /* OldPasswordTableViewCell.xib */,
 				B743389826DE2FAE004BBC05 /* OldPasswordTableViewCell.swift */,
-				B743389926DE2FAE004BBC05 /* ChangePasswordTableViewCell.xib */,
+				B743389726DE2FAE004BBC05 /* OldPasswordTableViewCell.xib */,
 				B743389A26DE2FAE004BBC05 /* ChangePasswordTableViewCell.swift */,
+				B743389926DE2FAE004BBC05 /* ChangePasswordTableViewCell.xib */,
 			);
 			path = "Change Password";
 			sourceTree = "<group>";
@@ -175,6 +183,7 @@
 				B7D8BEC126C2259800A8F8BA /* CreatePasswordViewModel.swift */,
 				B7D8BEC326C22D0700A8F8BA /* CreateDisplayNameViewModel.swift */,
 				B768499B26C3EC5100C438C5 /* ResendEmailViewModel.swift */,
+				B789821526DF49530057D7CC /* ChangePasswordViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -210,6 +219,7 @@
 		B7910E2126B418340097C94E /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				B743389626DE2FAE004BBC05 /* Change Password */,
 				B7910E2226B4185D0097C94E /* SignInCell.swift */,
 				B7910E2326B4185D0097C94E /* SignInCell.xib */,
 				B7910E4826B7FD090097C94E /* EmailCell.swift */,
@@ -240,6 +250,12 @@
 				B7910E5426B835DB0097C94E /* CreateDisplayNameViewController.swift */,
 				B7910E5C26B83FEB0097C94E /* VerifyEmailViewController.swift */,
 				B7910E6126B8F52B0097C94E /* ResendEmailViewController.swift */,
+				B743389426DE2FAE004BBC05 /* OldPasswordViewController.swift */,
+				B743389526DE2FAE004BBC05 /* ChangePasswordViewController.swift */,
+				B743389326DE2FAE004BBC05 /* ChangePasswordSuccessViewController.swift */,
+				B74338A726DE4794004BBC05 /* CheckEmailViewController.swift */,
+				B74338A926DE5689004BBC05 /* ForgotPasswordViewController.swift */,
+				B74338AB26DE765B004BBC05 /* EnterCodeViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -267,10 +283,6 @@
 			children = (
 				B7B1E3D026A92C48006E2FF6 /* Authen.h */,
 				B7B1E3D126A92C48006E2FF6 /* Info.plist */,
-				B743389626DE2FAE004BBC05 /* Change Password */,
-				B743389326DE2FAE004BBC05 /* ChangePasswordSuccessViewController.swift */,
-				B743389526DE2FAE004BBC05 /* ChangePasswordViewController.swift */,
-				B743389426DE2FAE004BBC05 /* OldPasswordViewController.swift */,
 				B7910E5E26B842560097C94E /* Assets */,
 				B7910E0426B126090097C94E /* Authen.storyboard */,
 				B743389226DE2FAE004BBC05 /* Password.storyboard */,
@@ -415,6 +427,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B74338AC26DE765B004BBC05 /* EnterCodeViewController.swift in Sources */,
 				B7910E6226B8F52B0097C94E /* ResendEmailViewController.swift in Sources */,
 				B7910E5526B835DB0097C94E /* CreateDisplayNameViewController.swift in Sources */,
 				B7910E0A26B1268E0097C94E /* AuthenNibVars.swift in Sources */,
@@ -424,6 +437,7 @@
 				B7910E5826B836100097C94E /* CreateDisplayNameCell.swift in Sources */,
 				B7910E5D26B83FEB0097C94E /* VerifyEmailViewController.swift in Sources */,
 				B7910E5026B82CC40097C94E /* CreatePasswordCell.swift in Sources */,
+				B789821626DF49530057D7CC /* ChangePasswordViewModel.swift in Sources */,
 				B7910E2426B4185D0097C94E /* SignInCell.swift in Sources */,
 				B7910E5B26B8368B0097C94E /* CreateDisplayNameSectionController.swift in Sources */,
 				B7910E4526B7EE6E0097C94E /* EmailSectionController.swift in Sources */,
@@ -437,10 +451,12 @@
 				B743389C26DE2FAE004BBC05 /* ChangePasswordSuccessViewController.swift in Sources */,
 				B743389E26DE2FAF004BBC05 /* ChangePasswordViewController.swift in Sources */,
 				B7D8BEC226C2259800A8F8BA /* CreatePasswordViewModel.swift in Sources */,
+				B74338A826DE4794004BBC05 /* CheckEmailViewController.swift in Sources */,
 				B743389D26DE2FAE004BBC05 /* OldPasswordViewController.swift in Sources */,
 				B7910E4D26B82C690097C94E /* CreatePasswordViewController.swift in Sources */,
 				B7910E2026B411030097C94E /* SignInSectionController.swift in Sources */,
 				B7910E4726B7F34C0097C94E /* EmailViewController.swift in Sources */,
+				B74338AA26DE5689004BBC05 /* ForgotPasswordViewController.swift in Sources */,
 				B768499C26C3EC5100C438C5 /* ResendEmailViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

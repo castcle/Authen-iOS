@@ -62,10 +62,10 @@ class ChangePasswordTableViewCell: UITableViewCell {
             self.confirmPasswordTextField.isSecureTextEntry = true
         }
     }
-    @IBOutlet var charCountFrameImage: UIImageView!
     @IBOutlet var charCountImage: UIImageView!
-    @IBOutlet var charTypeFrameImage: UIImageView!
     @IBOutlet var charTypeImage: UIImageView!
+    
+    var viewModel = ChangePasswordViewModel(.changePassword)
     
     private var isCanContinue: Bool {
         self.checkCharacterCount()
@@ -96,10 +96,8 @@ class ChangePasswordTableViewCell: UITableViewCell {
         self.limitCharLabel.textColor = UIColor.Asset.gray
         self.typeCharLabel.font = UIFont.asset(.regular, fontSize: .overline)
         self.typeCharLabel.textColor = UIColor.Asset.gray
-        self.charCountImage.image = UIImage.init(icon: .castcle(.checkmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.gray)
-        self.charCountFrameImage.capsule(borderWidth: 2, borderColor: UIColor.Asset.gray)
-        self.charTypeImage.image = UIImage.init(icon: .castcle(.checkmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.gray)
-        self.charTypeFrameImage.capsule(borderWidth: 2, borderColor: UIColor.Asset.gray)
+        self.charCountImage.image = UIImage.init(icon: .castcle(.addWithCheckmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.gray)
+        self.charTypeImage.image = UIImage.init(icon: .castcle(.addWithCheckmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.gray)
 
         self.passwordTextField.tag = 0
         self.passwordTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
@@ -109,6 +107,10 @@ class ChangePasswordTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+    }
+    
+    func configCell(viewModel: ChangePasswordViewModel) {
+        self.viewModel = viewModel
     }
     
     private func setupContinueButton(isActive: Bool) {
@@ -128,24 +130,20 @@ class ChangePasswordTableViewCell: UITableViewCell {
     private func checkCharacterCount() {
         if self.passwordTextField.text!.count < 6 || self.passwordTextField.text!.count > 20 {
             self.limitCharLabel.textColor = UIColor.Asset.gray
-            self.charCountImage.image = UIImage.init(icon: .castcle(.checkmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.gray)
-            self.charCountFrameImage.capsule(borderWidth: 2, borderColor: UIColor.Asset.gray)
+            self.charCountImage.image = UIImage.init(icon: .castcle(.addWithCheckmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.gray)
         } else {
             self.limitCharLabel.textColor = UIColor.Asset.lightBlue
-            self.charCountImage.image = UIImage.init(icon: .castcle(.checkmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.lightBlue)
-            self.charCountFrameImage.capsule(borderWidth: 2, borderColor: UIColor.Asset.lightBlue)
+            self.charCountImage.image = UIImage.init(icon: .castcle(.addWithCheckmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.lightBlue)
         }
     }
     
     private func checkCharacterType() {
         if self.passwordTextField.text!.isPassword {
             self.typeCharLabel.textColor = UIColor.Asset.lightBlue
-            self.charTypeImage.image = UIImage.init(icon: .castcle(.checkmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.lightBlue)
-            self.charTypeFrameImage.capsule(borderWidth: 2, borderColor: UIColor.Asset.lightBlue)
+            self.charTypeImage.image = UIImage.init(icon: .castcle(.addWithCheckmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.lightBlue)
         } else {
             self.typeCharLabel.textColor = UIColor.Asset.gray
-            self.charTypeImage.image = UIImage.init(icon: .castcle(.checkmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.gray)
-            self.charTypeFrameImage.capsule(borderWidth: 2, borderColor: UIColor.Asset.gray)
+            self.charTypeImage.image = UIImage.init(icon: .castcle(.addWithCheckmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.gray)
         }
     }
     
@@ -156,7 +154,7 @@ class ChangePasswordTableViewCell: UITableViewCell {
     @IBAction func applyAction(_ sender: Any) {
         self.endEditing(true)
         if self.isCanContinue {
-            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.changePasswordSuccess), animated: true)
+            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.changePasswordSuccess(self.viewModel)), animated: true)
         }
     }
 }

@@ -37,8 +37,11 @@ public enum AuthenScene {
     case verifyEmail
     case resendEmail(ResendEmailViewModel)
     case oldPassword
-    case changePassword
-    case changePasswordSuccess
+    case changePassword(ChangePasswordViewModel)
+    case changePasswordSuccess(ChangePasswordViewModel)
+    case checkEmail
+    case forgotPassword
+    case enterCode
 }
 
 public struct AuthenOpener {
@@ -77,13 +80,27 @@ public struct AuthenOpener {
             let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.password, bundle: ConfigBundle.authen)
             let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.oldPassword)
             return vc
-        case .changePassword:
+        case .changePassword(let viewModel):
             let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.password, bundle: ConfigBundle.authen)
-            let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.changePassword)
+            let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.changePassword) as? ChangePasswordViewController
+            vc?.viewModel = viewModel
+            return vc ?? ChangePasswordViewController()
+        case .changePasswordSuccess(let viewModel):
+            let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.password, bundle: ConfigBundle.authen)
+            let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.changePasswordSuccess) as? ChangePasswordSuccessViewController
+            vc?.viewModel = viewModel
+            return vc ?? ChangePasswordSuccessViewController()
+        case .checkEmail:
+            let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.password, bundle: ConfigBundle.authen)
+            let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.checkEmail)
             return vc
-        case .changePasswordSuccess:
+        case .forgotPassword:
             let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.password, bundle: ConfigBundle.authen)
-            let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.changePasswordSuccess)
+            let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.forgotPassword)
+            return vc
+        case .enterCode:
+            let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.password, bundle: ConfigBundle.authen)
+            let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.enterCode)
             return vc
         }
     }

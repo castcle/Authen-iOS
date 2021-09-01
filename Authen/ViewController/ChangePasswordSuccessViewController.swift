@@ -29,10 +29,11 @@ import UIKit
 
 class ChangePasswordSuccessViewController: UIViewController {
 
-    @IBOutlet var frameImage: UIImageView!
     @IBOutlet var successImage: UIImageView!
     @IBOutlet var headlineLabel: UILabel!
     @IBOutlet var homeButton: UIButton!
+    
+    var viewModel = ChangePasswordViewModel(.changePassword)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,8 +45,13 @@ class ChangePasswordSuccessViewController: UIViewController {
         self.homeButton.setBackgroundImage(UIColor.Asset.lightBlue.toImage(), for: .normal)
         self.homeButton.capsule(color: UIColor.clear, borderWidth: 1, borderColor: UIColor.clear)
         
-        self.frameImage.capsule(color: UIColor.clear, borderWidth: 6.0, borderColor: UIColor.Asset.lightBlue)
-        self.successImage.image = UIImage.init(icon: .castcle(.checkmark), size: CGSize(width: 80, height: 80), textColor: UIColor.Asset.lightBlue)
+        self.successImage.image = UIImage.init(icon: .castcle(.addWithCheckmark), size: CGSize(width: 100, height: 100), textColor: UIColor.Asset.lightBlue)
+        
+        if self.viewModel.changePasswordType == .changePassword {
+            self.homeButton.setTitle("Home", for: .normal)
+        } else if self.viewModel.changePasswordType == .forgotPassword {
+            self.homeButton.setTitle("เข้าสู่ระบบ", for: .normal)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -60,6 +66,10 @@ class ChangePasswordSuccessViewController: UIViewController {
     
     @IBAction func homeAction(_ sender: Any) {
         let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
-        self.navigationController!.popToViewController(viewControllers[viewControllers.count - 4], animated: true)
+        if self.viewModel.changePasswordType == .changePassword {
+            self.navigationController!.popToViewController(viewControllers[viewControllers.count - 4], animated: true)
+        } else if self.viewModel.changePasswordType == .forgotPassword {
+            self.navigationController!.popToViewController(viewControllers[viewControllers.count - 6], animated: true)
+        }
     }
 }

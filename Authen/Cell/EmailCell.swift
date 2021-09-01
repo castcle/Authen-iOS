@@ -33,11 +33,6 @@ class EmailCell: UICollectionViewCell, UITextFieldDelegate {
     }
     
     var viewModel = EmailViewModel()
-    var multiplyImage: UIImage {
-        let symbolConfiguration = UIImage.SymbolConfiguration(pointSize: 20, weight: .bold)
-        let homeImage = UIImage(systemName: "multiply", withConfiguration: symbolConfiguration) ?? UIImage()
-        return homeImage
-    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -66,7 +61,7 @@ class EmailCell: UICollectionViewCell, UITextFieldDelegate {
             if self.viewModel.isEmailExist {
                 self.setupNextButton(isActive: false)
                 self.checkImage.isHidden = false
-                self.checkImage.image = self.multiplyImage
+                self.checkImage.image = UIImage.init(icon: .castcle(.incorrect), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.denger)
                 self.alertLabel.text  = "Someone already has this email address.\nTry another name."
                 self.alertLabel.textColor = UIColor.Asset.denger
                 self.emailTextField.textColor = UIColor.Asset.denger
@@ -130,7 +125,7 @@ class EmailCell: UICollectionViewCell, UITextFieldDelegate {
         } else {
             self.setupNextButton(isActive: false)
             self.checkImage.isHidden = false
-            self.checkImage.image = self.multiplyImage
+            self.checkImage.image = UIImage.init(icon: .castcle(.incorrect), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.denger)
             self.alertLabel.text  = "Email wrong format."
             self.alertLabel.textColor = UIColor.Asset.denger
             self.emailTextField.textColor = UIColor.Asset.denger

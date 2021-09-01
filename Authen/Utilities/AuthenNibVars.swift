@@ -38,6 +38,9 @@ public struct AuthenNibVars {
         public static let oldPassword = "OldPasswordViewController"
         public static let changePassword = "ChangePasswordViewController"
         public static let changePasswordSuccess = "ChangePasswordSuccessViewController"
+        public static let checkEmail = "CheckEmailViewController"
+        public static let forgotPassword = "ForgotPasswordViewController"
+        public static let enterCode = "EnterCodeViewController"
     }
     
     // MARK: - View
