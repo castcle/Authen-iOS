@@ -56,6 +56,7 @@
 		B7B1E3D226A92C48006E2FF6 /* Authen.h in Headers */ = {isa = PBXBuildFile; fileRef = B7B1E3D026A92C48006E2FF6 /* Authen.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B7D8BEC226C2259800A8F8BA /* CreatePasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D8BEC126C2259800A8F8BA /* CreatePasswordViewModel.swift */; };
 		B7D8BEC426C22D0700A8F8BA /* CreateDisplayNameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D8BEC326C22D0700A8F8BA /* CreateDisplayNameViewModel.swift */; };
+		B7FF592226EB4D5E002EA174 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7FF592126EB4D5E002EA174 /* LoginViewModel.swift */; };
 		BC5260F1309A4FF47F9F790D /* Pods_Authen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CA00CC88894B8F1AC8E622D /* Pods_Authen.framework */; };
 /* End PBXBuildFile section */
 
@@ -132,6 +133,7 @@
 		B7B1E3D126A92C48006E2FF6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B7D8BEC126C2259800A8F8BA /* CreatePasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePasswordViewModel.swift; sourceTree = "<group>"; };
 		B7D8BEC326C22D0700A8F8BA /* CreateDisplayNameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateDisplayNameViewModel.swift; sourceTree = "<group>"; };
+		B7FF592126EB4D5E002EA174 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		D184063DD5BA8FA1D91E1CAD /* Pods-Authen.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Authen.debug.xcconfig"; path = "Target Support Files/Pods-Authen/Pods-Authen.debug.xcconfig"; sourceTree = "<group>"; };
 		E21C1573E8BC3B1378D38243 /* Pods-Authen.debug (development).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Authen.debug (development).xcconfig"; path = "Target Support Files/Pods-Authen/Pods-Authen.debug (development).xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -184,6 +186,7 @@
 				B7D8BEC326C22D0700A8F8BA /* CreateDisplayNameViewModel.swift */,
 				B768499B26C3EC5100C438C5 /* ResendEmailViewModel.swift */,
 				B789821526DF49530057D7CC /* ChangePasswordViewModel.swift */,
+				B7FF592126EB4D5E002EA174 /* LoginViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -447,6 +450,7 @@
 				B74338A026DE2FAF004BBC05 /* OldPasswordTableViewCell.swift in Sources */,
 				B7D8BEC426C22D0700A8F8BA /* CreateDisplayNameViewModel.swift in Sources */,
 				B7910E1A26B3B83D0097C94E /* SignInViewController.swift in Sources */,
+				B7FF592226EB4D5E002EA174 /* LoginViewModel.swift in Sources */,
 				B7910E0C26B126A80097C94E /* AuthenOpener.swift in Sources */,
 				B743389C26DE2FAE004BBC05 /* ChangePasswordSuccessViewController.swift in Sources */,
 				B743389E26DE2FAF004BBC05 /* ChangePasswordViewController.swift in Sources */,

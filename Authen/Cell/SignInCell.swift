@@ -27,9 +27,13 @@
 
 import UIKit
 import Core
+import Networking
 import ActiveLabel
 import SwiftColor
 import JVFloatLabeledTextField
+import Moya
+import SwiftyJSON
+import Defaults
 
 class SignInCell: UICollectionViewCell {
 
@@ -100,6 +104,7 @@ class SignInCell: UICollectionViewCell {
         }
     }
     
+    var viewModel = LoginViewModel()
     private var isCanLogin: Bool {
         if self.emailTextField.text!.isEmpty || self.passwordTextField.text!.isEmpty {
             return false
@@ -123,6 +128,8 @@ class SignInCell: UICollectionViewCell {
         self.emailTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
         self.passwordTextField.tag = 1
         self.passwordTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
+        
+        self.viewModel.delegate = self
     }
     
     private func setupLoginButton(isActive: Bool) {
@@ -159,8 +166,20 @@ class SignInCell: UICollectionViewCell {
     @IBAction func loginAction(_ sender: Any) {
         if self.isCanLogin {
             self.endEditing(true)
-            UserState.shared.login()
+            self.loginButton.isEnabled = false
+            self.viewModel.loginRequest.username = self.emailTextField.text ?? ""
+            self.viewModel.loginRequest.password = self.passwordTextField.text ?? ""
+            self.viewModel.login()
+        }
+    }
+}
+
+extension SignInCell: LoginViewModelDelegate {
+    func didLoginFinish(success: Bool) {
+        if success {
             Utility.currentViewController().navigationController?.popToRootViewController(animated: true)
+        } else {
+            self.loginButton.isEnabled = true
         }
     }
 }

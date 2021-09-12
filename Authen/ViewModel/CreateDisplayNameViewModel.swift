@@ -27,19 +27,160 @@
 
 import Core
 import Networking
+import Moya
+import SwiftyJSON
+import Defaults
+
+public protocol CreateDisplayNameViewModelDelegate {
+    func didRegisterFinish(success: Bool)
+    func didCheckCastcleIdExistsFinish()
+    func didSuggestCastcleIdFinish(suggestCastcleId: String)
+}
 
 class CreateDisplayNameViewModel {
     
-    //MARK: Private
+    public var delegate: CreateDisplayNameViewModelDelegate?
     var authenticationRepository: AuthenticationRepository
     var authenRequest: AuthenRequest = AuthenRequest()
     var isCastcleIdExist: Bool = true
+    let tokenViewModel: TokenViewModel = TokenViewModel()
+    private var stage: CreateDisplayNameStage = .none
+    
+    enum CreateDisplayNameStage {
+        case suggest
+        case check
+        case register
+        case none
+    }
 
     //MARK: Input
     public init(authenRequest: AuthenRequest = AuthenRequest(), authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()) {
         self.authenRequest = authenRequest
         self.authenticationRepository = authenticationRepository
+        self.tokenViewModel.delegate = self
     }
     
-    //MARK: Output
+    public func suggestCastcleId() {
+        self.stage = .suggest
+        self.authenticationRepository.suggestCastcleId(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in
+            if success {
+                do {
+                    let rawJson = try response.mapJSON()
+                    let json = JSON(rawJson)
+                    let payload = JSON(json[AuthenticationApiKey.payload.rawValue].dictionaryValue)
+                    let suggestCastcleId = payload[AuthenticationApiKey.suggestCastcleId.rawValue].stringValue
+                    self.delegate?.didSuggestCastcleIdFinish(suggestCastcleId: suggestCastcleId)
+                } catch {}
+            } else {
+                if isRefreshToken {
+                    self.tokenViewModel.refreshToken()
+                }
+            }
+        }
+    }
+    
+    public func checkCastcleIdExists() {
+        self.stage = .check
+        self.authenticationRepository.checkCastcleIdExists(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in
+            if success {
+                do {
+                    let rawJson = try response.mapJSON()
+                    let json = JSON(rawJson)
+                    let payload = JSON(json[AuthenticationApiKey.payload.rawValue].dictionaryValue)
+                    let exist = payload[AuthenticationApiKey.exist.rawValue].boolValue
+                    self.isCastcleIdExist = exist
+                    self.delegate?.didCheckCastcleIdExistsFinish()
+                } catch {}
+            } else {
+                if isRefreshToken {
+                    self.tokenViewModel.refreshToken()
+                } else {
+                    self.delegate?.didCheckCastcleIdExistsFinish()
+                }
+            }
+        }
+    }
+    
+    public func register() {
+        self.stage = .register
+        self.authenticationRepository.register(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in
+            if success {
+                do {
+                    let rawJson = try response.mapJSON()
+                    let json = JSON(rawJson)
+                    let accessToken = json[AuthenticationApiKey.accessToken.rawValue].stringValue
+                    let refreshToken = json[AuthenticationApiKey.refreshToken.rawValue].stringValue
+                    Defaults[.userRole] = "USER"
+                    Defaults[.accessToken] = accessToken
+                    Defaults[.refreshToken] = refreshToken
+                    self.delegate?.didRegisterFinish(success: true)
+                } catch {}
+            } else {
+                if isRefreshToken {
+                    self.tokenViewModel.refreshToken()
+                } else {
+                    self.delegate?.didRegisterFinish(success: true)
+                }
+            }
+            
+//            if success {
+//                Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.verifyEmail), animated: true)
+//            }
+        }
+        
+        //            switch result {
+        //            case .success(let response):
+        //                do {
+        //                    let rawJson = try response.mapJSON()
+        //                    let json = JSON(rawJson)
+        //                    if response.statusCode < 300 {
+                                
+        //                        completion(true)
+        //                    } else {
+        //                        ApiHelper.displayError(error: "\(json[ResponseErrorKey.code.rawValue].stringValue) : \(json[ResponseErrorKey.message.rawValue].stringValue)")
+        //                        completion(false)
+        //                    }
+        //                } catch {
+        //                    ApiHelper.displayError()
+        //                    completion(false)
+        //                }
+        //            case .failure:
+        //                ApiHelper.displayError()
+        //                completion(false)
+        //            }
+        
+        
+//        self.authenticationRepository.login(loginRequest: self.loginRequest) { (success, response, isRefreshToken) in
+//            if success {
+//                do {
+//                    let rawJson = try response.mapJSON()
+//                    let json = JSON(rawJson)
+//                    let accessToken = json[AuthenticationApiKey.accessToken.rawValue].stringValue
+//                    let refreshToken = json[AuthenticationApiKey.refreshToken.rawValue].stringValue
+//                    Defaults[.userRole] = "USER"
+//                    Defaults[.accessToken] = accessToken
+//                    Defaults[.refreshToken] = refreshToken
+//                    self.delegate?.didLoginFinish(success: true)
+//                } catch {}
+//            } else {
+//                if isRefreshToken {
+//                    self.tokenViewModel.refreshToken()
+//                } else {
+//                    self.delegate?.didLoginFinish(success: false)
+//                }
+//            }
+//        }
+    }
+}
+
+extension CreateDisplayNameViewModel: TokenViewModelDelegate {
+    func didRefreshTokenFinish() {
+        if self.stage == .suggest {
+            self.suggestCastcleId()
+        } else if self.stage == .check {
+            self.checkCastcleIdExists()
+        } else if self.stage == .register {
+            self.register()
+        }
+    }
 }

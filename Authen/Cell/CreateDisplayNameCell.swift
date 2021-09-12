@@ -27,6 +27,8 @@
 
 import UIKit
 import Core
+import Networking
+import Moya
 
 class CreateDisplayNameCell: UICollectionViewCell, UITextFieldDelegate {
 
@@ -73,9 +75,16 @@ class CreateDisplayNameCell: UICollectionViewCell, UITextFieldDelegate {
         self.displayNameTextfield.tag = 0
         self.idTextField.delegate = self
         self.idTextField.tag = 1
+        self.idTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
+        
+        self.viewModel.delegate = self
     }
     
-    func didCheckCastcleIdExistsFinish() {
+    private func castcleId(displayCastcleId: String) -> String {
+        return displayCastcleId.replacingOccurrences(of: "@", with: "")
+    }
+    
+    private func updateUI() {
         self.idTextField.isEnabled = true
         self.activityIndicator.isHidden = true
         self.activityIndicator.stopAnimating()
@@ -111,6 +120,14 @@ class CreateDisplayNameCell: UICollectionViewCell, UITextFieldDelegate {
         }
     }
     
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        if textField.tag == 1 {
+            let displayCastcleId = textField.text ?? ""
+            let castcleId = self.castcleId(displayCastcleId: displayCastcleId)
+            textField.text = "@\(castcleId)"
+        }
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
@@ -128,8 +145,16 @@ class CreateDisplayNameCell: UICollectionViewCell, UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         if textField.tag == 0 {
             let displayName = textField.text ?? ""
-            if !displayName.isEmpty && !self.viewModel.isCastcleIdExist {
+            self.viewModel.authenRequest.payload.displayName = displayName
+            
+            if !self.viewModel.authenRequest.payload.displayName.isEmpty && !self.viewModel.isCastcleIdExist {
                 self.setupNextButton(isActive: true)
+            } else if !self.viewModel.authenRequest.payload.displayName.isEmpty && self.viewModel.isCastcleIdExist {
+                self.idTextField.isEnabled = false
+                self.activityIndicator.isHidden = false
+                self.checkImage.isHidden = true
+                self.activityIndicator.startAnimating()
+                self.viewModel.suggestCastcleId()
             } else {
                 self.setupNextButton(isActive: false)
             }
@@ -144,18 +169,9 @@ class CreateDisplayNameCell: UICollectionViewCell, UITextFieldDelegate {
                 self.activityIndicator.isHidden = false
                 self.checkImage.isHidden = true
                 self.activityIndicator.startAnimating()
-                self.viewModel.authenRequest.payload.castcleId = textField.text!
-                self.viewModel.authenticationRepository.checkCastcleIdExists(authenRequest: self.viewModel.authenRequest) { (success, exist) in
-                    self.viewModel.isCastcleIdExist = exist
-                    self.didCheckCastcleIdExistsFinish()
-                }
+                self.viewModel.authenRequest.payload.castcleId = self.castcleId(displayCastcleId: textField.text!)
+                self.viewModel.checkCastcleIdExists()
             }
-//            } else {
-//                self.setupNextButton(isActive: false)
-//                self.checkImage.isHidden = false
-//                self.checkImage.image = self.multiplyImage
-//                self.idTextField.textColor = UIColor.Asset.denger
-//            }
         }
     }
     
@@ -166,13 +182,27 @@ class CreateDisplayNameCell: UICollectionViewCell, UITextFieldDelegate {
     @IBAction func nextAction(_ sender: Any) {
         self.endEditing(true)
         if !self.displayNameTextfield.text!.isEmpty && !self.viewModel.isCastcleIdExist {
-            self.viewModel.authenRequest.payload.displayName = self.displayNameTextfield.text ?? ""
-            self.viewModel.authenticationRepository.register(authenRequest: self.viewModel.authenRequest) { (success) in
-                if success {
-                    Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.verifyEmail), animated: true)
-                }
-            }
+            self.viewModel.register()
         }
     }
 
+}
+
+extension CreateDisplayNameCell: CreateDisplayNameViewModelDelegate {
+    func didSuggestCastcleIdFinish(suggestCastcleId: String) {
+        self.viewModel.authenRequest.payload.castcleId = suggestCastcleId
+        self.viewModel.isCastcleIdExist = false
+        self.idTextField.text = "@\(suggestCastcleId)"
+        self.updateUI()
+    }
+    
+    func didCheckCastcleIdExistsFinish() {
+        self.updateUI()
+    }
+    
+    func didRegisterFinish(success: Bool) {
+        if success {
+            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.verifyEmail), animated: true)
+        }
+    }
 }
