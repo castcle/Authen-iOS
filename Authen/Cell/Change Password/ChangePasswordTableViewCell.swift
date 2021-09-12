@@ -111,6 +111,7 @@ class ChangePasswordTableViewCell: UITableViewCell {
     
     func configCell(viewModel: ChangePasswordViewModel) {
         self.viewModel = viewModel
+        self.viewModel.delegate = self
     }
     
     private func setupContinueButton(isActive: Bool) {
@@ -154,7 +155,19 @@ class ChangePasswordTableViewCell: UITableViewCell {
     @IBAction func applyAction(_ sender: Any) {
         self.endEditing(true)
         if self.isCanContinue {
+            self.applyButton.isEnabled = false
+            self.viewModel.authenRequest.payload.newPassword = self.passwordTextField.text ?? ""
+            self.viewModel.changePasswordSubmit()
+        }
+    }
+}
+
+extension ChangePasswordTableViewCell: ChangePasswordViewModelDelegate {
+    func didChangePasswordSubmitFinish(success: Bool) {
+        if success {
             Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.changePasswordSuccess(self.viewModel)), animated: true)
+        } else {
+            self.applyButton.isEnabled = true
         }
     }
 }

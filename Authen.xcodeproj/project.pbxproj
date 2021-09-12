@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B7189ACE26EE2A6F00CB9719 /* VerifyPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7189ACD26EE2A6F00CB9719 /* VerifyPasswordViewModel.swift */; };
 		B743389B26DE2FAE004BBC05 /* Password.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B743389226DE2FAE004BBC05 /* Password.storyboard */; };
 		B743389C26DE2FAE004BBC05 /* ChangePasswordSuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B743389326DE2FAE004BBC05 /* ChangePasswordSuccessViewController.swift */; };
 		B743389D26DE2FAE004BBC05 /* OldPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B743389426DE2FAE004BBC05 /* OldPasswordViewController.swift */; };
@@ -85,6 +86,7 @@
 		4F720079B4589EF5D8B64517 /* Pods-Authen.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Authen.release.xcconfig"; path = "Target Support Files/Pods-Authen/Pods-Authen.release.xcconfig"; sourceTree = "<group>"; };
 		9CA00CC88894B8F1AC8E622D /* Pods_Authen.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Authen.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2BDEC0B7E0B08D056D09388 /* Pods-Authen.debug (staging).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Authen.debug (staging).xcconfig"; path = "Target Support Files/Pods-Authen/Pods-Authen.debug (staging).xcconfig"; sourceTree = "<group>"; };
+		B7189ACD26EE2A6F00CB9719 /* VerifyPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyPasswordViewModel.swift; sourceTree = "<group>"; };
 		B743389226DE2FAE004BBC05 /* Password.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Password.storyboard; sourceTree = "<group>"; };
 		B743389326DE2FAE004BBC05 /* ChangePasswordSuccessViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePasswordSuccessViewController.swift; sourceTree = "<group>"; };
 		B743389426DE2FAE004BBC05 /* OldPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OldPasswordViewController.swift; sourceTree = "<group>"; };
@@ -187,6 +189,7 @@
 				B768499B26C3EC5100C438C5 /* ResendEmailViewModel.swift */,
 				B789821526DF49530057D7CC /* ChangePasswordViewModel.swift */,
 				B7FF592126EB4D5E002EA174 /* LoginViewModel.swift */,
+				B7189ACD26EE2A6F00CB9719 /* VerifyPasswordViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -444,6 +447,7 @@
 				B7910E2426B4185D0097C94E /* SignInCell.swift in Sources */,
 				B7910E5B26B8368B0097C94E /* CreateDisplayNameSectionController.swift in Sources */,
 				B7910E4526B7EE6E0097C94E /* EmailSectionController.swift in Sources */,
+				B7189ACE26EE2A6F00CB9719 /* VerifyPasswordViewModel.swift in Sources */,
 				B7910E0726B1264F0097C94E /* SignUpMethodViewController.swift in Sources */,
 				B7910EDE26C107590097C94E /* EmailViewModel.swift in Sources */,
 				B7910DE726AFC9E60097C94E /* Authen.swift in Sources */,

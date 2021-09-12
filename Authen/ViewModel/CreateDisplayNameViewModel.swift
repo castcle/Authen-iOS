@@ -43,7 +43,7 @@ class CreateDisplayNameViewModel {
     var authenticationRepository: AuthenticationRepository
     var authenRequest: AuthenRequest = AuthenRequest()
     var isCastcleIdExist: Bool = true
-    let tokenViewModel: TokenViewModel = TokenViewModel()
+    let tokenHelper: TokenHelper = TokenHelper()
     private var stage: CreateDisplayNameStage = .none
     
     enum CreateDisplayNameStage {
@@ -57,7 +57,7 @@ class CreateDisplayNameViewModel {
     public init(authenRequest: AuthenRequest = AuthenRequest(), authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()) {
         self.authenRequest = authenRequest
         self.authenticationRepository = authenticationRepository
-        self.tokenViewModel.delegate = self
+        self.tokenHelper.delegate = self
     }
     
     public func suggestCastcleId() {
@@ -73,7 +73,7 @@ class CreateDisplayNameViewModel {
                 } catch {}
             } else {
                 if isRefreshToken {
-                    self.tokenViewModel.refreshToken()
+                    self.tokenHelper.refreshToken()
                 }
             }
         }
@@ -93,7 +93,7 @@ class CreateDisplayNameViewModel {
                 } catch {}
             } else {
                 if isRefreshToken {
-                    self.tokenViewModel.refreshToken()
+                    self.tokenHelper.refreshToken()
                 } else {
                     self.delegate?.didCheckCastcleIdExistsFinish()
                 }
@@ -117,63 +117,16 @@ class CreateDisplayNameViewModel {
                 } catch {}
             } else {
                 if isRefreshToken {
-                    self.tokenViewModel.refreshToken()
+                    self.tokenHelper.refreshToken()
                 } else {
                     self.delegate?.didRegisterFinish(success: true)
                 }
             }
-            
-//            if success {
-//                Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.verifyEmail), animated: true)
-//            }
         }
-        
-        //            switch result {
-        //            case .success(let response):
-        //                do {
-        //                    let rawJson = try response.mapJSON()
-        //                    let json = JSON(rawJson)
-        //                    if response.statusCode < 300 {
-                                
-        //                        completion(true)
-        //                    } else {
-        //                        ApiHelper.displayError(error: "\(json[ResponseErrorKey.code.rawValue].stringValue) : \(json[ResponseErrorKey.message.rawValue].stringValue)")
-        //                        completion(false)
-        //                    }
-        //                } catch {
-        //                    ApiHelper.displayError()
-        //                    completion(false)
-        //                }
-        //            case .failure:
-        //                ApiHelper.displayError()
-        //                completion(false)
-        //            }
-        
-        
-//        self.authenticationRepository.login(loginRequest: self.loginRequest) { (success, response, isRefreshToken) in
-//            if success {
-//                do {
-//                    let rawJson = try response.mapJSON()
-//                    let json = JSON(rawJson)
-//                    let accessToken = json[AuthenticationApiKey.accessToken.rawValue].stringValue
-//                    let refreshToken = json[AuthenticationApiKey.refreshToken.rawValue].stringValue
-//                    Defaults[.userRole] = "USER"
-//                    Defaults[.accessToken] = accessToken
-//                    Defaults[.refreshToken] = refreshToken
-//                    self.delegate?.didLoginFinish(success: true)
-//                } catch {}
-//            } else {
-//                if isRefreshToken {
-//                    self.tokenViewModel.refreshToken()
-//                } else {
-//                    self.delegate?.didLoginFinish(success: false)
-//                }
-//            }
-//        }
     }
 }
 
-extension CreateDisplayNameViewModel: TokenViewModelDelegate {
+extension CreateDisplayNameViewModel: TokenHelperDelegate {
     func didRefreshTokenFinish() {
         if self.stage == .suggest {
             self.suggestCastcleId()

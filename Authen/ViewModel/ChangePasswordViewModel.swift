@@ -25,15 +25,51 @@
 //  Created by Tanakorn Phoochaliaw on 1/9/2564 BE.
 //
 
+import Core
+import Networking
+import SwiftyJSON
+
 public enum ChangePasswordType {
     case changePassword
     case forgotPassword
 }
 
+public protocol ChangePasswordViewModelDelegate {
+    func didChangePasswordSubmitFinish(success: Bool)
+}
+
 public class ChangePasswordViewModel {
-    var changePasswordType: ChangePasswordType = .changePassword
+    public var delegate: ChangePasswordViewModelDelegate?
     
-    init(_ changePasswordType: ChangePasswordType) {
+    var changePasswordType: ChangePasswordType = .changePassword
+    var authenRequest: AuthenRequest
+    var authenticationRepository: AuthenticationRepository
+    let tokenHelper: TokenHelper = TokenHelper()
+    
+    init(_ changePasswordType: ChangePasswordType, authenRequest: AuthenRequest = AuthenRequest(), authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()) {
         self.changePasswordType = changePasswordType
+        self.authenRequest = authenRequest
+        self.authenticationRepository = authenticationRepository
+        self.tokenHelper.delegate = self
+    }
+    
+    public func changePasswordSubmit() {
+        self.authenticationRepository.changePasswordSubmit(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in
+            if success {
+                self.delegate?.didChangePasswordSubmitFinish(success: true)
+            } else {
+                if isRefreshToken {
+                    self.tokenHelper.refreshToken()
+                } else {
+                    self.delegate?.didChangePasswordSubmitFinish(success: false)
+                }
+            }
+        }
+    }
+}
+
+extension ChangePasswordViewModel: TokenHelperDelegate {
+    public func didRefreshTokenFinish() {
+        self.changePasswordSubmit()
     }
 }

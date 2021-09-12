@@ -48,6 +48,7 @@ class OldPasswordTableViewCell: UITableViewCell {
     }
     @IBOutlet var applyButton: UIButton!
     
+    var viewModel: VerifyPasswordViewModel = VerifyPasswordViewModel()
     private var isCanContinue: Bool {
         if self.passwordTextField.text!.isEmpty {
             return false
@@ -67,6 +68,8 @@ class OldPasswordTableViewCell: UITableViewCell {
 
         self.passwordTextField.tag = 0
         self.passwordTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
+        
+        self.viewModel.delegate = self
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -94,7 +97,19 @@ class OldPasswordTableViewCell: UITableViewCell {
     @IBAction func applyAction(_ sender: Any) {
         self.endEditing(true)
         if self.isCanContinue {
-            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.changePassword(ChangePasswordViewModel(.changePassword))), animated: true)
+            self.applyButton.isEnabled = false
+            self.viewModel.authenRequest.payload.password = self.passwordTextField.text ?? ""
+            self.viewModel.verifyPassword()
+        }
+    }
+}
+
+extension OldPasswordTableViewCell: VerifyPasswordViewModelDelegate {
+    func didVerificationPasswordFinish(success: Bool) {
+        if success {
+            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.changePassword(ChangePasswordViewModel(.changePassword, authenRequest: self.viewModel.authenRequest))), animated: true)
+        } else {
+            self.applyButton.isEnabled = true
         }
     }
 }

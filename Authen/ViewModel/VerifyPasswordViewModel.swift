@@ -19,62 +19,56 @@
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
 //
-//  LoginViewModel.swift
+//  VerifyPasswordViewModel.swift
 //  Authen
 //
-//  Created by Tanakorn Phoochaliaw on 10/9/2564 BE.
+//  Created by Tanakorn Phoochaliaw on 12/9/2564 BE.
 //
 
 import Core
 import Networking
 import SwiftyJSON
-import Defaults
 
-public protocol LoginViewModelDelegate {
-    func didLoginFinish(success: Bool)
+public protocol VerifyPasswordViewModelDelegate {
+    func didVerificationPasswordFinish(success: Bool)
 }
 
-class LoginViewModel {
+class VerifyPasswordViewModel {
     
-    public var delegate: LoginViewModelDelegate?
+    public var delegate: VerifyPasswordViewModelDelegate?
     
     var authenticationRepository: AuthenticationRepository
-    var loginRequest: LoginRequest = LoginRequest()
+    var authenRequest: AuthenRequest = AuthenRequest()
     let tokenHelper: TokenHelper = TokenHelper()
 
     //MARK: Input
-    public init(loginRequest: LoginRequest = LoginRequest(), authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()) {
-        self.loginRequest = loginRequest
+    public init(authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()) {
         self.authenticationRepository = authenticationRepository
         self.tokenHelper.delegate = self
     }
     
-    public func login() {
-        self.authenticationRepository.login(loginRequest: self.loginRequest) { (success, response, isRefreshToken) in
+    public func verifyPassword() {
+        self.authenticationRepository.verificationPassword(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in
             if success {
                 do {
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
-                    let accessToken = json[AuthenticationApiKey.accessToken.rawValue].stringValue
-                    let refreshToken = json[AuthenticationApiKey.refreshToken.rawValue].stringValue
-                    Defaults[.userRole] = "USER"
-                    Defaults[.accessToken] = accessToken
-                    Defaults[.refreshToken] = refreshToken
-                    self.delegate?.didLoginFinish(success: true)
+                    self.authenRequest.payload.refCode = json[AuthenticationApiKey.refCode.rawValue].stringValue
+                    self.delegate?.didVerificationPasswordFinish(success: true)
                 } catch {}
             } else {
                 if isRefreshToken {
                     self.tokenHelper.refreshToken()
                 } else {
-                    self.delegate?.didLoginFinish(success: false)
+                    self.delegate?.didVerificationPasswordFinish(success: false)
                 }
             }
         }
     }
 }
 
-extension LoginViewModel: TokenHelperDelegate {
+extension VerifyPasswordViewModel: TokenHelperDelegate {
     func didRefreshTokenFinish() {
-        self.login()
+        self.verifyPassword()
     }
 }
