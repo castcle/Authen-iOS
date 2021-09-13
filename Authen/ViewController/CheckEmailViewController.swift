@@ -28,6 +28,7 @@
 import UIKit
 import Core
 import JVFloatLabeledTextField
+import Defaults
 
 class CheckEmailViewController: UIViewController {
 
@@ -66,9 +67,13 @@ class CheckEmailViewController: UIViewController {
         self.headlineLabel.textColor = UIColor.Asset.white
         self.detailLabel.font = UIFont.asset(.regular, fontSize: .body)
         self.detailLabel.textColor = UIColor.Asset.white
-
         self.emailTextField.tag = 0
         self.emailTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        Defaults[.screenId] = ""
     }
     
     func setupNavBar() {

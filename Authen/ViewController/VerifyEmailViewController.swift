@@ -28,6 +28,7 @@
 import UIKit
 import Core
 import Profile
+import Defaults
 
 class VerifyEmailViewController: UIViewController {
 
@@ -42,7 +43,6 @@ class VerifyEmailViewController: UIViewController {
         super.viewDidLoad()
 
         self.view.backgroundColor = UIColor.Asset.darkGraphiteBlue
-        
         self.headlineLabel.font = UIFont.asset(.regular, fontSize: .title)
         self.headlineLabel.textColor = UIColor.Asset.white
         self.subTitleLabel.font = UIFont.asset(.regular, fontSize: .body)
@@ -64,6 +64,7 @@ class VerifyEmailViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
+        Defaults[.screenId] = ""
     }
 
     override func viewWillDisappear(_ animated: Bool) {

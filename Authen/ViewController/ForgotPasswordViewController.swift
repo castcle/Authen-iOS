@@ -27,6 +27,7 @@
 
 import UIKit
 import Core
+import Defaults
 
 class ForgotPasswordViewController: UIViewController {
 
@@ -48,7 +49,6 @@ class ForgotPasswordViewController: UIViewController {
         self.view.backgroundColor = UIColor.Asset.darkGraphiteBlue
         self.hideKeyboardWhenTapped()
         self.setupNavBar()
-        
         self.headlineLabel.font = UIFont.asset(.regular, fontSize: .h2)
         self.headlineLabel.textColor = UIColor.Asset.white
         self.detailLabel.font = UIFont.asset(.regular, fontSize: .body)
@@ -78,6 +78,11 @@ class ForgotPasswordViewController: UIViewController {
         self.frameView.capsule(color: UIColor.Asset.darkGraphiteBlue, borderWidth: 1, borderColor: UIColor.Asset.lightBlue)
         self.dotView.capsule(color: UIColor.Asset.lightBlue)
         self.avatarImage.circle(color: UIColor.Asset.white)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        Defaults[.screenId] = ""
     }
     
     func setupNavBar() {

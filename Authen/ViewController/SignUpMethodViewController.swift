@@ -146,12 +146,10 @@ public class SignUpMethodViewController: UIViewController {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-
         self.view.backgroundColor = UIColor.Asset.darkGraphiteBlue
         self.backgroundView.backgroundColor = UIColor.Asset.darkGray
         self.titleLabel.font = UIFont.asset(.medium, fontSize: .h3)
         self.titleLabel.textColor = UIColor.Asset.white
-        
         self.subTitleLabel.font = UIFont.asset(.light, fontSize: .overline)
         self.subTitleLabel.textColor = UIColor.Asset.white
         

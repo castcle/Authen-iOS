@@ -28,6 +28,7 @@
 import UIKit
 import Core
 import ActiveLabel
+import Defaults
 
 class ResendEmailViewController: UIViewController {
 
@@ -58,7 +59,6 @@ class ResendEmailViewController: UIViewController {
 
         self.view.backgroundColor = UIColor.Asset.darkGraphiteBlue
         self.setupNavBar()
-        
         self.headlineLabel.font = UIFont.asset(.regular, fontSize: .title)
         self.headlineLabel.textColor = UIColor.Asset.white
         self.subTitleLabel.font = UIFont.asset(.medium, fontSize: .body)
@@ -71,6 +71,11 @@ class ResendEmailViewController: UIViewController {
         self.resendButton.setTitleColor(UIColor.Asset.white, for: .normal)
         self.resendButton.setBackgroundImage(UIColor.Asset.lightBlue.toImage(), for: .normal)
         self.resendButton.capsule(color: UIColor.clear, borderWidth: 1, borderColor: UIColor.clear)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        Defaults[.screenId] = ""
     }
     
     func setupNavBar() {

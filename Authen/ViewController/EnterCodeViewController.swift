@@ -28,6 +28,7 @@
 import UIKit
 import Core
 import SVPinView
+import Defaults
 
 class EnterCodeViewController: UIViewController {
 
@@ -44,7 +45,6 @@ class EnterCodeViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.Asset.darkGraphiteBlue
         self.setupNavBar()
-        
         self.headlineLabel.font = UIFont.asset(.regular, fontSize: .h2)
         self.headlineLabel.textColor = UIColor.Asset.white
         self.detailLabel.font = UIFont.asset(.regular, fontSize: .body)
@@ -78,6 +78,11 @@ class EnterCodeViewController: UIViewController {
         
         self.countdownLabel.text = "Resend Code \(self.secondsRemaining)s"
         self.setupCountdown()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        Defaults[.screenId] = ""
     }
     
     func setupNavBar() {

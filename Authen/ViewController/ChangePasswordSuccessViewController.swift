@@ -26,6 +26,7 @@
 //
 
 import UIKit
+import Defaults
 
 class ChangePasswordSuccessViewController: UIViewController {
 
@@ -44,7 +45,6 @@ class ChangePasswordSuccessViewController: UIViewController {
         self.homeButton.setTitleColor(UIColor.Asset.white, for: .normal)
         self.homeButton.setBackgroundImage(UIColor.Asset.lightBlue.toImage(), for: .normal)
         self.homeButton.capsule(color: UIColor.clear, borderWidth: 1, borderColor: UIColor.clear)
-        
         self.successImage.image = UIImage.init(icon: .castcle(.addWithCheckmark), size: CGSize(width: 100, height: 100), textColor: UIColor.Asset.lightBlue)
         
         if self.viewModel.changePasswordType == .changePassword {
@@ -57,6 +57,7 @@ class ChangePasswordSuccessViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
+        Defaults[.screenId] = ""
     }
 
     override func viewWillDisappear(_ animated: Bool) {
