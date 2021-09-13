@@ -34,6 +34,7 @@ import JVFloatLabeledTextField
 import Moya
 import SwiftyJSON
 import Defaults
+import Loady
 
 class SignInCell: UICollectionViewCell {
 
@@ -41,7 +42,13 @@ class SignInCell: UICollectionViewCell {
     @IBOutlet var emailView: UIView!
     @IBOutlet var passwordView: UIView!
     @IBOutlet var forgotPasswordButton: UIButton!
-    @IBOutlet var loginButton: UIButton!
+    @IBOutlet var loginButton: LoadyButton! {
+        didSet {
+            self.loginButton.setAnimation(LoadyAnimationType.indicator(with: .init(indicatorViewStyle: .light)))
+            self.loginButton.indicatorViewStyle = .light
+//            self.setupLoginButton(isActive: false)
+        }
+    }
     @IBOutlet var showPasswordButton: UIButton!
     
     @IBOutlet var emailTextField: JVFloatLabeledTextField! {
@@ -132,17 +139,25 @@ class SignInCell: UICollectionViewCell {
         self.viewModel.delegate = self
     }
     
+    private func disableUI(isActive: Bool) {
+        if isActive {
+            self.emailTextField.isEnabled = true
+            self.passwordTextField.isEnabled = true
+        } else {
+            self.emailTextField.isEnabled = false
+            self.passwordTextField.isEnabled = false
+        }
+    }
+    
     private func setupLoginButton(isActive: Bool) {
         self.loginButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .h4)
         
         if isActive {
             self.loginButton.setTitleColor(UIColor.Asset.white, for: .normal)
-            self.loginButton.setBackgroundImage(UIColor.Asset.lightBlue.toImage(), for: .normal)
-            self.loginButton.capsule(color: UIColor.clear, borderWidth: 1, borderColor: UIColor.clear)
+            self.loginButton.capsule(color: UIColor.Asset.lightBlue, borderWidth: 1, borderColor: UIColor.Asset.lightBlue)
         } else {
             self.loginButton.setTitleColor(UIColor.Asset.gray, for: .normal)
-            self.loginButton.setBackgroundImage(UIColor.Asset.darkGraphiteBlue.toImage(), for: .normal)
-            self.loginButton.capsule(color: UIColor.clear, borderWidth: 1, borderColor: UIColor.Asset.black)
+            self.loginButton.capsule(color: UIColor.Asset.darkGraphiteBlue, borderWidth: 1, borderColor: UIColor.Asset.black)
         }
     }
     
@@ -166,7 +181,12 @@ class SignInCell: UICollectionViewCell {
     @IBAction func loginAction(_ sender: Any) {
         if self.isCanLogin {
             self.endEditing(true)
-            self.loginButton.isEnabled = false
+            if self.loginButton.loadingIsShowing() {
+                return
+            }
+            
+            self.disableUI(isActive: false)
+            self.loginButton.startLoading()
             self.viewModel.loginRequest.username = self.emailTextField.text ?? ""
             self.viewModel.loginRequest.password = self.passwordTextField.text ?? ""
             self.viewModel.login()
@@ -176,10 +196,11 @@ class SignInCell: UICollectionViewCell {
 
 extension SignInCell: LoginViewModelDelegate {
     func didLoginFinish(success: Bool) {
+        self.loginButton.stopLoading()
         if success {
             Utility.currentViewController().navigationController?.popToRootViewController(animated: true)
         } else {
-            self.loginButton.isEnabled = true
+            self.disableUI(isActive: true)
         }
     }
 }

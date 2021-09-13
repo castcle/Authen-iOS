@@ -44,7 +44,7 @@ class CreateDisplayNameCell: UICollectionViewCell, UITextFieldDelegate {
     @IBOutlet var checkImage: UIImageView!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
-    var viewModel = CreateDisplayNameViewModel()
+    private var viewModel = CreateDisplayNameViewModel()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -76,7 +76,10 @@ class CreateDisplayNameCell: UICollectionViewCell, UITextFieldDelegate {
         self.idTextField.delegate = self
         self.idTextField.tag = 1
         self.idTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
-        
+    }
+    
+    func configCell(viewModel: CreateDisplayNameViewModel) {
+        self.viewModel = viewModel
         self.viewModel.delegate = self
     }
     
@@ -185,7 +188,6 @@ class CreateDisplayNameCell: UICollectionViewCell, UITextFieldDelegate {
             self.viewModel.register()
         }
     }
-
 }
 
 extension CreateDisplayNameCell: CreateDisplayNameViewModelDelegate {

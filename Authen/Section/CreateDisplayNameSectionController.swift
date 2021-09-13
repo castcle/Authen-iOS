@@ -54,7 +54,7 @@ extension CreateDisplayNameSectionController {
     override func cellForItem(at index: Int) -> UICollectionViewCell {
         let cell = collectionContext?.dequeueReusableCell(withNibName: AuthenNibVars.CollectionViewCell.createDisplayName, bundle: ConfigBundle.authen, for: self, at: index) as? CreateDisplayNameCell
         cell?.backgroundColor = UIColor.clear
-        cell?.viewModel = self.viewModel
+        cell?.configCell(viewModel: self.viewModel)
         return cell ?? CreateDisplayNameCell()
     }
 }

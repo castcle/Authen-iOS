@@ -65,7 +65,7 @@ class ChangePasswordTableViewCell: UITableViewCell {
     @IBOutlet var charCountImage: UIImageView!
     @IBOutlet var charTypeImage: UIImageView!
     
-    var viewModel = ChangePasswordViewModel(.changePassword)
+    private var viewModel = ChangePasswordViewModel(.changePassword)
     
     private var isCanContinue: Bool {
         self.checkCharacterCount()
