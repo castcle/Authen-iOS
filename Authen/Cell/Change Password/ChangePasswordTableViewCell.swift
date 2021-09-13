@@ -155,9 +155,13 @@ class ChangePasswordTableViewCell: UITableViewCell {
     @IBAction func applyAction(_ sender: Any) {
         self.endEditing(true)
         if self.isCanContinue {
-            self.applyButton.isEnabled = false
-            self.viewModel.authenRequest.payload.newPassword = self.passwordTextField.text ?? ""
-            self.viewModel.changePasswordSubmit()
+            if self.viewModel.changePasswordType == .changePassword {
+                self.applyButton.isEnabled = false
+                self.viewModel.authenRequest.payload.newPassword = self.passwordTextField.text ?? ""
+                self.viewModel.changePasswordSubmit()
+            } else {
+                Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.changePasswordSuccess(self.viewModel)), animated: true)
+            }
         }
     }
 }
