@@ -71,7 +71,7 @@ class ForgotPasswordViewController: UIViewController {
         self.avatarImage.circle(color: UIColor.Asset.white)
         
         let url = URL(string: UserState.shared.avatar)
-        self.avatarImage.kf.setImage(with: url)
+        self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.5))])
         self.nameLabel.text = UserState.shared.name
         self.emailLabel.text = UserState.shared.email
         

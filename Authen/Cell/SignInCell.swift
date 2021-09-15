@@ -46,7 +46,6 @@ class SignInCell: UICollectionViewCell {
         didSet {
             self.loginButton.setAnimation(LoadyAnimationType.indicator(with: .init(indicatorViewStyle: .light)))
             self.loginButton.indicatorViewStyle = .light
-//            self.setupLoginButton(isActive: false)
         }
     }
     @IBOutlet var showPasswordButton: UIButton!
