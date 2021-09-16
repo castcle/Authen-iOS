@@ -27,24 +27,35 @@
 
 import Core
 import Networking
+import Moya
 
 public class ResendEmailViewModel {
     
     //MARK: Private
     var authenticationRepository: AuthenticationRepository
     var title: String = ""
+    let tokenHelper: TokenHelper = TokenHelper()
 
     //MARK: Input
     public init(authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl(), title: String = "") {
         self.authenticationRepository = authenticationRepository
         self.title = title
+        self.tokenHelper.delegate = self
     }
     
     func requestLinkVerify() {
-        self.authenticationRepository.requestLinkVerify() { (success) in
-            print("Verification Email : \(success)")
+        self.authenticationRepository.requestLinkVerify() { (success, response, isRefreshToken) in
+            if !success {
+                if isRefreshToken {
+                    self.tokenHelper.refreshToken()
+                }
+            }
         }
     }
-    
-    //MARK: Output
+}
+
+extension ResendEmailViewModel: TokenHelperDelegate {
+    public func didRefreshTokenFinish() {
+        self.requestLinkVerify()
+    }
 }

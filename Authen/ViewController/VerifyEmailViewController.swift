@@ -27,7 +27,6 @@
 
 import UIKit
 import Core
-import Profile
 import Defaults
 
 class VerifyEmailViewController: UIViewController {
@@ -81,6 +80,6 @@ class VerifyEmailViewController: UIViewController {
     }
     
     @IBAction func profileAction(_ sender: Any) {
-        Utility.currentViewController().navigationController?.pushViewController(ProfileOpener.open(.welcome), animated: true)
+//        Utility.currentViewController().navigationController?.pushViewController(ProfileOpener.open(.welcome), animated: true)
     }
 }

@@ -150,7 +150,6 @@ class SignInCell: UICollectionViewCell {
     
     private func setupLoginButton(isActive: Bool) {
         self.loginButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .h4)
-        
         if isActive {
             self.loginButton.setTitleColor(UIColor.Asset.white, for: .normal)
             self.loginButton.capsule(color: UIColor.Asset.lightBlue, borderWidth: 1, borderColor: UIColor.Asset.lightBlue)

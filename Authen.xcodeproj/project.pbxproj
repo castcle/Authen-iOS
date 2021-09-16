@@ -51,8 +51,6 @@
 		B7910E5D26B83FEB0097C94E /* VerifyEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7910E5C26B83FEB0097C94E /* VerifyEmailViewController.swift */; };
 		B7910E6026B842740097C94E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B7910E5F26B842740097C94E /* Assets.xcassets */; };
 		B7910E6226B8F52B0097C94E /* ResendEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7910E6126B8F52B0097C94E /* ResendEmailViewController.swift */; };
-		B7910E7E26BBDCD40097C94E /* Profile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7910E7D26BBDCD30097C94E /* Profile.framework */; };
-		B7910E7F26BBDCD40097C94E /* Profile.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B7910E7D26BBDCD30097C94E /* Profile.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B7910EDE26C107590097C94E /* EmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7910EDD26C107590097C94E /* EmailViewModel.swift */; };
 		B7B1E3D226A92C48006E2FF6 /* Authen.h in Headers */ = {isa = PBXBuildFile; fileRef = B7B1E3D026A92C48006E2FF6 /* Authen.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B7D8BEC226C2259800A8F8BA /* CreatePasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D8BEC126C2259800A8F8BA /* CreatePasswordViewModel.swift */; };
@@ -69,7 +67,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				B74CEF1726C50733006B1F2C /* Networking.framework in Embed Frameworks */,
-				B7910E7F26BBDCD40097C94E /* Profile.framework in Embed Frameworks */,
 				B7910E1D26B3BB700097C94E /* Component.framework in Embed Frameworks */,
 				B7910DED26AFCD880097C94E /* Core.framework in Embed Frameworks */,
 			);
@@ -128,7 +125,6 @@
 		B7910E5C26B83FEB0097C94E /* VerifyEmailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyEmailViewController.swift; sourceTree = "<group>"; };
 		B7910E5F26B842740097C94E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B7910E6126B8F52B0097C94E /* ResendEmailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResendEmailViewController.swift; sourceTree = "<group>"; };
-		B7910E7D26BBDCD30097C94E /* Profile.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Profile.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7910EDD26C107590097C94E /* EmailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailViewModel.swift; sourceTree = "<group>"; };
 		B7B1E3CD26A92C48006E2FF6 /* Authen.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Authen.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7B1E3D026A92C48006E2FF6 /* Authen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Authen.h; sourceTree = "<group>"; };
@@ -147,7 +143,6 @@
 			files = (
 				B7910E1C26B3BB700097C94E /* Component.framework in Frameworks */,
 				BC5260F1309A4FF47F9F790D /* Pods_Authen.framework in Frameworks */,
-				B7910E7E26BBDCD40097C94E /* Profile.framework in Frameworks */,
 				B74CEF1626C50733006B1F2C /* Networking.framework in Frameworks */,
 				B7910DEC26AFCD880097C94E /* Core.framework in Frameworks */,
 			);
@@ -161,7 +156,6 @@
 			children = (
 				B787962B26C6623E00FECC21 /* Share.framework */,
 				B74CEF1526C50733006B1F2C /* Networking.framework */,
-				B7910E7D26BBDCD30097C94E /* Profile.framework */,
 				B7910E1B26B3BB700097C94E /* Component.framework */,
 				B7910DEB26AFCD880097C94E /* Core.framework */,
 				9CA00CC88894B8F1AC8E622D /* Pods_Authen.framework */,
