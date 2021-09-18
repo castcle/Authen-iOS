@@ -34,7 +34,7 @@ import JVFloatLabeledTextField
 import Moya
 import SwiftyJSON
 import Defaults
-import Loady
+import JGProgressHUD
 
 class SignInCell: UICollectionViewCell {
 
@@ -42,12 +42,7 @@ class SignInCell: UICollectionViewCell {
     @IBOutlet var emailView: UIView!
     @IBOutlet var passwordView: UIView!
     @IBOutlet var forgotPasswordButton: UIButton!
-    @IBOutlet var loginButton: LoadyButton! {
-        didSet {
-            self.loginButton.setAnimation(LoadyAnimationType.indicator(with: .init(indicatorViewStyle: .light)))
-            self.loginButton.indicatorViewStyle = .light
-        }
-    }
+    @IBOutlet var loginButton: UIButton!
     @IBOutlet var showPasswordButton: UIButton!
     
     @IBOutlet var emailTextField: JVFloatLabeledTextField! {
@@ -110,6 +105,7 @@ class SignInCell: UICollectionViewCell {
         }
     }
     
+    let hud = JGProgressHUD()
     var viewModel = LoginViewModel()
     private var isCanLogin: Bool {
         if self.emailTextField.text!.isEmpty || self.passwordTextField.text!.isEmpty {
@@ -121,7 +117,7 @@ class SignInCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+        self.hud.textLabel.text = "Loading"
         self.logoImage.image = UIImage.Asset.castcleLogo
         self.emailView.custom(color: UIColor.Asset.darkGray, cornerRadius: 10, borderWidth: 1, borderColor: UIColor.Asset.black)
         self.passwordView.custom(color: UIColor.Asset.darkGray, cornerRadius: 10, borderWidth: 1, borderColor: UIColor.Asset.black)
@@ -179,12 +175,8 @@ class SignInCell: UICollectionViewCell {
     @IBAction func loginAction(_ sender: Any) {
         if self.isCanLogin {
             self.endEditing(true)
-            if self.loginButton.loadingIsShowing() {
-                return
-            }
-            
             self.disableUI(isActive: false)
-            self.loginButton.startLoading()
+            self.hud.show(in: Utility.currentViewController().view)
             self.viewModel.loginRequest.username = self.emailTextField.text ?? ""
             self.viewModel.loginRequest.password = self.passwordTextField.text ?? ""
             self.viewModel.login()
@@ -194,7 +186,7 @@ class SignInCell: UICollectionViewCell {
 
 extension SignInCell: LoginViewModelDelegate {
     func didLoginFinish(success: Bool) {
-        self.loginButton.stopLoading()
+        self.hud.dismiss()
         if success {
             Utility.currentViewController().navigationController?.popToRootViewController(animated: true)
         } else {

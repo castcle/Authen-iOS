@@ -41,6 +41,7 @@ public struct AuthenNibVars {
         public static let checkEmail = "CheckEmailViewController"
         public static let forgotPassword = "ForgotPasswordViewController"
         public static let enterCode = "EnterCodeViewController"
+        public static let mergeAccount = "MergeAccountViewController"
     }
     
     // MARK: - View

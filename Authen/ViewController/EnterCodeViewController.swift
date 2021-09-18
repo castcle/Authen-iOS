@@ -40,6 +40,7 @@ class EnterCodeViewController: UIViewController {
     @IBOutlet var resendButton: UIButton!
     
     var secondsRemaining = 60
+    var viewModel = EnterCodeViewModel(verifyCodeType: .password)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,7 +73,11 @@ class EnterCodeViewController: UIViewController {
         
         self.pinView.didFinishCallback = { [weak self] pin in
             guard let self = self else { return }
-            self.gotoCreatePassword()
+            if self.viewModel.verifyCodeType == .password {
+                self.gotoCreatePassword()
+            } else if self.viewModel.verifyCodeType == .mergeAccount {
+                self.gotoFeed()
+            }
             print("The pin entered is \(pin)")
         }
         
@@ -91,6 +96,10 @@ class EnterCodeViewController: UIViewController {
     
     private func gotoCreatePassword() {
         Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.changePassword(ChangePasswordViewModel(.forgotPassword))), animated: true)
+    }
+    
+    private func gotoFeed() {
+        Utility.currentViewController().navigationController?.popToRootViewController(animated: true)
     }
     
     private func setupCountdown() {

@@ -189,21 +189,45 @@ public class SignUpMethodViewController: UIViewController {
     }
     
     @IBAction func telegramAction(_ sender: Any) {
+        self.dismiss(animated: true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 ) {
+            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.mergeAccount(MergeAccountViewModel(socialType: .telegram))), animated: true)
+        }
     }
     
     @IBAction func facebookAction(_ sender: Any) {
+        self.dismiss(animated: true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 ) {
+            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.mergeAccount(MergeAccountViewModel(socialType: .facebook))), animated: true)
+        }
     }
     
     @IBAction func twitterAction(_ sender: Any) {
+        self.dismiss(animated: true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 ) {
+            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.mergeAccount(MergeAccountViewModel(socialType: .twitter))), animated: true)
+        }
     }
     
     @IBAction func googleAction(_ sender: Any) {
+        self.dismiss(animated: true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 ) {
+            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.mergeAccount(MergeAccountViewModel(socialType: .google))), animated: true)
+        }
     }
     
     @IBAction func appleAction(_ sender: Any) {
+        self.dismiss(animated: true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 ) {
+            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.mergeAccount(MergeAccountViewModel(socialType: .apple))), animated: true)
+        }
     }
     
     @IBAction func emailAction(_ sender: Any) {
+        self.dismiss(animated: true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 ) {
+            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.signIn), animated: true)
+        }
     }
 }
 

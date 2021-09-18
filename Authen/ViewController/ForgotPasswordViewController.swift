@@ -90,6 +90,6 @@ class ForgotPasswordViewController: UIViewController {
     }
 
     @IBAction func continueAction(_ sender: Any) {
-        Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.enterCode), animated: true)
+        Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.enterCode(EnterCodeViewModel(verifyCodeType: .password))), animated: true)
     }
 }

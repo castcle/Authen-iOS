@@ -41,7 +41,8 @@ public enum AuthenScene {
     case changePasswordSuccess(ChangePasswordViewModel)
     case checkEmail
     case forgotPassword
-    case enterCode
+    case enterCode(EnterCodeViewModel)
+    case mergeAccount(MergeAccountViewModel)
 }
 
 public struct AuthenOpener {
@@ -98,10 +99,16 @@ public struct AuthenOpener {
             let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.password, bundle: ConfigBundle.authen)
             let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.forgotPassword)
             return vc
-        case .enterCode:
+        case .enterCode(let viewModel):
             let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.password, bundle: ConfigBundle.authen)
-            let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.enterCode)
-            return vc
+            let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.enterCode) as? EnterCodeViewController
+            vc?.viewModel = viewModel
+            return vc ?? EnterCodeViewController()
+        case .mergeAccount(let viewModel):
+            let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.authen, bundle: ConfigBundle.authen)
+            let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.mergeAccount) as? MergeAccountViewController
+            vc?.viewModel = viewModel
+            return vc ?? MergeAccountViewController()
         }
     }
 }

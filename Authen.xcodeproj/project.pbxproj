@@ -21,6 +21,9 @@
 		B74338AC26DE765B004BBC05 /* EnterCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74338AB26DE765B004BBC05 /* EnterCodeViewController.swift */; };
 		B74CEF1626C50733006B1F2C /* Networking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B74CEF1526C50733006B1F2C /* Networking.framework */; };
 		B74CEF1726C50733006B1F2C /* Networking.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B74CEF1526C50733006B1F2C /* Networking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B758AC5F26F46D1600A4A5FB /* MergeAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B758AC5E26F46D1600A4A5FB /* MergeAccountViewController.swift */; };
+		B758AC6126F4792300A4A5FB /* MergeAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B758AC6026F4792300A4A5FB /* MergeAccountViewModel.swift */; };
+		B758AC6326F47F8600A4A5FB /* EnterCodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B758AC6226F47F8600A4A5FB /* EnterCodeViewModel.swift */; };
 		B768499C26C3EC5100C438C5 /* ResendEmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768499B26C3EC5100C438C5 /* ResendEmailViewModel.swift */; };
 		B789821626DF49530057D7CC /* ChangePasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B789821526DF49530057D7CC /* ChangePasswordViewModel.swift */; };
 		B7910DE726AFC9E60097C94E /* Authen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7910DE626AFC9E60097C94E /* Authen.swift */; };
@@ -96,6 +99,9 @@
 		B74338A926DE5689004BBC05 /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
 		B74338AB26DE765B004BBC05 /* EnterCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterCodeViewController.swift; sourceTree = "<group>"; };
 		B74CEF1526C50733006B1F2C /* Networking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Networking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B758AC5E26F46D1600A4A5FB /* MergeAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeAccountViewController.swift; sourceTree = "<group>"; };
+		B758AC6026F4792300A4A5FB /* MergeAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeAccountViewModel.swift; sourceTree = "<group>"; };
+		B758AC6226F47F8600A4A5FB /* EnterCodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterCodeViewModel.swift; sourceTree = "<group>"; };
 		B768499B26C3EC5100C438C5 /* ResendEmailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResendEmailViewModel.swift; sourceTree = "<group>"; };
 		B787962B26C6623E00FECC21 /* Share.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Share.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B789821526DF49530057D7CC /* ChangePasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewModel.swift; sourceTree = "<group>"; };
@@ -286,6 +292,9 @@
 				B7910E5E26B842560097C94E /* Assets */,
 				B7910E0426B126090097C94E /* Authen.storyboard */,
 				B743389226DE2FAE004BBC05 /* Password.storyboard */,
+				B758AC5E26F46D1600A4A5FB /* MergeAccountViewController.swift */,
+				B758AC6026F4792300A4A5FB /* MergeAccountViewModel.swift */,
+				B758AC6226F47F8600A4A5FB /* EnterCodeViewModel.swift */,
 				B76849D626C4F8E800C438C5 /* ViewModel */,
 				B7910EB626BD0C030097C94E /* ViewController */,
 				B7910E2126B418340097C94E /* Cell */,
@@ -431,9 +440,12 @@
 				B7910E6226B8F52B0097C94E /* ResendEmailViewController.swift in Sources */,
 				B7910E5526B835DB0097C94E /* CreateDisplayNameViewController.swift in Sources */,
 				B7910E0A26B1268E0097C94E /* AuthenNibVars.swift in Sources */,
+				B758AC5F26F46D1600A4A5FB /* MergeAccountViewController.swift in Sources */,
 				B7910E4A26B7FD090097C94E /* EmailCell.swift in Sources */,
 				B74338A226DE2FAF004BBC05 /* ChangePasswordTableViewCell.swift in Sources */,
 				B7910E5326B82EE00097C94E /* CreatePasswordSectionController.swift in Sources */,
+				B758AC6326F47F8600A4A5FB /* EnterCodeViewModel.swift in Sources */,
+				B758AC6126F4792300A4A5FB /* MergeAccountViewModel.swift in Sources */,
 				B7910E5826B836100097C94E /* CreateDisplayNameCell.swift in Sources */,
 				B7910E5D26B83FEB0097C94E /* VerifyEmailViewController.swift in Sources */,
 				B7910E5026B82CC40097C94E /* CreatePasswordCell.swift in Sources */,
