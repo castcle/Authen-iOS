@@ -171,6 +171,8 @@
 				B789821526DF49530057D7CC /* ChangePasswordViewModel.swift */,
 				B7FF592126EB4D5E002EA174 /* LoginViewModel.swift */,
 				B7189ACD26EE2A6F00CB9719 /* VerifyPasswordViewModel.swift */,
+				B758AC6226F47F8600A4A5FB /* EnterCodeViewModel.swift */,
+				B758AC6026F4792300A4A5FB /* MergeAccountViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -243,6 +245,7 @@
 				B74338A726DE4794004BBC05 /* CheckEmailViewController.swift */,
 				B74338A926DE5689004BBC05 /* ForgotPasswordViewController.swift */,
 				B74338AB26DE765B004BBC05 /* EnterCodeViewController.swift */,
+				B758AC5E26F46D1600A4A5FB /* MergeAccountViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -273,9 +276,6 @@
 				B7910E5E26B842560097C94E /* Assets */,
 				B7910E0426B126090097C94E /* Authen.storyboard */,
 				B743389226DE2FAE004BBC05 /* Password.storyboard */,
-				B758AC5E26F46D1600A4A5FB /* MergeAccountViewController.swift */,
-				B758AC6026F4792300A4A5FB /* MergeAccountViewModel.swift */,
-				B758AC6226F47F8600A4A5FB /* EnterCodeViewModel.swift */,
 				B76849D626C4F8E800C438C5 /* ViewModel */,
 				B7910EB626BD0C030097C94E /* ViewController */,
 				B7910E2126B418340097C94E /* Cell */,

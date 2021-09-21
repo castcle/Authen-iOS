@@ -226,7 +226,7 @@ public class SignUpMethodViewController: UIViewController {
     @IBAction func emailAction(_ sender: Any) {
         self.dismiss(animated: true)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 ) {
-            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.signIn), animated: true)
+            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.email), animated: true)
         }
     }
 }
