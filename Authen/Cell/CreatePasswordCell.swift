@@ -128,10 +128,20 @@ class CreatePasswordCell: UICollectionViewCell {
     
     @IBAction func showPasswordAction(_ sender: Any) {
         self.passwordTextField.isSecureTextEntry.toggle()
+        if self.passwordTextField.isSecureTextEntry {
+            self.showPasswordButton.setImage(UIImage.init(icon: .castcle(.show), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.white).withRenderingMode(.alwaysOriginal), for: .normal)
+        } else {
+            self.showPasswordButton.setImage(UIImage.init(icon: .castcle(.show), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.lightBlue).withRenderingMode(.alwaysOriginal), for: .normal)
+        }
     }
     
     @IBAction func showConfirmPasswordAction(_ sender: Any) {
         self.confirmPasswordTextField.isSecureTextEntry.toggle()
+        if self.confirmPasswordTextField.isSecureTextEntry {
+            self.showConfirmPasswordButton.setImage(UIImage.init(icon: .castcle(.show), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.white).withRenderingMode(.alwaysOriginal), for: .normal)
+        } else {
+            self.showConfirmPasswordButton.setImage(UIImage.init(icon: .castcle(.show), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.lightBlue).withRenderingMode(.alwaysOriginal), for: .normal)
+        }
     }
     
     @IBAction func nextAction(_ sender: Any) {
