@@ -40,8 +40,10 @@ public protocol CreateDisplayNameViewModelDelegate {
 class CreateDisplayNameViewModel {
     
     public var delegate: CreateDisplayNameViewModelDelegate?
-    var authenticationRepository: AuthenticationRepository
+    var authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()
+    var notificationRepository: NotificationRepository = NotificationRepositoryImpl()
     var authenRequest: AuthenRequest = AuthenRequest()
+    var notificationRequest: NotificationRequest = NotificationRequest()
     var isCastcleIdExist: Bool = true
     let tokenHelper: TokenHelper = TokenHelper()
     private var stage: CreateDisplayNameStage = .none
@@ -54,9 +56,8 @@ class CreateDisplayNameViewModel {
     }
 
     //MARK: Input
-    public init(authenRequest: AuthenRequest = AuthenRequest(), authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()) {
+    public init(authenRequest: AuthenRequest = AuthenRequest()) {
         self.authenRequest = authenRequest
-        self.authenticationRepository = authenticationRepository
         self.tokenHelper.delegate = self
     }
     
@@ -113,6 +114,7 @@ class CreateDisplayNameViewModel {
                     Defaults[.userRole] = "USER"
                     Defaults[.accessToken] = accessToken
                     Defaults[.refreshToken] = refreshToken
+                    self.registerNotificationToken()
                     self.delegate?.didRegisterFinish(success: true)
                 } catch {}
             } else {
@@ -123,6 +125,12 @@ class CreateDisplayNameViewModel {
                 }
             }
         }
+    }
+    
+    private func registerNotificationToken() {
+        self.notificationRequest.deviceUUID = Defaults[.deviceUuid]
+        self.notificationRequest.firebaseToken = Defaults[.firebaseToken]
+        self.notificationRepository.registerToken(notificationRequest: self.notificationRequest) { (_, _, _) in }
     }
 }
 

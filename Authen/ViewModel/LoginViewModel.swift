@@ -38,14 +38,15 @@ class LoginViewModel {
     
     public var delegate: LoginViewModelDelegate?
     
-    var authenticationRepository: AuthenticationRepository
+    var authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()
+    var notificationRepository: NotificationRepository = NotificationRepositoryImpl()
     var loginRequest: LoginRequest = LoginRequest()
+    var notificationRequest: NotificationRequest = NotificationRequest()
     let tokenHelper: TokenHelper = TokenHelper()
 
     //MARK: Input
-    public init(loginRequest: LoginRequest = LoginRequest(), authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()) {
+    public init(loginRequest: LoginRequest = LoginRequest()) {
         self.loginRequest = loginRequest
-        self.authenticationRepository = authenticationRepository
         self.tokenHelper.delegate = self
     }
     
@@ -60,6 +61,7 @@ class LoginViewModel {
                     Defaults[.userRole] = "USER"
                     Defaults[.accessToken] = accessToken
                     Defaults[.refreshToken] = refreshToken
+                    self.registerNotificationToken()
                     self.delegate?.didLoginFinish(success: true)
                 } catch {}
             } else {
@@ -70,6 +72,12 @@ class LoginViewModel {
                 }
             }
         }
+    }
+    
+    private func registerNotificationToken() {
+        self.notificationRequest.deviceUUID = Defaults[.deviceUuid]
+        self.notificationRequest.firebaseToken = Defaults[.firebaseToken]
+        self.notificationRepository.registerToken(notificationRequest: self.notificationRequest) { (_, _, _) in }
     }
 }
 
