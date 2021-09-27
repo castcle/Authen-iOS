@@ -29,6 +29,7 @@ import UIKit
 import Core
 import Networking
 import Moya
+import JGProgressHUD
 
 class CreateDisplayNameCell: UICollectionViewCell, UITextFieldDelegate {
 
@@ -45,6 +46,7 @@ class CreateDisplayNameCell: UICollectionViewCell, UITextFieldDelegate {
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
     private var viewModel = CreateDisplayNameViewModel()
+    let hud = JGProgressHUD()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -78,8 +80,15 @@ class CreateDisplayNameCell: UICollectionViewCell, UITextFieldDelegate {
     }
     
     func configCell(viewModel: CreateDisplayNameViewModel) {
+        self.hud.textLabel.text = "Loading"
         self.viewModel = viewModel
         self.viewModel.delegate = self
+        self.headlineLabel.text = Localization.RegisterDisplayName.headline.text
+        self.subTitleLabel.text = Localization.RegisterDisplayName.subtitle.text
+        self.displayNameLabel.text = Localization.RegisterDisplayName.value.text
+        self.displayNameTextfield.placeholder = Localization.RegisterDisplayName.value.text
+        self.castcleIdLabel.text = Localization.RegisterDisplayName.castcleId.text
+        self.nextButton.setTitle(Localization.RegisterDisplayName.button.text, for: .normal)
     }
     
     private func castcleId(displayCastcleId: String) -> String {
@@ -184,6 +193,7 @@ class CreateDisplayNameCell: UICollectionViewCell, UITextFieldDelegate {
     @IBAction func nextAction(_ sender: Any) {
         self.endEditing(true)
         if !self.displayNameTextfield.text!.isEmpty && !self.viewModel.isCastcleIdExist {
+            self.hud.show(in: Utility.currentViewController().view)
             self.viewModel.register()
         }
     }
@@ -202,6 +212,7 @@ extension CreateDisplayNameCell: CreateDisplayNameViewModelDelegate {
     }
     
     func didRegisterFinish(success: Bool) {
+        self.hud.dismiss()
         if success {
             Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.verifyEmail), animated: true)
         }

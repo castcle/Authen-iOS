@@ -30,7 +30,6 @@ class EmailViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.Asset.darkGraphiteBlue
         self.hideKeyboardWhenTapped()
-        self.setupNavBar()
         self.collectionView.alwaysBounceVertical = true
         self.collectionView.showsHorizontalScrollIndicator = false
         self.collectionView.showsVerticalScrollIndicator = false
@@ -47,11 +46,12 @@ class EmailViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.setupNavBar()
         Defaults[.screenId] = ""
     }
     
     func setupNavBar() {
-        self.customNavigationBar(.secondary, title: "Login", textColor: UIColor.Asset.lightBlue)
+        self.customNavigationBar(.secondary, title: Localization.RegisterCheckEmail.title.text, textColor: UIColor.Asset.lightBlue)
     }
 }
 

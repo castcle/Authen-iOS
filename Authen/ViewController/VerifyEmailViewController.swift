@@ -63,6 +63,12 @@ class VerifyEmailViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
+        self.headlineLabel.text = Localization.VerifyEmail.title.text
+        self.subTitleLabel.text = Localization.VerifyEmail.subtitle.text
+        self.getNewEmailLabel.text = Localization.VerifyEmail.notice.text
+        self.resendButton.setTitle(Localization.VerifyEmail.resend.text, for: .normal)
+        self.feedButton.setTitle(Localization.VerifyEmail.gotoFeed.text, for: .normal)
+        self.profileButton.setTitle(Localization.VerifyEmail.gotoProfileSetting.text, for: .normal)
         Defaults[.screenId] = ""
     }
 

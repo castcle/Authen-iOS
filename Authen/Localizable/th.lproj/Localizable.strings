@@ -1,0 +1,98 @@
+//  Copyright (c) 2021, Castcle and/or its affiliates. All rights reserved.
+//  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+//
+//  This code is free software; you can redistribute it and/or modify it
+//  under the terms of the GNU General Public License version 3 only, as
+//  published by the Free Software Foundation.
+//
+//  This code is distributed in the hope that it will be useful, but WITHOUT
+//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+//  FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+//  version 3 for more details (a copy is included in the LICENSE file that
+//  accompanied this code).
+//
+//  You should have received a copy of the GNU General Public License version
+//  3 along with this work; if not, write to the Free Software Foundation,
+//  Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+//
+//  Please contact Castcle, 22 Phet Kasem 47/2 Alley, Bang Khae, Bangkok,
+//  Thailand 10160, or visit www.castcle.com if you need additional information
+//  or have any questions.
+/*
+  Localizable.strings
+  Authen
+
+  Created by Tanakorn Phoochaliaw on 27/9/2564 BE.
+  
+*/
+
+// MARK: - Authen Method
+"authen_method_title"                       = "Create an Account to continue";
+"authen_method_subtitle"                    = "By continuing you agree to our";
+"authen_method_subtitle_user_agreement"     = "User Agreement";
+"authen_method_subtitle_and"                = "and";
+"authen_method_subtitle_privacy_policy"     = "Privacy Policy";
+"authen_method_telegram"                    = "Continue with Telegram";
+"authen_method_facebook"                    = "Continue with Facebook";
+"authen_method_twitter"                     = "Continue with Twitter";
+"authen_method_google"                      = "Continue with Google";
+"authen_method_apple"                       = "Continue with Apple ID";
+"authen_method_email"                       = "Continue with Email";
+"authen_method_already_account"             = "Already have a Castcle account ?";
+"authen_method_login"                       = "Login";
+"authen_method_join_us"                     = "Join us";
+"authen_method_docs"                        = "Docs";
+"authen_method_whitepaper"                  = "Whitepaper";
+"authen_method_version"                     = "Version";
+
+// MARK: - Login
+"login_title"                               = "Home";
+"login_welcome"                             = "Welcome to";
+"login_castcle"                             = "Castcle";
+"login_email"                               = "Email";
+"login_password"                            = "Password";
+"login_forgot_password"                     = "Forgot Password?";
+"login_button"                              = "Login";
+"login_new_user"                            = "New to Castcle?";
+"login_sign_up"                             = "sign up";
+
+// MARK: - Register (Check Email)
+"register_check_email_title"                = "Login";
+"register_check_email_headline"             = "What's Your Email Address ?";
+"register_check_email_welcome"              = "Welcome to Castcle";
+"register_check_email_email"                = "Email";
+"register_check_email_alert_notice"         = "You'll use this email when you login and when you lose your password.";
+"register_check_email_button"               = "Next";
+"register_check_email_already_account"      = "Already have an account?";
+"register_check_email_alert_email_invalid"  = "Someone already has this email address.\nTry another name.";
+"register_check_email_alert_email_valid"    = "This email address is valid.";
+"register_check_email_alert_wrong_format"   = "Email wrong format.";
+
+// MARK: - Register (Password)
+"register_password_headline"                = "Create Password";
+"register_password_subtitle"                = "for your Castcle account";
+"register_password_value"                   = "Password";
+"register_password_retry"                   = "Re-type Password";
+"register_password_notice"                  = "Enter a combination of at least 6 numbers, letters and punctuation marks (such as ! and &).";
+"register_password_button"                  = "Next";
+
+// MARK: - Register (Display Name)
+"register_display_name_headline"            = "Your Display name";
+"register_display_name_subtitle"            = "You can change your display name later from your account settings.";
+"register_display_name_value"               = "Display name";
+"register_display_name_castcle_id"          = "Castcle Id";
+"register_display_name_button"              = "Next";
+
+// MARK: - Verify Email
+"verify_email_title"                        = "Verify Email";
+"verify_email_subtitle"                     = "Please verify your email by clicking on the activation link sent to your inbox.";
+"verify_email_notice"                       = "If you can't get an email, please click the link below.";
+"verify_email_resend"                       = "Haven't received email yet?";
+"verify_email_go_to_feed"                   = "Go to Feed";
+"verify_email_go_to_profile_setting"        = "Go to Profile Setting";
+
+// MARK: - Resend Email
+"resend_email_title"                        = "Haven't receive email yet.";
+"resend_email_notice_title"                 = "Make sure that";
+"resend_email_notice_detail"                = "1. Your email \"%@\" is correct and can be reached from the Internet.\n\n2. Please check your spam folder.\n\n3. Your inbox is not full. Otherwise, delete some of your emails from your inbox before clicking the resend button.";
+"resend_email_button"                       = "Resend Email";

@@ -49,8 +49,9 @@ extension SignInSectionController {
     }
     
     override func cellForItem(at index: Int) -> UICollectionViewCell {
-        let cell = collectionContext?.dequeueReusableCell(withNibName: AuthenNibVars.CollectionViewCell.signIn, bundle: ConfigBundle.authen, for: self, at: index) ?? SignInCell()
-        cell.backgroundColor = UIColor.clear
-        return cell
+        let cell = collectionContext?.dequeueReusableCell(withNibName: AuthenNibVars.CollectionViewCell.signIn, bundle: ConfigBundle.authen, for: self, at: index) as? SignInCell
+        cell?.backgroundColor = UIColor.clear
+        cell?.configCell()
+        return cell ?? SignInCell()
     }
 }

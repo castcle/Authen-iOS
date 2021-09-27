@@ -727,7 +727,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vij-jZ-EkQ">
-                                <rect key="frame" x="20" y="511" width="280" height="50"/>
+                                <rect key="frame" x="20" y="404" width="280" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="UxH-vW-bOG"/>
                                 </constraints>
@@ -744,41 +744,23 @@
                                     <constraint firstAttribute="height" constant="100" id="kbB-O2-2W4"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2. Please check your spam folder." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RpG-Fv-6FJ">
-                                <rect key="frame" x="15" y="389" width="290" height="19.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3. Your inbox is not full. Otherwise, delete some of your emails from your inbox before clicking the resend button." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wPB-Z7-Slw">
-                                <rect key="frame" x="15" y="423.5" width="290" height="57.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="GRT-En-GA8"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="IB8-fP-Uci" firstAttribute="leading" secondItem="GRT-En-GA8" secondAttribute="leading" constant="15" id="4cG-j0-Rt2"/>
-                            <constraint firstItem="GRT-En-GA8" firstAttribute="trailing" secondItem="RpG-Fv-6FJ" secondAttribute="trailing" constant="15" id="5oo-g3-MDQ"/>
                             <constraint firstItem="Nd5-E2-eWP" firstAttribute="top" secondItem="A8y-21-wgO" secondAttribute="bottom" constant="30" id="Evb-mG-H4n"/>
                             <constraint firstItem="GRT-En-GA8" firstAttribute="trailing" secondItem="Vij-jZ-EkQ" secondAttribute="trailing" constant="20" id="FXr-Ee-wSw"/>
                             <constraint firstItem="A8y-21-wgO" firstAttribute="leading" secondItem="GRT-En-GA8" secondAttribute="leading" constant="15" id="FuK-j6-dv8"/>
+                            <constraint firstItem="Vij-jZ-EkQ" firstAttribute="top" secondItem="IB8-fP-Uci" secondAttribute="bottom" constant="30" id="Hfe-gm-iq8"/>
                             <constraint firstItem="z8z-lm-hQJ" firstAttribute="top" secondItem="GRT-En-GA8" secondAttribute="top" constant="50" id="Ily-Id-1QV"/>
-                            <constraint firstItem="RpG-Fv-6FJ" firstAttribute="leading" secondItem="GRT-En-GA8" secondAttribute="leading" constant="15" id="JXB-Vx-5Kz"/>
                             <constraint firstItem="GRT-En-GA8" firstAttribute="trailing" secondItem="A8y-21-wgO" secondAttribute="trailing" constant="15" id="JvV-cw-yra"/>
                             <constraint firstItem="IB8-fP-Uci" firstAttribute="top" secondItem="Nd5-E2-eWP" secondAttribute="bottom" constant="15" id="L37-A7-hlA"/>
                             <constraint firstItem="GRT-En-GA8" firstAttribute="trailing" secondItem="IB8-fP-Uci" secondAttribute="trailing" constant="15" id="cVd-EV-x8E"/>
-                            <constraint firstItem="GRT-En-GA8" firstAttribute="trailing" secondItem="wPB-Z7-Slw" secondAttribute="trailing" constant="15" id="cXr-VN-5tB"/>
                             <constraint firstItem="Nd5-E2-eWP" firstAttribute="leading" secondItem="GRT-En-GA8" secondAttribute="leading" constant="15" id="f0e-kT-5dW"/>
-                            <constraint firstItem="Vij-jZ-EkQ" firstAttribute="top" secondItem="wPB-Z7-Slw" secondAttribute="bottom" constant="30" id="fWE-Ko-SIQ"/>
                             <constraint firstItem="GRT-En-GA8" firstAttribute="trailing" secondItem="Nd5-E2-eWP" secondAttribute="trailing" constant="15" id="gEP-gh-Hev"/>
                             <constraint firstItem="Vij-jZ-EkQ" firstAttribute="leading" secondItem="GRT-En-GA8" secondAttribute="leading" constant="20" id="hHt-4V-zdf"/>
                             <constraint firstItem="A8y-21-wgO" firstAttribute="top" secondItem="z8z-lm-hQJ" secondAttribute="bottom" constant="30" id="mzj-Gd-00O"/>
-                            <constraint firstItem="wPB-Z7-Slw" firstAttribute="leading" secondItem="GRT-En-GA8" secondAttribute="leading" constant="15" id="oQf-iZ-XlF"/>
-                            <constraint firstItem="RpG-Fv-6FJ" firstAttribute="top" secondItem="IB8-fP-Uci" secondAttribute="bottom" constant="15" id="qLf-lk-DIw"/>
-                            <constraint firstItem="wPB-Z7-Slw" firstAttribute="top" secondItem="RpG-Fv-6FJ" secondAttribute="bottom" constant="15" id="rfQ-Tl-OcX"/>
                             <constraint firstItem="z8z-lm-hQJ" firstAttribute="centerX" secondItem="vAi-K8-d8q" secondAttribute="centerX" id="wLf-Rp-xqO"/>
                         </constraints>
                     </view>
@@ -786,9 +768,7 @@
                         <outlet property="firstLabel" destination="IB8-fP-Uci" id="qRR-p4-0yV"/>
                         <outlet property="headlineLabel" destination="A8y-21-wgO" id="mU9-LR-JQh"/>
                         <outlet property="resendButton" destination="Vij-jZ-EkQ" id="ajw-mV-kgq"/>
-                        <outlet property="secondLabel" destination="RpG-Fv-6FJ" id="eWh-Cs-24l"/>
                         <outlet property="subTitleLabel" destination="Nd5-E2-eWP" id="8EQ-EQ-tqb"/>
-                        <outlet property="thirdLabel" destination="wPB-Z7-Slw" id="foP-FD-wis"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7rG-ZF-ugr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

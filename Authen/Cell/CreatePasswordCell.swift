@@ -39,31 +39,8 @@ class CreatePasswordCell: UICollectionViewCell {
     @IBOutlet var nextButton: UIButton!
     @IBOutlet var showPasswordButton: UIButton!
     @IBOutlet var showConfirmPasswordButton: UIButton!
-    
-    @IBOutlet var passwordTextField: JVFloatLabeledTextField! {
-        didSet {
-            self.passwordTextField.font = UIFont.asset(.regular, fontSize: .body)
-            self.passwordTextField.placeholder = "Password"
-            self.passwordTextField.placeholderColor = UIColor.Asset.gray
-            self.passwordTextField.floatingLabelTextColor = UIColor.Asset.gray
-            self.passwordTextField.floatingLabelActiveTextColor = UIColor.Asset.gray
-            self.passwordTextField.floatingLabelFont = UIFont.asset(.regular, fontSize: .small)
-            self.passwordTextField.textColor = UIColor.Asset.white
-            self.passwordTextField.isSecureTextEntry = true
-        }
-    }
-    @IBOutlet var confirmPasswordTextField: JVFloatLabeledTextField! {
-        didSet {
-            self.confirmPasswordTextField.font = UIFont.asset(.regular, fontSize: .body)
-            self.confirmPasswordTextField.placeholder = "Re-type Password"
-            self.confirmPasswordTextField.placeholderColor = UIColor.Asset.gray
-            self.confirmPasswordTextField.floatingLabelTextColor = UIColor.Asset.gray
-            self.confirmPasswordTextField.floatingLabelActiveTextColor = UIColor.Asset.gray
-            self.confirmPasswordTextField.floatingLabelFont = UIFont.asset(.regular, fontSize: .small)
-            self.confirmPasswordTextField.textColor = UIColor.Asset.white
-            self.confirmPasswordTextField.isSecureTextEntry = true
-        }
-    }
+    @IBOutlet var passwordTextField: JVFloatLabeledTextField!
+    @IBOutlet var confirmPasswordTextField: JVFloatLabeledTextField!
     
     var viewModel = CreatePasswordViewModel()
     
@@ -86,6 +63,29 @@ class CreatePasswordCell: UICollectionViewCell {
         self.passwordTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
         self.confirmPasswordTextField.tag = 1
         self.confirmPasswordTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
+    }
+    
+    func configCell() {
+        self.headlineLabel.text = Localization.RegisterPassword.headline.text
+        self.welcomeLabel.text = Localization.RegisterPassword.subtitle.text
+        self.alertLabel.text = Localization.RegisterPassword.notice.text
+        self.nextButton.setTitle(Localization.RegisterPassword.button.text, for: .normal)
+        self.passwordTextField.font = UIFont.asset(.regular, fontSize: .body)
+        self.passwordTextField.placeholder = Localization.RegisterPassword.value.text
+        self.passwordTextField.placeholderColor = UIColor.Asset.gray
+        self.passwordTextField.floatingLabelTextColor = UIColor.Asset.gray
+        self.passwordTextField.floatingLabelActiveTextColor = UIColor.Asset.gray
+        self.passwordTextField.floatingLabelFont = UIFont.asset(.regular, fontSize: .small)
+        self.passwordTextField.textColor = UIColor.Asset.white
+        self.passwordTextField.isSecureTextEntry = true
+        self.confirmPasswordTextField.font = UIFont.asset(.regular, fontSize: .body)
+        self.confirmPasswordTextField.placeholder = Localization.RegisterPassword.retry.text
+        self.confirmPasswordTextField.placeholderColor = UIColor.Asset.gray
+        self.confirmPasswordTextField.floatingLabelTextColor = UIColor.Asset.gray
+        self.confirmPasswordTextField.floatingLabelActiveTextColor = UIColor.Asset.gray
+        self.confirmPasswordTextField.floatingLabelFont = UIFont.asset(.regular, fontSize: .small)
+        self.confirmPasswordTextField.textColor = UIColor.Asset.white
+        self.confirmPasswordTextField.isSecureTextEntry = true
     }
     
     private func setupNextButton(isActive: Bool) {

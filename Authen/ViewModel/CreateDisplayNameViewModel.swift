@@ -114,6 +114,7 @@ class CreateDisplayNameViewModel {
                     Defaults[.userRole] = "USER"
                     Defaults[.accessToken] = accessToken
                     Defaults[.refreshToken] = refreshToken
+                    Defaults[.email] = self.authenRequest.payload.email
                     self.registerNotificationToken()
                     self.delegate?.didRegisterFinish(success: true)
                 } catch {}

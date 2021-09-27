@@ -34,22 +34,7 @@ class ResendEmailViewController: UIViewController {
 
     @IBOutlet var headlineLabel: UILabel!
     @IBOutlet var subTitleLabel: UILabel!
-    @IBOutlet var firstLabel: ActiveLabel! {
-        didSet {
-            self.firstLabel.customize { label in
-                label.font = UIFont.asset(.regular, fontSize: .body)
-                label.numberOfLines = 0
-                label.textColor = UIColor.Asset.white
-                
-                let emailType = ActiveType.custom(pattern: "Castcle@gmail.com")
-                label.enabledTypes = [emailType]
-                label.customColor[emailType] = UIColor.Asset.lightBlue
-                label.customSelectedColor[emailType] = UIColor.Asset.lightBlue
-            }
-        }
-    }
-    @IBOutlet var secondLabel: UILabel!
-    @IBOutlet var thirdLabel: UILabel!
+    @IBOutlet var firstLabel: ActiveLabel!
     @IBOutlet var resendButton: UIButton!
     
     var viewModel = ResendEmailViewModel()
@@ -63,10 +48,6 @@ class ResendEmailViewController: UIViewController {
         self.headlineLabel.textColor = UIColor.Asset.white
         self.subTitleLabel.font = UIFont.asset(.medium, fontSize: .body)
         self.subTitleLabel.textColor = UIColor.Asset.white
-        self.secondLabel.font = UIFont.asset(.regular, fontSize: .body)
-        self.secondLabel.textColor = UIColor.Asset.white
-        self.thirdLabel.font = UIFont.asset(.regular, fontSize: .body)
-        self.thirdLabel.textColor = UIColor.Asset.white
         self.resendButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .h4)
         self.resendButton.setTitleColor(UIColor.Asset.white, for: .normal)
         self.resendButton.setBackgroundImage(UIColor.Asset.lightBlue.toImage(), for: .normal)
@@ -75,6 +56,21 @@ class ResendEmailViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.headlineLabel.text = Localization.ResendEmail.title.text
+        self.subTitleLabel.text = Localization.ResendEmail.noticeTitle.text
+        let noticeDetail = (Localization.ResendEmail.noticeDetail.text).replacingOccurrences(of: "%@", with: UserState.shared.email)
+        self.firstLabel.text = noticeDetail
+        self.firstLabel.customize { label in
+            label.font = UIFont.asset(.regular, fontSize: .body)
+            label.numberOfLines = 0
+            label.textColor = UIColor.Asset.white
+            
+            let emailType = ActiveType.custom(pattern: UserState.shared.email)
+            label.enabledTypes = [emailType]
+            label.customColor[emailType] = UIColor.Asset.lightBlue
+            label.customSelectedColor[emailType] = UIColor.Asset.lightBlue
+        }
+        self.resendButton.setTitle(Localization.ResendEmail.button.text, for: .normal)
         Defaults[.screenId] = ""
     }
     

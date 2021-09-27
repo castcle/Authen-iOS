@@ -44,66 +44,10 @@ class SignInCell: UICollectionViewCell {
     @IBOutlet var forgotPasswordButton: UIButton!
     @IBOutlet var loginButton: UIButton!
     @IBOutlet var showPasswordButton: UIButton!
-    
-    @IBOutlet var emailTextField: JVFloatLabeledTextField! {
-        didSet {
-            self.emailTextField.font = UIFont.asset(.regular, fontSize: .body)
-            self.emailTextField.placeholder = "Email"
-            self.emailTextField.placeholderColor = UIColor.Asset.gray
-            self.emailTextField.floatingLabelTextColor = UIColor.Asset.gray
-            self.emailTextField.floatingLabelActiveTextColor = UIColor.Asset.gray
-            self.emailTextField.floatingLabelFont = UIFont.asset(.regular, fontSize: .small)
-            self.emailTextField.textColor = UIColor.Asset.white
-        }
-    }
-    @IBOutlet var passwordTextField: JVFloatLabeledTextField! {
-        didSet {
-            self.passwordTextField.font = UIFont.asset(.regular, fontSize: .body)
-            self.passwordTextField.placeholder = "Password"
-            self.passwordTextField.placeholderColor = UIColor.Asset.gray
-            self.passwordTextField.floatingLabelTextColor = UIColor.Asset.gray
-            self.passwordTextField.floatingLabelActiveTextColor = UIColor.Asset.gray
-            self.passwordTextField.floatingLabelFont = UIFont.asset(.regular, fontSize: .small)
-            self.passwordTextField.textColor = UIColor.Asset.white
-            self.passwordTextField.isSecureTextEntry = true
-        }
-    }
-    
-    @IBOutlet var welcomeLabel: ActiveLabel! {
-        didSet {
-            self.welcomeLabel.customize { label in
-                label.font = UIFont.asset(.regular, fontSize: .h2)
-                label.numberOfLines = 1
-                label.textColor = UIColor.Asset.white
-                
-                let castcleType = ActiveType.custom(pattern: "Castcle")
-                
-                label.enabledTypes = [castcleType]
-                label.customColor[castcleType] = UIColor.Asset.lightBlue
-                label.customSelectedColor[castcleType] = UIColor.Asset.lightBlue
-            }
-        }
-    }
-    @IBOutlet var signInLabel: ActiveLabel! {
-        didSet {
-            self.signInLabel.customize { label in
-                label.font = UIFont.asset(.regular, fontSize: .h4)
-                label.numberOfLines = 1
-                label.textColor = UIColor.Asset.white
-                
-                let signUpType = ActiveType.custom(pattern: "sign up")
-                
-                label.enabledTypes = [signUpType]
-                label.customColor[signUpType] = UIColor.Asset.lightBlue
-                label.customSelectedColor[signUpType] = UIColor.Asset.lightBlue
-                
-                label.handleCustomTap(for: signUpType) { element in
-                    self.endEditing(true)
-                    Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.email), animated: true)
-                }
-            }
-        }
-    }
+    @IBOutlet var emailTextField: JVFloatLabeledTextField!
+    @IBOutlet var passwordTextField: JVFloatLabeledTextField!
+    @IBOutlet var welcomeLabel: ActiveLabel!
+    @IBOutlet var signInLabel: ActiveLabel!
     
     let hud = JGProgressHUD()
     var viewModel = LoginViewModel()
@@ -117,7 +61,6 @@ class SignInCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.hud.textLabel.text = "Loading"
         self.logoImage.image = UIImage.Asset.castcleLogo
         self.emailView.custom(color: UIColor.Asset.darkGray, cornerRadius: 10, borderWidth: 1, borderColor: UIColor.Asset.black)
         self.passwordView.custom(color: UIColor.Asset.darkGray, cornerRadius: 10, borderWidth: 1, borderColor: UIColor.Asset.black)
@@ -132,6 +75,56 @@ class SignInCell: UICollectionViewCell {
         self.passwordTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
         
         self.viewModel.delegate = self
+    }
+    
+    func configCell() {
+        self.hud.textLabel.text = "Loading"
+        self.welcomeLabel.text = "\(Localization.Login.welcome.text) \(Localization.Login.castcle.text)"
+        self.welcomeLabel.customize { label in
+            label.font = UIFont.asset(.regular, fontSize: .h2)
+            label.numberOfLines = 1
+            label.textColor = UIColor.Asset.white
+            
+            let castcleType = ActiveType.custom(pattern: Localization.Login.castcle.text)
+            
+            label.enabledTypes = [castcleType]
+            label.customColor[castcleType] = UIColor.Asset.lightBlue
+            label.customSelectedColor[castcleType] = UIColor.Asset.lightBlue
+        }
+        self.signInLabel.text = "\(Localization.Login.newUser.text) \(Localization.Login.signUp.text)"
+        self.signInLabel.customize { label in
+            label.font = UIFont.asset(.regular, fontSize: .h4)
+            label.numberOfLines = 1
+            label.textColor = UIColor.Asset.white
+            
+            let signUpType = ActiveType.custom(pattern: Localization.Login.signUp.text)
+            
+            label.enabledTypes = [signUpType]
+            label.customColor[signUpType] = UIColor.Asset.lightBlue
+            label.customSelectedColor[signUpType] = UIColor.Asset.lightBlue
+            
+            label.handleCustomTap(for: signUpType) { element in
+                self.endEditing(true)
+                Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.email), animated: true)
+            }
+        }
+        self.emailTextField.font = UIFont.asset(.regular, fontSize: .body)
+        self.emailTextField.placeholder = Localization.Login.email.text
+        self.emailTextField.placeholderColor = UIColor.Asset.gray
+        self.emailTextField.floatingLabelTextColor = UIColor.Asset.gray
+        self.emailTextField.floatingLabelActiveTextColor = UIColor.Asset.gray
+        self.emailTextField.floatingLabelFont = UIFont.asset(.regular, fontSize: .small)
+        self.emailTextField.textColor = UIColor.Asset.white
+        self.passwordTextField.font = UIFont.asset(.regular, fontSize: .body)
+        self.passwordTextField.placeholder = Localization.Login.password.text
+        self.passwordTextField.placeholderColor = UIColor.Asset.gray
+        self.passwordTextField.floatingLabelTextColor = UIColor.Asset.gray
+        self.passwordTextField.floatingLabelActiveTextColor = UIColor.Asset.gray
+        self.passwordTextField.floatingLabelFont = UIFont.asset(.regular, fontSize: .small)
+        self.passwordTextField.textColor = UIColor.Asset.white
+        self.passwordTextField.isSecureTextEntry = true
+        self.forgotPasswordButton.setTitle(Localization.Login.forgotPassword.text, for: .normal)
+        self.loginButton.setTitle(Localization.Login.button.text, for: .normal)
     }
     
     private func disableUI(isActive: Bool) {

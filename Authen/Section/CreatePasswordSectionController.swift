@@ -55,6 +55,7 @@ extension CreatePasswordSectionController {
         let cell = collectionContext?.dequeueReusableCell(withNibName: AuthenNibVars.CollectionViewCell.createPassword, bundle: ConfigBundle.authen, for: self, at: index) as? CreatePasswordCell
         cell?.backgroundColor = UIColor.clear
         cell?.viewModel = self.viewModel
+        cell?.configCell()
         return cell ?? CreatePasswordCell()
     }
 }

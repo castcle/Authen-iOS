@@ -50,7 +50,6 @@ class SignInViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.Asset.darkGraphiteBlue
         self.hideKeyboardWhenTapped()
-        self.setupNavBar()
         self.collectionView.alwaysBounceVertical = true
         self.collectionView.showsHorizontalScrollIndicator = false
         self.collectionView.showsVerticalScrollIndicator = false
@@ -67,11 +66,12 @@ class SignInViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.setupNavBar()
         Defaults[.screenId] = ""
     }
     
     func setupNavBar() {
-        self.customNavigationBar(.secondary, title: "Home", textColor: UIColor.Asset.lightBlue)
+        self.customNavigationBar(.secondary, title: Localization.Login.title.text, textColor: UIColor.Asset.lightBlue)
     }
 }
 

@@ -49,8 +49,9 @@ extension EmailSectionController {
     }
     
     override func cellForItem(at index: Int) -> UICollectionViewCell {
-        let cell = collectionContext?.dequeueReusableCell(withNibName: AuthenNibVars.CollectionViewCell.email, bundle: ConfigBundle.authen, for: self, at: index) ?? EmailCell()
-        cell.backgroundColor = UIColor.clear
-        return cell
+        let cell = collectionContext?.dequeueReusableCell(withNibName: AuthenNibVars.CollectionViewCell.email, bundle: ConfigBundle.authen, for: self, at: index) as? EmailCell
+        cell?.backgroundColor = UIColor.clear
+        cell?.configCell()
+        return cell ?? EmailCell()
     }
 }
