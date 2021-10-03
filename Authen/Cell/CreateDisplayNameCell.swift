@@ -30,6 +30,7 @@ import Core
 import Networking
 import Moya
 import JGProgressHUD
+import Defaults
 
 class CreateDisplayNameCell: UICollectionViewCell, UITextFieldDelegate {
 
@@ -214,6 +215,7 @@ extension CreateDisplayNameCell: CreateDisplayNameViewModelDelegate {
     func didRegisterFinish(success: Bool) {
         self.hud.dismiss()
         if success {
+            Defaults[.startLoadFeed] = true
             Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.verifyEmail), animated: true)
         }
     }

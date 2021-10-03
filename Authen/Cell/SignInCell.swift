@@ -186,6 +186,7 @@ extension SignInCell: LoginViewModelDelegate {
     func didLoginFinish(success: Bool) {
         self.hud.dismiss()
         if success {
+            Defaults[.startLoadFeed] = true
             Utility.currentViewController().navigationController?.popToRootViewController(animated: true)
         } else {
             self.disableUI(isActive: true)

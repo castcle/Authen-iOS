@@ -58,14 +58,14 @@ class ResendEmailViewController: UIViewController {
         super.viewWillAppear(animated)
         self.headlineLabel.text = Localization.ResendEmail.title.text
         self.subTitleLabel.text = Localization.ResendEmail.noticeTitle.text
-        let noticeDetail = (Localization.ResendEmail.noticeDetail.text).replacingOccurrences(of: "%@", with: UserState.shared.email)
+        let noticeDetail = (Localization.ResendEmail.noticeDetail.text).replacingOccurrences(of: "%@", with: UserManager.shared.email)
         self.firstLabel.text = noticeDetail
         self.firstLabel.customize { label in
             label.font = UIFont.asset(.regular, fontSize: .body)
             label.numberOfLines = 0
             label.textColor = UIColor.Asset.white
             
-            let emailType = ActiveType.custom(pattern: UserState.shared.email)
+            let emailType = ActiveType.custom(pattern: UserManager.shared.email)
             label.enabledTypes = [emailType]
             label.customColor[emailType] = UIColor.Asset.lightBlue
             label.customSelectedColor[emailType] = UIColor.Asset.lightBlue

@@ -37,12 +37,20 @@ public protocol LoginViewModelDelegate {
 class LoginViewModel {
     
     public var delegate: LoginViewModelDelegate?
-    
     var authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()
     var notificationRepository: NotificationRepository = NotificationRepositoryImpl()
+    private var userRepository: UserRepository = UserRepositoryImpl()
     var loginRequest: LoginRequest = LoginRequest()
     var notificationRequest: NotificationRequest = NotificationRequest()
     let tokenHelper: TokenHelper = TokenHelper()
+    var viewState: ViewState = .none
+    
+    enum ViewState {
+        case login
+        case registerToken
+        case getMe
+        case none
+    }
 
     //MARK: Input
     public init(loginRequest: LoginRequest = LoginRequest()) {
@@ -51,6 +59,7 @@ class LoginViewModel {
     }
     
     public func login() {
+        self.viewState = .login
         self.authenticationRepository.login(loginRequest: self.loginRequest) { (success, response, isRefreshToken) in
             if success {
                 do {
@@ -62,6 +71,7 @@ class LoginViewModel {
                     Defaults[.accessToken] = accessToken
                     Defaults[.refreshToken] = refreshToken
                     self.registerNotificationToken()
+                    self.getMe()
                     self.delegate?.didLoginFinish(success: true)
                 } catch {}
             } else {
@@ -74,15 +84,46 @@ class LoginViewModel {
         }
     }
     
+    private func getMe() {
+        self.viewState = .getMe
+        self.userRepository.getMe() { (success, response, isRefreshToken) in
+            if success {
+                do {
+                    let rawJson = try response.mapJSON()
+                    let json = JSON(rawJson)
+                    let userHelper = UserHelper()
+                    userHelper.updateLocalProfile(user: User(json: json))
+                } catch {}
+            } else {
+                if isRefreshToken {
+                    self.tokenHelper.refreshToken()
+                }
+            }
+        }
+    }
+    
     private func registerNotificationToken() {
+        self.viewState = .registerToken
         self.notificationRequest.deviceUUID = Defaults[.deviceUuid]
         self.notificationRequest.firebaseToken = Defaults[.firebaseToken]
-        self.notificationRepository.registerToken(notificationRequest: self.notificationRequest) { (_, _, _) in }
+        self.notificationRepository.registerToken(notificationRequest: self.notificationRequest) { (success, response, isRefreshToken) in
+            if !success {
+                if isRefreshToken {
+                    self.tokenHelper.refreshToken()
+                }
+            }
+        }
     }
 }
 
 extension LoginViewModel: TokenHelperDelegate {
     func didRefreshTokenFinish() {
-        self.login()
+        if self.viewState == .login {
+            self.login()
+        } else if self.viewState == .registerToken {
+            self.registerNotificationToken()
+        } else if self.viewState == .getMe {
+            self.getMe()
+        }
     }
 }

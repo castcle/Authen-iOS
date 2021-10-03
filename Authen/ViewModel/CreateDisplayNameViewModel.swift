@@ -44,6 +44,7 @@ class CreateDisplayNameViewModel {
     var notificationRepository: NotificationRepository = NotificationRepositoryImpl()
     var authenRequest: AuthenRequest = AuthenRequest()
     var notificationRequest: NotificationRequest = NotificationRequest()
+    private var userRepository: UserRepository = UserRepositoryImpl()
     var isCastcleIdExist: Bool = true
     let tokenHelper: TokenHelper = TokenHelper()
     private var stage: CreateDisplayNameStage = .none
@@ -52,6 +53,8 @@ class CreateDisplayNameViewModel {
         case suggest
         case check
         case register
+        case getMe
+        case registerToken
         case none
     }
 
@@ -128,10 +131,35 @@ class CreateDisplayNameViewModel {
         }
     }
     
+    private func getMe() {
+        self.stage = .getMe
+        self.userRepository.getMe() { (success, response, isRefreshToken) in
+            if success {
+                do {
+                    let rawJson = try response.mapJSON()
+                    let json = JSON(rawJson)
+                    let userHelper = UserHelper()
+                    userHelper.updateLocalProfile(user: User(json: json))
+                } catch {}
+            } else {
+                if isRefreshToken {
+                    self.tokenHelper.refreshToken()
+                }
+            }
+        }
+    }
+    
     private func registerNotificationToken() {
+        self.stage = .registerToken
         self.notificationRequest.deviceUUID = Defaults[.deviceUuid]
         self.notificationRequest.firebaseToken = Defaults[.firebaseToken]
-        self.notificationRepository.registerToken(notificationRequest: self.notificationRequest) { (_, _, _) in }
+        self.notificationRepository.registerToken(notificationRequest: self.notificationRequest) { (success, response, isRefreshToken) in
+            if !success {
+                if isRefreshToken {
+                    self.tokenHelper.refreshToken()
+                }
+            }
+        }
     }
 }
 
@@ -143,6 +171,10 @@ extension CreateDisplayNameViewModel: TokenHelperDelegate {
             self.checkCastcleIdExists()
         } else if self.stage == .register {
             self.register()
+        } else if self.stage == .registerToken {
+            self.registerNotificationToken()
+        } else if self.stage == .getMe {
+            self.getMe()
         }
     }
 }
