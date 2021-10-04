@@ -19,12 +19,7 @@ class EmailCell: UICollectionViewCell, UITextFieldDelegate {
     @IBOutlet var loginButton: UIButton!
     @IBOutlet var checkImage: UIImageView!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
-    
-    @IBOutlet var emailTextField: JVFloatLabeledTextField! {
-        didSet {
-            
-        }
-    }
+    @IBOutlet var emailTextField: JVFloatLabeledTextField!
     
     var viewModel = EmailViewModel()
     
@@ -70,7 +65,8 @@ class EmailCell: UICollectionViewCell, UITextFieldDelegate {
         }
     }
     
-    func configCell() {
+    func configCell(fromSignIn: Bool) {
+        self.viewModel.framSignIn = fromSignIn
         self.headlineLabel.text = Localization.RegisterCheckEmail.headline.text
         self.welcomeLabel.text = Localization.RegisterCheckEmail.welcome.text
         self.alertLabel.text = Localization.RegisterCheckEmail.alertNotice.text
@@ -152,6 +148,10 @@ class EmailCell: UICollectionViewCell, UITextFieldDelegate {
     
     @IBAction func loginAction(_ sender: Any) {
         self.endEditing(true)
-        Utility.currentViewController().navigationController?.popViewController(animated: true)
+        if self.viewModel.framSignIn {
+            Utility.currentViewController().navigationController?.popViewController(animated: true)
+        } else {
+            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.signIn(showSignUp: false)), animated: true)
+        }
     }
 }

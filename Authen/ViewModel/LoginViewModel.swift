@@ -44,6 +44,7 @@ class LoginViewModel {
     var notificationRequest: NotificationRequest = NotificationRequest()
     let tokenHelper: TokenHelper = TokenHelper()
     var viewState: ViewState = .none
+    var showSignUp: Bool = true
     
     enum ViewState {
         case login

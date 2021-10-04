@@ -34,6 +34,7 @@ class EmailViewModel {
     private var authenticationRepository: AuthenticationRepository
     var authenRequest: AuthenRequest = AuthenRequest()
     var isEmailExist: Bool = true
+    var framSignIn: Bool = true
 
     //MARK: Input
     public func checkEmailExists() {

@@ -29,6 +29,8 @@ import Core
 import IGListKit
 
 class SignInSectionController: ListSectionController {
+    var showSignUp: Bool = true
+    
     override init() {
         super.init()
         inset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -51,7 +53,7 @@ extension SignInSectionController {
     override func cellForItem(at index: Int) -> UICollectionViewCell {
         let cell = collectionContext?.dequeueReusableCell(withNibName: AuthenNibVars.CollectionViewCell.signIn, bundle: ConfigBundle.authen, for: self, at: index) as? SignInCell
         cell?.backgroundColor = UIColor.clear
-        cell?.configCell()
+        cell?.configCell(showSignUp: self.showSignUp)
         return cell ?? SignInCell()
     }
 }

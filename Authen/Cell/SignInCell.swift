@@ -77,7 +77,8 @@ class SignInCell: UICollectionViewCell {
         self.viewModel.delegate = self
     }
     
-    func configCell() {
+    func configCell(showSignUp: Bool) {
+        self.viewModel.showSignUp = showSignUp
         self.hud.textLabel.text = "Loading"
         self.welcomeLabel.text = "\(Localization.Login.welcome.text) \(Localization.Login.castcle.text)"
         self.welcomeLabel.customize { label in
@@ -105,7 +106,7 @@ class SignInCell: UICollectionViewCell {
             
             label.handleCustomTap(for: signUpType) { element in
                 self.endEditing(true)
-                Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.email), animated: true)
+                Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.email(fromSignIn: true)), animated: true)
             }
         }
         self.emailTextField.font = UIFont.asset(.regular, fontSize: .body)
@@ -125,6 +126,12 @@ class SignInCell: UICollectionViewCell {
         self.passwordTextField.isSecureTextEntry = true
         self.forgotPasswordButton.setTitle(Localization.Login.forgotPassword.text, for: .normal)
         self.loginButton.setTitle(Localization.Login.button.text, for: .normal)
+        
+        if self.viewModel.showSignUp {
+            self.signInLabel.isHidden = false
+        } else {
+            self.signInLabel.isHidden = true
+        }
     }
     
     private func disableUI(isActive: Bool) {

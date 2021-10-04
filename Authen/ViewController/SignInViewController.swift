@@ -46,6 +46,8 @@ class SignInViewController: UIViewController {
         case signIn = 1
     }
     
+    var showSignUp: Bool = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.Asset.darkGraphiteBlue
@@ -83,7 +85,9 @@ extension SignInViewController: ListAdapterDataSource {
     }
     
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
-        return SignInSectionController()
+        let section = SignInSectionController()
+        section.showSignUp = self.showSignUp
+        return section
     }
     
     func emptyView(for listAdapter: ListAdapter) -> UIView? {

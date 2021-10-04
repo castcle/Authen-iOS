@@ -26,6 +26,8 @@ class EmailViewController: UIViewController {
         case email = 0
     }
     
+    var fromSignIn: Bool = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.Asset.darkGraphiteBlue
@@ -63,7 +65,9 @@ extension EmailViewController: ListAdapterDataSource {
     }
     
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
-        return EmailSectionController()
+        let section = EmailSectionController()
+        section.fromSignIn = self.fromSignIn
+        return section
     }
     
     func emptyView(for listAdapter: ListAdapter) -> UIView? {

@@ -139,7 +139,7 @@ public class SignUpMethodViewController: UIViewController {
             label.handleCustomTap(for: logType) { element in
                 self.dismiss(animated: true)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1 ) {
-                    Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.signIn), animated: true)
+                    Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.signIn(showSignUp: true)), animated: true)
                 }
             }
         }
@@ -230,7 +230,7 @@ public class SignUpMethodViewController: UIViewController {
     @IBAction func emailAction(_ sender: Any) {
         self.dismiss(animated: true)
         DispatchQueue.main.asyncAfter(deadline: .now() + 1 ) {
-            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.email), animated: true)
+            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.email(fromSignIn: false)), animated: true)
         }
     }
 }
