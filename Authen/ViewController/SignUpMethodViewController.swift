@@ -101,13 +101,13 @@ public class SignUpMethodViewController: UIViewController {
         super.viewWillAppear(animated)
         self.titleLabel.text = Localization.AuthenMethod.title.text
         self.subTitleLabel.text = Localization.AuthenMethod.subtitle.text
-        self.agreementLabel.text = "\(Localization.AuthenMethod.subtitlePrivacyPolicy.text) \(Localization.AuthenMethod.subtitleAnd.text) \(Localization.AuthenMethod.subtitlePrivacyPolicy.text)"
+        self.agreementLabel.text = "\(Localization.AuthenMethod.subtitleUserAgreement.text) \(Localization.AuthenMethod.subtitleAnd.text) \(Localization.AuthenMethod.subtitlePrivacyPolicy.text)"
         self.agreementLabel.customize { label in
             label.font = UIFont.asset(.light, fontSize: .overline)
             label.numberOfLines = 1
             label.textColor = UIColor.Asset.white
             
-            let agreementType = ActiveType.custom(pattern: Localization.AuthenMethod.subtitlePrivacyPolicy.text)
+            let agreementType = ActiveType.custom(pattern: Localization.AuthenMethod.subtitleUserAgreement.text)
             let policyType = ActiveType.custom(pattern: Localization.AuthenMethod.subtitlePrivacyPolicy.text)
             
             label.enabledTypes = [agreementType, policyType]
