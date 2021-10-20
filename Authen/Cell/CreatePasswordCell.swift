@@ -29,7 +29,7 @@ import UIKit
 import Core
 import JVFloatLabeledTextField
 
-class CreatePasswordCell: UICollectionViewCell {
+class CreatePasswordCell: UICollectionViewCell, UITextFieldDelegate {
 
     @IBOutlet var headlineLabel: UILabel!
     @IBOutlet var welcomeLabel: UILabel!
@@ -59,10 +59,10 @@ class CreatePasswordCell: UICollectionViewCell {
         self.showConfirmPasswordButton.setImage(UIImage.init(icon: .castcle(.show), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.white).withRenderingMode(.alwaysOriginal), for: .normal)
         self.setupNextButton(isActive: false)
         
+        self.passwordTextField.delegate = self
         self.passwordTextField.tag = 0
-        self.passwordTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
+        self.confirmPasswordTextField.delegate = self
         self.confirmPasswordTextField.tag = 1
-        self.confirmPasswordTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
     }
     
     func configCell() {
@@ -90,7 +90,6 @@ class CreatePasswordCell: UICollectionViewCell {
     
     private func setupNextButton(isActive: Bool) {
         self.nextButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .h4)
-        
         if isActive {
             self.nextButton.setTitleColor(UIColor.Asset.white, for: .normal)
             self.nextButton.setBackgroundImage(UIColor.Asset.lightBlue.toImage(), for: .normal)
@@ -118,7 +117,33 @@ class CreatePasswordCell: UICollectionViewCell {
         return CGSize(width: width, height: 500)
     }
     
-    @objc func textFieldDidChange(_ textField: UITextField) {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField.tag == 0 {
+            self.confirmPasswordTextField.becomeFirstResponder()
+        } else {
+            textField.resignFirstResponder()
+        }
+        
+        return true
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        self.alertLabel.textColor = UIColor.Asset.white
+        self.alertLabel.text = Localization.RegisterPassword.notice.text
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if !self.passwordTextField.text!.isPassword {
+            self.alertLabel.textColor = UIColor.Asset.denger
+            self.alertLabel.text = "Wrong password format.\n\n\(Localization.RegisterPassword.notice.text)"
+        } else if self.passwordTextField.text! != self.confirmPasswordTextField.text! {
+            self.alertLabel.textColor = UIColor.Asset.denger
+            self.alertLabel.text = "Password and confirm password not match"
+        } else {
+            self.alertLabel.textColor = UIColor.Asset.white
+            self.alertLabel.text = Localization.RegisterPassword.notice.text
+        }
+        
         if self.validatePassword() {
             self.setupNextButton(isActive: true)
         } else {

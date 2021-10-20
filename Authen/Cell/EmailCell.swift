@@ -20,6 +20,7 @@ class EmailCell: UICollectionViewCell, UITextFieldDelegate {
     @IBOutlet var checkImage: UIImageView!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     @IBOutlet var emailTextField: JVFloatLabeledTextField!
+    @IBOutlet weak var statusButton: UIButton!
     
     var viewModel = EmailViewModel()
     
@@ -85,10 +86,12 @@ class EmailCell: UICollectionViewCell, UITextFieldDelegate {
         self.nextButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .h4)
         
         if isActive {
+            self.statusButton.isEnabled = false
             self.nextButton.setTitleColor(UIColor.Asset.white, for: .normal)
             self.nextButton.setBackgroundImage(UIColor.Asset.lightBlue.toImage(), for: .normal)
             self.nextButton.capsule(color: UIColor.clear, borderWidth: 1, borderColor: UIColor.clear)
         } else {
+            self.statusButton.isEnabled = true
             self.nextButton.setTitleColor(UIColor.Asset.gray, for: .normal)
             self.nextButton.setBackgroundImage(UIColor.Asset.darkGraphiteBlue.toImage(), for: .normal)
             self.nextButton.capsule(color: UIColor.clear, borderWidth: 1, borderColor: UIColor.Asset.black)
@@ -135,6 +138,14 @@ class EmailCell: UICollectionViewCell, UITextFieldDelegate {
             self.alertLabel.textColor = UIColor.Asset.denger
             self.emailTextField.textColor = UIColor.Asset.denger
         }
+    }
+    
+    @IBAction func statusAction(_ sender: Any) {
+        self.emailTextField.text = ""
+        self.checkImage.isHidden = true
+        self.alertLabel.text  = Localization.RegisterCheckEmail.alertNotice.text
+        self.alertLabel.textColor = UIColor.Asset.white
+        self.emailTextField.textColor = UIColor.Asset.white
     }
     
     @IBAction func nextAction(_ sender: Any) {

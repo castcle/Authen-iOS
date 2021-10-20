@@ -66,7 +66,7 @@
 "register_check_email_already_account"      = "Already have an account?";
 "register_check_email_alert_email_invalid"  = "Someone already has this email address.\nTry another name.";
 "register_check_email_alert_email_valid"    = "This email address is valid.";
-"register_check_email_alert_wrong_format"   = "Email wrong format.";
+"register_check_email_alert_wrong_format"   = "Wrong email format.";
 
 // MARK: - Register (Password)
 "register_password_headline"                = "Create Password";
