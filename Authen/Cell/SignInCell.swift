@@ -22,7 +22,7 @@
 //  SignInCell.swift
 //  Authen
 //
-//  Created by Tanakorn Phoochaliaw on 30/7/2564 BE.
+//  Created by Castcle Co., Ltd. on 30/7/2564 BE.
 //
 
 import UIKit

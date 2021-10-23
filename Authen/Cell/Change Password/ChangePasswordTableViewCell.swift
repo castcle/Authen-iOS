@@ -22,7 +22,7 @@
 //  ChangePasswordTableViewCell.swift
 //  Authen
 //
-//  Created by Tanakorn Phoochaliaw on 30/8/2564 BE.
+//  Created by Castcle Co., Ltd. on 30/8/2564 BE.
 //
 
 import UIKit

@@ -22,7 +22,7 @@
 //  VerifyPasswordViewModel.swift
 //  Authen
 //
-//  Created by Tanakorn Phoochaliaw on 12/9/2564 BE.
+//  Created by Castcle Co., Ltd. on 12/9/2564 BE.
 //
 
 import Core

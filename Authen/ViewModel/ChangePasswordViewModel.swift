@@ -22,7 +22,7 @@
 //  ChangePasswordViewModel.swift
 //  Authen
 //
-//  Created by Tanakorn Phoochaliaw on 1/9/2564 BE.
+//  Created by Castcle Co., Ltd. on 1/9/2564 BE.
 //
 
 import Core
