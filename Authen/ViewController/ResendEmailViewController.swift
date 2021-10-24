@@ -46,7 +46,7 @@ class ResendEmailViewController: UIViewController {
         self.setupNavBar()
         self.headlineLabel.font = UIFont.asset(.regular, fontSize: .title)
         self.headlineLabel.textColor = UIColor.Asset.white
-        self.subTitleLabel.font = UIFont.asset(.medium, fontSize: .body)
+        self.subTitleLabel.font = UIFont.asset(.bold, fontSize: .body)
         self.subTitleLabel.textColor = UIColor.Asset.white
         self.resendButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .h4)
         self.resendButton.setTitleColor(UIColor.Asset.white, for: .normal)

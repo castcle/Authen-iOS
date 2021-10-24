@@ -54,7 +54,7 @@ class EnterCodeViewController: UIViewController {
         self.noticLabel.textColor = UIColor.Asset.white
         self.countdownLabel.font = UIFont.asset(.regular, fontSize: .overline)
         self.countdownLabel.textColor = UIColor.Asset.lightGray
-        self.resendButton.titleLabel?.font = UIFont.asset(.medium, fontSize: .body)
+        self.resendButton.titleLabel?.font = UIFont.asset(.bold, fontSize: .body)
         self.resendButton.setTitleColor(UIColor.Asset.lightBlue, for: .normal)
         
         self.pinView.backgroundColor = UIColor.clear
@@ -68,7 +68,7 @@ class EnterCodeViewController: UIViewController {
         self.pinView.activeBorderLineColor = UIColor.Asset.white
         self.pinView.borderLineThickness = 1
         self.pinView.activeBorderLineThickness = 1
-        self.pinView.font = UIFont.asset(.medium, fontSize: .h2)
+        self.pinView.font = UIFont.asset(.bold, fontSize: .h2)
         self.pinView.keyboardType = .numberPad
         
         self.pinView.didFinishCallback = { [weak self] pin in
