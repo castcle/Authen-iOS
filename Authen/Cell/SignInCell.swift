@@ -36,7 +36,7 @@ import SwiftyJSON
 import Defaults
 import JGProgressHUD
 
-class SignInCell: UICollectionViewCell {
+class SignInCell: UICollectionViewCell, UITextFieldDelegate {
 
     @IBOutlet var logoImage: UIImageView!
     @IBOutlet var emailView: UIView!
@@ -69,8 +69,10 @@ class SignInCell: UICollectionViewCell {
         self.showPasswordButton.setImage(UIImage.init(icon: .castcle(.show), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.white).withRenderingMode(.alwaysOriginal), for: .normal)
         self.setupLoginButton(isActive: self.isCanLogin)
         
+        self.emailTextField.delegate = self
         self.emailTextField.tag = 0
         self.emailTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
+        self.passwordTextField.delegate = self
         self.passwordTextField.tag = 1
         self.passwordTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
         
@@ -161,6 +163,15 @@ class SignInCell: UICollectionViewCell {
     
     @objc func textFieldDidChange(_ textField: UITextField) {
         self.setupLoginButton(isActive: self.isCanLogin)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField.tag == 0 {
+            self.passwordTextField.becomeFirstResponder()
+        } else {
+            textField.resignFirstResponder()
+        }
+        return true
     }
     
     @IBAction func showPasswordAction(_ sender: Any) {
