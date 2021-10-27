@@ -81,7 +81,7 @@ class CreateDisplayNameCell: UICollectionViewCell, UITextFieldDelegate {
     }
     
     func configCell(viewModel: CreateDisplayNameViewModel) {
-        self.hud.textLabel.text = "Loading"
+        self.hud.textLabel.text = "Creating"
         self.viewModel = viewModel
         self.viewModel.delegate = self
         self.headlineLabel.text = Localization.RegisterDisplayName.headline.text
