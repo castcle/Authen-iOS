@@ -53,7 +53,6 @@ class CreateDisplayNameViewModel {
         case suggest
         case check
         case register
-        case getMe
         case registerToken
         case none
     }
@@ -114,6 +113,11 @@ class CreateDisplayNameViewModel {
                     let json = JSON(rawJson)
                     let accessToken = json[AuthenticationApiKey.accessToken.rawValue].stringValue
                     let refreshToken = json[AuthenticationApiKey.refreshToken.rawValue].stringValue
+                    let profile = JSON(json[AuthenticationApiKey.profile.rawValue].dictionaryValue)
+                    
+                    let userHelper = UserHelper()
+                    userHelper.updateLocalProfile(user: User(json: profile))
+                    
                     Defaults[.userRole] = "USER"
                     Defaults[.accessToken] = accessToken
                     Defaults[.refreshToken] = refreshToken
@@ -126,24 +130,6 @@ class CreateDisplayNameViewModel {
                     self.tokenHelper.refreshToken()
                 } else {
                     self.delegate?.didRegisterFinish(success: true)
-                }
-            }
-        }
-    }
-    
-    private func getMe() {
-        self.stage = .getMe
-        self.userRepository.getMe() { (success, response, isRefreshToken) in
-            if success {
-                do {
-                    let rawJson = try response.mapJSON()
-                    let json = JSON(rawJson)
-                    let userHelper = UserHelper()
-                    userHelper.updateLocalProfile(user: User(json: json))
-                } catch {}
-            } else {
-                if isRefreshToken {
-                    self.tokenHelper.refreshToken()
                 }
             }
         }
@@ -173,8 +159,6 @@ extension CreateDisplayNameViewModel: TokenHelperDelegate {
             self.register()
         } else if self.stage == .registerToken {
             self.registerNotificationToken()
-        } else if self.stage == .getMe {
-            self.getMe()
         }
     }
 }

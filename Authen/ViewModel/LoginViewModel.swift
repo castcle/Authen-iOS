@@ -29,6 +29,7 @@ import Core
 import Networking
 import SwiftyJSON
 import Defaults
+import RealmSwift
 
 public protocol LoginViewModelDelegate {
     func didLoginFinish(success: Bool)
@@ -45,11 +46,11 @@ class LoginViewModel {
     let tokenHelper: TokenHelper = TokenHelper()
     var viewState: ViewState = .none
     var showSignUp: Bool = true
+    private let realm = try! Realm()
     
     enum ViewState {
         case login
         case registerToken
-        case getMe
         case none
     }
 
@@ -68,11 +69,34 @@ class LoginViewModel {
                     let json = JSON(rawJson)
                     let accessToken = json[AuthenticationApiKey.accessToken.rawValue].stringValue
                     let refreshToken = json[AuthenticationApiKey.refreshToken.rawValue].stringValue
+                    let profile = JSON(json[AuthenticationApiKey.profile.rawValue].dictionaryValue)
+                    let pageList = json[AuthenticationApiKey.pages.rawValue].arrayValue
+                    
+                    let userHelper = UserHelper()
+                    userHelper.updateLocalProfile(user: User(json: profile))
+                    
+                    let pageLocal = self.realm.objects(PageLocal.self)
+                    try! self.realm.write {
+                        self.realm.delete(pageLocal)
+                    }
+                    
+                    pageList.forEach { page in
+                        let pageInfo = PageInfo(json: page)
+                        try! self.realm.write {
+                            let pageLocal = PageLocal()
+                            pageLocal.id = pageInfo.id
+                            pageLocal.castcleId = pageInfo.castcleId
+                            pageLocal.displayName = pageInfo.displayName
+                            pageLocal.image = pageInfo.image.avatar.fullHd
+                            self.realm.add(pageLocal, update: .modified)
+                        }
+                        
+                    }
+                    
                     Defaults[.userRole] = "USER"
                     Defaults[.accessToken] = accessToken
                     Defaults[.refreshToken] = refreshToken
                     self.registerNotificationToken()
-                    self.getMe()
                     self.delegate?.didLoginFinish(success: true)
                 } catch {}
             } else {
@@ -80,24 +104,6 @@ class LoginViewModel {
                     self.tokenHelper.refreshToken()
                 } else {
                     self.delegate?.didLoginFinish(success: false)
-                }
-            }
-        }
-    }
-    
-    private func getMe() {
-        self.viewState = .getMe
-        self.userRepository.getMe() { (success, response, isRefreshToken) in
-            if success {
-                do {
-                    let rawJson = try response.mapJSON()
-                    let json = JSON(rawJson)
-                    let userHelper = UserHelper()
-                    userHelper.updateLocalProfile(user: User(json: json))
-                } catch {}
-            } else {
-                if isRefreshToken {
-                    self.tokenHelper.refreshToken()
                 }
             }
         }
@@ -123,8 +129,6 @@ extension LoginViewModel: TokenHelperDelegate {
             self.login()
         } else if self.viewState == .registerToken {
             self.registerNotificationToken()
-        } else if self.viewState == .getMe {
-            self.getMe()
         }
     }
 }
