@@ -40,7 +40,6 @@ class LoginViewModel {
     public var delegate: LoginViewModelDelegate?
     var authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()
     var notificationRepository: NotificationRepository = NotificationRepositoryImpl()
-    private var userRepository: UserRepository = UserRepositoryImpl()
     var loginRequest: LoginRequest = LoginRequest()
     var notificationRequest: NotificationRequest = NotificationRequest()
     let tokenHelper: TokenHelper = TokenHelper()

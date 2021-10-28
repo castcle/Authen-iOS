@@ -44,7 +44,6 @@ class CreateDisplayNameViewModel {
     var notificationRepository: NotificationRepository = NotificationRepositoryImpl()
     var authenRequest: AuthenRequest = AuthenRequest()
     var notificationRequest: NotificationRequest = NotificationRequest()
-    private var userRepository: UserRepository = UserRepositoryImpl()
     var isCastcleIdExist: Bool = true
     let tokenHelper: TokenHelper = TokenHelper()
     private var stage: CreateDisplayNameStage = .none
