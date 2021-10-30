@@ -83,7 +83,6 @@ class LoginViewModel {
                         let pageInfo = PageInfo(json: page)
                         try! self.realm.write {
                             let pageLocal = PageLocal()
-                            pageLocal.id = pageInfo.id
                             pageLocal.castcleId = pageInfo.castcleId
                             pageLocal.displayName = pageInfo.displayName
                             pageLocal.image = pageInfo.image.avatar.fullHd
