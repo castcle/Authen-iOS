@@ -69,24 +69,24 @@ class LoginViewModel {
                     let accessToken = json[AuthenticationApiKey.accessToken.rawValue].stringValue
                     let refreshToken = json[AuthenticationApiKey.refreshToken.rawValue].stringValue
                     let profile = JSON(json[AuthenticationApiKey.profile.rawValue].dictionaryValue)
-                    let pageList = json[AuthenticationApiKey.pages.rawValue].arrayValue
+                    let pages = json[AuthenticationApiKey.pages.rawValue].arrayValue
                     
                     let userHelper = UserHelper()
                     userHelper.updateLocalProfile(user: User(json: profile))
                     
-                    let pageLocal = self.realm.objects(PageLocal.self)
+                    let pageRealm = self.realm.objects(Page.self)
                     try! self.realm.write {
-                        self.realm.delete(pageLocal)
+                        self.realm.delete(pageRealm)
                     }
                     
-                    pageList.forEach { page in
+                    pages.forEach { page in
                         let pageInfo = PageInfo(json: page)
                         try! self.realm.write {
-                            let pageLocal = PageLocal()
-                            pageLocal.castcleId = pageInfo.castcleId
-                            pageLocal.displayName = pageInfo.displayName
-                            pageLocal.image = pageInfo.image.avatar.thumbnail
-                            self.realm.add(pageLocal, update: .modified)
+                            let pageTemp = Page()
+                            pageTemp.castcleId = pageInfo.castcleId
+                            pageTemp.displayName = pageInfo.displayName
+                            pageTemp.image = pageInfo.image.avatar.thumbnail
+                            self.realm.add(pageTemp, update: .modified)
                         }
                         
                     }
