@@ -70,7 +70,7 @@ class LoginViewModel {
                     let refreshToken = json[AuthenticationApiKey.refreshToken.rawValue].stringValue
                     let profile = JSON(json[AuthenticationApiKey.profile.rawValue].dictionaryValue)
                     let pages = json[AuthenticationApiKey.pages.rawValue].arrayValue
-                    
+
                     let userHelper = UserHelper()
                     userHelper.updateLocalProfile(user: User(json: profile))
                     
@@ -85,7 +85,7 @@ class LoginViewModel {
                             let pageTemp = Page()
                             pageTemp.castcleId = pageInfo.castcleId
                             pageTemp.displayName = pageInfo.displayName
-                            ImageHelper.shared.downloadImage(from: pageInfo.image.avatar.thumbnail, iamgeName: pageInfo.castcleId, type: .avatar)
+                            ImageHelper.shared.downloadImage(from: pageInfo.images.avatar.thumbnail, iamgeName: pageInfo.castcleId, type: .avatar)
                             self.realm.add(pageTemp, update: .modified)
                         }
                         
