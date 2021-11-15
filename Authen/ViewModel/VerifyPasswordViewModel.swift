@@ -37,18 +37,17 @@ class VerifyPasswordViewModel {
     
     public var delegate: VerifyPasswordViewModelDelegate?
     
-    var authenticationRepository: AuthenticationRepository
+    var authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()
     var authenRequest: AuthenRequest = AuthenRequest()
     let tokenHelper: TokenHelper = TokenHelper()
 
     //MARK: Input
-    public init(authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()) {
-        self.authenticationRepository = authenticationRepository
+    public init() {
         self.tokenHelper.delegate = self
     }
     
     public func verifyPassword() {
-        self.authenticationRepository.verificationPassword(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in
+        self.authenticationRepository.verifyPassword(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in
             if success {
                 do {
                     let rawJson = try response.mapJSON()

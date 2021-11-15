@@ -28,6 +28,7 @@
 import UIKit
 import Core
 import JVFloatLabeledTextField
+import JGProgressHUD
 
 class OldPasswordTableViewCell: UITableViewCell {
 
@@ -49,6 +50,7 @@ class OldPasswordTableViewCell: UITableViewCell {
     @IBOutlet var applyButton: UIButton!
     
     var viewModel: VerifyPasswordViewModel = VerifyPasswordViewModel()
+    let hud = JGProgressHUD()
     private var isCanContinue: Bool {
         if self.passwordTextField.text!.isEmpty {
             return false
@@ -70,6 +72,7 @@ class OldPasswordTableViewCell: UITableViewCell {
         self.passwordTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
         
         self.viewModel.delegate = self
+        self.hud.textLabel.text = "Checking"
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -97,6 +100,7 @@ class OldPasswordTableViewCell: UITableViewCell {
     @IBAction func applyAction(_ sender: Any) {
         self.endEditing(true)
         if self.isCanContinue {
+            self.hud.show(in: Utility.currentViewController().view)
             self.applyButton.isEnabled = false
             self.viewModel.authenRequest.payload.password = self.passwordTextField.text ?? ""
             self.viewModel.verifyPassword()
@@ -106,7 +110,9 @@ class OldPasswordTableViewCell: UITableViewCell {
 
 extension OldPasswordTableViewCell: VerifyPasswordViewModelDelegate {
     func didVerificationPasswordFinish(success: Bool) {
+        self.hud.dismiss()
         if success {
+            self.viewModel.authenRequest.payload.objective = .changePassword
             Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.changePassword(ChangePasswordViewModel(.changePassword, authenRequest: self.viewModel.authenRequest))), animated: true)
         } else {
             self.applyButton.isEnabled = true

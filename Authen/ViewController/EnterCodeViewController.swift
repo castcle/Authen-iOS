@@ -29,6 +29,7 @@ import UIKit
 import Core
 import SVPinView
 import Defaults
+import JGProgressHUD
 
 class EnterCodeViewController: UIViewController {
 
@@ -41,6 +42,7 @@ class EnterCodeViewController: UIViewController {
     
     var secondsRemaining = 60
     var viewModel = EnterCodeViewModel(verifyCodeType: .password)
+    let hud = JGProgressHUD()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,7 +76,9 @@ class EnterCodeViewController: UIViewController {
         self.pinView.didFinishCallback = { [weak self] pin in
             guard let self = self else { return }
             if self.viewModel.verifyCodeType == .password {
-                self.gotoCreatePassword()
+                self.hud.show(in: self.view)
+                self.viewModel.authenRequest.payload.otp = pin
+                self.viewModel.verifyOtp()
             } else if self.viewModel.verifyCodeType == .mergeAccount {
                 self.gotoFeed()
             }
@@ -83,6 +87,9 @@ class EnterCodeViewController: UIViewController {
         
         self.countdownLabel.text = "Resend Code \(self.secondsRemaining)s"
         self.setupCountdown()
+        self.viewModel.delegate = self
+        self.hud.textLabel.text = "Verifying"
+        self.detailLabel.text = "We already send you an OTP to your email address \"\(self.viewModel.authenRequest.payload.email)\""
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -95,7 +102,8 @@ class EnterCodeViewController: UIViewController {
     }
     
     private func gotoCreatePassword() {
-        Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.changePassword(ChangePasswordViewModel(.forgotPassword))), animated: true)
+        self.viewModel.authenRequest.payload.objective = .forgotPassword
+        Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.changePassword(ChangePasswordViewModel(.forgotPassword, authenRequest: self.viewModel.authenRequest))), animated: true)
     }
     
     private func gotoFeed() {
@@ -119,6 +127,23 @@ class EnterCodeViewController: UIViewController {
     }
     
     @IBAction func resendAction(_ sender: Any) {
-        self.setupCountdown()
+        self.hud.show(in: self.view)
+        self.viewModel.requestOtp()
+    }
+}
+
+extension EnterCodeViewController: EnterCodeViewModelDelegate {
+    func didVerifyOtpFinish(success: Bool) {
+        self.hud.dismiss()
+        if success {
+            self.gotoCreatePassword()
+        }
+    }
+    
+    func didRequestOtpFinish(success: Bool) {
+        self.hud.dismiss()
+        if success {
+            self.setupCountdown()
+        }
     }
 }

@@ -19,69 +19,31 @@
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
 //
-//  EnterCodeViewModel.swift
+//  CheckEmailViewModel.swift
 //  Authen
 //
-//  Created by Castcle Co., Ltd. on 17/9/2564 BE.
+//  Created by Castcle Co., Ltd. on 15/11/2564 BE.
 //
 
-
+import Core
 import Networking
 import SwiftyJSON
 
-public enum VerifyCodeType {
-    case password
-    case mergeAccount
-}
-
-public protocol EnterCodeViewModelDelegate {
-    func didVerifyOtpFinish(success: Bool)
+public protocol CheckEmailViewModelDelegate {
     func didRequestOtpFinish(success: Bool)
 }
 
-public class EnterCodeViewModel {
-    public var delegate: EnterCodeViewModelDelegate?
-    public var verifyCodeType: VerifyCodeType
+class CheckEmailViewModel {
+    public var delegate: CheckEmailViewModelDelegate?
     var authenRequest: AuthenRequest = AuthenRequest()
     var authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()
     let tokenHelper: TokenHelper = TokenHelper()
-    private var state: Stage = .none
-    
-    enum Stage {
-        case requestOtp
-        case verifyOtp
-        case none
-    }
-    
-    public init(verifyCodeType: VerifyCodeType, authenRequest: AuthenRequest = AuthenRequest()) {
-        self.verifyCodeType = verifyCodeType
-        self.authenRequest = authenRequest
+
+    public init() {
         self.tokenHelper.delegate = self
     }
     
-    func verifyOtp() {
-        self.state = .verifyOtp
-        self.authenticationRepository.verificationOtp(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in
-            if success {
-                do {
-                    let rawJson = try response.mapJSON()
-                    let json = JSON(rawJson)
-                    print(json)
-                    self.authenRequest.payload.refCode = json[AuthenticationApiKey.refCode.rawValue].stringValue
-                    self.delegate?.didVerifyOtpFinish(success: true)
-                } catch {}
-            } else {
-                if isRefreshToken {
-                    self.tokenHelper.refreshToken()
-                } else {
-                    self.delegate?.didVerifyOtpFinish(success: false)
-                }
-            }
-        }
-    }
-    
     func requestOtp() {
-        self.state = .requestOtp
         self.authenticationRepository.requestOtp(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in
             if success {
                 do {
@@ -101,12 +63,8 @@ public class EnterCodeViewModel {
     }
 }
 
-extension EnterCodeViewModel: TokenHelperDelegate {
+extension CheckEmailViewModel: TokenHelperDelegate {
     public func didRefreshTokenFinish() {
-        if self.state == .verifyOtp {
-            self.verifyOtp()
-        } else if self.state == .requestOtp {
-            self.requestOtp()
-        }
+        self.requestOtp()
     }
 }
