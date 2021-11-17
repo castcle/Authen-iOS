@@ -28,6 +28,7 @@
 import UIKit
 import Core
 import JVFloatLabeledTextField
+import JGProgressHUD
 
 class ChangePasswordTableViewCell: UITableViewCell {
 
@@ -66,6 +67,7 @@ class ChangePasswordTableViewCell: UITableViewCell {
     @IBOutlet var charTypeImage: UIImageView!
     
     private var viewModel = ChangePasswordViewModel(.changePassword)
+    let hud = JGProgressHUD()
     
     private var isCanContinue: Bool {
         self.checkCharacterCount()
@@ -112,6 +114,7 @@ class ChangePasswordTableViewCell: UITableViewCell {
     func configCell(viewModel: ChangePasswordViewModel) {
         self.viewModel = viewModel
         self.viewModel.delegate = self
+        self.hud.textLabel.text = "Creating"
     }
     
     private func setupContinueButton(isActive: Bool) {
@@ -155,23 +158,17 @@ class ChangePasswordTableViewCell: UITableViewCell {
     @IBAction func applyAction(_ sender: Any) {
         self.endEditing(true)
         if self.isCanContinue {
+            self.hud.show(in: Utility.currentViewController().view)
             self.applyButton.isEnabled = false
             self.viewModel.authenRequest.payload.newPassword = self.passwordTextField.text ?? ""
             self.viewModel.changePasswordSubmit()
-//            if self.viewModel.changePasswordType == .changePassword {
-//                self.applyButton.isEnabled = false
-//                self.viewModel.authenRequest.payload.newPassword = self.passwordTextField.text ?? ""
-//                self.viewModel.authenRequest.payload.objective = .changePassword
-//                self.viewModel.changePasswordSubmit()
-//            } else {
-//                Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.changePasswordSuccess(self.viewModel)), animated: true)
-//            }
         }
     }
 }
 
 extension ChangePasswordTableViewCell: ChangePasswordViewModelDelegate {
     func didChangePasswordSubmitFinish(success: Bool) {
+        self.hud.dismiss()
         if success {
             Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.changePasswordSuccess(self.viewModel)), animated: true)
         } else {

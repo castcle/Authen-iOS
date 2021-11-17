@@ -66,7 +66,6 @@ public class EnterCodeViewModel {
                 do {
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
-                    print(json)
                     self.authenRequest.payload.refCode = json[AuthenticationApiKey.refCode.rawValue].stringValue
                     self.delegate?.didVerifyOtpFinish(success: true)
                 } catch {}
