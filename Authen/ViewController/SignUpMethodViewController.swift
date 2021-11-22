@@ -36,16 +36,22 @@ public class SignUpMethodViewController: UIViewController {
 
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var subTitleLabel: UILabel!
+    @IBOutlet var twitterLabel: UILabel!
+    @IBOutlet var appleLabel: UILabel!
     @IBOutlet var emailLabel: UILabel!
     @IBOutlet var agreementLabel: ActiveLabel!
     @IBOutlet var loginLabel: ActiveLabel!
     @IBOutlet var otherLabel: ActiveLabel!
     
     @IBOutlet var backgroundView: UIView!
+    @IBOutlet var twitterView: UIView!
+    @IBOutlet var appleView: UIView!
     @IBOutlet var emailView: UIView!
+    @IBOutlet var twitterImage: UIImageView!
+    @IBOutlet var appleImage: UIImageView!
     @IBOutlet var emailImage: UIImageView!
     
-    var maxHeight = (UIScreen.main.bounds.height - 370)
+    var maxHeight = (UIScreen.main.bounds.height - 480)
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,10 +61,18 @@ public class SignUpMethodViewController: UIViewController {
         self.titleLabel.textColor = UIColor.Asset.white
         self.subTitleLabel.font = UIFont.asset(.light, fontSize: .overline)
         self.subTitleLabel.textColor = UIColor.Asset.white
+        self.twitterLabel.font = UIFont.asset(.regular, fontSize: .body)
+        self.twitterLabel.textColor = UIColor.Asset.white
+        self.appleLabel.font = UIFont.asset(.regular, fontSize: .body)
+        self.appleLabel.textColor = UIColor.Asset.white
         self.emailLabel.font = UIFont.asset(.regular, fontSize: .body)
         self.emailLabel.textColor = UIColor.Asset.white
+        self.twitterView.custom(color: UIColor.Asset.twitter, cornerRadius: 10)
+        self.appleView.custom(color: UIColor.Asset.apple, cornerRadius: 10)
         self.emailView.custom(color: UIColor.Asset.black, cornerRadius: 10)
         
+        self.twitterImage.image = UIImage.init(icon: .castcle(.twitter), size: CGSize(width: 23, height: 23), textColor: UIColor.Asset.white)
+        self.appleImage.image = UIImage.init(icon: .castcle(.apple), size: CGSize(width: 23, height: 23), textColor: UIColor.Asset.white)
         self.emailImage.image = UIImage.init(icon: .castcle(.email), size: CGSize(width: 23, height: 23), textColor: UIColor.Asset.white)
     }
     
@@ -141,7 +155,9 @@ public class SignUpMethodViewController: UIViewController {
                 self.openWebView(urlString: Environment.whitepaper)
             }
         }
-        self.otherLabel.text = "\(Localization.AuthenMethod.joinUs.text) | \(Localization.AuthenMethod.docs.text) | \(Localization.AuthenMethod.whitepaper.text) | \(Localization.AuthenMethod.version.text) \(Defaults[.appVersion]) - \(Defaults[.appBuild])"
+        self.otherLabel.text = "\(Localization.AuthenMethod.joinUs.text) | \(Localization.AuthenMethod.docs.text) | \(Localization.AuthenMethod.whitepaper.text) | \(Localization.AuthenMethod.version.text) \(Defaults[.appVersion]) (\(Defaults[.appBuild]))"
+        self.twitterLabel.text = Localization.AuthenMethod.twitter.text
+        self.appleLabel.text = Localization.AuthenMethod.apple.text
         self.emailLabel.text = Localization.AuthenMethod.email.text
     }
     
@@ -152,9 +168,23 @@ public class SignUpMethodViewController: UIViewController {
         }
     }
     
+    @IBAction func twitterAction(_ sender: Any) {
+        self.dismiss(animated: true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.mergeAccount(MergeAccountViewModel(socialType: .twitter))), animated: true)
+        }
+    }
+    
+    @IBAction func appleAction(_ sender: Any) {
+        self.dismiss(animated: true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.mergeAccount(MergeAccountViewModel(socialType: .apple))), animated: true)
+        }
+    }
+    
     @IBAction func emailAction(_ sender: Any) {
         self.dismiss(animated: true)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1 ) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.email(fromSignIn: false)), animated: true)
         }
     }
