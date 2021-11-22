@@ -81,7 +81,7 @@ class CreateDisplayNameCell: UICollectionViewCell, UITextFieldDelegate {
     }
     
     func configCell(viewModel: CreateDisplayNameViewModel) {
-        self.hud.textLabel.text = "Loading"
+        self.hud.textLabel.text = "Creating"
         self.viewModel = viewModel
         self.viewModel.delegate = self
         self.headlineLabel.text = Localization.RegisterDisplayName.headline.text
@@ -136,7 +136,11 @@ class CreateDisplayNameCell: UICollectionViewCell, UITextFieldDelegate {
         if textField.tag == 1 {
             let displayCastcleId = textField.text ?? ""
             let castcleId = self.castcleId(displayCastcleId: displayCastcleId)
-            textField.text = "@\(castcleId)"
+            if !castcleId.isEmpty {
+                textField.text = "@\(castcleId)"
+            } else {
+                textField.text = ""
+            }
         }
     }
     

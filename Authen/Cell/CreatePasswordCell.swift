@@ -123,7 +123,6 @@ class CreatePasswordCell: UICollectionViewCell, UITextFieldDelegate {
         } else {
             textField.resignFirstResponder()
         }
-        
         return true
     }
     

@@ -40,7 +40,7 @@ class EmailCell: UICollectionViewCell, UITextFieldDelegate {
     @IBOutlet var checkImage: UIImageView!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     @IBOutlet var emailTextField: JVFloatLabeledTextField!
-    @IBOutlet weak var statusButton: UIButton!
+    @IBOutlet var statusButton: UIButton!
     
     var viewModel = EmailViewModel()
     

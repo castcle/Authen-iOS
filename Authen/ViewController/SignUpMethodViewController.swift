@@ -36,31 +36,16 @@ public class SignUpMethodViewController: UIViewController {
 
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var subTitleLabel: UILabel!
-    @IBOutlet var telegramLabel: UILabel!
-    @IBOutlet var facebookLabel: UILabel!
-    @IBOutlet var twitterLabel: UILabel!
-    @IBOutlet var googleLabel: UILabel!
-    @IBOutlet var appleLabel: UILabel!
     @IBOutlet var emailLabel: UILabel!
     @IBOutlet var agreementLabel: ActiveLabel!
     @IBOutlet var loginLabel: ActiveLabel!
     @IBOutlet var otherLabel: ActiveLabel!
     
     @IBOutlet var backgroundView: UIView!
-    @IBOutlet var telegramView: UIView!
-    @IBOutlet var facebookView: UIView!
-    @IBOutlet var twitterView: UIView!
-    @IBOutlet var googleView: UIView!
-    @IBOutlet var appleView: UIView!
     @IBOutlet var emailView: UIView!
-    @IBOutlet var telegramImage: UIImageView!
-    @IBOutlet var facebookImage: UIImageView!
-    @IBOutlet var twitterImage: UIImageView!
-    @IBOutlet var googleImage: UIImageView!
-    @IBOutlet var appleImage: UIImageView!
     @IBOutlet var emailImage: UIImageView!
     
-    var maxHeight = (UIScreen.main.bounds.height - 650)
+    var maxHeight = (UIScreen.main.bounds.height - 370)
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,30 +55,10 @@ public class SignUpMethodViewController: UIViewController {
         self.titleLabel.textColor = UIColor.Asset.white
         self.subTitleLabel.font = UIFont.asset(.light, fontSize: .overline)
         self.subTitleLabel.textColor = UIColor.Asset.white
-        self.telegramLabel.font = UIFont.asset(.regular, fontSize: .body)
-        self.telegramLabel.textColor = UIColor.Asset.white
-        self.facebookLabel.font = UIFont.asset(.regular, fontSize: .body)
-        self.facebookLabel.textColor = UIColor.Asset.white
-        self.twitterLabel.font = UIFont.asset(.regular, fontSize: .body)
-        self.twitterLabel.textColor = UIColor.Asset.white
-        self.googleLabel.font = UIFont.asset(.regular, fontSize: .body)
-        self.googleLabel.textColor = UIColor.Asset.black
-        self.appleLabel.font = UIFont.asset(.regular, fontSize: .body)
-        self.appleLabel.textColor = UIColor.Asset.white
         self.emailLabel.font = UIFont.asset(.regular, fontSize: .body)
         self.emailLabel.textColor = UIColor.Asset.white
-        self.telegramView.custom(color: UIColor.Asset.telegram, cornerRadius: 10)
-        self.facebookView.custom(color: UIColor.Asset.facebook, cornerRadius: 10)
-        self.twitterView.custom(color: UIColor.Asset.twitter, cornerRadius: 10)
-        self.googleView.custom(color: UIColor.Asset.white, cornerRadius: 10)
-        self.appleView.custom(color: UIColor.Asset.apple, cornerRadius: 10)
         self.emailView.custom(color: UIColor.Asset.black, cornerRadius: 10)
         
-        self.telegramImage.image = UIImage.init(icon: .castcle(.direct), size: CGSize(width: 23, height: 23), textColor: UIColor.Asset.white)
-        self.facebookImage.image = UIImage.init(icon: .castcle(.facebook), size: CGSize(width: 23, height: 23), textColor: UIColor.Asset.white)
-        self.twitterImage.image = UIImage.init(icon: .castcle(.twitter), size: CGSize(width: 23, height: 23), textColor: UIColor.Asset.white)
-        self.googleImage.image = UIImage.Asset.googleLogo
-        self.appleImage.image = UIImage.init(icon: .castcle(.apple), size: CGSize(width: 23, height: 23), textColor: UIColor.Asset.white)
         self.emailImage.image = UIImage.init(icon: .castcle(.email), size: CGSize(width: 23, height: 23), textColor: UIColor.Asset.white)
     }
     
@@ -177,11 +142,6 @@ public class SignUpMethodViewController: UIViewController {
             }
         }
         self.otherLabel.text = "\(Localization.AuthenMethod.joinUs.text) | \(Localization.AuthenMethod.docs.text) | \(Localization.AuthenMethod.whitepaper.text) | \(Localization.AuthenMethod.version.text) \(Defaults[.appVersion]) - \(Defaults[.appBuild])"
-        self.telegramLabel.text = Localization.AuthenMethod.telegram.text
-        self.facebookLabel.text = Localization.AuthenMethod.facebook.text
-        self.twitterLabel.text = Localization.AuthenMethod.twitter.text
-        self.googleLabel.text = Localization.AuthenMethod.google.text
-        self.appleLabel.text = Localization.AuthenMethod.apple.text
         self.emailLabel.text = Localization.AuthenMethod.email.text
     }
     
@@ -189,41 +149,6 @@ public class SignUpMethodViewController: UIViewController {
         self.dismiss(animated: true)
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(URL(string: urlString)!)), animated: true)
-        }
-    }
-    
-    @IBAction func telegramAction(_ sender: Any) {
-        self.dismiss(animated: true)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1 ) {
-            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.mergeAccount(MergeAccountViewModel(socialType: .telegram))), animated: true)
-        }
-    }
-    
-    @IBAction func facebookAction(_ sender: Any) {
-        self.dismiss(animated: true)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1 ) {
-            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.mergeAccount(MergeAccountViewModel(socialType: .facebook))), animated: true)
-        }
-    }
-    
-    @IBAction func twitterAction(_ sender: Any) {
-        self.dismiss(animated: true)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1 ) {
-            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.mergeAccount(MergeAccountViewModel(socialType: .twitter))), animated: true)
-        }
-    }
-    
-    @IBAction func googleAction(_ sender: Any) {
-        self.dismiss(animated: true)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1 ) {
-            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.mergeAccount(MergeAccountViewModel(socialType: .google))), animated: true)
-        }
-    }
-    
-    @IBAction func appleAction(_ sender: Any) {
-        self.dismiss(animated: true)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1 ) {
-            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.mergeAccount(MergeAccountViewModel(socialType: .apple))), animated: true)
         }
     }
     
