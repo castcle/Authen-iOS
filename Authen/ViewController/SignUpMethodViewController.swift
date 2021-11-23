@@ -191,7 +191,6 @@ public class SignUpMethodViewController: UIViewController {
 }
 
 extension SignUpMethodViewController: PanModalPresentable {
-
     public override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
