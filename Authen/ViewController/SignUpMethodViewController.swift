@@ -116,7 +116,7 @@ public class SignUpMethodViewController: UIViewController {
             let joinUsType = ActiveType.custom(pattern: Localization.AuthenMethod.joinUs.text)
             let docsType = ActiveType.custom(pattern: Localization.AuthenMethod.docs.text)
             let whitepaperType = ActiveType.custom(pattern: Localization.AuthenMethod.whitepaper.text)
-            let versionType = ActiveType.custom(pattern: "\(Localization.AuthenMethod.version.text) \(Defaults[.appVersion]) - \(Defaults[.appBuild])")
+            let versionType = ActiveType.custom(pattern: "\(Localization.AuthenMethod.version.text) \(Defaults[.appVersion]) (\(Defaults[.appBuild]))")
             
             label.enabledTypes = [joinUsType, docsType, whitepaperType, versionType]
             
@@ -141,7 +141,7 @@ public class SignUpMethodViewController: UIViewController {
                 self.openWebView(urlString: Environment.whitepaper)
             }
         }
-        self.otherLabel.text = "\(Localization.AuthenMethod.joinUs.text) | \(Localization.AuthenMethod.docs.text) | \(Localization.AuthenMethod.whitepaper.text) | \(Localization.AuthenMethod.version.text) \(Defaults[.appVersion]) - \(Defaults[.appBuild])"
+        self.otherLabel.text = "\(Localization.AuthenMethod.joinUs.text) | \(Localization.AuthenMethod.docs.text) | \(Localization.AuthenMethod.whitepaper.text) | \(Localization.AuthenMethod.version.text) \(Defaults[.appVersion]) (\(Defaults[.appBuild]))"
         self.emailLabel.text = Localization.AuthenMethod.email.text
     }
     
