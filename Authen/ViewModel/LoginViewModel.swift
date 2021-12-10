@@ -22,13 +22,14 @@
 //  LoginViewModel.swift
 //  Authen
 //
-//  Created by Tanakorn Phoochaliaw on 10/9/2564 BE.
+//  Created by Castcle Co., Ltd. on 10/9/2564 BE.
 //
 
 import Core
 import Networking
 import SwiftyJSON
 import Defaults
+import RealmSwift
 
 public protocol LoginViewModelDelegate {
     func didLoginFinish(success: Bool)
@@ -37,19 +38,29 @@ public protocol LoginViewModelDelegate {
 class LoginViewModel {
     
     public var delegate: LoginViewModelDelegate?
-    
-    var authenticationRepository: AuthenticationRepository
+    var authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()
+    var notificationRepository: NotificationRepository = NotificationRepositoryImpl()
     var loginRequest: LoginRequest = LoginRequest()
+    var notificationRequest: NotificationRequest = NotificationRequest()
     let tokenHelper: TokenHelper = TokenHelper()
+    var viewState: ViewState = .none
+    var showSignUp: Bool = true
+    private let realm = try! Realm()
+    
+    enum ViewState {
+        case login
+        case registerToken
+        case none
+    }
 
     //MARK: Input
-    public init(loginRequest: LoginRequest = LoginRequest(), authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()) {
+    public init(loginRequest: LoginRequest = LoginRequest()) {
         self.loginRequest = loginRequest
-        self.authenticationRepository = authenticationRepository
         self.tokenHelper.delegate = self
     }
     
     public func login() {
+        self.viewState = .login
         self.authenticationRepository.login(loginRequest: self.loginRequest) { (success, response, isRefreshToken) in
             if success {
                 do {
@@ -57,9 +68,34 @@ class LoginViewModel {
                     let json = JSON(rawJson)
                     let accessToken = json[AuthenticationApiKey.accessToken.rawValue].stringValue
                     let refreshToken = json[AuthenticationApiKey.refreshToken.rawValue].stringValue
+                    let profile = JSON(json[AuthenticationApiKey.profile.rawValue].dictionaryValue)
+                    let pages = json[AuthenticationApiKey.pages.rawValue].arrayValue
+
+                    let userHelper = UserHelper()
+                    userHelper.updateLocalProfile(user: User(json: profile))
+                    
+                    let pageRealm = self.realm.objects(Page.self)
+                    try! self.realm.write {
+                        self.realm.delete(pageRealm)
+                    }
+                    
+                    pages.forEach { page in
+                        let pageInfo = PageInfo(json: page)
+                        try! self.realm.write {
+                            let pageTemp = Page()
+                            pageTemp.id = pageInfo.id
+                            pageTemp.castcleId = pageInfo.castcleId
+                            pageTemp.displayName = pageInfo.displayName
+                            ImageHelper.shared.downloadImage(from: pageInfo.images.avatar.thumbnail, iamgeName: pageInfo.castcleId, type: .avatar)
+                            self.realm.add(pageTemp, update: .modified)
+                        }
+                        
+                    }
+                    
                     Defaults[.userRole] = "USER"
                     Defaults[.accessToken] = accessToken
                     Defaults[.refreshToken] = refreshToken
+                    self.registerNotificationToken()
                     self.delegate?.didLoginFinish(success: true)
                 } catch {}
             } else {
@@ -71,10 +107,27 @@ class LoginViewModel {
             }
         }
     }
+    
+    private func registerNotificationToken() {
+        self.viewState = .registerToken
+        self.notificationRequest.deviceUUID = Defaults[.deviceUuid]
+        self.notificationRequest.firebaseToken = Defaults[.firebaseToken]
+        self.notificationRepository.registerToken(notificationRequest: self.notificationRequest) { (success, response, isRefreshToken) in
+            if !success {
+                if isRefreshToken {
+                    self.tokenHelper.refreshToken()
+                }
+            }
+        }
+    }
 }
 
 extension LoginViewModel: TokenHelperDelegate {
     func didRefreshTokenFinish() {
-        self.login()
+        if self.viewState == .login {
+            self.login()
+        } else if self.viewState == .registerToken {
+            self.registerNotificationToken()
+        }
     }
 }

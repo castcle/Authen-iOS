@@ -19,43 +19,52 @@
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
 //
-//  ResendEmailViewModel.swift
+//  CheckEmailViewModel.swift
 //  Authen
 //
-//  Created by Castcle Co., Ltd. on 11/8/2564 BE.
+//  Created by Castcle Co., Ltd. on 15/11/2564 BE.
 //
 
 import Core
 import Networking
-import Moya
+import SwiftyJSON
 
-public class ResendEmailViewModel {
-    
-    //MARK: Private
-    var authenticationRepository: AuthenticationRepository
-    var title: String = ""
+public protocol CheckEmailViewModelDelegate {
+    func didRequestOtpFinish(success: Bool)
+}
+
+class CheckEmailViewModel {
+    public var delegate: CheckEmailViewModelDelegate?
+    var authenRequest: AuthenRequest = AuthenRequest()
+    var authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()
     let tokenHelper: TokenHelper = TokenHelper()
 
-    //MARK: Input
-    public init(authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl(), title: String = "") {
-        self.authenticationRepository = authenticationRepository
-        self.title = title
+    public init() {
         self.tokenHelper.delegate = self
     }
     
-    func requestLinkVerify() {
-        self.authenticationRepository.requestLinkVerify() { (success, response, isRefreshToken) in
-            if !success {
+    func requestOtp() {
+        self.authenticationRepository.requestOtp(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in
+            if success {
+                do {
+                    let rawJson = try response.mapJSON()
+                    let json = JSON(rawJson)
+                    self.authenRequest.payload.refCode = json[AuthenticationApiKey.refCode.rawValue].stringValue
+                    self.delegate?.didRequestOtpFinish(success: true)
+                } catch {}
+            } else {
                 if isRefreshToken {
                     self.tokenHelper.refreshToken()
+                } else {
+                    self.delegate?.didRequestOtpFinish(success: false)
                 }
             }
         }
     }
 }
 
-extension ResendEmailViewModel: TokenHelperDelegate {
+extension CheckEmailViewModel: TokenHelperDelegate {
     public func didRefreshTokenFinish() {
-        self.requestLinkVerify()
+        self.requestOtp()
     }
 }

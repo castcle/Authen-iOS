@@ -22,7 +22,7 @@
 //  ForgotPasswordViewController.swift
 //  Authen
 //
-//  Created by Tanakorn Phoochaliaw on 31/8/2564 BE.
+//  Created by Castcle Co., Ltd. on 31/8/2564 BE.
 //
 
 import UIKit
@@ -70,10 +70,9 @@ class ForgotPasswordViewController: UIViewController {
         
         self.avatarImage.circle(color: UIColor.Asset.white)
         
-        let url = URL(string: UserState.shared.avatar)
-        self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.5))])
-        self.nameLabel.text = UserState.shared.name
-        self.emailLabel.text = UserState.shared.email
+        self.avatarImage.image = UserManager.shared.avatar
+        self.nameLabel.text = UserManager.shared.displayName
+        self.emailLabel.text = UserManager.shared.email
         
         self.frameView.capsule(color: UIColor.Asset.darkGraphiteBlue, borderWidth: 1, borderColor: UIColor.Asset.lightBlue)
         self.dotView.capsule(color: UIColor.Asset.lightBlue)

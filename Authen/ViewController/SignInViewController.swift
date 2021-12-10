@@ -22,7 +22,7 @@
 //  SignInViewController.swift
 //  Authen
 //
-//  Created by Tanakorn Phoochaliaw on 30/7/2564 BE.
+//  Created by Castcle Co., Ltd. on 30/7/2564 BE.
 //
 
 import UIKit
@@ -46,11 +46,12 @@ class SignInViewController: UIViewController {
         case signIn = 1
     }
     
+    var showSignUp: Bool = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.Asset.darkGraphiteBlue
         self.hideKeyboardWhenTapped()
-        self.setupNavBar()
         self.collectionView.alwaysBounceVertical = true
         self.collectionView.showsHorizontalScrollIndicator = false
         self.collectionView.showsVerticalScrollIndicator = false
@@ -67,11 +68,12 @@ class SignInViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.setupNavBar()
         Defaults[.screenId] = ""
     }
     
     func setupNavBar() {
-        self.customNavigationBar(.secondary, title: "Home", textColor: UIColor.Asset.lightBlue)
+        self.customNavigationBar(.secondary, title: Localization.Login.title.text, textColor: UIColor.Asset.lightBlue)
     }
 }
 
@@ -83,7 +85,9 @@ extension SignInViewController: ListAdapterDataSource {
     }
     
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
-        return SignInSectionController()
+        let section = SignInSectionController()
+        section.showSignUp = self.showSignUp
+        return section
     }
     
     func emptyView(for listAdapter: ListAdapter) -> UIView? {

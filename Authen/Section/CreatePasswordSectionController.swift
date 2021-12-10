@@ -22,7 +22,7 @@
 //  CreatePasswordSectionController.swift
 //  Authen
 //
-//  Created by Tanakorn Phoochaliaw on 2/8/2564 BE.
+//  Created by Castcle Co., Ltd. on 2/8/2564 BE.
 //
 
 import Core
@@ -55,6 +55,7 @@ extension CreatePasswordSectionController {
         let cell = collectionContext?.dequeueReusableCell(withNibName: AuthenNibVars.CollectionViewCell.createPassword, bundle: ConfigBundle.authen, for: self, at: index) as? CreatePasswordCell
         cell?.backgroundColor = UIColor.clear
         cell?.viewModel = self.viewModel
+        cell?.configCell()
         return cell ?? CreatePasswordCell()
     }
 }

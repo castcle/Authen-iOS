@@ -22,13 +22,14 @@
 //  CheckEmailViewController.swift
 //  Authen
 //
-//  Created by Tanakorn Phoochaliaw on 31/8/2564 BE.
+//  Created by Castcle Co., Ltd. on 31/8/2564 BE.
 //
 
 import UIKit
 import Core
 import JVFloatLabeledTextField
 import Defaults
+import JGProgressHUD
 
 class CheckEmailViewController: UIViewController {
 
@@ -48,6 +49,8 @@ class CheckEmailViewController: UIViewController {
     }
     @IBOutlet var searchButton: UIButton!
     
+    var viewModel = CheckEmailViewModel()
+    let hud = JGProgressHUD()
     private var isCanContinue: Bool {
         if self.emailTextField.text!.isEmpty {
             return false
@@ -69,6 +72,8 @@ class CheckEmailViewController: UIViewController {
         self.detailLabel.textColor = UIColor.Asset.white
         self.emailTextField.tag = 0
         self.emailTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
+        self.viewModel.delegate = self
+        self.hud.textLabel.text = "Searching"
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -101,7 +106,20 @@ class CheckEmailViewController: UIViewController {
     @IBAction func searchAction(_ sender: Any) {
         self.view.endEditing(true)
         if self.isCanContinue {
-            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.forgotPassword), animated: true)
+            self.hud.show(in: self.view)
+            self.viewModel.authenRequest.objective = .forgotPassword
+            self.viewModel.authenRequest.channel = .email
+            self.viewModel.authenRequest.payload.email = self.emailTextField.text ?? ""
+            self.viewModel.requestOtp()
+        }
+    }
+}
+
+extension CheckEmailViewController: CheckEmailViewModelDelegate {
+    func didRequestOtpFinish(success: Bool) {
+        self.hud.dismiss()
+        if success {
+            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.enterCode(EnterCodeViewModel(verifyCodeType: .password, authenRequest: self.viewModel.authenRequest))), animated: true)
         }
     }
 }

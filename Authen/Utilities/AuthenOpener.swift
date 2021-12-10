@@ -22,7 +22,7 @@
 //  AuthenOpener.swift
 //  Authen
 //
-//  Created by Tanakorn Phoochaliaw on 28/7/2564 BE.
+//  Created by Castcle Co., Ltd. on 28/7/2564 BE.
 //
 
 import UIKit
@@ -30,8 +30,8 @@ import Core
 
 public enum AuthenScene {
     case signUpMethod
-    case signIn
-    case email
+    case signIn(showSignUp: Bool)
+    case email(fromSignIn: Bool)
     case createPassword
     case createDisplayName
     case verifyEmail
@@ -52,14 +52,16 @@ public struct AuthenOpener {
             let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.authen, bundle: ConfigBundle.authen)
             let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.signUpMethod)
             return vc
-        case .signIn:
+        case .signIn(let showSignUp):
             let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.authen, bundle: ConfigBundle.authen)
-            let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.signIn)
-            return vc
-        case .email:
+            let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.signIn) as? SignInViewController
+            vc?.showSignUp = showSignUp
+            return vc ?? SignInViewController()
+        case .email(let fromSignIn):
             let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.authen, bundle: ConfigBundle.authen)
-            let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.email)
-            return vc
+            let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.email) as? EmailViewController
+            vc?.fromSignIn = fromSignIn
+            return vc ?? EmailViewController()
         case .createPassword:
             let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.authen, bundle: ConfigBundle.authen)
             let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.createPassword)

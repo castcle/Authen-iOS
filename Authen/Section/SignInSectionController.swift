@@ -22,13 +22,15 @@
 //  SignInSectionController.swift
 //  Authen
 //
-//  Created by Tanakorn Phoochaliaw on 30/7/2564 BE.
+//  Created by Castcle Co., Ltd. on 30/7/2564 BE.
 //
 
 import Core
 import IGListKit
 
 class SignInSectionController: ListSectionController {
+    var showSignUp: Bool = true
+    
     override init() {
         super.init()
         inset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -49,8 +51,9 @@ extension SignInSectionController {
     }
     
     override func cellForItem(at index: Int) -> UICollectionViewCell {
-        let cell = collectionContext?.dequeueReusableCell(withNibName: AuthenNibVars.CollectionViewCell.signIn, bundle: ConfigBundle.authen, for: self, at: index) ?? SignInCell()
-        cell.backgroundColor = UIColor.clear
-        return cell
+        let cell = collectionContext?.dequeueReusableCell(withNibName: AuthenNibVars.CollectionViewCell.signIn, bundle: ConfigBundle.authen, for: self, at: index) as? SignInCell
+        cell?.backgroundColor = UIColor.clear
+        cell?.configCell(showSignUp: self.showSignUp)
+        return cell ?? SignInCell()
     }
 }

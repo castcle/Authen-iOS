@@ -22,13 +22,15 @@
 //  EmailSectionController.swift
 //  Authen
 //
-//  Created by Tanakorn Phoochaliaw on 2/8/2564 BE.
+//  Created by Castcle Co., Ltd. on 2/8/2564 BE.
 //
 
 import Core
 import IGListKit
 
 class EmailSectionController: ListSectionController {
+    var fromSignIn: Bool = true
+    
     override init() {
         super.init()
         inset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -49,8 +51,9 @@ extension EmailSectionController {
     }
     
     override func cellForItem(at index: Int) -> UICollectionViewCell {
-        let cell = collectionContext?.dequeueReusableCell(withNibName: AuthenNibVars.CollectionViewCell.email, bundle: ConfigBundle.authen, for: self, at: index) ?? EmailCell()
-        cell.backgroundColor = UIColor.clear
-        return cell
+        let cell = collectionContext?.dequeueReusableCell(withNibName: AuthenNibVars.CollectionViewCell.email, bundle: ConfigBundle.authen, for: self, at: index) as? EmailCell
+        cell?.backgroundColor = UIColor.clear
+        cell?.configCell(fromSignIn: self.fromSignIn)
+        return cell ?? EmailCell()
     }
 }

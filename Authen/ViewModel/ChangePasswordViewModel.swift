@@ -22,7 +22,7 @@
 //  ChangePasswordViewModel.swift
 //  Authen
 //
-//  Created by Tanakorn Phoochaliaw on 1/9/2564 BE.
+//  Created by Castcle Co., Ltd. on 1/9/2564 BE.
 //
 
 import Core
@@ -43,13 +43,12 @@ public class ChangePasswordViewModel {
     
     var changePasswordType: ChangePasswordType = .changePassword
     var authenRequest: AuthenRequest
-    var authenticationRepository: AuthenticationRepository
+    var authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()
     let tokenHelper: TokenHelper = TokenHelper()
     
-    init(_ changePasswordType: ChangePasswordType, authenRequest: AuthenRequest = AuthenRequest(), authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()) {
+    init(_ changePasswordType: ChangePasswordType, authenRequest: AuthenRequest = AuthenRequest()) {
         self.changePasswordType = changePasswordType
         self.authenRequest = authenRequest
-        self.authenticationRepository = authenticationRepository
         self.tokenHelper.delegate = self
     }
     

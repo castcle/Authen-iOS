@@ -22,7 +22,7 @@
 //  CreateDisplayNameViewModel.swift
 //  Authen
 //
-//  Created by Tanakorn Phoochaliaw on 10/8/2564 BE.
+//  Created by Castcle Co., Ltd. on 10/8/2564 BE.
 //
 
 import Core
@@ -40,8 +40,10 @@ public protocol CreateDisplayNameViewModelDelegate {
 class CreateDisplayNameViewModel {
     
     public var delegate: CreateDisplayNameViewModelDelegate?
-    var authenticationRepository: AuthenticationRepository
+    var authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()
+    var notificationRepository: NotificationRepository = NotificationRepositoryImpl()
     var authenRequest: AuthenRequest = AuthenRequest()
+    var notificationRequest: NotificationRequest = NotificationRequest()
     var isCastcleIdExist: Bool = true
     let tokenHelper: TokenHelper = TokenHelper()
     private var stage: CreateDisplayNameStage = .none
@@ -50,13 +52,13 @@ class CreateDisplayNameViewModel {
         case suggest
         case check
         case register
+        case registerToken
         case none
     }
 
     //MARK: Input
-    public init(authenRequest: AuthenRequest = AuthenRequest(), authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()) {
+    public init(authenRequest: AuthenRequest = AuthenRequest()) {
         self.authenRequest = authenRequest
-        self.authenticationRepository = authenticationRepository
         self.tokenHelper.delegate = self
     }
     
@@ -110,9 +112,16 @@ class CreateDisplayNameViewModel {
                     let json = JSON(rawJson)
                     let accessToken = json[AuthenticationApiKey.accessToken.rawValue].stringValue
                     let refreshToken = json[AuthenticationApiKey.refreshToken.rawValue].stringValue
+                    let profile = JSON(json[AuthenticationApiKey.profile.rawValue].dictionaryValue)
+                    
+                    let userHelper = UserHelper()
+                    userHelper.updateLocalProfile(user: User(json: profile))
+                    
                     Defaults[.userRole] = "USER"
                     Defaults[.accessToken] = accessToken
                     Defaults[.refreshToken] = refreshToken
+                    Defaults[.email] = self.authenRequest.payload.email
+                    self.registerNotificationToken()
                     self.delegate?.didRegisterFinish(success: true)
                 } catch {}
             } else {
@@ -120,6 +129,19 @@ class CreateDisplayNameViewModel {
                     self.tokenHelper.refreshToken()
                 } else {
                     self.delegate?.didRegisterFinish(success: true)
+                }
+            }
+        }
+    }
+    
+    private func registerNotificationToken() {
+        self.stage = .registerToken
+        self.notificationRequest.deviceUUID = Defaults[.deviceUuid]
+        self.notificationRequest.firebaseToken = Defaults[.firebaseToken]
+        self.notificationRepository.registerToken(notificationRequest: self.notificationRequest) { (success, response, isRefreshToken) in
+            if !success {
+                if isRefreshToken {
+                    self.tokenHelper.refreshToken()
                 }
             }
         }
@@ -134,6 +156,8 @@ extension CreateDisplayNameViewModel: TokenHelperDelegate {
             self.checkCastcleIdExists()
         } else if self.stage == .register {
             self.register()
+        } else if self.stage == .registerToken {
+            self.registerNotificationToken()
         }
     }
 }

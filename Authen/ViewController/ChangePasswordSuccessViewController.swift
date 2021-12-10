@@ -22,7 +22,7 @@
 //  ChangePasswordSuccessViewController.swift
 //  Authen
 //
-//  Created by Tanakorn Phoochaliaw on 30/8/2564 BE.
+//  Created by Castcle Co., Ltd. on 30/8/2564 BE.
 //
 
 import UIKit
@@ -48,7 +48,7 @@ class ChangePasswordSuccessViewController: UIViewController {
         self.successImage.image = UIImage.init(icon: .castcle(.addWithCheckmark), size: CGSize(width: 100, height: 100), textColor: UIColor.Asset.lightBlue)
         
         if self.viewModel.changePasswordType == .changePassword {
-            self.homeButton.setTitle("Home", for: .normal)
+            self.homeButton.setTitle("Back", for: .normal)
         } else if self.viewModel.changePasswordType == .forgotPassword {
             self.homeButton.setTitle("เข้าสู่ระบบ", for: .normal)
         }

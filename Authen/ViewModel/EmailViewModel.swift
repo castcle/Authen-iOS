@@ -22,7 +22,7 @@
 //  EmailViewModel.swift
 //  Authen
 //
-//  Created by Tanakorn Phoochaliaw on 9/8/2564 BE.
+//  Created by Castcle Co., Ltd. on 9/8/2564 BE.
 //
 
 import Core
@@ -34,6 +34,7 @@ class EmailViewModel {
     private var authenticationRepository: AuthenticationRepository
     var authenRequest: AuthenRequest = AuthenRequest()
     var isEmailExist: Bool = true
+    var framSignIn: Bool = true
 
     //MARK: Input
     public func checkEmailExists() {

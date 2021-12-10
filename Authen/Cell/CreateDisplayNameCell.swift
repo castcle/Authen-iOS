@@ -22,13 +22,15 @@
 //  CreateDisplayNameCell.swift
 //  Authen
 //
-//  Created by Tanakorn Phoochaliaw on 2/8/2564 BE.
+//  Created by Castcle Co., Ltd. on 2/8/2564 BE.
 //
 
 import UIKit
 import Core
 import Networking
 import Moya
+import JGProgressHUD
+import Defaults
 
 class CreateDisplayNameCell: UICollectionViewCell, UITextFieldDelegate {
 
@@ -45,6 +47,7 @@ class CreateDisplayNameCell: UICollectionViewCell, UITextFieldDelegate {
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
     private var viewModel = CreateDisplayNameViewModel()
+    let hud = JGProgressHUD()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -78,8 +81,15 @@ class CreateDisplayNameCell: UICollectionViewCell, UITextFieldDelegate {
     }
     
     func configCell(viewModel: CreateDisplayNameViewModel) {
+        self.hud.textLabel.text = "Creating"
         self.viewModel = viewModel
         self.viewModel.delegate = self
+        self.headlineLabel.text = Localization.RegisterDisplayName.headline.text
+        self.subTitleLabel.text = Localization.RegisterDisplayName.subtitle.text
+        self.displayNameLabel.text = Localization.RegisterDisplayName.value.text
+        self.displayNameTextfield.placeholder = Localization.RegisterDisplayName.value.text
+        self.castcleIdLabel.text = Localization.RegisterDisplayName.castcleId.text
+        self.nextButton.setTitle(Localization.RegisterDisplayName.button.text, for: .normal)
     }
     
     private func castcleId(displayCastcleId: String) -> String {
@@ -126,7 +136,11 @@ class CreateDisplayNameCell: UICollectionViewCell, UITextFieldDelegate {
         if textField.tag == 1 {
             let displayCastcleId = textField.text ?? ""
             let castcleId = self.castcleId(displayCastcleId: displayCastcleId)
-            textField.text = "@\(castcleId)"
+            if !castcleId.isEmpty {
+                textField.text = "@\(castcleId)"
+            } else {
+                textField.text = ""
+            }
         }
     }
     
@@ -184,6 +198,7 @@ class CreateDisplayNameCell: UICollectionViewCell, UITextFieldDelegate {
     @IBAction func nextAction(_ sender: Any) {
         self.endEditing(true)
         if !self.displayNameTextfield.text!.isEmpty && !self.viewModel.isCastcleIdExist {
+            self.hud.show(in: Utility.currentViewController().view)
             self.viewModel.register()
         }
     }
@@ -202,7 +217,9 @@ extension CreateDisplayNameCell: CreateDisplayNameViewModelDelegate {
     }
     
     func didRegisterFinish(success: Bool) {
+        self.hud.dismiss()
         if success {
+            Defaults[.startLoadFeed] = true
             Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.verifyEmail), animated: true)
         }
     }
