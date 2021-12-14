@@ -130,7 +130,7 @@ public class SignUpMethodViewController: UIViewController {
             let joinUsType = ActiveType.custom(pattern: Localization.AuthenMethod.joinUs.text)
             let docsType = ActiveType.custom(pattern: Localization.AuthenMethod.docs.text)
             let whitepaperType = ActiveType.custom(pattern: Localization.AuthenMethod.whitepaper.text)
-            let versionType = ActiveType.custom(pattern: "\(Localization.AuthenMethod.version.text) \(Defaults[.appVersion]) - \(Defaults[.appBuild])")
+            let versionType = ActiveType.custom(pattern: "\(Localization.AuthenMethod.version.text) \(Defaults[.appVersion]) (\(Defaults[.appBuild]))")
             
             label.enabledTypes = [joinUsType, docsType, whitepaperType, versionType]
             
