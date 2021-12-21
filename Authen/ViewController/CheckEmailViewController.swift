@@ -31,7 +31,7 @@ import JVFloatLabeledTextField
 import Defaults
 import JGProgressHUD
 
-class CheckEmailViewController: UIViewController {
+class CheckEmailViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet var headlineLabel: UILabel!
     @IBOutlet var detailLabel: UILabel!
@@ -70,6 +70,7 @@ class CheckEmailViewController: UIViewController {
         self.headlineLabel.textColor = UIColor.Asset.white
         self.detailLabel.font = UIFont.asset(.regular, fontSize: .body)
         self.detailLabel.textColor = UIColor.Asset.white
+        self.emailTextField.delegate = self
         self.emailTextField.tag = 0
         self.emailTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
         self.viewModel.delegate = self
@@ -101,6 +102,11 @@ class CheckEmailViewController: UIViewController {
     
     @objc func textFieldDidChange(_ textField: UITextField) {
         self.setupContinueButton(isActive: self.isCanContinue)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
     
     @IBAction func searchAction(_ sender: Any) {
