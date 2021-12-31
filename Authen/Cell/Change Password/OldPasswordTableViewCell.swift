@@ -30,7 +30,7 @@ import Core
 import JVFloatLabeledTextField
 import JGProgressHUD
 
-class OldPasswordTableViewCell: UITableViewCell {
+class OldPasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
 
     @IBOutlet var headlineLabel: UILabel!
     @IBOutlet var detailLabel: UILabel!
@@ -68,6 +68,7 @@ class OldPasswordTableViewCell: UITableViewCell {
         self.detailLabel.font = UIFont.asset(.regular, fontSize: .body)
         self.detailLabel.textColor = UIColor.Asset.white
 
+        self.passwordTextField.delegate = self
         self.passwordTextField.tag = 0
         self.passwordTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
         
@@ -95,6 +96,11 @@ class OldPasswordTableViewCell: UITableViewCell {
     
     @objc func textFieldDidChange(_ textField: UITextField) {
         self.setupContinueButton(isActive: self.isCanContinue)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
     
     @IBAction func applyAction(_ sender: Any) {
