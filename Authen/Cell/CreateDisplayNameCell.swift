@@ -84,12 +84,12 @@ class CreateDisplayNameCell: UICollectionViewCell, UITextFieldDelegate {
         self.hud.textLabel.text = "Creating"
         self.viewModel = viewModel
         self.viewModel.delegate = self
-        self.headlineLabel.text = Localization.RegisterDisplayName.headline.text
-        self.subTitleLabel.text = Localization.RegisterDisplayName.subtitle.text
-        self.displayNameLabel.text = Localization.RegisterDisplayName.value.text
-        self.displayNameTextfield.placeholder = Localization.RegisterDisplayName.value.text
-        self.castcleIdLabel.text = Localization.RegisterDisplayName.castcleId.text
-        self.nextButton.setTitle(Localization.RegisterDisplayName.button.text, for: .normal)
+        self.headlineLabel.text = Localization.registerDisplayName.headline.text
+        self.subTitleLabel.text = Localization.registerDisplayName.subtitle.text
+        self.displayNameLabel.text = Localization.registerDisplayName.value.text
+        self.displayNameTextfield.placeholder = Localization.registerDisplayName.value.text
+        self.castcleIdLabel.text = Localization.registerDisplayName.castcleId.text
+        self.nextButton.setTitle(Localization.registerDisplayName.button.text, for: .normal)
     }
     
     private func castcleId(displayCastcleId: String) -> String {

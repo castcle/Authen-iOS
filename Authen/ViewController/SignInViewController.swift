@@ -73,7 +73,7 @@ class SignInViewController: UIViewController {
     }
     
     func setupNavBar() {
-        self.customNavigationBar(.secondary, title: Localization.Login.title.text, textColor: UIColor.Asset.lightBlue)
+        self.customNavigationBar(.secondary, title: Localization.login.title.text, textColor: UIColor.Asset.lightBlue)
     }
 }
 

@@ -30,7 +30,7 @@ import Core
 extension Localization {
     
     // MARK: - Authen Method
-    public enum AuthenMethod {
+    public enum authenMethod {
         case title
         case subtitle
         case subtitleUserAgreement
@@ -90,7 +90,7 @@ extension Localization {
     }
     
     // MARK: - Login
-    public enum Login {
+    public enum login {
         case title
         case welcome
         case castcle
@@ -126,7 +126,7 @@ extension Localization {
     }
     
     // MARK: - Register (Check Email)
-    public enum RegisterCheckEmail {
+    public enum registerCheckEmail {
         case title
         case headline
         case welcome
@@ -165,7 +165,7 @@ extension Localization {
     }
     
     // MARK: - Register (Password)
-    public enum RegisterPassword {
+    public enum registerPassword {
         case headline
         case subtitle
         case value
@@ -192,7 +192,7 @@ extension Localization {
     }
     
     // MARK: - Register (Display Name)
-    public enum RegisterDisplayName {
+    public enum registerDisplayName {
         case headline
         case subtitle
         case value
@@ -216,7 +216,7 @@ extension Localization {
     }
     
     // MARK: - Verify Email
-    public enum VerifyEmail {
+    public enum verifyEmail {
         case title
         case subtitle
         case notice
@@ -243,7 +243,7 @@ extension Localization {
     }
 
     // MARK: - Resend Email
-    public enum ResendEmail {
+    public enum resendEmail {
         case title
         case noticeTitle
         case noticeDetail
