@@ -78,16 +78,16 @@ public class SignUpMethodViewController: UIViewController {
     
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.titleLabel.text = Localization.AuthenMethod.title.text
-        self.subTitleLabel.text = Localization.AuthenMethod.subtitle.text
-        self.agreementLabel.text = "\(Localization.AuthenMethod.subtitleUserAgreement.text) \(Localization.AuthenMethod.subtitleAnd.text) \(Localization.AuthenMethod.subtitlePrivacyPolicy.text)"
+        self.titleLabel.text = Localization.authenMethod.title.text
+        self.subTitleLabel.text = Localization.authenMethod.subtitle.text
+        self.agreementLabel.text = "\(Localization.authenMethod.subtitleUserAgreement.text) \(Localization.authenMethod.subtitleAnd.text) \(Localization.authenMethod.subtitlePrivacyPolicy.text)"
         self.agreementLabel.customize { label in
             label.font = UIFont.asset(.light, fontSize: .overline)
             label.numberOfLines = 1
             label.textColor = UIColor.Asset.white
             
-            let agreementType = ActiveType.custom(pattern: Localization.AuthenMethod.subtitleUserAgreement.text)
-            let policyType = ActiveType.custom(pattern: Localization.AuthenMethod.subtitlePrivacyPolicy.text)
+            let agreementType = ActiveType.custom(pattern: Localization.authenMethod.subtitleUserAgreement.text)
+            let policyType = ActiveType.custom(pattern: Localization.authenMethod.subtitlePrivacyPolicy.text)
             
             label.enabledTypes = [agreementType, policyType]
             label.customColor[agreementType] = UIColor.Asset.lightBlue
@@ -103,13 +103,13 @@ public class SignUpMethodViewController: UIViewController {
                 self.openWebView(urlString: Environment.privacyPolicy)
             }
         }
-        self.loginLabel.text = "\(Localization.AuthenMethod.alreadyAccount.text) \(Localization.AuthenMethod.login.text)"
+        self.loginLabel.text = "\(Localization.authenMethod.alreadyAccount.text) \(Localization.authenMethod.login.text)"
         self.loginLabel.customize { label in
             label.font = UIFont.asset(.light, fontSize: .body)
             label.numberOfLines = 1
             label.textColor = UIColor.Asset.white
             
-            let logType = ActiveType.custom(pattern: Localization.AuthenMethod.login.text)
+            let logType = ActiveType.custom(pattern: Localization.authenMethod.login.text)
             
             label.enabledTypes = [logType]
             label.customColor[logType] = UIColor.Asset.lightBlue
@@ -127,10 +127,10 @@ public class SignUpMethodViewController: UIViewController {
             label.numberOfLines = 1
             label.textColor = UIColor.Asset.white
             
-            let joinUsType = ActiveType.custom(pattern: Localization.AuthenMethod.joinUs.text)
-            let docsType = ActiveType.custom(pattern: Localization.AuthenMethod.docs.text)
-            let whitepaperType = ActiveType.custom(pattern: Localization.AuthenMethod.whitepaper.text)
-            let versionType = ActiveType.custom(pattern: "\(Localization.AuthenMethod.version.text) \(Defaults[.appVersion]) (\(Defaults[.appBuild]))")
+            let joinUsType = ActiveType.custom(pattern: Localization.authenMethod.joinUs.text)
+            let docsType = ActiveType.custom(pattern: Localization.authenMethod.docs.text)
+            let whitepaperType = ActiveType.custom(pattern: Localization.authenMethod.whitepaper.text)
+            let versionType = ActiveType.custom(pattern: "\(Localization.authenMethod.version.text) \(Defaults[.appVersion]) (\(Defaults[.appBuild]))")
             
             label.enabledTypes = [joinUsType, docsType, whitepaperType, versionType]
             
@@ -155,10 +155,10 @@ public class SignUpMethodViewController: UIViewController {
                 self.openWebView(urlString: Environment.whitepaper)
             }
         }
-        self.otherLabel.text = "\(Localization.AuthenMethod.joinUs.text) | \(Localization.AuthenMethod.docs.text) | \(Localization.AuthenMethod.whitepaper.text) | \(Localization.AuthenMethod.version.text) \(Defaults[.appVersion]) (\(Defaults[.appBuild]))"
-        self.twitterLabel.text = Localization.AuthenMethod.twitter.text
-        self.appleLabel.text = Localization.AuthenMethod.apple.text
-        self.emailLabel.text = Localization.AuthenMethod.email.text
+        self.otherLabel.text = "\(Localization.authenMethod.joinUs.text) | \(Localization.authenMethod.docs.text) | \(Localization.authenMethod.whitepaper.text) | \(Localization.authenMethod.version.text) \(Defaults[.appVersion]) (\(Defaults[.appBuild]))"
+        self.twitterLabel.text = Localization.authenMethod.twitter.text
+        self.appleLabel.text = Localization.authenMethod.apple.text
+        self.emailLabel.text = Localization.authenMethod.email.text
     }
     
     private func openWebView(urlString: String) {

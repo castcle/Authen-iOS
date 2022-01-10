@@ -72,14 +72,14 @@ class EmailCell: UICollectionViewCell, UITextFieldDelegate {
                 self.setupNextButton(isActive: false)
                 self.checkImage.isHidden = false
                 self.checkImage.image = UIImage.init(icon: .castcle(.incorrect), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.denger)
-                self.alertLabel.text  = Localization.RegisterCheckEmail.alertEmailInvalid.text
+                self.alertLabel.text  = Localization.registerCheckEmail.alertEmailInvalid.text
                 self.alertLabel.textColor = UIColor.Asset.denger
                 self.emailTextField.textColor = UIColor.Asset.denger
             } else {
                 self.setupNextButton(isActive: true)
                 self.checkImage.isHidden = false
                 self.checkImage.image = UIImage.init(icon: .castcle(.checkmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.lightBlue)
-                self.alertLabel.text  = Localization.RegisterCheckEmail.alertEmailValid.text
+                self.alertLabel.text  = Localization.registerCheckEmail.alertEmailValid.text
                 self.alertLabel.textColor = UIColor.Asset.lightBlue
                 self.emailTextField.textColor = UIColor.Asset.white
             }
@@ -88,13 +88,13 @@ class EmailCell: UICollectionViewCell, UITextFieldDelegate {
     
     func configCell(fromSignIn: Bool) {
         self.viewModel.framSignIn = fromSignIn
-        self.headlineLabel.text = Localization.RegisterCheckEmail.headline.text
-        self.welcomeLabel.text = Localization.RegisterCheckEmail.welcome.text
-        self.alertLabel.text = Localization.RegisterCheckEmail.alertNotice.text
-        self.nextButton.setTitle(Localization.RegisterCheckEmail.button.text, for: .normal)
-        self.loginButton.setTitle(Localization.RegisterCheckEmail.alreadyAccount.text, for: .normal)
+        self.headlineLabel.text = Localization.registerCheckEmail.headline.text
+        self.welcomeLabel.text = Localization.registerCheckEmail.welcome.text
+        self.alertLabel.text = Localization.registerCheckEmail.alertNotice.text
+        self.nextButton.setTitle(Localization.registerCheckEmail.button.text, for: .normal)
+        self.loginButton.setTitle(Localization.registerCheckEmail.alreadyAccount.text, for: .normal)
         self.emailTextField.font = UIFont.asset(.regular, fontSize: .body)
-        self.emailTextField.placeholder = Localization.RegisterCheckEmail.email.text
+        self.emailTextField.placeholder = Localization.registerCheckEmail.email.text
         self.emailTextField.placeholderColor = UIColor.Asset.gray
         self.emailTextField.floatingLabelTextColor = UIColor.Asset.gray
         self.emailTextField.floatingLabelActiveTextColor = UIColor.Asset.gray
@@ -130,7 +130,7 @@ class EmailCell: UICollectionViewCell, UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         self.setupNextButton(isActive: false)
         self.checkImage.isHidden = true
-        self.alertLabel.text  = Localization.RegisterCheckEmail.alertNotice.text
+        self.alertLabel.text  = Localization.registerCheckEmail.alertNotice.text
         self.alertLabel.textColor = UIColor.Asset.white
         self.emailTextField.textColor = UIColor.Asset.white
     }
@@ -140,7 +140,7 @@ class EmailCell: UICollectionViewCell, UITextFieldDelegate {
         if email.isEmpty {
             self.setupNextButton(isActive: false)
             self.checkImage.isHidden = true
-            self.alertLabel.text  = Localization.RegisterCheckEmail.alertNotice.text
+            self.alertLabel.text  = Localization.registerCheckEmail.alertNotice.text
             self.alertLabel.textColor = UIColor.Asset.white
             self.emailTextField.textColor = UIColor.Asset.white
         } else if email.isEmail {
@@ -154,7 +154,7 @@ class EmailCell: UICollectionViewCell, UITextFieldDelegate {
             self.setupNextButton(isActive: false)
             self.checkImage.isHidden = false
             self.checkImage.image = UIImage.init(icon: .castcle(.incorrect), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.denger)
-            self.alertLabel.text  = Localization.RegisterCheckEmail.alertWrongFormat.text
+            self.alertLabel.text  = Localization.registerCheckEmail.alertWrongFormat.text
             self.alertLabel.textColor = UIColor.Asset.denger
             self.emailTextField.textColor = UIColor.Asset.denger
         }
@@ -163,7 +163,7 @@ class EmailCell: UICollectionViewCell, UITextFieldDelegate {
     @IBAction func statusAction(_ sender: Any) {
         self.emailTextField.text = ""
         self.checkImage.isHidden = true
-        self.alertLabel.text  = Localization.RegisterCheckEmail.alertNotice.text
+        self.alertLabel.text  = Localization.registerCheckEmail.alertNotice.text
         self.alertLabel.textColor = UIColor.Asset.white
         self.emailTextField.textColor = UIColor.Asset.white
     }

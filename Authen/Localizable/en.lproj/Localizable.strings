@@ -29,7 +29,7 @@
 // MARK: - Authen Method
 "authen_method_title"                       = "Create an Account to continue";
 "authen_method_subtitle"                    = "By continuing you agree to our";
-"authen_method_subtitle_user_agreement"     = "User Agreement";
+"authen_method_subtitle_user_agreement"     = "Terms of Service";
 "authen_method_subtitle_and"                = "and";
 "authen_method_subtitle_privacy_policy"     = "Privacy Policy";
 "authen_method_telegram"                    = "Continue with Telegram";
@@ -73,7 +73,7 @@
 "register_password_subtitle"                = "for your Castcle account";
 "register_password_value"                   = "Password";
 "register_password_retry"                   = "Re-type Password";
-"register_password_notice"                  = "Enter a combination of at least 6 numbers, letters and punctuation marks (such as ! and &).";
+"register_password_notice"                  = "Use 6 or more characters with a mix of numbers and both uppercase and lowercase letters";
 "register_password_button"                  = "Next";
 
 // MARK: - Register (Display Name)

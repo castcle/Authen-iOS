@@ -73,7 +73,7 @@ class EmailViewController: UIViewController {
     }
     
     func setupNavBar() {
-        self.customNavigationBar(.secondary, title: Localization.RegisterCheckEmail.title.text, textColor: UIColor.Asset.lightBlue)
+        self.customNavigationBar(.secondary, title: Localization.registerCheckEmail.title.text, textColor: UIColor.Asset.lightBlue)
     }
 }
 

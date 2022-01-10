@@ -30,7 +30,7 @@ import Core
 import JVFloatLabeledTextField
 import JGProgressHUD
 
-class ChangePasswordTableViewCell: UITableViewCell {
+class ChangePasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
 
     @IBOutlet var headlineLabel: UILabel!
     @IBOutlet var passwordGuideLabel: UILabel!
@@ -101,8 +101,10 @@ class ChangePasswordTableViewCell: UITableViewCell {
         self.charCountImage.image = UIImage.init(icon: .castcle(.addWithCheckmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.gray)
         self.charTypeImage.image = UIImage.init(icon: .castcle(.addWithCheckmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.gray)
 
+        self.passwordTextField.delegate = self
         self.passwordTextField.tag = 0
         self.passwordTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
+        self.confirmPasswordTextField.delegate = self
         self.confirmPasswordTextField.tag = 1
         self.confirmPasswordTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
     }
@@ -153,6 +155,15 @@ class ChangePasswordTableViewCell: UITableViewCell {
     
     @objc func textFieldDidChange(_ textField: UITextField) {
         self.setupContinueButton(isActive: self.isCanContinue)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField.tag == 0 {
+            self.confirmPasswordTextField.becomeFirstResponder()
+        } else {
+            textField.resignFirstResponder()
+        }
+        return true
     }
     
     @IBAction func applyAction(_ sender: Any) {

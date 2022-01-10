@@ -27,72 +27,73 @@
 */
 
 // MARK: - Authen Method
-"authen_method_title"                       = "Create an Account to continue";
-"authen_method_subtitle"                    = "By continuing you agree to our";
-"authen_method_subtitle_user_agreement"     = "User Agreement";
-"authen_method_subtitle_and"                = "and";
-"authen_method_subtitle_privacy_policy"     = "Privacy Policy";
-"authen_method_telegram"                    = "Continue with Telegram";
-"authen_method_facebook"                    = "Continue with Facebook";
-"authen_method_twitter"                     = "Continue with Twitter";
-"authen_method_google"                      = "Continue with Google";
-"authen_method_apple"                       = "Continue with Apple ID";
-"authen_method_email"                       = "Continue with Email";
-"authen_method_already_account"             = "Already have a Castcle account ?";
-"authen_method_login"                       = "Login";
-"authen_method_join_us"                     = "Join us";
+"authen_method_title"                       = "สร้างบัญชีผู้ใช้ใหม่เพื่อดำเนินการต่อ";
+"authen_method_subtitle"                    = "เมื่อดำเนินการต่อ แสดงว่าคุณยินยอมตาม";
+"authen_method_subtitle_user_agreement"     = "เงื่อนไขการใช้บริการ";
+"authen_method_subtitle_and"                = "และ";
+"authen_method_subtitle_privacy_policy"     = "นโยบายความเป็นส่วนตัว";
+"authen_method_telegram"                    = "ดำเนินการต่อด้วย Telegram";
+"authen_method_facebook"                    = "ดำเนินการต่อด้วย Facebook";
+"authen_method_twitter"                     = "ดำเนินการต่อด้วย Twitter";
+"authen_method_google"                      = "ดำเนินการต่อด้วย Google";
+"authen_method_apple"                       = "ดำเนินการต่อด้วย Apple ID";
+"authen_method_email"                       = "ดำเนินการต่อด้วย อีเมล";
+"authen_method_already_account"             = "มีบัญชีอยู่แล้วใช่ไหม ?";
+"authen_method_login"                       = "เข้าสู่ระบบ";
+"authen_method_join_us"                     = "ร่วมงานกับเรา";
 "authen_method_docs"                        = "Docs";
 "authen_method_whitepaper"                  = "Whitepaper";
-"authen_method_version"                     = "Version";
+"authen_method_version"                     = "เวอร์ชั่น";
 
 // MARK: - Login
-"login_title"                               = "Home";
-"login_welcome"                             = "Welcome to";
+"login_title"                               = "หน้าหลัก";
+"login_welcome"                             = "ยินดีต้อนรับสู่";
 "login_castcle"                             = "Castcle";
-"login_email"                               = "Email";
-"login_password"                            = "Password";
-"login_forgot_password"                     = "Forgot Password?";
-"login_button"                              = "Login";
-"login_new_user"                            = "New to Castcle?";
-"login_sign_up"                             = "sign up";
+"login_email"                               = "อีเมล";
+"login_password"                            = "รหัสผ่าน";
+"login_forgot_password"                     = "ลืมรหัสผ่านใช่หรือไม่ ?";
+"login_button"                              = "เข้าสู่ระบบ";
+"login_new_user"                            = "ยังไม่มีบัญชีผู้ใช้ใช่หรือไม่ ?";
+"login_sign_up"                             = "สมัครสมาชิก ";
 
 // MARK: - Register (Check Email)
-"register_check_email_title"                = "Login";
-"register_check_email_headline"             = "What's Your Email Address ?";
-"register_check_email_welcome"              = "Welcome to Castcle";
-"register_check_email_email"                = "Email";
-"register_check_email_alert_notice"         = "You'll use this email when you login and when you lose your password.";
-"register_check_email_button"               = "Next";
-"register_check_email_already_account"      = "Already have an account?";
-"register_check_email_alert_email_invalid"  = "Someone already has this email address.\nTry another name.";
-"register_check_email_alert_email_valid"    = "This email address is valid.";
-"register_check_email_alert_wrong_format"   = "Wrong email format.";
+"register_check_email_title"                = "เข้าสู่ระบบ";
+"register_check_email_headline"             = "อีเมลของคุณคืออะไร ?";
+"register_check_email_welcome"              = "ยินดีต้อนรับสู่ Castcle";
+"register_check_email_email"                = "อีเมล";
+"register_check_email_alert_notice"         = "คุณจะต้องใช้ข้อมูลนี้เมื่อคุณเข้าสู่ระบบหรือหากคุณจำเป็นต้องรีเซ็ตรหัสผ่านของคุณ";
+"register_check_email_button"               = "ถัดไป";
+"register_check_email_already_account"      = "มีบัญชีผู้ใช้แล้วใช่หรือไม่?";
+"register_check_email_alert_email_invalid"  = "มีบางคนใช้อีเมลนี้แล้ว\nลองอีเมลใหม่";
+"register_check_email_alert_email_valid"    = "อีเมลนี้สามารถใช้งานได้";
+"register_check_email_alert_wrong_format"   = "ผิดรูปแบบอีเมล";
 
 // MARK: - Register (Password)
-"register_password_headline"                = "Create Password";
-"register_password_subtitle"                = "for your Castcle account";
-"register_password_value"                   = "Password";
-"register_password_retry"                   = "Re-type Password";
-"register_password_notice"                  = "Enter a combination of at least 6 numbers, letters and punctuation marks (such as ! and &).";
-"register_password_button"                  = "Next";
+"register_password_headline"                = "สร้างรหัสผ่าน";
+"register_password_subtitle"                = "สำหรับบัญชี Castcle ของคุณ";
+"register_password_value"                   = "รหัสผ่าน";
+"register_password_retry"                   = "ป้อนรหัสผ่านอีกครั้ง";
+"register_password_notice"                  = "ป้อนอักขระอย่างน้อยหกตัวให้ผสมกันทั้งตัวเลข ตัวอักษรพิมพ์เล็ก และตัวอักษรพิมพ์ใหญ่";
+"register_password_button"                  = "ถัดไป";
 
 // MARK: - Register (Display Name)
-"register_display_name_headline"            = "Your Display name";
-"register_display_name_subtitle"            = "You can change your display name later from your account settings.";
-"register_display_name_value"               = "Display name";
-"register_display_name_castcle_id"          = "Castcle Id";
-"register_display_name_button"              = "Next";
+"register_display_name_headline"            = "ชื่อของคุณ";
+"register_display_name_subtitle"            = "คุณสามารถเปลี่ยนชื่อบัญชีได้ในภายหลังในการตั้งค่าบัญชี";
+"register_display_name_value"               = "ชื่อ";
+"register_display_name_castcle_id"          = "ชื่อผู้ใช้งาน";
+"register_display_name_button"              = "ถัดไป";
 
 // MARK: - Verify Email
-"verify_email_title"                        = "Verify Email";
-"verify_email_subtitle"                     = "Please verify your email by clicking on the activation link sent to your inbox.";
-"verify_email_notice"                       = "If you can't get an email, please click the link below.";
-"verify_email_resend"                       = "Haven't received email yet?";
-"verify_email_go_to_feed"                   = "Go to Feed";
-"verify_email_go_to_profile_setting"        = "Go to Profile Setting";
+"verify_email_title"                        = "ยืนยันอีเมล";
+"verify_email_subtitle"                     = "โปรดยืนยันอีเมลของคุณโดยคลิกลิงก์เปิดใช้งานที่ส่งไปยังกล่องจดหมายของคุณ";
+"verify_email_notice"                       = "หากไม่ได้รับอีเมล โปรดคลิกลิงก์ด้านล่าง
+";
+"verify_email_resend"                       = "ยังไม่ได้รับอีเมลใช่ไหม?";
+"verify_email_go_to_feed"                   = "กลับไปสู่หน้าฟีด";
+"verify_email_go_to_profile_setting"        = "กลับไปสู่หน้าตั้งค่า";
 
 // MARK: - Resend Email
-"resend_email_title"                        = "Haven't receive email yet.";
-"resend_email_notice_title"                 = "Make sure that";
-"resend_email_notice_detail"                = "1. Your email \"%@\" is correct and can be reached from the Internet.\n\n2. Please check your spam folder.\n\n3. Your inbox is not full. Otherwise, delete some of your emails from your inbox before clicking the resend button.";
-"resend_email_button"                       = "Resend Email";
+"resend_email_title"                        = "ยังไม่ได้รับอีเมลยืนยันใช่หรือไม่";
+"resend_email_notice_title"                 = "โปรดตรวจสอบให้แน่ใจว่าคุณทำรายละเอียดดังกล่าวครบถ้วนแล้ว";
+"resend_email_notice_detail"                = "1. อีเมลของคุณคือ \"%@\" และสามารถเข้าอีเมลผ่านระบบอินเตอร์เน็ตได้ปกติหรือไม่?\n\n2.โปรดตรวจสอบอีเมลสแปม\n\n3. โปรดตรวจสอบอีกครั้งว่ากล่องจดหมายของคุณไม่เต็มถ้าหากเต็มกรุณาลบอีเมลบางฉบับก่อนที่จะกดส่งอีกครั้ง";
+"resend_email_button"                       = "ส่งอีเมลอีกครั้ง";

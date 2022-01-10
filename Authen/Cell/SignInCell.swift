@@ -82,25 +82,25 @@ class SignInCell: UICollectionViewCell, UITextFieldDelegate {
     func configCell(showSignUp: Bool) {
         self.viewModel.showSignUp = showSignUp
         self.hud.textLabel.text = "Loading"
-        self.welcomeLabel.text = "\(Localization.Login.welcome.text) \(Localization.Login.castcle.text)"
+        self.welcomeLabel.text = "\(Localization.login.welcome.text) \(Localization.login.castcle.text)"
         self.welcomeLabel.customize { label in
             label.font = UIFont.asset(.regular, fontSize: .h2)
             label.numberOfLines = 1
             label.textColor = UIColor.Asset.white
             
-            let castcleType = ActiveType.custom(pattern: Localization.Login.castcle.text)
+            let castcleType = ActiveType.custom(pattern: Localization.login.castcle.text)
             
             label.enabledTypes = [castcleType]
             label.customColor[castcleType] = UIColor.Asset.lightBlue
             label.customSelectedColor[castcleType] = UIColor.Asset.lightBlue
         }
-        self.signInLabel.text = "\(Localization.Login.newUser.text) \(Localization.Login.signUp.text)"
+        self.signInLabel.text = "\(Localization.login.newUser.text) \(Localization.login.signUp.text)"
         self.signInLabel.customize { label in
             label.font = UIFont.asset(.regular, fontSize: .h4)
             label.numberOfLines = 1
             label.textColor = UIColor.Asset.white
             
-            let signUpType = ActiveType.custom(pattern: Localization.Login.signUp.text)
+            let signUpType = ActiveType.custom(pattern: Localization.login.signUp.text)
             
             label.enabledTypes = [signUpType]
             label.customColor[signUpType] = UIColor.Asset.lightBlue
@@ -112,22 +112,22 @@ class SignInCell: UICollectionViewCell, UITextFieldDelegate {
             }
         }
         self.emailTextField.font = UIFont.asset(.regular, fontSize: .body)
-        self.emailTextField.placeholder = Localization.Login.email.text
+        self.emailTextField.placeholder = Localization.login.email.text
         self.emailTextField.placeholderColor = UIColor.Asset.gray
         self.emailTextField.floatingLabelTextColor = UIColor.Asset.gray
         self.emailTextField.floatingLabelActiveTextColor = UIColor.Asset.gray
         self.emailTextField.floatingLabelFont = UIFont.asset(.regular, fontSize: .small)
         self.emailTextField.textColor = UIColor.Asset.white
         self.passwordTextField.font = UIFont.asset(.regular, fontSize: .body)
-        self.passwordTextField.placeholder = Localization.Login.password.text
+        self.passwordTextField.placeholder = Localization.login.password.text
         self.passwordTextField.placeholderColor = UIColor.Asset.gray
         self.passwordTextField.floatingLabelTextColor = UIColor.Asset.gray
         self.passwordTextField.floatingLabelActiveTextColor = UIColor.Asset.gray
         self.passwordTextField.floatingLabelFont = UIFont.asset(.regular, fontSize: .small)
         self.passwordTextField.textColor = UIColor.Asset.white
         self.passwordTextField.isSecureTextEntry = true
-        self.forgotPasswordButton.setTitle(Localization.Login.forgotPassword.text, for: .normal)
-        self.loginButton.setTitle(Localization.Login.button.text, for: .normal)
+        self.forgotPasswordButton.setTitle(Localization.login.forgotPassword.text, for: .normal)
+        self.loginButton.setTitle(Localization.login.button.text, for: .normal)
         
         if self.viewModel.showSignUp {
             self.signInLabel.isHidden = false

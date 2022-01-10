@@ -56,9 +56,9 @@ class ResendEmailViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.headlineLabel.text = Localization.ResendEmail.title.text
-        self.subTitleLabel.text = Localization.ResendEmail.noticeTitle.text
-        let noticeDetail = (Localization.ResendEmail.noticeDetail.text).replacingOccurrences(of: "%@", with: UserManager.shared.email)
+        self.headlineLabel.text = Localization.resendEmail.title.text
+        self.subTitleLabel.text = Localization.resendEmail.noticeTitle.text
+        let noticeDetail = (Localization.resendEmail.noticeDetail.text).replacingOccurrences(of: "%@", with: UserManager.shared.email)
         self.firstLabel.text = noticeDetail
         self.firstLabel.customize { label in
             label.font = UIFont.asset(.regular, fontSize: .body)
@@ -70,7 +70,7 @@ class ResendEmailViewController: UIViewController {
             label.customColor[emailType] = UIColor.Asset.lightBlue
             label.customSelectedColor[emailType] = UIColor.Asset.lightBlue
         }
-        self.resendButton.setTitle(Localization.ResendEmail.button.text, for: .normal)
+        self.resendButton.setTitle(Localization.resendEmail.button.text, for: .normal)
         Defaults[.screenId] = ""
     }
     

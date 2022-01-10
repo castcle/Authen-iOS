@@ -66,12 +66,12 @@ class CreatePasswordCell: UICollectionViewCell, UITextFieldDelegate {
     }
     
     func configCell() {
-        self.headlineLabel.text = Localization.RegisterPassword.headline.text
-        self.welcomeLabel.text = Localization.RegisterPassword.subtitle.text
-        self.alertLabel.text = Localization.RegisterPassword.notice.text
-        self.nextButton.setTitle(Localization.RegisterPassword.button.text, for: .normal)
+        self.headlineLabel.text = Localization.registerPassword.headline.text
+        self.welcomeLabel.text = Localization.registerPassword.subtitle.text
+        self.alertLabel.text = Localization.registerPassword.notice.text
+        self.nextButton.setTitle(Localization.registerPassword.button.text, for: .normal)
         self.passwordTextField.font = UIFont.asset(.regular, fontSize: .body)
-        self.passwordTextField.placeholder = Localization.RegisterPassword.value.text
+        self.passwordTextField.placeholder = Localization.registerPassword.value.text
         self.passwordTextField.placeholderColor = UIColor.Asset.gray
         self.passwordTextField.floatingLabelTextColor = UIColor.Asset.gray
         self.passwordTextField.floatingLabelActiveTextColor = UIColor.Asset.gray
@@ -79,7 +79,7 @@ class CreatePasswordCell: UICollectionViewCell, UITextFieldDelegate {
         self.passwordTextField.textColor = UIColor.Asset.white
         self.passwordTextField.isSecureTextEntry = true
         self.confirmPasswordTextField.font = UIFont.asset(.regular, fontSize: .body)
-        self.confirmPasswordTextField.placeholder = Localization.RegisterPassword.retry.text
+        self.confirmPasswordTextField.placeholder = Localization.registerPassword.retry.text
         self.confirmPasswordTextField.placeholderColor = UIColor.Asset.gray
         self.confirmPasswordTextField.floatingLabelTextColor = UIColor.Asset.gray
         self.confirmPasswordTextField.floatingLabelActiveTextColor = UIColor.Asset.gray
@@ -128,19 +128,19 @@ class CreatePasswordCell: UICollectionViewCell, UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         self.alertLabel.textColor = UIColor.Asset.white
-        self.alertLabel.text = Localization.RegisterPassword.notice.text
+        self.alertLabel.text = Localization.registerPassword.notice.text
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         if !self.passwordTextField.text!.isPassword {
             self.alertLabel.textColor = UIColor.Asset.denger
-            self.alertLabel.text = "Wrong password format.\n\n\(Localization.RegisterPassword.notice.text)"
+            self.alertLabel.text = "Wrong password format.\n\n\(Localization.registerPassword.notice.text)"
         } else if self.passwordTextField.text! != self.confirmPasswordTextField.text! {
             self.alertLabel.textColor = UIColor.Asset.denger
             self.alertLabel.text = "Password and confirm password not match"
         } else {
             self.alertLabel.textColor = UIColor.Asset.white
-            self.alertLabel.text = Localization.RegisterPassword.notice.text
+            self.alertLabel.text = Localization.registerPassword.notice.text
         }
         
         if self.validatePassword() {
