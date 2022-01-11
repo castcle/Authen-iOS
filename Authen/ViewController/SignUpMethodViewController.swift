@@ -31,6 +31,7 @@ import Component
 import PanModal
 import ActiveLabel
 import Defaults
+import AuthenticationServices
 
 public class SignUpMethodViewController: UIViewController {
 
@@ -176,10 +177,18 @@ public class SignUpMethodViewController: UIViewController {
     }
     
     @IBAction func appleAction(_ sender: Any) {
-        self.dismiss(animated: true)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.mergeAccount(MergeAccountViewModel(socialType: .apple))), animated: true)
-        }
+        let request = ASAuthorizationAppleIDProvider().createRequest()
+        request.requestedScopes = [.email, .fullName]
+        
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
+        authorizationController.performRequests()
+        
+//        self.dismiss(animated: true)
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+//            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.mergeAccount(MergeAccountViewModel(socialType: .apple))), animated: true)
+//        }
     }
     
     @IBAction func emailAction(_ sender: Any) {
@@ -205,5 +214,37 @@ extension SignUpMethodViewController: PanModalPresentable {
 
     public var anchorModalToLongForm: Bool {
         return false
+    }
+}
+
+extension SignUpMethodViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
+    public func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        if let appleIdCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
+            let email: String = appleIdCredential.email ?? ""
+            let givenName: String = appleIdCredential.fullName?.givenName ?? ""
+            let familyName: String = appleIdCredential.fullName?.familyName ?? ""
+            var fullName: String {
+                if !givenName.isEmpty && !familyName.isEmpty {
+                    return "\(givenName) \(familyName)"
+                } else if !givenName.isEmpty && familyName.isEmpty {
+                    return givenName
+                } else if givenName.isEmpty && !familyName.isEmpty {
+                    return familyName
+                } else {
+                    return ""
+                }
+            }
+            
+            if Defaults[.appleUserId] != appleIdCredential.user {
+                Defaults[.appleUserId] = appleIdCredential.user
+                Defaults[.appleEmail] = email
+                Defaults[.appleFullName] = fullName
+            }
+            self.dismiss(animated: true)
+        }
+    }
+    
+    public func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return self.view.window!
     }
 }
