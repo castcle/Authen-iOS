@@ -32,6 +32,8 @@ import PanModal
 import ActiveLabel
 import Defaults
 import AuthenticationServices
+import Swifter
+import SafariServices
 
 public class SignUpMethodViewController: UIViewController {
 
@@ -53,6 +55,8 @@ public class SignUpMethodViewController: UIViewController {
     @IBOutlet var emailImage: UIImageView!
     
     var maxHeight = (UIScreen.main.bounds.height - 480)
+    var swifter: Swifter!
+    var accToken: Credential.OAuthAccessToken?
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -170,10 +174,19 @@ public class SignUpMethodViewController: UIViewController {
     }
     
     @IBAction func twitterAction(_ sender: Any) {
-        self.dismiss(animated: true)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.mergeAccount(MergeAccountViewModel(socialType: .twitter))), animated: true)
+        self.swifter = Swifter(consumerKey: TwitterConstants.CONSUMER_KEY, consumerSecret: TwitterConstants.CONSUMER_SECRET_KEY)
+        
+        self.swifter.authorize(withProvider: self, callbackURL: URL(string: TwitterConstants.CALLBACK_URL)!) { accessToken, response in
+            self.accToken = accessToken
+            self.getUserProfile()
+        } failure: { error in
+            print("ERROR: \(error.localizedDescription)")
         }
+        
+//        self.dismiss(animated: true)
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+//            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.mergeAccount(MergeAccountViewModel(socialType: .twitter))), animated: true)
+//        }
     }
     
     @IBAction func appleAction(_ sender: Any) {
@@ -241,10 +254,49 @@ extension SignUpMethodViewController: ASAuthorizationControllerDelegate, ASAutho
                 Defaults[.appleFullName] = fullName
             }
             self.dismiss(animated: true)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                let str: String = "UserId : \(Defaults[.appleUserId])\nEmail : \(Defaults[.appleEmail])\nFull name : \(Defaults[.appleFullName])"
+                self.alertText(string: str)
+            }
         }
     }
     
     public func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return self.view.window!
+    }
+    
+    func alertText(string: String) {
+        let alert = UIAlertController(title: "Info", message: string, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        Utility.currentViewController().present(alert, animated: true, completion: nil)
+    }
+}
+
+extension SignUpMethodViewController: SFSafariViewControllerDelegate, ASWebAuthenticationPresentationContextProviding {
+    func getUserProfile() {
+        self.swifter.verifyAccountCredentials(includeEntities: false, skipStatus: false, includeEmail: true, success: { json in
+            let twitterId: String = json["id_str"].string ?? ""
+            let twitterHandle: String = json["screen_name"].string ?? ""
+            let twitterName: String = json["name"].string ?? ""
+            let twitterEmail: String = json["email"].string ?? ""
+            let twitterProfilePic: String = json["profile_image_url_https"].string?.replacingOccurrences(of: "_normal", with: "", options: .literal, range: nil) ?? ""
+            
+            self.dismiss(animated: true)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                let str: String = "Twitter Id: \(twitterId)\nTwitter Handle: \(twitterHandle)\nTwitter Name: \(twitterName)\nTwitter Email: \(twitterEmail)\nTwitter Profile URL: \(twitterProfilePic)\nTwitter Access Token: \(self.accToken?.key ?? "")"
+                self.alertText(string: str)
+            }
+            
+        }) { error in
+            print("ERROR: \(error.localizedDescription)")
+        }
+    }
+    
+    public func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
+        controller.dismiss(animated: true, completion: nil)
+    }
+    
+    public func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
         return self.view.window!
     }
 }
