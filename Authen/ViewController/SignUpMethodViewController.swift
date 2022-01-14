@@ -35,11 +35,13 @@ import AuthenticationServices
 import Swifter
 import SafariServices
 import GoogleSignIn
+import FBSDKLoginKit
 
 public class SignUpMethodViewController: UIViewController {
 
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var subTitleLabel: UILabel!
+    @IBOutlet var facebookLabel: UILabel!
     @IBOutlet var twitterLabel: UILabel!
     @IBOutlet var googleLabel: UILabel!
     @IBOutlet var appleLabel: UILabel!
@@ -49,11 +51,13 @@ public class SignUpMethodViewController: UIViewController {
     @IBOutlet var otherLabel: ActiveLabel!
     
     @IBOutlet var backgroundView: UIView!
+    @IBOutlet var facebookView: UIView!
     @IBOutlet var twitterView: UIView!
     @IBOutlet var googleView: UIView!
     @IBOutlet var appleView: UIView!
     @IBOutlet var emailView: UIView!
     
+    @IBOutlet var facebookImage: UIImageView!
     @IBOutlet var twitterImage: UIImageView!
     @IBOutlet var googleImage: UIImageView!
     @IBOutlet var appleImage: UIImageView!
@@ -71,6 +75,8 @@ public class SignUpMethodViewController: UIViewController {
         self.titleLabel.textColor = UIColor.Asset.white
         self.subTitleLabel.font = UIFont.asset(.light, fontSize: .overline)
         self.subTitleLabel.textColor = UIColor.Asset.white
+        self.facebookLabel.font = UIFont.asset(.regular, fontSize: .body)
+        self.facebookLabel.textColor = UIColor.Asset.white
         self.twitterLabel.font = UIFont.asset(.regular, fontSize: .body)
         self.twitterLabel.textColor = UIColor.Asset.white
         self.googleLabel.font = UIFont.asset(.regular, fontSize: .body)
@@ -79,11 +85,13 @@ public class SignUpMethodViewController: UIViewController {
         self.appleLabel.textColor = UIColor.Asset.white
         self.emailLabel.font = UIFont.asset(.regular, fontSize: .body)
         self.emailLabel.textColor = UIColor.Asset.white
+        self.facebookView.custom(color: UIColor.Asset.facebook, cornerRadius: 10)
         self.twitterView.custom(color: UIColor.Asset.twitter, cornerRadius: 10)
         self.googleView.custom(color: UIColor.Asset.white, cornerRadius: 10)
         self.appleView.custom(color: UIColor.Asset.apple, cornerRadius: 10)
         self.emailView.custom(color: UIColor.Asset.black, cornerRadius: 10)
         
+        self.facebookImage.image = UIImage.init(icon: .castcle(.facebook), size: CGSize(width: 23, height: 23), textColor: UIColor.Asset.white)
         self.twitterImage.image = UIImage.init(icon: .castcle(.twitter), size: CGSize(width: 23, height: 23), textColor: UIColor.Asset.white)
         self.googleImage.image = UIImage.Asset.googleLogo
         self.appleImage.image = UIImage.init(icon: .castcle(.apple), size: CGSize(width: 23, height: 23), textColor: UIColor.Asset.white)
@@ -181,6 +189,56 @@ public class SignUpMethodViewController: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(URL(string: urlString)!)), animated: true)
         }
+    }
+    
+    @IBAction func facebookAction(_ sender: Any) {
+//        NotificationCenter.default.post(name: .facebookLogin, object: nil)
+        
+        let loginManager = LoginManager()
+        
+        if let _ = AccessToken.current {
+            loginManager.logOut()
+        } else {
+            loginManager.logIn(permissions: ["public_profile", "email"], from: self) { (result, error) in
+                
+                // Check for error
+                guard error == nil else {
+                    // Error occurred
+                    print(error!.localizedDescription)
+                    return
+                }
+                
+                // Check for cancel
+                guard let result = result, !result.isCancelled else {
+                    print("User cancelled login")
+                    return
+                }
+                
+                Profile.loadCurrentProfile { (profile, error) in
+//                    self?.updateMessage(with: Profile.current?.name)
+                    let userId: String = profile?.userID ?? ""
+                    let email: String = profile?.email ?? ""
+                    let fullName: String = profile?.name ?? ""
+                    let profilePicUrl: String = "http://graph.facebook.com/\(AccessToken.current?.userID ?? "")/picture?type=large"
+                    let accessToken: String = AccessToken.current?.tokenString ?? ""
+                    
+                    self.dismiss(animated: true)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        let str: String = "Facebook Id: \(userId)\nFacebook Name: \(fullName)\nFacebook Email: \(email)\nFacebook Profile URL: \(profilePicUrl)\nFacebook Access Token: \(accessToken)"
+                        self.alertText(string: str)
+                    }
+                    
+                }
+            }
+        }
+        
+        
+        
+        
+//        self.dismiss(animated: true)
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1 ) {
+//            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.mergeAccount(MergeAccountViewModel(socialType: .facebook))), animated: true)
+//        }
     }
     
     @IBAction func twitterAction(_ sender: Any) {
