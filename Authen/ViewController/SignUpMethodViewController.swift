@@ -34,12 +34,14 @@ import Defaults
 import AuthenticationServices
 import Swifter
 import SafariServices
+import GoogleSignIn
 
 public class SignUpMethodViewController: UIViewController {
 
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var subTitleLabel: UILabel!
     @IBOutlet var twitterLabel: UILabel!
+    @IBOutlet var googleLabel: UILabel!
     @IBOutlet var appleLabel: UILabel!
     @IBOutlet var emailLabel: UILabel!
     @IBOutlet var agreementLabel: ActiveLabel!
@@ -48,13 +50,16 @@ public class SignUpMethodViewController: UIViewController {
     
     @IBOutlet var backgroundView: UIView!
     @IBOutlet var twitterView: UIView!
+    @IBOutlet var googleView: UIView!
     @IBOutlet var appleView: UIView!
     @IBOutlet var emailView: UIView!
+    
     @IBOutlet var twitterImage: UIImageView!
+    @IBOutlet var googleImage: UIImageView!
     @IBOutlet var appleImage: UIImageView!
     @IBOutlet var emailImage: UIImageView!
     
-    var maxHeight = (UIScreen.main.bounds.height - 480)
+    var maxHeight = (UIScreen.main.bounds.height - 530)
     var swifter: Swifter!
     var accToken: Credential.OAuthAccessToken?
     
@@ -68,15 +73,19 @@ public class SignUpMethodViewController: UIViewController {
         self.subTitleLabel.textColor = UIColor.Asset.white
         self.twitterLabel.font = UIFont.asset(.regular, fontSize: .body)
         self.twitterLabel.textColor = UIColor.Asset.white
+        self.googleLabel.font = UIFont.asset(.regular, fontSize: .body)
+        self.googleLabel.textColor = UIColor.Asset.black
         self.appleLabel.font = UIFont.asset(.regular, fontSize: .body)
         self.appleLabel.textColor = UIColor.Asset.white
         self.emailLabel.font = UIFont.asset(.regular, fontSize: .body)
         self.emailLabel.textColor = UIColor.Asset.white
         self.twitterView.custom(color: UIColor.Asset.twitter, cornerRadius: 10)
+        self.googleView.custom(color: UIColor.Asset.white, cornerRadius: 10)
         self.appleView.custom(color: UIColor.Asset.apple, cornerRadius: 10)
         self.emailView.custom(color: UIColor.Asset.black, cornerRadius: 10)
         
         self.twitterImage.image = UIImage.init(icon: .castcle(.twitter), size: CGSize(width: 23, height: 23), textColor: UIColor.Asset.white)
+        self.googleImage.image = UIImage.Asset.googleLogo
         self.appleImage.image = UIImage.init(icon: .castcle(.apple), size: CGSize(width: 23, height: 23), textColor: UIColor.Asset.white)
         self.emailImage.image = UIImage.init(icon: .castcle(.email), size: CGSize(width: 23, height: 23), textColor: UIColor.Asset.white)
     }
@@ -162,6 +171,7 @@ public class SignUpMethodViewController: UIViewController {
         }
         self.otherLabel.text = "\(Localization.authenMethod.joinUs.text) | \(Localization.authenMethod.docs.text) | \(Localization.authenMethod.whitepaper.text) | \(Localization.authenMethod.version.text) \(Defaults[.appVersion]) (\(Defaults[.appBuild]))"
         self.twitterLabel.text = Localization.authenMethod.twitter.text
+        self.googleLabel.text = Localization.authenMethod.google.text
         self.appleLabel.text = Localization.authenMethod.apple.text
         self.emailLabel.text = Localization.authenMethod.email.text
     }
@@ -186,6 +196,30 @@ public class SignUpMethodViewController: UIViewController {
 //        self.dismiss(animated: true)
 //        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
 //            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.mergeAccount(MergeAccountViewModel(socialType: .twitter))), animated: true)
+//        }
+    }
+    
+    @IBAction func googleAction(_ sender: Any) {
+        let signInConfig = GIDConfiguration.init(clientID: "399197784684-qu71doj4dn7ftksq09i7hvgeot4vbd4c.apps.googleusercontent.com")
+        GIDSignIn.sharedInstance.signIn(with: signInConfig, presenting: self) { user, error in
+            guard error == nil else { return }
+            guard let user = user else { return }
+            
+            let userId: String = user.userID ?? ""
+            let email: String = user.profile?.email ?? ""
+            let fullName: String = user.profile?.name ?? ""
+            let profilePicUrl: String = user.profile?.imageURL(withDimension: 320)?.absoluteString ?? ""
+            let accessToken: String = user.authentication.accessToken
+            
+            self.dismiss(animated: true)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                let str: String = "Google Id: \(userId)\nGoogle Name: \(fullName)\nGoogle Email: \(email)\nGoogle Profile URL: \(profilePicUrl)\nGoogle Access Token: \(accessToken)"
+                self.alertText(string: str)
+            }
+          }
+//        self.dismiss(animated: true)
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1 ) {
+//            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.mergeAccount(MergeAccountViewModel(socialType: .google))), animated: true)
 //        }
     }
     
