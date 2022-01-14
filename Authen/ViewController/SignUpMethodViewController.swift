@@ -184,9 +184,8 @@ public class SignUpMethodViewController: UIViewController {
     }
     
     @IBAction func twitterAction(_ sender: Any) {
-        self.swifter = Swifter(consumerKey: TwitterConstants.CONSUMER_KEY, consumerSecret: TwitterConstants.CONSUMER_SECRET_KEY)
-        
-        self.swifter.authorize(withProvider: self, callbackURL: URL(string: TwitterConstants.CALLBACK_URL)!) { accessToken, response in
+        self.swifter = Swifter(consumerKey: TwitterConstants.key, consumerSecret: TwitterConstants.secretKey)
+        self.swifter.authorize(withProvider: self, callbackURL: URL(string: TwitterConstants.callbackUrl)!) { accessToken, response in
             self.accToken = accessToken
             self.getUserProfile()
         } failure: { error in
