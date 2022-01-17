@@ -63,7 +63,7 @@ public class SignUpMethodViewController: UIViewController {
     @IBOutlet var appleImage: UIImageView!
     @IBOutlet var emailImage: UIImageView!
     
-    var maxHeight = (UIScreen.main.bounds.height - 530)
+    var maxHeight = (UIScreen.main.bounds.height - 585)
     var swifter: Swifter!
     var accToken: Credential.OAuthAccessToken?
     

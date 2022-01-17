@@ -116,10 +116,9 @@ class CreateDisplayNameViewModel {
                     
                     let userHelper = UserHelper()
                     userHelper.updateLocalProfile(user: User(json: profile))
-                    
-                    Defaults[.userRole] = "USER"
-                    Defaults[.accessToken] = accessToken
-                    Defaults[.refreshToken] = refreshToken
+                    UserManager.shared.setUserRole(userRole: .user)
+                    UserManager.shared.setAccessToken(token: accessToken)
+                    UserManager.shared.setRefreshToken(token: refreshToken)
                     Defaults[.email] = self.authenRequest.payload.email
                     self.registerNotificationToken()
                     self.delegate?.didRegisterFinish(success: true)

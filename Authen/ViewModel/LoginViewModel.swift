@@ -92,10 +92,9 @@ class LoginViewModel {
                         }
                         
                     }
-                    
-                    Defaults[.userRole] = "USER"
-                    Defaults[.accessToken] = accessToken
-                    Defaults[.refreshToken] = refreshToken
+                    UserManager.shared.setUserRole(userRole: .user)
+                    UserManager.shared.setAccessToken(token: accessToken)
+                    UserManager.shared.setRefreshToken(token: refreshToken)
                     self.registerNotificationToken()
                     self.delegate?.didLoginFinish(success: true)
                 } catch {}
