@@ -339,14 +339,14 @@ extension SignUpMethodViewController: ASAuthorizationControllerDelegate, ASAutho
                 }
             }
             
-            if Defaults[.appleUserId] != appleIdCredential.user {
-                Defaults[.appleUserId] = appleIdCredential.user
-                Defaults[.appleEmail] = email
-                Defaults[.appleFullName] = fullName
+            if KeychainHelper.shared.getKeychainWith(with: .appleUserId) != appleIdCredential.user {
+                KeychainHelper.shared.setKeychainWith(with: .appleUserId, value: appleIdCredential.user)
+                KeychainHelper.shared.setKeychainWith(with: .appleEmail, value: email)
+                KeychainHelper.shared.setKeychainWith(with: .appleFullName, value: fullName)
             }
             self.dismiss(animated: true)
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                let str: String = "UserId : \(Defaults[.appleUserId])\nEmail : \(Defaults[.appleEmail])\nFull name : \(Defaults[.appleFullName])"
+                let str: String = "UserId : \(KeychainHelper.shared.getKeychainWith(with: .appleUserId))\nEmail : \(KeychainHelper.shared.getKeychainWith(with: .appleEmail))\nFull name : \(KeychainHelper.shared.getKeychainWith(with: .appleFullName))"
                 self.alertText(string: str)
             }
         }
