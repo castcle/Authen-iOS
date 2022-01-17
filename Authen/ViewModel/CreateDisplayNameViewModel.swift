@@ -116,6 +116,7 @@ class CreateDisplayNameViewModel {
                     
                     let userHelper = UserHelper()
                     userHelper.updateLocalProfile(user: User(json: profile))
+                    userHelper.clearSeenContent()
                     UserManager.shared.setUserRole(userRole: .user)
                     UserManager.shared.setAccessToken(token: accessToken)
                     UserManager.shared.setRefreshToken(token: refreshToken)

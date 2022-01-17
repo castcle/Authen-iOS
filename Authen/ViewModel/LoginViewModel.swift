@@ -73,6 +73,7 @@ class LoginViewModel {
 
                     let userHelper = UserHelper()
                     userHelper.updateLocalProfile(user: User(json: profile))
+                    userHelper.clearSeenContent()
                     
                     let pageRealm = self.realm.objects(Page.self)
                     try! self.realm.write {
