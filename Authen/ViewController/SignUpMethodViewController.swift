@@ -27,6 +27,7 @@
 
 import UIKit
 import Core
+import Networking
 import Component
 import PanModal
 import ActiveLabel
@@ -36,6 +37,7 @@ import Swifter
 import SafariServices
 import GoogleSignIn
 import FBSDKLoginKit
+import JGProgressHUD
 
 public class SignUpMethodViewController: UIViewController {
 
@@ -63,12 +65,16 @@ public class SignUpMethodViewController: UIViewController {
     @IBOutlet var appleImage: UIImageView!
     @IBOutlet var emailImage: UIImageView!
     
+    var viewModel = SocialLoginViewModel()
     var maxHeight = (UIScreen.main.bounds.height - 585)
     var swifter: Swifter!
     var accToken: Credential.OAuthAccessToken?
+    let hud = JGProgressHUD()
     
     public override func viewDidLoad() {
         super.viewDidLoad()
+        self.viewModel.delegate = self
+        self.hud.textLabel.text = "Loading"
         self.view.backgroundColor = UIColor.Asset.darkGraphiteBlue
         self.backgroundView.backgroundColor = UIColor.Asset.darkGray
         self.titleLabel.font = UIFont.asset(.bold, fontSize: .h3)
@@ -139,7 +145,7 @@ public class SignUpMethodViewController: UIViewController {
             
             label.handleCustomTap(for: logType) { element in
                 self.dismiss(animated: true)
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1 ) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.signIn(showSignUp: true)), animated: true)
                 }
             }
@@ -192,53 +198,45 @@ public class SignUpMethodViewController: UIViewController {
     }
     
     @IBAction func facebookAction(_ sender: Any) {
-//        NotificationCenter.default.post(name: .facebookLogin, object: nil)
-        
         let loginManager = LoginManager()
-        
         if let _ = AccessToken.current {
             loginManager.logOut()
         } else {
             loginManager.logIn(permissions: ["public_profile", "email"], from: self) { (result, error) in
-                
-                // Check for error
                 guard error == nil else {
-                    // Error occurred
                     print(error!.localizedDescription)
                     return
                 }
                 
-                // Check for cancel
                 guard let result = result, !result.isCancelled else {
                     print("User cancelled login")
                     return
                 }
                 
                 Profile.loadCurrentProfile { (profile, error) in
-//                    self?.updateMessage(with: Profile.current?.name)
                     let userId: String = profile?.userID ?? ""
                     let email: String = profile?.email ?? ""
                     let fullName: String = profile?.name ?? ""
                     let profilePicUrl: String = "http://graph.facebook.com/\(AccessToken.current?.userID ?? "")/picture?type=large"
                     let accessToken: String = AccessToken.current?.tokenString ?? ""
                     
+                    var authenRequest: AuthenRequest = AuthenRequest()
+                    authenRequest.provider = .facebook
+                    authenRequest.uid = userId
+                    authenRequest.displayName = fullName
+                    authenRequest.avatar = profilePicUrl
+                    authenRequest.email = email
+                    authenRequest.authToken = accessToken
+                    
                     self.dismiss(animated: true)
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                        let str: String = "Facebook Id: \(userId)\nFacebook Name: \(fullName)\nFacebook Email: \(email)\nFacebook Profile URL: \(profilePicUrl)\nFacebook Access Token: \(accessToken)"
-                        self.alertText(string: str)
+                        self.hud.show(in: Utility.currentViewController().view)
+                        self.viewModel.authenRequest = authenRequest
+                        self.viewModel.socialLogin()
                     }
-                    
                 }
             }
         }
-        
-        
-        
-        
-//        self.dismiss(animated: true)
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 1 ) {
-//            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.mergeAccount(MergeAccountViewModel(socialType: .facebook))), animated: true)
-//        }
     }
     
     @IBAction func twitterAction(_ sender: Any) {
@@ -249,11 +247,6 @@ public class SignUpMethodViewController: UIViewController {
         } failure: { error in
             print("ERROR: \(error.localizedDescription)")
         }
-        
-//        self.dismiss(animated: true)
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-//            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.mergeAccount(MergeAccountViewModel(socialType: .twitter))), animated: true)
-//        }
     }
     
     @IBAction func googleAction(_ sender: Any) {
@@ -268,16 +261,21 @@ public class SignUpMethodViewController: UIViewController {
             let profilePicUrl: String = user.profile?.imageURL(withDimension: 320)?.absoluteString ?? ""
             let accessToken: String = user.authentication.accessToken
             
+            var authenRequest: AuthenRequest = AuthenRequest()
+            authenRequest.provider = .google
+            authenRequest.uid = userId
+            authenRequest.displayName = fullName
+            authenRequest.avatar = profilePicUrl
+            authenRequest.email = email
+            authenRequest.authToken = accessToken
+            
             self.dismiss(animated: true)
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                let str: String = "Google Id: \(userId)\nGoogle Name: \(fullName)\nGoogle Email: \(email)\nGoogle Profile URL: \(profilePicUrl)\nGoogle Access Token: \(accessToken)"
-                self.alertText(string: str)
+                self.hud.show(in: Utility.currentViewController().view)
+                self.viewModel.authenRequest = authenRequest
+                self.viewModel.socialLogin()
             }
           }
-//        self.dismiss(animated: true)
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 1 ) {
-//            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.mergeAccount(MergeAccountViewModel(socialType: .google))), animated: true)
-//        }
     }
     
     @IBAction func appleAction(_ sender: Any) {
@@ -288,17 +286,22 @@ public class SignUpMethodViewController: UIViewController {
         authorizationController.delegate = self
         authorizationController.presentationContextProvider = self
         authorizationController.performRequests()
-        
-//        self.dismiss(animated: true)
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-//            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.mergeAccount(MergeAccountViewModel(socialType: .apple))), animated: true)
-//        }
     }
     
     @IBAction func emailAction(_ sender: Any) {
         self.dismiss(animated: true)
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.email(fromSignIn: false)), animated: true)
+        }
+    }
+}
+
+extension SignUpMethodViewController: SocialLoginViewModelDelegate {
+    public func didSocialLoginFinish(success: Bool) {
+        self.hud.dismiss()
+        if success {
+            Defaults[.startLoadFeed] = true
+            NotificationCenter.default.post(name: .resetFeedContent, object: nil)
         }
     }
 }
@@ -344,10 +347,18 @@ extension SignUpMethodViewController: ASAuthorizationControllerDelegate, ASAutho
                 KeychainHelper.shared.setKeychainWith(with: .appleEmail, value: email)
                 KeychainHelper.shared.setKeychainWith(with: .appleFullName, value: fullName)
             }
+            
+            var authenRequest: AuthenRequest = AuthenRequest()
+            authenRequest.provider = .apple
+            authenRequest.uid = KeychainHelper.shared.getKeychainWith(with: .appleUserId)
+            authenRequest.displayName = KeychainHelper.shared.getKeychainWith(with: .appleFullName)
+            authenRequest.email = KeychainHelper.shared.getKeychainWith(with: .appleEmail)
+            
             self.dismiss(animated: true)
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                let str: String = "UserId : \(KeychainHelper.shared.getKeychainWith(with: .appleUserId))\nEmail : \(KeychainHelper.shared.getKeychainWith(with: .appleEmail))\nFull name : \(KeychainHelper.shared.getKeychainWith(with: .appleFullName))"
-                self.alertText(string: str)
+                self.hud.show(in: Utility.currentViewController().view)
+                self.viewModel.authenRequest = authenRequest
+                self.viewModel.socialLogin()
             }
         }
     }
@@ -367,17 +378,24 @@ extension SignUpMethodViewController: SFSafariViewControllerDelegate, ASWebAuthe
     func getUserProfile() {
         self.swifter.verifyAccountCredentials(includeEntities: false, skipStatus: false, includeEmail: true, success: { json in
             let twitterId: String = json["id_str"].string ?? ""
-            let twitterHandle: String = json["screen_name"].string ?? ""
             let twitterName: String = json["name"].string ?? ""
             let twitterEmail: String = json["email"].string ?? ""
             let twitterProfilePic: String = json["profile_image_url_https"].string?.replacingOccurrences(of: "_normal", with: "", options: .literal, range: nil) ?? ""
             
+            var authenRequest: AuthenRequest = AuthenRequest()
+            authenRequest.provider = .twitter
+            authenRequest.uid = twitterId
+            authenRequest.displayName = twitterName
+            authenRequest.avatar = twitterProfilePic
+            authenRequest.email = twitterEmail
+            authenRequest.authToken = self.accToken?.key ?? ""
+            
             self.dismiss(animated: true)
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                let str: String = "Twitter Id: \(twitterId)\nTwitter Handle: \(twitterHandle)\nTwitter Name: \(twitterName)\nTwitter Email: \(twitterEmail)\nTwitter Profile URL: \(twitterProfilePic)\nTwitter Access Token: \(self.accToken?.key ?? "")"
-                self.alertText(string: str)
+                self.hud.show(in: Utility.currentViewController().view)
+                self.viewModel.authenRequest = authenRequest
+                self.viewModel.socialLogin()
             }
-            
         }) { error in
             print("ERROR: \(error.localizedDescription)")
         }
