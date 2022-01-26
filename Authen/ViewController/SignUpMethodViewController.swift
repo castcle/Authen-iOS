@@ -366,12 +366,6 @@ extension SignUpMethodViewController: ASAuthorizationControllerDelegate, ASAutho
     public func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         return self.view.window!
     }
-    
-    func alertText(string: String) {
-        let alert = UIAlertController(title: "Info", message: string, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
-        Utility.currentViewController().present(alert, animated: true, completion: nil)
-    }
 }
 
 extension SignUpMethodViewController: SFSafariViewControllerDelegate, ASWebAuthenticationPresentationContextProviding {
