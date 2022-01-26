@@ -146,6 +146,7 @@ public class SignUpMethodViewController: UIViewController {
             label.handleCustomTap(for: logType) { element in
                 self.dismiss(animated: true)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    Utility.currentViewController().navigationController?.popToRootViewController(animated: false)
                     Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.signIn(showSignUp: true)), animated: true)
                 }
             }
@@ -193,6 +194,7 @@ public class SignUpMethodViewController: UIViewController {
     private func openWebView(urlString: String) {
         self.dismiss(animated: true)
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            Utility.currentViewController().navigationController?.popToRootViewController(animated: false)
             Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(URL(string: urlString)!)), animated: true)
         }
     }
@@ -230,6 +232,7 @@ public class SignUpMethodViewController: UIViewController {
                     
                     self.dismiss(animated: true)
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        Utility.currentViewController().navigationController?.popToRootViewController(animated: false)
                         self.hud.show(in: Utility.currentViewController().view)
                         self.viewModel.authenRequest = authenRequest
                         self.viewModel.socialLogin()
@@ -271,6 +274,7 @@ public class SignUpMethodViewController: UIViewController {
             
             self.dismiss(animated: true)
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                Utility.currentViewController().navigationController?.popToRootViewController(animated: false)
                 self.hud.show(in: Utility.currentViewController().view)
                 self.viewModel.authenRequest = authenRequest
                 self.viewModel.socialLogin()
@@ -291,6 +295,7 @@ public class SignUpMethodViewController: UIViewController {
     @IBAction func emailAction(_ sender: Any) {
         self.dismiss(animated: true)
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            Utility.currentViewController().navigationController?.popToRootViewController(animated: false)
             Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.email(fromSignIn: false)), animated: true)
         }
     }
@@ -356,6 +361,7 @@ extension SignUpMethodViewController: ASAuthorizationControllerDelegate, ASAutho
             
             self.dismiss(animated: true)
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                Utility.currentViewController().navigationController?.popToRootViewController(animated: false)
                 self.hud.show(in: Utility.currentViewController().view)
                 self.viewModel.authenRequest = authenRequest
                 self.viewModel.socialLogin()
@@ -392,6 +398,7 @@ extension SignUpMethodViewController: SFSafariViewControllerDelegate, ASWebAuthe
             
             self.dismiss(animated: true)
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                Utility.currentViewController().navigationController?.popToRootViewController(animated: false)
                 self.hud.show(in: Utility.currentViewController().view)
                 self.viewModel.authenRequest = authenRequest
                 self.viewModel.socialLogin()
