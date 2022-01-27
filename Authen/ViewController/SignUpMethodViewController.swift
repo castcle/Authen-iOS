@@ -203,40 +203,37 @@ public class SignUpMethodViewController: UIViewController {
         let loginManager = LoginManager()
         if let _ = AccessToken.current {
             loginManager.logOut()
-        } else {
-            loginManager.logIn(permissions: ["public_profile", "email"], from: self) { (result, error) in
-                guard error == nil else {
-                    print(error!.localizedDescription)
-                    return
-                }
+        }
+        loginManager.logIn(permissions: ["public_profile", "email"], from: self) { (result, error) in
+            guard error == nil else {
+                print(error!.localizedDescription)
+                return
+            }
+            guard let result = result, !result.isCancelled else {
+                print("User cancelled login")
+                return
+            }
+            Profile.loadCurrentProfile { (profile, error) in
+                let userId: String = profile?.userID ?? ""
+                let email: String = profile?.email ?? ""
+                let fullName: String = profile?.name ?? ""
+                let profilePicUrl: String = "http://graph.facebook.com/\(AccessToken.current?.userID ?? "")/picture?type=large"
+                let accessToken: String = AccessToken.current?.tokenString ?? ""
                 
-                guard let result = result, !result.isCancelled else {
-                    print("User cancelled login")
-                    return
-                }
+                var authenRequest: AuthenRequest = AuthenRequest()
+                authenRequest.provider = .facebook
+                authenRequest.uid = userId
+                authenRequest.displayName = fullName
+                authenRequest.avatar = profilePicUrl
+                authenRequest.email = email
+                authenRequest.authToken = accessToken
                 
-                Profile.loadCurrentProfile { (profile, error) in
-                    let userId: String = profile?.userID ?? ""
-                    let email: String = profile?.email ?? ""
-                    let fullName: String = profile?.name ?? ""
-                    let profilePicUrl: String = "http://graph.facebook.com/\(AccessToken.current?.userID ?? "")/picture?type=large"
-                    let accessToken: String = AccessToken.current?.tokenString ?? ""
-                    
-                    var authenRequest: AuthenRequest = AuthenRequest()
-                    authenRequest.provider = .facebook
-                    authenRequest.uid = userId
-                    authenRequest.displayName = fullName
-                    authenRequest.avatar = profilePicUrl
-                    authenRequest.email = email
-                    authenRequest.authToken = accessToken
-                    
-                    self.dismiss(animated: true)
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                        Utility.currentViewController().navigationController?.popToRootViewController(animated: false)
-                        self.hud.show(in: Utility.currentViewController().view)
-                        self.viewModel.authenRequest = authenRequest
-                        self.viewModel.socialLogin()
-                    }
+                self.dismiss(animated: true)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    Utility.currentViewController().navigationController?.popToRootViewController(animated: false)
+                    self.hud.show(in: Utility.currentViewController().view)
+                    self.viewModel.authenRequest = authenRequest
+                    self.viewModel.socialLogin()
                 }
             }
         }
