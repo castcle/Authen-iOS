@@ -222,7 +222,7 @@ public class SignUpMethodViewController: UIViewController {
                 
                 var authenRequest: AuthenRequest = AuthenRequest()
                 authenRequest.provider = .facebook
-                authenRequest.uid = userId
+                authenRequest.socialId = userId
                 authenRequest.displayName = fullName
                 authenRequest.avatar = profilePicUrl
                 authenRequest.email = email
@@ -263,7 +263,7 @@ public class SignUpMethodViewController: UIViewController {
             
             var authenRequest: AuthenRequest = AuthenRequest()
             authenRequest.provider = .google
-            authenRequest.uid = userId
+            authenRequest.socialId = userId
             authenRequest.displayName = fullName
             authenRequest.avatar = profilePicUrl
             authenRequest.email = email
@@ -352,7 +352,7 @@ extension SignUpMethodViewController: ASAuthorizationControllerDelegate, ASAutho
             
             var authenRequest: AuthenRequest = AuthenRequest()
             authenRequest.provider = .apple
-            authenRequest.uid = KeychainHelper.shared.getKeychainWith(with: .appleUserId)
+            authenRequest.socialId = KeychainHelper.shared.getKeychainWith(with: .appleUserId)
             authenRequest.displayName = KeychainHelper.shared.getKeychainWith(with: .appleFullName)
             authenRequest.email = KeychainHelper.shared.getKeychainWith(with: .appleEmail)
             
@@ -387,7 +387,7 @@ extension SignUpMethodViewController: SFSafariViewControllerDelegate, ASWebAuthe
             
             var authenRequest: AuthenRequest = AuthenRequest()
             authenRequest.provider = .twitter
-            authenRequest.uid = twitterId
+            authenRequest.socialId = twitterId
             authenRequest.displayName = twitterName
             authenRequest.avatar = twitterProfilePic
             authenRequest.email = twitterEmail
