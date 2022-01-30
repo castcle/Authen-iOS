@@ -36,7 +36,7 @@
 "authen_method_facebook"                    = "Continue with Facebook";
 "authen_method_twitter"                     = "Continue with Twitter";
 "authen_method_google"                      = "Continue with Google";
-"authen_method_apple"                       = "Continue with Apple ID";
+"authen_method_apple"                       = "Continue with Apple";
 "authen_method_email"                       = "Continue with Email";
 "authen_method_already_account"             = "Already have a Castcle account ?";
 "authen_method_login"                       = "Login";
