@@ -146,6 +146,7 @@ public class SignUpMethodViewController: UIViewController {
             label.handleCustomTap(for: logType) { element in
                 self.dismiss(animated: true)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    Utility.currentViewController().navigationController?.popToRootViewController(animated: false)
                     Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.signIn(showSignUp: true)), animated: true)
                 }
             }
@@ -193,6 +194,7 @@ public class SignUpMethodViewController: UIViewController {
     private func openWebView(urlString: String) {
         self.dismiss(animated: true)
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            Utility.currentViewController().navigationController?.popToRootViewController(animated: false)
             Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(URL(string: urlString)!)), animated: true)
         }
     }
@@ -201,39 +203,37 @@ public class SignUpMethodViewController: UIViewController {
         let loginManager = LoginManager()
         if let _ = AccessToken.current {
             loginManager.logOut()
-        } else {
-            loginManager.logIn(permissions: ["public_profile", "email"], from: self) { (result, error) in
-                guard error == nil else {
-                    print(error!.localizedDescription)
-                    return
-                }
+        }
+        loginManager.logIn(permissions: ["public_profile", "email"], from: self) { (result, error) in
+            guard error == nil else {
+                print(error!.localizedDescription)
+                return
+            }
+            guard let result = result, !result.isCancelled else {
+                print("User cancelled login")
+                return
+            }
+            Profile.loadCurrentProfile { (profile, error) in
+                let userId: String = profile?.userID ?? ""
+                let email: String = profile?.email ?? ""
+                let fullName: String = profile?.name ?? ""
+                let profilePicUrl: String = "http://graph.facebook.com/\(AccessToken.current?.userID ?? "")/picture?type=large"
+                let accessToken: String = AccessToken.current?.tokenString ?? ""
                 
-                guard let result = result, !result.isCancelled else {
-                    print("User cancelled login")
-                    return
-                }
+                var authenRequest: AuthenRequest = AuthenRequest()
+                authenRequest.provider = .facebook
+                authenRequest.socialId = userId
+                authenRequest.displayName = fullName
+                authenRequest.avatar = profilePicUrl
+                authenRequest.email = email
+                authenRequest.authToken = accessToken
                 
-                Profile.loadCurrentProfile { (profile, error) in
-                    let userId: String = profile?.userID ?? ""
-                    let email: String = profile?.email ?? ""
-                    let fullName: String = profile?.name ?? ""
-                    let profilePicUrl: String = "http://graph.facebook.com/\(AccessToken.current?.userID ?? "")/picture?type=large"
-                    let accessToken: String = AccessToken.current?.tokenString ?? ""
-                    
-                    var authenRequest: AuthenRequest = AuthenRequest()
-                    authenRequest.provider = .facebook
-                    authenRequest.uid = userId
-                    authenRequest.displayName = fullName
-                    authenRequest.avatar = profilePicUrl
-                    authenRequest.email = email
-                    authenRequest.authToken = accessToken
-                    
-                    self.dismiss(animated: true)
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                        self.hud.show(in: Utility.currentViewController().view)
-                        self.viewModel.authenRequest = authenRequest
-                        self.viewModel.socialLogin()
-                    }
+                self.dismiss(animated: true)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    Utility.currentViewController().navigationController?.popToRootViewController(animated: false)
+                    self.hud.show(in: Utility.currentViewController().view)
+                    self.viewModel.authenRequest = authenRequest
+                    self.viewModel.socialLogin()
                 }
             }
         }
@@ -263,7 +263,7 @@ public class SignUpMethodViewController: UIViewController {
             
             var authenRequest: AuthenRequest = AuthenRequest()
             authenRequest.provider = .google
-            authenRequest.uid = userId
+            authenRequest.socialId = userId
             authenRequest.displayName = fullName
             authenRequest.avatar = profilePicUrl
             authenRequest.email = email
@@ -271,6 +271,7 @@ public class SignUpMethodViewController: UIViewController {
             
             self.dismiss(animated: true)
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                Utility.currentViewController().navigationController?.popToRootViewController(animated: false)
                 self.hud.show(in: Utility.currentViewController().view)
                 self.viewModel.authenRequest = authenRequest
                 self.viewModel.socialLogin()
@@ -291,6 +292,7 @@ public class SignUpMethodViewController: UIViewController {
     @IBAction func emailAction(_ sender: Any) {
         self.dismiss(animated: true)
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            Utility.currentViewController().navigationController?.popToRootViewController(animated: false)
             Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.email(fromSignIn: false)), animated: true)
         }
     }
@@ -350,12 +352,13 @@ extension SignUpMethodViewController: ASAuthorizationControllerDelegate, ASAutho
             
             var authenRequest: AuthenRequest = AuthenRequest()
             authenRequest.provider = .apple
-            authenRequest.uid = KeychainHelper.shared.getKeychainWith(with: .appleUserId)
+            authenRequest.socialId = KeychainHelper.shared.getKeychainWith(with: .appleUserId)
             authenRequest.displayName = KeychainHelper.shared.getKeychainWith(with: .appleFullName)
             authenRequest.email = KeychainHelper.shared.getKeychainWith(with: .appleEmail)
             
             self.dismiss(animated: true)
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                Utility.currentViewController().navigationController?.popToRootViewController(animated: false)
                 self.hud.show(in: Utility.currentViewController().view)
                 self.viewModel.authenRequest = authenRequest
                 self.viewModel.socialLogin()
@@ -378,7 +381,7 @@ extension SignUpMethodViewController: SFSafariViewControllerDelegate, ASWebAuthe
             
             var authenRequest: AuthenRequest = AuthenRequest()
             authenRequest.provider = .twitter
-            authenRequest.uid = twitterId
+            authenRequest.socialId = twitterId
             authenRequest.displayName = twitterName
             authenRequest.avatar = twitterProfilePic
             authenRequest.email = twitterEmail
@@ -386,6 +389,7 @@ extension SignUpMethodViewController: SFSafariViewControllerDelegate, ASWebAuthe
             
             self.dismiss(animated: true)
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                Utility.currentViewController().navigationController?.popToRootViewController(animated: false)
                 self.hud.show(in: Utility.currentViewController().view)
                 self.viewModel.authenRequest = authenRequest
                 self.viewModel.socialLogin()

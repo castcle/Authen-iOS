@@ -36,7 +36,7 @@
 "authen_method_facebook"                    = "ดำเนินการต่อด้วย Facebook";
 "authen_method_twitter"                     = "ดำเนินการต่อด้วย Twitter";
 "authen_method_google"                      = "ดำเนินการต่อด้วย Google";
-"authen_method_apple"                       = "ดำเนินการต่อด้วย Apple ID";
+"authen_method_apple"                       = "ดำเนินการต่อด้วย Apple";
 "authen_method_email"                       = "ดำเนินการต่อด้วย อีเมล";
 "authen_method_already_account"             = "มีบัญชีอยู่แล้วใช่ไหม ?";
 "authen_method_login"                       = "เข้าสู่ระบบ";
