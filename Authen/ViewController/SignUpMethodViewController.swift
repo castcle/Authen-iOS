@@ -217,9 +217,8 @@ public class SignUpMethodViewController: UIViewController {
                 let userId: String = profile?.userID ?? ""
                 let email: String = profile?.email ?? ""
                 let fullName: String = profile?.name ?? ""
-                let profilePicUrl: String = "http://graph.facebook.com/\(AccessToken.current?.userID ?? "")/picture?type=large"
                 let accessToken: String = AccessToken.current?.tokenString ?? ""
-                
+                let profilePicUrl: String = "https://graph.facebook.com/\(userId)/picture?type=large&access_token=\(accessToken)"
                 var authenRequest: AuthenRequest = AuthenRequest()
                 authenRequest.provider = .facebook
                 authenRequest.socialId = userId
