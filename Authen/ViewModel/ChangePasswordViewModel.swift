@@ -32,6 +32,7 @@ import SwiftyJSON
 public enum ChangePasswordType {
     case changePassword
     case forgotPassword
+    case createPassword
 }
 
 public protocol ChangePasswordViewModelDelegate {
@@ -40,22 +41,34 @@ public protocol ChangePasswordViewModelDelegate {
 
 public class ChangePasswordViewModel {
     public var delegate: ChangePasswordViewModelDelegate?
-    
     var changePasswordType: ChangePasswordType = .changePassword
     var authenRequest: AuthenRequest
     var authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()
+    var userRepository: UserRepository = UserRepositoryImpl()
     let tokenHelper: TokenHelper = TokenHelper()
+    var stage: Stage = .none
     
-    init(_ changePasswordType: ChangePasswordType, authenRequest: AuthenRequest = AuthenRequest()) {
+    enum Stage {
+        case updatePassword
+        case getMe
+        case none
+    }
+    
+    public init(_ changePasswordType: ChangePasswordType, authenRequest: AuthenRequest = AuthenRequest()) {
         self.changePasswordType = changePasswordType
         self.authenRequest = authenRequest
         self.tokenHelper.delegate = self
     }
     
     public func changePasswordSubmit() {
+        self.stage = .updatePassword
         self.authenticationRepository.changePasswordSubmit(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in
             if success {
-                self.delegate?.didChangePasswordSubmitFinish(success: true)
+                if self.changePasswordType == .createPassword {
+                    self.getMe()
+                } else {
+                    self.delegate?.didChangePasswordSubmitFinish(success: true)
+                }
             } else {
                 if isRefreshToken {
                     self.tokenHelper.refreshToken()
@@ -65,10 +78,37 @@ public class ChangePasswordViewModel {
             }
         }
     }
+    
+    private func getMe() {
+        self.stage = .getMe
+        self.userRepository.getMe() { (success, response, isRefreshToken) in
+            if success {
+                do {
+                    let rawJson = try response.mapJSON()
+                    let json = JSON(rawJson)
+                    let userHelper = UserHelper()
+                    userHelper.updateLocalProfile(user: User(json: json))
+                    self.delegate?.didChangePasswordSubmitFinish(success: true)
+                } catch {
+                    self.delegate?.didChangePasswordSubmitFinish(success: true)
+                }
+            } else {
+                if isRefreshToken {
+                    self.tokenHelper.refreshToken()
+                } else {
+                    self.delegate?.didChangePasswordSubmitFinish(success: true)
+                }
+            }
+        }
+    }
 }
 
 extension ChangePasswordViewModel: TokenHelperDelegate {
     public func didRefreshTokenFinish() {
-        self.changePasswordSubmit()
+        if self.stage == .updatePassword {
+            self.changePasswordSubmit()
+        } else if self.stage == .getMe {
+            self.getMe()
+        }
     }
 }

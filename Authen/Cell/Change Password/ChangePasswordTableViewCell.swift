@@ -181,7 +181,12 @@ extension ChangePasswordTableViewCell: ChangePasswordViewModelDelegate {
     func didChangePasswordSubmitFinish(success: Bool) {
         self.hud.dismiss()
         if success {
-            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.changePasswordSuccess(self.viewModel)), animated: true)
+            if self.viewModel.changePasswordType == .createPassword {
+                let viewControllers: [UIViewController] = Utility.currentViewController().navigationController!.viewControllers as [UIViewController]
+                Utility.currentViewController().navigationController!.popToViewController(viewControllers[viewControllers.count - 4], animated: true)
+            } else {
+                Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.changePasswordSuccess(self.viewModel)), animated: true)
+            }
         } else {
             self.applyButton.isEnabled = true
         }
