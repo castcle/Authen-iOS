@@ -47,6 +47,7 @@ class VerifyPasswordViewModel {
     }
     
     public func verifyPassword() {
+        self.authenRequest.objective = .changePassword
         self.authenticationRepository.verifyPassword(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in
             if success {
                 do {

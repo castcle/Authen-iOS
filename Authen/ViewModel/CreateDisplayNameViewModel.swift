@@ -115,7 +115,7 @@ class CreateDisplayNameViewModel {
                     let profile = JSON(json[AuthenticationApiKey.profile.rawValue].dictionaryValue)
                     
                     let userHelper = UserHelper()
-                    userHelper.updateLocalProfile(user: User(json: profile))
+                    userHelper.updateLocalProfile(user: UserInfo(json: profile))
                     userHelper.clearSeenContent()
                     UserManager.shared.setUserRole(userRole: .user)
                     UserManager.shared.setAccessToken(token: accessToken)

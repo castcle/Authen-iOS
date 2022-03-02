@@ -71,7 +71,7 @@ class SocialLoginViewModel {
                     let pages = json[AuthenticationApiKey.pages.rawValue].arrayValue
 
                     let userHelper = UserHelper()
-                    userHelper.updateLocalProfile(user: User(json: profile))
+                    userHelper.updateLocalProfile(user: UserInfo(json: profile))
                     userHelper.clearSeenContent()
                     
                     let pageRealm = self.realm.objects(Page.self)
