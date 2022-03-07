@@ -305,6 +305,11 @@ extension SignUpMethodViewController: SocialLoginViewModelDelegate {
             NotificationCenter.default.post(name: .resetFeedContent, object: nil)
         }
     }
+    
+    public func didMergeAccount(userInfo: UserInfo) {
+        self.hud.dismiss()
+        Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.mergeAccount(MergeAccountViewModel(userInfo: userInfo, authenRequest: self.viewModel.authenRequest))), animated: true)
+    }
 }
 
 extension SignUpMethodViewController: PanModalPresentable {

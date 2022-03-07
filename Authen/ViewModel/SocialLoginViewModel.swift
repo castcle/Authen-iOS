@@ -33,6 +33,7 @@ import RealmSwift
 
 public protocol SocialLoginViewModelDelegate {
     func didSocialLoginFinish(success: Bool)
+    func didMergeAccount(userInfo: UserInfo)
 }
 
 class SocialLoginViewModel {
@@ -65,40 +66,48 @@ class SocialLoginViewModel {
                 do {
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
-                    let accessToken = json[AuthenticationApiKey.accessToken.rawValue].stringValue
-                    let refreshToken = json[AuthenticationApiKey.refreshToken.rawValue].stringValue
-                    let profile = JSON(json[AuthenticationApiKey.profile.rawValue].dictionaryValue)
-                    let pages = json[AuthenticationApiKey.pages.rawValue].arrayValue
+                    let code = json[AuthenticationApiKey.code.rawValue].stringValue
+                    if code == "3021" {
+                        let payload = JSON(json[AuthenticationApiKey.payload.rawValue].dictionaryValue)
+                        let profile = JSON(payload[AuthenticationApiKey.profile.rawValue].dictionaryValue)
+                        let userInfo = UserInfo(json: profile)
+                        self.delegate?.didMergeAccount(userInfo: userInfo)
+                    } else {
+                        let accessToken = json[AuthenticationApiKey.accessToken.rawValue].stringValue
+                        let refreshToken = json[AuthenticationApiKey.refreshToken.rawValue].stringValue
+                        let profile = JSON(json[AuthenticationApiKey.profile.rawValue].dictionaryValue)
+                        let pages = json[AuthenticationApiKey.pages.rawValue].arrayValue
 
-                    let userHelper = UserHelper()
-                    userHelper.updateLocalProfile(user: UserInfo(json: profile))
-                    userHelper.clearSeenContent()
-                    
-                    let pageRealm = self.realm.objects(Page.self)
-                    try! self.realm.write {
-                        self.realm.delete(pageRealm)
-                    }
-                    
-                    pages.forEach { page in
-                        let pageInfo = PageInfo(json: page)
+                        let userHelper = UserHelper()
+                        userHelper.updateLocalProfile(user: UserInfo(json: profile))
+                        userHelper.clearSeenContent()
+                        
+                        let pageRealm = self.realm.objects(Page.self)
                         try! self.realm.write {
-                            let pageTemp = Page()
-                            pageTemp.id = pageInfo.id
-                            pageTemp.castcleId = pageInfo.castcleId
-                            pageTemp.displayName = pageInfo.displayName
-                            pageTemp.avatar = pageInfo.images.avatar.thumbnail
-                            pageTemp.cover = pageInfo.images.cover.fullHd
-                            pageTemp.overview = pageInfo.overview
-                            pageTemp.official = pageInfo.verified.official
-                            self.realm.add(pageTemp, update: .modified)
+                            self.realm.delete(pageRealm)
                         }
                         
+                        pages.forEach { page in
+                            let pageInfo = PageInfo(json: page)
+                            try! self.realm.write {
+                                let pageTemp = Page()
+                                pageTemp.id = pageInfo.id
+                                pageTemp.castcleId = pageInfo.castcleId
+                                pageTemp.displayName = pageInfo.displayName
+                                pageTemp.avatar = pageInfo.images.avatar.thumbnail
+                                pageTemp.cover = pageInfo.images.cover.fullHd
+                                pageTemp.overview = pageInfo.overview
+                                pageTemp.official = pageInfo.verified.official
+                                self.realm.add(pageTemp, update: .modified)
+                            }
+                            
+                        }
+                        UserManager.shared.setUserRole(userRole: .user)
+                        UserManager.shared.setAccessToken(token: accessToken)
+                        UserManager.shared.setRefreshToken(token: refreshToken)
+                        self.registerNotificationToken()
+                        self.delegate?.didSocialLoginFinish(success: true)
                     }
-                    UserManager.shared.setUserRole(userRole: .user)
-                    UserManager.shared.setAccessToken(token: accessToken)
-                    UserManager.shared.setRefreshToken(token: refreshToken)
-                    self.registerNotificationToken()
-                    self.delegate?.didSocialLoginFinish(success: true)
                 } catch {}
             } else {
                 if isRefreshToken {

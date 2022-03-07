@@ -75,14 +75,9 @@ class EnterCodeViewController: UIViewController {
         
         self.pinView.didFinishCallback = { [weak self] pin in
             guard let self = self else { return }
-            if self.viewModel.verifyCodeType == .password {
-                self.hud.show(in: self.view)
-                self.viewModel.authenRequest.payload.otp = pin
-                self.viewModel.verifyOtp()
-            } else if self.viewModel.verifyCodeType == .mergeAccount {
-                self.gotoFeed()
-            }
-            print("The pin entered is \(pin)")
+            self.hud.show(in: self.view)
+            self.viewModel.authenRequest.payload.otp = pin
+            self.viewModel.verifyOtp()
         }
         
         self.countdownLabel.text = "Resend Code \(self.secondsRemaining)s"
@@ -106,8 +101,8 @@ class EnterCodeViewController: UIViewController {
         Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.changePassword(ChangePasswordViewModel(.forgotPassword, authenRequest: self.viewModel.authenRequest))), animated: true)
     }
     
-    private func gotoFeed() {
-        Utility.currentViewController().navigationController?.popToRootViewController(animated: true)
+    private func gotoMergeSuccess() {
+        Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.mergeAccountSuccess), animated: true)
     }
     
     private func setupCountdown() {
@@ -136,7 +131,11 @@ extension EnterCodeViewController: EnterCodeViewModelDelegate {
     func didVerifyOtpFinish(success: Bool) {
         self.hud.dismiss()
         if success {
-            self.gotoCreatePassword()
+            if self.viewModel.verifyCodeType == .password {
+                self.gotoCreatePassword()
+            } else if self.viewModel.verifyCodeType == .mergeAccount {
+                self.gotoMergeSuccess()
+            }
         }
     }
     

@@ -338,19 +338,20 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="We found your account on Castcle" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AHQ-CQ-FlN">
-                                <rect key="frame" x="30" y="20" width="260" height="48"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <rect key="frame" x="30" y="210" width="260" height="43"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="By clicking on the button below, you'll get an OTP sent to your inbox to confirm account merging." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZYp-BL-hM7">
-                                <rect key="frame" x="30" y="328" width="260" height="57.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZYp-BL-hM7">
+                                <rect key="frame" x="30" y="273" width="260" height="76.5"/>
+                                <string key="text">Your email already exists on Castcle. Confirm will merge your accounts. An OTP code will be sent to your email to confirm the merger.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2aL-v8-FnO">
-                                <rect key="frame" x="10" y="108" width="300" height="200"/>
+                                <rect key="frame" x="10" y="20" width="300" height="170"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cF4-92-fZ6">
                                         <rect key="frame" x="20" y="0.0" width="100" height="100"/>
@@ -441,7 +442,7 @@
                                     <constraint firstItem="crF-QX-606" firstAttribute="trailing" secondItem="cF4-92-fZ6" secondAttribute="trailing" id="1C5-1a-CSL"/>
                                     <constraint firstItem="dyB-Bw-I2i" firstAttribute="trailing" secondItem="idr-TW-tw2" secondAttribute="trailing" id="1TP-h8-eKB"/>
                                     <constraint firstItem="cF4-92-fZ6" firstAttribute="top" secondItem="2aL-v8-FnO" secondAttribute="top" id="Csx-MT-pxx"/>
-                                    <constraint firstAttribute="height" constant="200" id="E1m-nh-79V"/>
+                                    <constraint firstAttribute="height" constant="170" id="E1m-nh-79V"/>
                                     <constraint firstItem="tSg-ia-8VJ" firstAttribute="trailing" secondItem="lGh-Bl-7IG" secondAttribute="trailing" id="EAf-Z6-oae"/>
                                     <constraint firstItem="MR3-K5-eWq" firstAttribute="top" secondItem="crF-QX-606" secondAttribute="bottom" constant="5" id="FY0-Re-8PH"/>
                                     <constraint firstAttribute="trailing" secondItem="idr-TW-tw2" secondAttribute="trailing" constant="20" id="FmZ-Vz-tYj"/>
@@ -480,13 +481,13 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="2aL-v8-FnO" firstAttribute="centerX" secondItem="cNa-ka-Xr1" secondAttribute="centerX" id="0EB-pY-yG2"/>
-                            <constraint firstItem="2aL-v8-FnO" firstAttribute="top" secondItem="AHQ-CQ-FlN" secondAttribute="bottom" constant="40" id="0mA-q3-2sX"/>
-                            <constraint firstItem="AHQ-CQ-FlN" firstAttribute="top" secondItem="lmL-y3-J8c" secondAttribute="top" constant="20" id="LRW-44-ytp"/>
                             <constraint firstItem="ntT-01-B0G" firstAttribute="leading" secondItem="cNa-ka-Xr1" secondAttribute="leading" constant="20" id="NCs-Fl-cql"/>
-                            <constraint firstItem="ZYp-BL-hM7" firstAttribute="top" secondItem="2aL-v8-FnO" secondAttribute="bottom" constant="20" id="OHe-2H-0s0"/>
+                            <constraint firstItem="ZYp-BL-hM7" firstAttribute="top" secondItem="AHQ-CQ-FlN" secondAttribute="bottom" constant="20" id="NJg-2f-Kel"/>
                             <constraint firstItem="lmL-y3-J8c" firstAttribute="bottom" secondItem="ntT-01-B0G" secondAttribute="bottom" constant="30" id="OXs-Sd-LhI"/>
                             <constraint firstAttribute="trailing" secondItem="ntT-01-B0G" secondAttribute="trailing" constant="20" id="SbX-Ta-CPl"/>
+                            <constraint firstItem="2aL-v8-FnO" firstAttribute="top" secondItem="lmL-y3-J8c" secondAttribute="top" constant="20" id="avc-hP-HDl"/>
                             <constraint firstItem="lmL-y3-J8c" firstAttribute="trailing" secondItem="ZYp-BL-hM7" secondAttribute="trailing" constant="30" id="brg-lE-6Lv"/>
+                            <constraint firstItem="AHQ-CQ-FlN" firstAttribute="top" secondItem="2aL-v8-FnO" secondAttribute="bottom" constant="20" id="cv3-SK-VxH"/>
                             <constraint firstItem="ZYp-BL-hM7" firstAttribute="leading" secondItem="lmL-y3-J8c" secondAttribute="leading" constant="30" id="oyX-CQ-sin"/>
                             <constraint firstItem="lmL-y3-J8c" firstAttribute="trailing" secondItem="AHQ-CQ-FlN" secondAttribute="trailing" constant="30" id="wrv-AW-7CF"/>
                             <constraint firstItem="AHQ-CQ-FlN" firstAttribute="leading" secondItem="lmL-y3-J8c" secondAttribute="leading" constant="30" id="yWr-Kr-8Gp"/>
@@ -734,6 +735,86 @@
             </objects>
             <point key="canvasLocation" x="4066.875" y="69.718309859154928"/>
         </scene>
+        <!--Merge Account Success View Controller-->
+        <scene sceneID="z3e-fQ-omi">
+            <objects>
+                <viewController storyboardIdentifier="MergeAccountSuccessViewController" id="r3H-xw-Pde" customClass="MergeAccountSuccessViewController" customModule="Authen" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="PIz-1T-mla">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A69-Yz-mdn">
+                                <rect key="frame" x="0.0" y="101" width="320" height="366.5"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="verify-success" translatesAutoresizingMaskIntoConstraints="NO" id="Pk3-mx-3Hp">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="180"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="Pk3-mx-3Hp" secondAttribute="height" multiplier="16:9" id="qGF-Iq-RlF"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your account successfully merged" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lor-sp-pg4">
+                                        <rect key="frame" x="30" y="200" width="260" height="43"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kgc-Ej-ZvP">
+                                        <rect key="frame" x="20" y="316.5" width="280" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="zwW-KQ-ENf"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <state key="normal" title="Close"/>
+                                        <connections>
+                                            <action selector="homeAction:" destination="r3H-xw-Pde" eventType="touchUpInside" id="Wzl-vw-dd6"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your have successfully merged your account with Castcle" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ua5-zL-frj">
+                                        <rect key="frame" x="30" y="258" width="260" height="38.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="Lor-sp-pg4" firstAttribute="leading" secondItem="A69-Yz-mdn" secondAttribute="leading" constant="30" id="0LG-pj-54z"/>
+                                    <constraint firstItem="Kgc-Ej-ZvP" firstAttribute="top" secondItem="Ua5-zL-frj" secondAttribute="bottom" constant="20" id="5KN-SO-MML"/>
+                                    <constraint firstItem="Pk3-mx-3Hp" firstAttribute="top" secondItem="A69-Yz-mdn" secondAttribute="top" id="79q-2Z-3ix"/>
+                                    <constraint firstAttribute="trailing" secondItem="Lor-sp-pg4" secondAttribute="trailing" constant="30" id="7nO-vi-qLw"/>
+                                    <constraint firstItem="Kgc-Ej-ZvP" firstAttribute="leading" secondItem="A69-Yz-mdn" secondAttribute="leading" constant="20" id="FDG-WM-QC2"/>
+                                    <constraint firstItem="Ua5-zL-frj" firstAttribute="top" secondItem="Lor-sp-pg4" secondAttribute="bottom" constant="15" id="Fkq-B2-ZAS"/>
+                                    <constraint firstItem="Pk3-mx-3Hp" firstAttribute="leading" secondItem="A69-Yz-mdn" secondAttribute="leading" id="LEp-E4-oc5"/>
+                                    <constraint firstAttribute="bottom" secondItem="Kgc-Ej-ZvP" secondAttribute="bottom" id="RdL-ha-D5Z"/>
+                                    <constraint firstItem="Lor-sp-pg4" firstAttribute="top" secondItem="Pk3-mx-3Hp" secondAttribute="bottom" constant="20" id="SRe-aE-elj"/>
+                                    <constraint firstAttribute="trailing" secondItem="Kgc-Ej-ZvP" secondAttribute="trailing" constant="20" id="VVn-kY-ggM"/>
+                                    <constraint firstAttribute="trailing" secondItem="Pk3-mx-3Hp" secondAttribute="trailing" id="dPO-sY-hlt"/>
+                                    <constraint firstItem="Pk3-mx-3Hp" firstAttribute="centerX" secondItem="A69-Yz-mdn" secondAttribute="centerX" id="ryz-5z-bL9"/>
+                                    <constraint firstAttribute="trailing" secondItem="Ua5-zL-frj" secondAttribute="trailing" constant="30" id="yC9-1C-jUi"/>
+                                    <constraint firstItem="Ua5-zL-frj" firstAttribute="leading" secondItem="A69-Yz-mdn" secondAttribute="leading" constant="30" id="yXG-Xk-572"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="dgC-sN-Bn3"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="A69-Yz-mdn" firstAttribute="centerX" secondItem="PIz-1T-mla" secondAttribute="centerX" id="3C2-VH-fuf"/>
+                            <constraint firstItem="A69-Yz-mdn" firstAttribute="leading" secondItem="dgC-sN-Bn3" secondAttribute="leading" id="Dxm-Gd-OAg"/>
+                            <constraint firstItem="A69-Yz-mdn" firstAttribute="centerY" secondItem="PIz-1T-mla" secondAttribute="centerY" id="afD-5J-0Mf"/>
+                            <constraint firstItem="A69-Yz-mdn" firstAttribute="trailing" secondItem="dgC-sN-Bn3" secondAttribute="trailing" id="haB-Qk-c5V"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="detailLabel" destination="Ua5-zL-frj" id="K7D-LI-Il6"/>
+                        <outlet property="headlineLabel" destination="Lor-sp-pg4" id="eCw-Ox-FZP"/>
+                        <outlet property="homeButton" destination="Kgc-Ej-ZvP" id="ILW-Rj-okI"/>
+                        <outlet property="successImage" destination="Pk3-mx-3Hp" id="j86-cI-ZdJ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="u1O-a1-iVr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1395" y="774"/>
+        </scene>
     </scenes>
     <designables>
         <designable name="0Ed-j4-Mvp">
@@ -753,6 +834,7 @@
         <image name="auth-background" width="375" height="665"/>
         <image name="resend-email" width="82.5" height="84"/>
         <image name="verify-email" width="218" height="150"/>
+        <image name="verify-success" width="191.5" height="174.5"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

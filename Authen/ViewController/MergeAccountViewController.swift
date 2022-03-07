@@ -27,7 +27,10 @@
 
 import UIKit
 import Core
+import Networking
 import Defaults
+import Kingfisher
+import JGProgressHUD
 
 class MergeAccountViewController: UIViewController {
 
@@ -46,14 +49,15 @@ class MergeAccountViewController: UIViewController {
     @IBOutlet var nextIcon: UIImageView!
     @IBOutlet var mergeButton: UIButton!
     
-    var viewModel = MergeAccountViewModel(socialType: .twitter)
+    var viewModel = MergeAccountViewModel(userInfo: UserInfo(), authenRequest: AuthenRequest())
+    let hud = JGProgressHUD()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.Asset.darkGraphiteBlue
         self.setupNavBar()
         
-        self.headlineLabel.font = UIFont.asset(.regular, fontSize: .h3)
+        self.headlineLabel.font = UIFont.asset(.regular, fontSize: .h4)
         self.headlineLabel.textColor = UIColor.Asset.white
         
         self.detailLabel.font = UIFont.asset(.regular, fontSize: .body)
@@ -72,20 +76,32 @@ class MergeAccountViewController: UIViewController {
         self.castcleAvatarImage.circle(color: UIColor.Asset.white)
         self.castcleAvatarImage.image = UIImage.Asset.userPlaceholder
         
-        self.sicialIconView.capsule(color: self.viewModel.socialType.color, borderWidth: 2, borderColor: UIColor.Asset.black)
+        self.sicialIconView.capsule(color: self.viewModel.color, borderWidth: 2, borderColor: UIColor.Asset.black)
         self.castcleIconView.capsule(color: UIColor.Asset.black, borderWidth: 2, borderColor: UIColor.Asset.black)
-        self.socialIcon.image = self.viewModel.socialType.icon
+        self.socialIcon.image = self.viewModel.icon
         self.castcleIcon.image = UIImage.init(icon: .castcle(.logo), size: CGSize(width: 23, height: 23), textColor: UIColor.Asset.white)
         self.nextIcon.image = UIImage.init(icon: .castcle(.next), size: CGSize(width: 23, height: 23), textColor: UIColor.Asset.white)
+        
+        let castcleAvatarUrl = URL(string: self.viewModel.userInfo.images.avatar.thumbnail)
+        self.castcleAvatarImage.kf.setImage(with: castcleAvatarUrl, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
+        self.castcleNameLabel.text = self.viewModel.userInfo.displayName
+        self.castcleIdLabel.text = "@\(self.viewModel.userInfo.castcleId)"
+        
+        let socialAvatarUrl = URL(string: self.viewModel.authenRequest.avatar)
+        self.socialAvatarImage.kf.setImage(with: socialAvatarUrl, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
+        self.socialNameLabel.text = self.viewModel.authenRequest.displayName
+        self.socialIdLabel.text = ""
         
         self.mergeButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .h4)
         self.mergeButton.setTitleColor(UIColor.Asset.white, for: .normal)
         self.mergeButton.capsule(color: UIColor.Asset.lightBlue, borderWidth: 1, borderColor: UIColor.Asset.lightBlue)
+        self.viewModel.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         Defaults[.screenId] = ""
+        self.hud.textLabel.text = "Verifying"
     }
     
     func setupNavBar() {
@@ -93,6 +109,19 @@ class MergeAccountViewController: UIViewController {
     }
     
     @IBAction func mergeAction(_ sender: Any) {
-        Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.enterCode(EnterCodeViewModel(verifyCodeType: .mergeAccount))), animated: true)
+        self.hud.show(in: self.view)
+        self.viewModel.authenRequest.objective = .mergeAccount
+        self.viewModel.authenRequest.channel = .email
+        self.viewModel.authenRequest.payload.email = self.viewModel.userInfo.email
+        self.viewModel.requestOtp()
+    }
+}
+
+extension MergeAccountViewController: MergeAccountViewModelDelegate {
+    func didRequestOtpFinish(success: Bool) {
+        self.hud.dismiss()
+        if success {
+            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.enterCode(EnterCodeViewModel(verifyCodeType: .mergeAccount, authenRequest: self.viewModel.authenRequest))), animated: true)
+        }
     }
 }

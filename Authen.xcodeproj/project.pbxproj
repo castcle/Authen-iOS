@@ -19,6 +19,7 @@
 		B74338A826DE4794004BBC05 /* CheckEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74338A726DE4794004BBC05 /* CheckEmailViewController.swift */; };
 		B74338AA26DE5689004BBC05 /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74338A926DE5689004BBC05 /* ForgotPasswordViewController.swift */; };
 		B74338AC26DE765B004BBC05 /* EnterCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74338AB26DE765B004BBC05 /* EnterCodeViewController.swift */; };
+		B74640A227D605EA0085CEC5 /* MergeAccountSuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74640A127D605EA0085CEC5 /* MergeAccountSuccessViewController.swift */; };
 		B74CEF1626C50733006B1F2C /* Networking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B74CEF1526C50733006B1F2C /* Networking.framework */; };
 		B758AC5F26F46D1600A4A5FB /* MergeAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B758AC5E26F46D1600A4A5FB /* MergeAccountViewController.swift */; };
 		B758AC6126F4792300A4A5FB /* MergeAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B758AC6026F4792300A4A5FB /* MergeAccountViewModel.swift */; };
@@ -83,6 +84,7 @@
 		B74338A726DE4794004BBC05 /* CheckEmailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckEmailViewController.swift; sourceTree = "<group>"; };
 		B74338A926DE5689004BBC05 /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
 		B74338AB26DE765B004BBC05 /* EnterCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterCodeViewController.swift; sourceTree = "<group>"; };
+		B74640A127D605EA0085CEC5 /* MergeAccountSuccessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeAccountSuccessViewController.swift; sourceTree = "<group>"; };
 		B74CEF1526C50733006B1F2C /* Networking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Networking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B758AC5E26F46D1600A4A5FB /* MergeAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeAccountViewController.swift; sourceTree = "<group>"; };
 		B758AC6026F4792300A4A5FB /* MergeAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeAccountViewModel.swift; sourceTree = "<group>"; };
@@ -257,6 +259,7 @@
 				B74338A926DE5689004BBC05 /* ForgotPasswordViewController.swift */,
 				B74338AB26DE765B004BBC05 /* EnterCodeViewController.swift */,
 				B758AC5E26F46D1600A4A5FB /* MergeAccountViewController.swift */,
+				B74640A127D605EA0085CEC5 /* MergeAccountSuccessViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -440,6 +443,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B74338AC26DE765B004BBC05 /* EnterCodeViewController.swift in Sources */,
+				B74640A227D605EA0085CEC5 /* MergeAccountSuccessViewController.swift in Sources */,
 				B7910E6226B8F52B0097C94E /* ResendEmailViewController.swift in Sources */,
 				B7910E5526B835DB0097C94E /* CreateDisplayNameViewController.swift in Sources */,
 				B7910E0A26B1268E0097C94E /* AuthenNibVars.swift in Sources */,

@@ -26,18 +26,23 @@
 //
 
 import UIKit
+import Networking
+import SwiftyJSON
 
-public enum SocialType {
-    case telegram
-    case facebook
-    case twitter
-    case google
-    case apple
+public protocol MergeAccountViewModelDelegate {
+    func didRequestOtpFinish(success: Bool)
+}
+
+public class MergeAccountViewModel {
+    
+    public var delegate: MergeAccountViewModelDelegate?
+    var userInfo: UserInfo = UserInfo()
+    var authenRequest: AuthenRequest = AuthenRequest()
+    var authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()
+    let tokenHelper: TokenHelper = TokenHelper()
     
     var icon: UIImage {
-        switch self {
-        case .telegram:
-            return UIImage.init(icon: .castcle(.direct), size: CGSize(width: 23, height: 23), textColor: UIColor.Asset.white)
+        switch self.authenRequest.provider {
         case .facebook:
             return UIImage.init(icon: .castcle(.facebook), size: CGSize(width: 23, height: 23), textColor: UIColor.Asset.white)
         case .twitter:
@@ -46,13 +51,13 @@ public enum SocialType {
             return UIImage.Asset.googleLogo
         case .apple:
             return UIImage.init(icon: .castcle(.apple), size: CGSize(width: 23, height: 23), textColor: UIColor.Asset.white)
+        default:
+            return UIImage()
         }
     }
     
     var color: UIColor {
-        switch self {
-        case .telegram:
-            return UIColor.Asset.telegram
+        switch self.authenRequest.provider {
         case .facebook:
             return UIColor.Asset.facebook
         case .twitter:
@@ -61,15 +66,39 @@ public enum SocialType {
             return UIColor.Asset.white
         case .apple:
             return UIColor.Asset.apple
+        default:
+            return UIColor.clear
+        }
+    }
+    
+    public init(userInfo: UserInfo, authenRequest: AuthenRequest) {
+        self.userInfo = userInfo
+        self.authenRequest = authenRequest
+        self.tokenHelper.delegate = self
+    }
+    
+    func requestOtp() {
+        self.authenticationRepository.requestOtp(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in
+            if success {
+                do {
+                    let rawJson = try response.mapJSON()
+                    let json = JSON(rawJson)
+                    self.authenRequest.payload.refCode = json[AuthenticationApiKey.refCode.rawValue].stringValue
+                    self.delegate?.didRequestOtpFinish(success: true)
+                } catch {}
+            } else {
+                if isRefreshToken {
+                    self.tokenHelper.refreshToken()
+                } else {
+                    self.delegate?.didRequestOtpFinish(success: false)
+                }
+            }
         }
     }
 }
 
-public class MergeAccountViewModel {
-    
-    public var socialType: SocialType
-    
-    public init(socialType: SocialType) {
-        self.socialType = socialType
+extension MergeAccountViewModel: TokenHelperDelegate {
+    public func didRefreshTokenFinish() {
+        self.requestOtp()
     }
 }

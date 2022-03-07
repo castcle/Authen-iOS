@@ -25,9 +25,11 @@
 //  Created by Castcle Co., Ltd. on 17/9/2564 BE.
 //
 
-
+import Core
 import Networking
 import SwiftyJSON
+import RealmSwift
+import Defaults
 
 public enum VerifyCodeType {
     case password
@@ -44,12 +46,17 @@ public class EnterCodeViewModel {
     public var verifyCodeType: VerifyCodeType
     var authenRequest: AuthenRequest = AuthenRequest()
     var authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()
+    var notificationRepository: NotificationRepository = NotificationRepositoryImpl()
+    var notificationRequest: NotificationRequest = NotificationRequest()
     let tokenHelper: TokenHelper = TokenHelper()
     private var state: Stage = .none
+    private let realm = try! Realm()
     
     enum Stage {
         case requestOtp
         case verifyOtp
+        case connectSocial
+        case registerToken
         case none
     }
     
@@ -66,8 +73,10 @@ public class EnterCodeViewModel {
                 do {
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
+                    let accessToken = json[AuthenticationApiKey.accessToken.rawValue].stringValue
                     self.authenRequest.payload.refCode = json[AuthenticationApiKey.refCode.rawValue].stringValue
-                    self.delegate?.didVerifyOtpFinish(success: true)
+                    UserManager.shared.setAccessToken(token: accessToken)
+                    self.connectWithSocial()
                 } catch {}
             } else {
                 if isRefreshToken {
@@ -98,6 +107,73 @@ public class EnterCodeViewModel {
             }
         }
     }
+    
+    func connectWithSocial() {
+        self.state = .connectSocial
+        self.authenticationRepository.connectWithSocial(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in
+            if success {
+                do {
+                    let rawJson = try response.mapJSON()
+                    let json = JSON(rawJson)
+                    let accessToken = json[AuthenticationApiKey.accessToken.rawValue].stringValue
+                    let refreshToken = json[AuthenticationApiKey.refreshToken.rawValue].stringValue
+                    let profile = JSON(json[AuthenticationApiKey.profile.rawValue].dictionaryValue)
+                    let pages = json[AuthenticationApiKey.pages.rawValue].arrayValue
+
+                    let userHelper = UserHelper()
+                    userHelper.updateLocalProfile(user: UserInfo(json: profile))
+                    userHelper.clearSeenContent()
+                    
+                    let pageRealm = self.realm.objects(Page.self)
+                    try! self.realm.write {
+                        self.realm.delete(pageRealm)
+                    }
+                    
+                    pages.forEach { page in
+                        let pageInfo = PageInfo(json: page)
+                        try! self.realm.write {
+                            let pageTemp = Page()
+                            pageTemp.id = pageInfo.id
+                            pageTemp.castcleId = pageInfo.castcleId
+                            pageTemp.displayName = pageInfo.displayName
+                            pageTemp.avatar = pageInfo.images.avatar.thumbnail
+                            pageTemp.cover = pageInfo.images.cover.fullHd
+                            pageTemp.overview = pageInfo.overview
+                            pageTemp.official = pageInfo.verified.official
+                            self.realm.add(pageTemp, update: .modified)
+                        }
+                        
+                    }
+                    UserManager.shared.setUserRole(userRole: .user)
+                    UserManager.shared.setAccessToken(token: accessToken)
+                    UserManager.shared.setRefreshToken(token: refreshToken)
+                    self.registerNotificationToken()
+                    self.delegate?.didVerifyOtpFinish(success: true)
+                } catch {
+                    self.delegate?.didVerifyOtpFinish(success: false)
+                }
+            } else {
+                if isRefreshToken {
+                    self.tokenHelper.refreshToken()
+                } else {
+                    self.delegate?.didVerifyOtpFinish(success: false)
+                }
+            }
+        }
+    }
+    
+    private func registerNotificationToken() {
+        self.state = .registerToken
+        self.notificationRequest.deviceUUID = Defaults[.deviceUuid]
+        self.notificationRequest.firebaseToken = Defaults[.firebaseToken]
+        self.notificationRepository.registerToken(notificationRequest: self.notificationRequest) { (success, response, isRefreshToken) in
+            if !success {
+                if isRefreshToken {
+                    self.tokenHelper.refreshToken()
+                }
+            }
+        }
+    }
 }
 
 extension EnterCodeViewModel: TokenHelperDelegate {
@@ -106,6 +182,10 @@ extension EnterCodeViewModel: TokenHelperDelegate {
             self.verifyOtp()
         } else if self.state == .requestOtp {
             self.requestOtp()
+        } else if self.state == .connectSocial {
+            self.connectWithSocial()
+        } else if self.state == .registerToken {
+            self.registerNotificationToken()
         }
     }
 }
