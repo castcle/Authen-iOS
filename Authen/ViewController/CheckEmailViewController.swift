@@ -83,7 +83,7 @@ class CheckEmailViewController: UIViewController, UITextFieldDelegate {
     }
     
     func setupNavBar() {
-        self.customNavigationBar(.secondary, title: "ค้นหาบัญชี")
+        self.customNavigationBar(.secondary, title: "Search account")
     }
     
     private func setupContinueButton(isActive: Bool) {
