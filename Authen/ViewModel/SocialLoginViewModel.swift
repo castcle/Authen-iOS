@@ -98,9 +98,11 @@ class SocialLoginViewModel {
                                 pageTemp.cover = pageInfo.images.cover.fullHd
                                 pageTemp.overview = pageInfo.overview
                                 pageTemp.official = pageInfo.verified.official
+                                pageTemp.socialProvider = pageInfo.syncSocial.provider
+                                pageTemp.socialActive = pageInfo.syncSocial.active
+                                pageTemp.socialAutoPost = pageInfo.syncSocial.autoPost
                                 self.realm.add(pageTemp, update: .modified)
                             }
-                            
                         }
                         UserManager.shared.setUserRole(userRole: .user)
                         UserManager.shared.setAccessToken(token: accessToken)
