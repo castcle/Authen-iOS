@@ -46,9 +46,9 @@ class CreateDisplayNameViewModel {
     var notificationRequest: NotificationRequest = NotificationRequest()
     var isCastcleIdExist: Bool = true
     let tokenHelper: TokenHelper = TokenHelper()
-    private var stage: CreateDisplayNameStage = .none
+    private var state: State = .none
     
-    enum CreateDisplayNameStage {
+    enum State {
         case suggest
         case check
         case register
@@ -63,7 +63,7 @@ class CreateDisplayNameViewModel {
     }
     
     public func suggestCastcleId() {
-        self.stage = .suggest
+        self.state = .suggest
         self.authenticationRepository.suggestCastcleId(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in
             if success {
                 do {
@@ -82,7 +82,7 @@ class CreateDisplayNameViewModel {
     }
     
     public func checkCastcleIdExists() {
-        self.stage = .check
+        self.state = .check
         self.authenticationRepository.checkCastcleIdExists(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in
             if success {
                 do {
@@ -104,7 +104,7 @@ class CreateDisplayNameViewModel {
     }
     
     public func register() {
-        self.stage = .register
+        self.state = .register
         self.authenticationRepository.register(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in
             if success {
                 do {
@@ -135,7 +135,7 @@ class CreateDisplayNameViewModel {
     }
     
     private func registerNotificationToken() {
-        self.stage = .registerToken
+        self.state = .registerToken
         self.notificationRequest.deviceUUID = Defaults[.deviceUuid]
         self.notificationRequest.firebaseToken = Defaults[.firebaseToken]
         self.notificationRepository.registerToken(notificationRequest: self.notificationRequest) { (success, response, isRefreshToken) in
@@ -150,13 +150,13 @@ class CreateDisplayNameViewModel {
 
 extension CreateDisplayNameViewModel: TokenHelperDelegate {
     func didRefreshTokenFinish() {
-        if self.stage == .suggest {
+        if self.state == .suggest {
             self.suggestCastcleId()
-        } else if self.stage == .check {
+        } else if self.state == .check {
             self.checkCastcleIdExists()
-        } else if self.stage == .register {
+        } else if self.state == .register {
             self.register()
-        } else if self.stage == .registerToken {
+        } else if self.state == .registerToken {
             self.registerNotificationToken()
         }
     }

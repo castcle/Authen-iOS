@@ -49,10 +49,10 @@ public class EnterCodeViewModel {
     var notificationRepository: NotificationRepository = NotificationRepositoryImpl()
     var notificationRequest: NotificationRequest = NotificationRequest()
     let tokenHelper: TokenHelper = TokenHelper()
-    private var state: Stage = .none
+    private var state: State = .none
     private let realm = try! Realm()
     
-    enum Stage {
+    enum State {
         case requestOtp
         case verifyOtp
         case connectSocial

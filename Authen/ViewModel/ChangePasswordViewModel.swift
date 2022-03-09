@@ -46,9 +46,9 @@ public class ChangePasswordViewModel {
     var authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()
     var userRepository: UserRepository = UserRepositoryImpl()
     let tokenHelper: TokenHelper = TokenHelper()
-    var stage: Stage = .none
+    var state: State = .none
     
-    enum Stage {
+    enum State {
         case updatePassword
         case getMe
         case none
@@ -61,7 +61,7 @@ public class ChangePasswordViewModel {
     }
     
     public func changePasswordSubmit() {
-        self.stage = .updatePassword
+        self.state = .updatePassword
         self.authenticationRepository.changePasswordSubmit(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in
             if success {
                 if self.changePasswordType == .createPassword {
@@ -80,7 +80,7 @@ public class ChangePasswordViewModel {
     }
     
     private func getMe() {
-        self.stage = .getMe
+        self.state = .getMe
         self.userRepository.getMe() { (success, response, isRefreshToken) in
             if success {
                 do {
@@ -105,9 +105,9 @@ public class ChangePasswordViewModel {
 
 extension ChangePasswordViewModel: TokenHelperDelegate {
     public func didRefreshTokenFinish() {
-        if self.stage == .updatePassword {
+        if self.state == .updatePassword {
             self.changePasswordSubmit()
-        } else if self.stage == .getMe {
+        } else if self.state == .getMe {
             self.getMe()
         }
     }
