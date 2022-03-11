@@ -75,6 +75,7 @@ class EnterCodeViewController: UIViewController {
         
         self.pinView.didFinishCallback = { [weak self] pin in
             guard let self = self else { return }
+            self.hud.textLabel.text = "Verifying"
             self.hud.show(in: self.view)
             self.viewModel.authenRequest.payload.otp = pin
             self.viewModel.verifyOtp()
@@ -83,7 +84,7 @@ class EnterCodeViewController: UIViewController {
         self.countdownLabel.text = "Resend Code \(self.secondsRemaining)s"
         self.setupCountdown()
         self.viewModel.delegate = self
-        self.hud.textLabel.text = "Verifying"
+        
         self.detailLabel.text = "We already send you an OTP to your email address \"\(self.viewModel.authenRequest.payload.email)\""
     }
     
@@ -122,6 +123,7 @@ class EnterCodeViewController: UIViewController {
     }
     
     @IBAction func resendAction(_ sender: Any) {
+        self.hud.textLabel.text = "Sending"
         self.hud.show(in: self.view)
         self.viewModel.requestOtp()
     }

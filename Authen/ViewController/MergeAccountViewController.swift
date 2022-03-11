@@ -101,7 +101,7 @@ class MergeAccountViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         Defaults[.screenId] = ""
-        self.hud.textLabel.text = "Verifying"
+        self.hud.textLabel.text = "Sending"
     }
     
     func setupNavBar() {

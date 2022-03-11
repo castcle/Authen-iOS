@@ -344,8 +344,8 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZYp-BL-hM7">
-                                <rect key="frame" x="30" y="273" width="260" height="76.5"/>
-                                <string key="text">Your email already exists on Castcle. Confirm will merge your accounts. An OTP code will be sent to your email to confirm the merger.</string>
+                                <rect key="frame" x="30" y="273" width="260" height="95.5"/>
+                                <string key="text">Your email already exists on Castcle. Click on the "Next" button below and use OTP code sent to your email inbox to confirm account merge.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -471,7 +471,7 @@
                                     <constraint firstAttribute="height" constant="50" id="n0g-St-2SY"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <state key="normal" title="Merge Account"/>
+                                <state key="normal" title="Next"/>
                                 <connections>
                                     <action selector="mergeAction:" destination="4C0-S0-3xe" eventType="touchUpInside" id="TF3-xc-r3F"/>
                                 </connections>
