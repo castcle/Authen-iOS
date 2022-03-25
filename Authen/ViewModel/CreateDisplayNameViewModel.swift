@@ -136,7 +136,7 @@ class CreateDisplayNameViewModel {
     
     private func registerNotificationToken() {
         self.state = .registerToken
-        self.notificationRequest.deviceUUID = Defaults[.deviceUuid]
+        self.notificationRequest.uuid = Defaults[.deviceUuid]
         self.notificationRequest.firebaseToken = Defaults[.firebaseToken]
         self.notificationRepository.registerToken(notificationRequest: self.notificationRequest) { (success, response, isRefreshToken) in
             if !success {
