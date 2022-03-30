@@ -281,7 +281,6 @@ public class SignUpMethodViewController: UIViewController {
     @IBAction func appleAction(_ sender: Any) {
         let request = ASAuthorizationAppleIDProvider().createRequest()
         request.requestedScopes = [.email, .fullName]
-        
         let authorizationController = ASAuthorizationController(authorizationRequests: [request])
         authorizationController.delegate = self
         authorizationController.presentationContextProvider = self
@@ -382,6 +381,8 @@ extension SignUpMethodViewController: SFSafariViewControllerDelegate, ASWebAuthe
             let twitterName: String = json["name"].string ?? ""
             let twitterEmail: String = json["email"].string ?? ""
             let twitterProfilePic: String = json["profile_image_url_https"].string?.replacingOccurrences(of: "_normal", with: "", options: .literal, range: nil) ?? ""
+            let twitterDescription: String = json["description"].string ?? ""
+            let twitterCover: String = json["profile_banner_url"].string ?? ""
             
             var authenRequest: AuthenRequest = AuthenRequest()
             authenRequest.provider = .twitter
@@ -389,6 +390,8 @@ extension SignUpMethodViewController: SFSafariViewControllerDelegate, ASWebAuthe
             authenRequest.displayName = twitterName
             authenRequest.avatar = twitterProfilePic
             authenRequest.email = twitterEmail
+            authenRequest.overview = twitterDescription
+            authenRequest.cover = twitterCover
             authenRequest.authToken = self.accToken?.key ?? ""
             
             self.dismiss(animated: true)
