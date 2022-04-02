@@ -302,6 +302,7 @@ extension SignUpMethodViewController: SocialLoginViewModelDelegate {
         if success {
             Defaults[.startLoadFeed] = true
             NotificationCenter.default.post(name: .resetFeedContent, object: nil)
+            
         }
     }
     

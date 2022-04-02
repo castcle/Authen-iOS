@@ -73,6 +73,7 @@ class SocialLoginViewModel {
                         let userInfo = UserInfo(json: profile)
                         self.delegate?.didMergeAccount(userInfo: userInfo)
                     } else {
+                        let registered: Bool = json[AuthenticationApiKey.registered.rawValue].boolValue
                         let accessToken = json[AuthenticationApiKey.accessToken.rawValue].stringValue
                         let refreshToken = json[AuthenticationApiKey.refreshToken.rawValue].stringValue
                         let profile = JSON(json[AuthenticationApiKey.profile.rawValue].dictionaryValue)
@@ -81,6 +82,10 @@ class SocialLoginViewModel {
                         let userHelper = UserHelper()
                         userHelper.updateLocalProfile(user: UserInfo(json: profile))
                         userHelper.clearSeenContent()
+                        
+                        if self.authenRequest.provider == .twitter && !registered {
+                            Defaults[.syncTwitter] = false
+                        }
                         
                         let pageRealm = self.realm.objects(Page.self)
                         try! self.realm.write {
