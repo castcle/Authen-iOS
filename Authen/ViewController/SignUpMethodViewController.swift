@@ -395,6 +395,7 @@ extension SignUpMethodViewController: SFSafariViewControllerDelegate, ASWebAuthe
             let twitterProfilePic: String = json["profile_image_url_https"].string?.replacingOccurrences(of: "_normal", with: "", options: .literal, range: nil) ?? ""
             let twitterDescription: String = json["description"].string ?? ""
             let twitterCover: String = json["profile_banner_url"].string ?? ""
+            let twitterScreenName: String = json["screen_name"].string ?? ""
             
             var authenRequest: AuthenRequest = AuthenRequest()
             authenRequest.provider = .twitter
@@ -404,6 +405,7 @@ extension SignUpMethodViewController: SFSafariViewControllerDelegate, ASWebAuthe
             authenRequest.email = twitterEmail
             authenRequest.overview = twitterDescription
             authenRequest.cover = twitterCover
+            authenRequest.userName = twitterScreenName
             authenRequest.authToken = self.accToken?.key ?? ""
             
             self.dismiss(animated: true)
