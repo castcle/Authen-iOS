@@ -147,7 +147,7 @@ public class SignUpMethodViewController: UIViewController {
                 self.dismiss(animated: true)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     Utility.currentViewController().navigationController?.popToRootViewController(animated: false)
-                    Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.signIn(showSignUp: true)), animated: true)
+//                    Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.signIn(showSignUp: true)), animated: true)
                 }
             }
         }
@@ -304,7 +304,7 @@ extension SignUpMethodViewController: SocialLoginViewModelDelegate {
             NotificationCenter.default.post(name: .resetFeedContent, object: nil)
             if !Defaults[.syncTwitter] {
                 var pageSocial: PageSocial = PageSocial()
-                pageSocial.provider = ProviderCreatePage(rawValue: self.viewModel.authenRequest.provider.rawValue) ?? .none
+                pageSocial.provider = SocialType(rawValue: self.viewModel.authenRequest.provider.rawValue) ?? .unknow
                 pageSocial.socialId = self.viewModel.authenRequest.socialId
                 pageSocial.userName = self.viewModel.authenRequest.userName
                 pageSocial.displayName = self.viewModel.authenRequest.displayName

@@ -55,6 +55,7 @@ public struct AuthenNibVars {
     public struct TableViewCell {
         public static let oldPassword = "OldPasswordTableViewCell"
         public static let changePassword = "ChangePasswordTableViewCell"
+        public static let signIn = "SignInTableViewCell"
     }
     
     // MARK: - CollectionViewCell

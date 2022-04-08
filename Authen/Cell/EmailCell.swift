@@ -182,7 +182,7 @@ class EmailCell: UICollectionViewCell, UITextFieldDelegate {
         if self.viewModel.framSignIn {
             Utility.currentViewController().navigationController?.popViewController(animated: true)
         } else {
-            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.signIn(showSignUp: false)), animated: true)
+//            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.signIn(showSignUp: false)), animated: true)
         }
     }
 }

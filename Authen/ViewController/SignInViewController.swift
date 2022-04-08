@@ -27,70 +27,79 @@
 
 import UIKit
 import Core
-import IGListKit
+//import IGListKit
 import Defaults
 
 class SignInViewController: UIViewController {
 
-    let collectionView: UICollectionView = {
-        let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        view.backgroundColor = UIColor.Asset.darkGraphiteBlue
-        return view
-    }()
-    
-    lazy var adapter: ListAdapter = {
-        return ListAdapter(updater: ListAdapterUpdater(), viewController: self, workingRangeSize: 0)
-    }()
-    
-    enum SignInType: Int {
-        case signIn = 1
-    }
-    
-    var showSignUp: Bool = true
+    @IBOutlet var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.Asset.darkGraphiteBlue
         self.hideKeyboardWhenTapped()
-        self.collectionView.alwaysBounceVertical = true
-        self.collectionView.showsHorizontalScrollIndicator = false
-        self.collectionView.showsVerticalScrollIndicator = false
-        self.collectionView.backgroundColor = UIColor.clear
-        self.view.addSubview(self.collectionView)
-        self.adapter.collectionView = self.collectionView
-        self.adapter.dataSource = self
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        self.collectionView.frame = view.bounds
+        self.setupNavBar()
+        self.configureTableView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.setupNavBar()
         Defaults[.screenId] = ""
     }
     
     func setupNavBar() {
-        self.customNavigationBar(.secondary, title: Localization.login.title.text, textColor: UIColor.Asset.lightBlue)
+        self.customNavigationBar(.primary, title: "")
+        var rightButton: [UIBarButtonItem] = []
+        let rightIcon = NavBarButtonType.close.barButton
+        rightIcon.addTarget(self, action: #selector(self.closeAction), for: .touchUpInside)
+        rightButton.append(UIBarButtonItem(customView: rightIcon))
+        self.navigationItem.rightBarButtonItems = rightButton
+    }
+    
+    func configureTableView() {
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        self.tableView.register(UINib(nibName: AuthenNibVars.TableViewCell.signIn, bundle: ConfigBundle.authen), forCellReuseIdentifier: AuthenNibVars.TableViewCell.signIn)
+        self.tableView.rowHeight = UITableView.automaticDimension
+        self.tableView.estimatedRowHeight = 100
+    }
+    
+    @objc private func closeAction() {
+        self.dismiss(animated: true)
     }
 }
 
-// MARK: - ListAdapterDataSource
-extension SignInViewController: ListAdapterDataSource {
-    func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
-        let items: [ListDiffable] = [SignInType.signIn.rawValue] as [ListDiffable]
-        return items
+extension SignInViewController: UITableViewDelegate, UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
     }
     
-    func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
-        let section = SignInSectionController()
-        section.showSignUp = self.showSignUp
-        return section
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
     }
     
-    func emptyView(for listAdapter: ListAdapter) -> UIView? {
-        return nil
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: AuthenNibVars.TableViewCell.signIn, for: indexPath as IndexPath) as? SignInTableViewCell
+        cell?.backgroundColor = UIColor.clear
+        cell?.delegate = self
+        return cell ?? SignInTableViewCell()
+    }
+}
+
+extension SignInViewController: SignInTableViewCellDelegate {
+    func didLoginWithFacebook(_ signInTableViewCell: SignInTableViewCell) {
+        //
+    }
+    
+    func didLoginWithTwitter(_ signInTableViewCell: SignInTableViewCell) {
+        //
+    }
+    
+    func didLoginWithGoogle(_ signInTableViewCell: SignInTableViewCell) {
+        //
+    }
+    
+    func didLoginWithApple(_ signInTableViewCell: SignInTableViewCell) {
+        //
     }
 }

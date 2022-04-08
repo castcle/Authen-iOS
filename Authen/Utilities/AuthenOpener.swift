@@ -29,8 +29,8 @@ import UIKit
 import Core
 
 public enum AuthenScene {
-    case signUpMethod
-    case signIn(showSignUp: Bool)
+//    case signUpMethod
+    case signIn
     case email(fromSignIn: Bool)
     case createPassword
     case createDisplayName
@@ -49,14 +49,13 @@ public enum AuthenScene {
 public struct AuthenOpener {
     public static func open(_ authenScene: AuthenScene) -> UIViewController {
         switch authenScene {
-        case .signUpMethod:
-            let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.authen, bundle: ConfigBundle.authen)
-            let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.signUpMethod)
-            return vc
-        case .signIn(let showSignUp):
+//        case .signUpMethod:
+//            let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.authen, bundle: ConfigBundle.authen)
+//            let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.signUpMethod)
+//            return vc
+        case .signIn:
             let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.authen, bundle: ConfigBundle.authen)
             let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.signIn) as? SignInViewController
-            vc?.showSignUp = showSignUp
             return vc ?? SignInViewController()
         case .email(let fromSignIn):
             let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.authen, bundle: ConfigBundle.authen)

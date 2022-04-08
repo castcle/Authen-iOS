@@ -47,15 +47,13 @@ class OldPasswordViewController: UIViewController {
     }
     
     func setupNavBar() {
-        self.customNavigationBar(.secondary, title: "เปลี่ยนรหัสผ่าน")
+        self.customNavigationBar(.secondary, title: "Change Password")
     }
     
     func configureTableView() {
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        
         self.tableView.register(UINib(nibName: AuthenNibVars.TableViewCell.oldPassword, bundle: ConfigBundle.authen), forCellReuseIdentifier: AuthenNibVars.TableViewCell.oldPassword)
-        
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 100
     }
