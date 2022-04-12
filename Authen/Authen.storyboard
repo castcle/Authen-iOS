@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -338,20 +338,20 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="We found your account on Castcle" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AHQ-CQ-FlN">
-                                <rect key="frame" x="30" y="210" width="260" height="43"/>
+                                <rect key="frame" x="30" y="220" width="260" height="43"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZYp-BL-hM7">
-                                <rect key="frame" x="30" y="273" width="260" height="95.5"/>
+                                <rect key="frame" x="30" y="283" width="260" height="95.5"/>
                                 <string key="text">Your email already exists on Castcle. Click on the "Next" button below and use OTP code sent to your email inbox to confirm account merge.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2aL-v8-FnO">
-                                <rect key="frame" x="10" y="20" width="300" height="170"/>
+                                <rect key="frame" x="10" y="20" width="300" height="180"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cF4-92-fZ6">
                                         <rect key="frame" x="20" y="0.0" width="100" height="100"/>
@@ -442,7 +442,7 @@
                                     <constraint firstItem="crF-QX-606" firstAttribute="trailing" secondItem="cF4-92-fZ6" secondAttribute="trailing" id="1C5-1a-CSL"/>
                                     <constraint firstItem="dyB-Bw-I2i" firstAttribute="trailing" secondItem="idr-TW-tw2" secondAttribute="trailing" id="1TP-h8-eKB"/>
                                     <constraint firstItem="cF4-92-fZ6" firstAttribute="top" secondItem="2aL-v8-FnO" secondAttribute="top" id="Csx-MT-pxx"/>
-                                    <constraint firstAttribute="height" constant="170" id="E1m-nh-79V"/>
+                                    <constraint firstAttribute="height" constant="180" id="E1m-nh-79V"/>
                                     <constraint firstItem="tSg-ia-8VJ" firstAttribute="trailing" secondItem="lGh-Bl-7IG" secondAttribute="trailing" id="EAf-Z6-oae"/>
                                     <constraint firstItem="MR3-K5-eWq" firstAttribute="top" secondItem="crF-QX-606" secondAttribute="bottom" constant="5" id="FY0-Re-8PH"/>
                                     <constraint firstAttribute="trailing" secondItem="idr-TW-tw2" secondAttribute="trailing" constant="20" id="FmZ-Vz-tYj"/>
