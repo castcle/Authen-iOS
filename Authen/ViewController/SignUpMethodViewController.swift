@@ -302,6 +302,18 @@ extension SignUpMethodViewController: SocialLoginViewModelDelegate {
         if success {
             Defaults[.startLoadFeed] = true
             NotificationCenter.default.post(name: .resetFeedContent, object: nil)
+            if !Defaults[.syncTwitter] {
+                var pageSocial: PageSocial = PageSocial()
+                pageSocial.provider = SocialType(rawValue: self.viewModel.authenRequest.provider.rawValue) ?? .unknow
+                pageSocial.socialId = self.viewModel.authenRequest.socialId
+                pageSocial.userName = self.viewModel.authenRequest.userName
+                pageSocial.displayName = self.viewModel.authenRequest.displayName
+                pageSocial.overview = self.viewModel.authenRequest.overview
+                pageSocial.avatar = self.viewModel.authenRequest.avatar
+                pageSocial.cover = self.viewModel.authenRequest.cover
+                pageSocial.authToken = self.viewModel.authenRequest.authToken
+                NotificationCenter.default.post(name: .syncTwittwerAutoPost, object: nil, userInfo: pageSocial.paramPageSocial)
+            }
         }
     }
     
@@ -383,6 +395,7 @@ extension SignUpMethodViewController: SFSafariViewControllerDelegate, ASWebAuthe
             let twitterProfilePic: String = json["profile_image_url_https"].string?.replacingOccurrences(of: "_normal", with: "", options: .literal, range: nil) ?? ""
             let twitterDescription: String = json["description"].string ?? ""
             let twitterCover: String = json["profile_banner_url"].string ?? ""
+            let twitterScreenName: String = json["screen_name"].string ?? ""
             
             var authenRequest: AuthenRequest = AuthenRequest()
             authenRequest.provider = .twitter
@@ -392,6 +405,7 @@ extension SignUpMethodViewController: SFSafariViewControllerDelegate, ASWebAuthe
             authenRequest.email = twitterEmail
             authenRequest.overview = twitterDescription
             authenRequest.cover = twitterCover
+            authenRequest.userName = twitterScreenName
             authenRequest.authToken = self.accToken?.key ?? ""
             
             self.dismiss(animated: true)
