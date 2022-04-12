@@ -304,7 +304,7 @@ extension SignUpMethodViewController: SocialLoginViewModelDelegate {
             NotificationCenter.default.post(name: .resetFeedContent, object: nil)
             if !Defaults[.syncTwitter] {
                 var pageSocial: PageSocial = PageSocial()
-                pageSocial.provider = ProviderCreatePage(rawValue: self.viewModel.authenRequest.provider.rawValue) ?? .none
+                pageSocial.provider = SocialType(rawValue: self.viewModel.authenRequest.provider.rawValue) ?? .unknow
                 pageSocial.socialId = self.viewModel.authenRequest.socialId
                 pageSocial.userName = self.viewModel.authenRequest.userName
                 pageSocial.displayName = self.viewModel.authenRequest.displayName
