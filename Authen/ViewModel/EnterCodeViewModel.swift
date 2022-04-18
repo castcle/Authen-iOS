@@ -130,7 +130,7 @@ public class EnterCodeViewModel {
                     }
                     
                     pages.forEach { page in
-                        let pageInfo = PageInfo(json: page)
+                        let pageInfo = UserInfo(json: page)
                         try! self.realm.write {
                             let pageTemp = Page()
                             pageTemp.id = pageInfo.id
@@ -140,9 +140,8 @@ public class EnterCodeViewModel {
                             pageTemp.cover = pageInfo.images.cover.fullHd
                             pageTemp.overview = pageInfo.overview
                             pageTemp.official = pageInfo.verified.official
-                            pageTemp.socialProvider = pageInfo.syncSocial.provider
-                            pageTemp.socialActive = pageInfo.syncSocial.active
-                            pageTemp.socialAutoPost = pageInfo.syncSocial.autoPost
+                            pageTemp.isSyncTwitter = (pageInfo.syncSocial.twitter.socialId.isEmpty ? false : true)
+                            pageTemp.isSyncFacebook = (pageInfo.syncSocial.facebook.socialId.isEmpty ? false : true)
                             self.realm.add(pageTemp, update: .modified)
                         }
                     }
