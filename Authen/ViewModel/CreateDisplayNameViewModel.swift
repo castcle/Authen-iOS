@@ -114,9 +114,8 @@ class CreateDisplayNameViewModel {
                     let refreshToken = json[AuthenticationApiKey.refreshToken.rawValue].stringValue
                     let profile = JSON(json[AuthenticationApiKey.profile.rawValue].dictionaryValue)
                     
-                    let userHelper = UserHelper()
-                    userHelper.updateLocalProfile(user: UserInfo(json: profile))
-                    userHelper.clearSeenContent()
+                    UserHelper.shared.updateLocalProfile(user: UserInfo(json: profile))
+                    UserHelper.shared.clearSeenContent()
                     UserManager.shared.setUserRole(userRole: .user)
                     UserManager.shared.setAccessToken(token: accessToken)
                     UserManager.shared.setRefreshToken(token: refreshToken)

@@ -120,9 +120,8 @@ public class EnterCodeViewModel {
                     let profile = JSON(json[AuthenticationApiKey.profile.rawValue].dictionaryValue)
                     let pages = json[AuthenticationApiKey.pages.rawValue].arrayValue
 
-                    let userHelper = UserHelper()
-                    userHelper.updateLocalProfile(user: UserInfo(json: profile))
-                    userHelper.clearSeenContent()
+                    UserHelper.shared.updateLocalProfile(user: UserInfo(json: profile))
+                    UserHelper.shared.clearSeenContent()
                     
                     let pageRealm = self.realm.objects(Page.self)
                     try! self.realm.write {
