@@ -48,12 +48,6 @@ public class ChangePasswordViewModel {
     let tokenHelper: TokenHelper = TokenHelper()
     var state: State = .none
     
-    enum State {
-        case updatePassword
-        case getMe
-        case none
-    }
-    
     public init(_ changePasswordType: ChangePasswordType, authenRequest: AuthenRequest = AuthenRequest()) {
         self.changePasswordType = changePasswordType
         self.authenRequest = authenRequest

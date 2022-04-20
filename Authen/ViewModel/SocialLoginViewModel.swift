@@ -46,12 +46,6 @@ class SocialLoginViewModel {
     let tokenHelper: TokenHelper = TokenHelper()
     var state: State = .none
     private let realm = try! Realm()
-    
-    enum State {
-        case login
-        case registerToken
-        case none
-    }
 
     //MARK: Input
     public init(authenRequest: AuthenRequest = AuthenRequest()) {

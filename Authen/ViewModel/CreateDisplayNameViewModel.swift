@@ -47,14 +47,6 @@ class CreateDisplayNameViewModel {
     var isCastcleIdExist: Bool = true
     let tokenHelper: TokenHelper = TokenHelper()
     private var state: State = .none
-    
-    enum State {
-        case suggest
-        case check
-        case register
-        case registerToken
-        case none
-    }
 
     //MARK: Input
     public init(authenRequest: AuthenRequest = AuthenRequest()) {
@@ -63,7 +55,7 @@ class CreateDisplayNameViewModel {
     }
     
     public func suggestCastcleId() {
-        self.state = .suggest
+        self.state = .suggestCastcleId
         self.authenticationRepository.suggestCastcleId(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in
             if success {
                 do {
@@ -82,7 +74,7 @@ class CreateDisplayNameViewModel {
     }
     
     public func checkCastcleIdExists() {
-        self.state = .check
+        self.state = .checkCastcleIdExists
         self.authenticationRepository.checkCastcleIdExists(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in
             if success {
                 do {
@@ -149,9 +141,9 @@ class CreateDisplayNameViewModel {
 
 extension CreateDisplayNameViewModel: TokenHelperDelegate {
     func didRefreshTokenFinish() {
-        if self.state == .suggest {
+        if self.state == .suggestCastcleId {
             self.suggestCastcleId()
-        } else if self.state == .check {
+        } else if self.state == .checkCastcleIdExists {
             self.checkCastcleIdExists()
         } else if self.state == .register {
             self.register()

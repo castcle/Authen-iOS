@@ -31,11 +31,6 @@ import SwiftyJSON
 import RealmSwift
 import Defaults
 
-public enum VerifyCodeType {
-    case password
-    case mergeAccount
-}
-
 public protocol EnterCodeViewModelDelegate {
     func didVerifyOtpFinish(success: Bool)
     func didRequestOtpFinish(success: Bool)
@@ -51,14 +46,6 @@ public class EnterCodeViewModel {
     let tokenHelper: TokenHelper = TokenHelper()
     private var state: State = .none
     private let realm = try! Realm()
-    
-    enum State {
-        case requestOtp
-        case verifyOtp
-        case connectSocial
-        case registerToken
-        case none
-    }
     
     public init(verifyCodeType: VerifyCodeType, authenRequest: AuthenRequest = AuthenRequest()) {
         self.verifyCodeType = verifyCodeType
