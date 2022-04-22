@@ -71,9 +71,8 @@ class LoginViewModel {
                     let profile = JSON(json[AuthenticationApiKey.profile.rawValue].dictionaryValue)
                     let pages = json[AuthenticationApiKey.pages.rawValue].arrayValue
 
-                    let userHelper = UserHelper()
-                    userHelper.updateLocalProfile(user: UserInfo(json: profile))
-                    userHelper.clearSeenContent()
+                    UserHelper.shared.updateLocalProfile(user: UserInfo(json: profile))
+                    UserHelper.shared.clearSeenContent()
                     
                     let pageRealm = self.realm.objects(Page.self)
                     try! self.realm.write {
@@ -81,7 +80,7 @@ class LoginViewModel {
                     }
                     
                     pages.forEach { page in
-                        let pageInfo = PageInfo(json: page)
+                        let pageInfo = UserInfo(json: page)
                         try! self.realm.write {
                             let pageTemp = Page()
                             pageTemp.id = pageInfo.id
@@ -91,9 +90,8 @@ class LoginViewModel {
                             pageTemp.cover = pageInfo.images.cover.fullHd
                             pageTemp.overview = pageInfo.overview
                             pageTemp.official = pageInfo.verified.official
-                            pageTemp.socialProvider = pageInfo.syncSocial.provider
-                            pageTemp.socialActive = pageInfo.syncSocial.active
-                            pageTemp.socialAutoPost = pageInfo.syncSocial.autoPost
+                            pageTemp.isSyncTwitter = !pageInfo.syncSocial.twitter.socialId.isEmpty
+                            pageTemp.isSyncFacebook = !pageInfo.syncSocial.facebook.socialId.isEmpty
                             self.realm.add(pageTemp, update: .modified)
                         }
                     }

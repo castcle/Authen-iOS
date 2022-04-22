@@ -46,12 +46,6 @@ class SocialLoginViewModel {
     let tokenHelper: TokenHelper = TokenHelper()
     var state: State = .none
     private let realm = try! Realm()
-    
-    enum State {
-        case login
-        case registerToken
-        case none
-    }
 
     //MARK: Input
     public init(authenRequest: AuthenRequest = AuthenRequest()) {
@@ -79,9 +73,8 @@ class SocialLoginViewModel {
                         let profile = JSON(json[AuthenticationApiKey.profile.rawValue].dictionaryValue)
                         let pages = json[AuthenticationApiKey.pages.rawValue].arrayValue
 
-                        let userHelper = UserHelper()
-                        userHelper.updateLocalProfile(user: UserInfo(json: profile))
-                        userHelper.clearSeenContent()
+                        UserHelper.shared.updateLocalProfile(user: UserInfo(json: profile))
+                        UserHelper.shared.clearSeenContent()
                         
                         if self.authenRequest.provider == .twitter && !registered {
                             Defaults[.syncTwitter] = false
@@ -93,7 +86,7 @@ class SocialLoginViewModel {
                         }
                         
                         pages.forEach { page in
-                            let pageInfo = PageInfo(json: page)
+                            let pageInfo = UserInfo(json: page)
                             try! self.realm.write {
                                 let pageTemp = Page()
                                 pageTemp.id = pageInfo.id
@@ -103,9 +96,8 @@ class SocialLoginViewModel {
                                 pageTemp.cover = pageInfo.images.cover.fullHd
                                 pageTemp.overview = pageInfo.overview
                                 pageTemp.official = pageInfo.verified.official
-                                pageTemp.socialProvider = pageInfo.syncSocial.provider
-                                pageTemp.socialActive = pageInfo.syncSocial.active
-                                pageTemp.socialAutoPost = pageInfo.syncSocial.autoPost
+                                pageTemp.isSyncTwitter = !pageInfo.syncSocial.twitter.socialId.isEmpty
+                                pageTemp.isSyncFacebook = !pageInfo.syncSocial.facebook.socialId.isEmpty
                                 self.realm.add(pageTemp, update: .modified)
                             }
                         }

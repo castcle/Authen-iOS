@@ -48,12 +48,6 @@ public class ChangePasswordViewModel {
     let tokenHelper: TokenHelper = TokenHelper()
     var state: State = .none
     
-    enum State {
-        case updatePassword
-        case getMe
-        case none
-    }
-    
     public init(_ changePasswordType: ChangePasswordType, authenRequest: AuthenRequest = AuthenRequest()) {
         self.changePasswordType = changePasswordType
         self.authenRequest = authenRequest
@@ -86,8 +80,7 @@ public class ChangePasswordViewModel {
                 do {
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
-                    let userHelper = UserHelper()
-                    userHelper.updateLocalProfile(user: UserInfo(json: json))
+                    UserHelper.shared.updateLocalProfile(user: UserInfo(json: json))
                     self.delegate?.didChangePasswordSubmitFinish(success: true)
                 } catch {
                     self.delegate?.didChangePasswordSubmitFinish(success: true)
