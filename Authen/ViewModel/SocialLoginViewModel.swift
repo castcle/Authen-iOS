@@ -78,6 +78,8 @@ class SocialLoginViewModel {
                         
                         if self.authenRequest.provider == .twitter && !registered {
                             Defaults[.syncTwitter] = false
+                        } else {
+                            Defaults[.syncTwitter] = true
                         }
                         
                         let pageRealm = self.realm.objects(Page.self)
