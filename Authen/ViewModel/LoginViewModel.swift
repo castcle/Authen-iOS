@@ -73,6 +73,7 @@ class LoginViewModel {
 
                     UserHelper.shared.updateLocalProfile(user: UserInfo(json: profile))
                     UserHelper.shared.clearSeenContent()
+                    NotifyHelper.shared.getBadges()
                     
                     let pageRealm = self.realm.objects(Page.self)
                     try! self.realm.write {

@@ -27,12 +27,23 @@
 
 import UIKit
 import Core
-//import IGListKit
+import Networking
 import Defaults
+import JGProgressHUD
+import FBSDKLoginKit
+import AuthenticationServices
+import Swifter
+import SafariServices
+import GoogleSignIn
 
 class SignInViewController: UIViewController {
 
     @IBOutlet var tableView: UITableView!
+    
+    let hud = JGProgressHUD()
+    var viewModel = SocialLoginViewModel()
+    var swifter: Swifter!
+    var accToken: Credential.OAuthAccessToken?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +51,8 @@ class SignInViewController: UIViewController {
         self.hideKeyboardWhenTapped()
         self.setupNavBar()
         self.configureTableView()
+        self.viewModel.delegate = self
+        self.hud.textLabel.text = "Logging in"
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -88,18 +101,190 @@ extension SignInViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension SignInViewController: SignInTableViewCellDelegate {
     func didLoginWithFacebook(_ signInTableViewCell: SignInTableViewCell) {
-        //
+        let loginManager = LoginManager()
+        if let _ = AccessToken.current {
+            loginManager.logOut()
+        }
+        loginManager.logIn(permissions: ["public_profile", "email"], from: self) { (result, error) in
+            guard error == nil else {
+                print(error!.localizedDescription)
+                return
+            }
+            guard let result = result, !result.isCancelled else {
+                print("User cancelled login")
+                return
+            }
+            Profile.loadCurrentProfile { (profile, error) in
+                let userId: String = profile?.userID ?? ""
+                let email: String = profile?.email ?? ""
+                let fullName: String = profile?.name ?? ""
+                let accessToken: String = AccessToken.current?.tokenString ?? ""
+                let profilePicUrl: String = "https://graph.facebook.com/\(userId)/picture?type=large&access_token=\(accessToken)"
+                var authenRequest: AuthenRequest = AuthenRequest()
+                authenRequest.provider = .facebook
+                authenRequest.socialId = userId
+                authenRequest.displayName = fullName
+                authenRequest.avatar = profilePicUrl
+                authenRequest.email = email
+                authenRequest.authToken = accessToken
+                
+                self.hud.show(in: self.view)
+                self.viewModel.authenRequest = authenRequest
+                self.viewModel.socialLogin()
+            }
+        }
     }
     
     func didLoginWithTwitter(_ signInTableViewCell: SignInTableViewCell) {
-        //
+        self.swifter = Swifter(consumerKey: TwitterConstants.key, consumerSecret: TwitterConstants.secretKey)
+        self.swifter.authorize(withProvider: self, callbackURL: URL(string: TwitterConstants.callbackUrl)!) { accessToken, response in
+            self.accToken = accessToken
+            self.getUserProfile()
+        } failure: { error in
+            print("ERROR: \(error.localizedDescription)")
+        }
     }
     
     func didLoginWithGoogle(_ signInTableViewCell: SignInTableViewCell) {
-        //
+        let signInConfig = GIDConfiguration.init(clientID: "399197784684-qu71doj4dn7ftksq09i7hvgeot4vbd4c.apps.googleusercontent.com")
+        GIDSignIn.sharedInstance.signIn(with: signInConfig, presenting: self) { user, error in
+            guard error == nil else { return }
+            guard let user = user else { return }
+            
+            let userId: String = user.userID ?? ""
+            let email: String = user.profile?.email ?? ""
+            let fullName: String = user.profile?.name ?? ""
+            let profilePicUrl: String = user.profile?.imageURL(withDimension: 320)?.absoluteString ?? ""
+            let accessToken: String = user.authentication.accessToken
+            
+            var authenRequest: AuthenRequest = AuthenRequest()
+            authenRequest.provider = .google
+            authenRequest.socialId = userId
+            authenRequest.displayName = fullName
+            authenRequest.avatar = profilePicUrl
+            authenRequest.email = email
+            authenRequest.authToken = accessToken
+            
+            self.hud.show(in: self.view)
+            self.viewModel.authenRequest = authenRequest
+            self.viewModel.socialLogin()
+        }
     }
     
     func didLoginWithApple(_ signInTableViewCell: SignInTableViewCell) {
-        //
+        let request = ASAuthorizationAppleIDProvider().createRequest()
+        request.requestedScopes = [.email, .fullName]
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
+        authorizationController.performRequests()
+    }
+}
+
+extension SignInViewController: SocialLoginViewModelDelegate {
+    public func didSocialLoginFinish(success: Bool) {
+        self.hud.dismiss()
+        if success {
+            self.dismiss(animated: true)
+            Defaults[.startLoadFeed] = true
+            NotificationCenter.default.post(name: .resetFeedContent, object: nil)
+            if !Defaults[.syncTwitter] {
+                var pageSocial: PageSocial = PageSocial()
+                pageSocial.provider = SocialType(rawValue: self.viewModel.authenRequest.provider.rawValue) ?? .unknow
+                pageSocial.socialId = self.viewModel.authenRequest.socialId
+                pageSocial.userName = self.viewModel.authenRequest.userName
+                pageSocial.displayName = self.viewModel.authenRequest.displayName
+                pageSocial.overview = self.viewModel.authenRequest.overview
+                pageSocial.avatar = self.viewModel.authenRequest.avatar
+                pageSocial.cover = self.viewModel.authenRequest.cover
+                pageSocial.authToken = self.viewModel.authenRequest.authToken
+                NotificationCenter.default.post(name: .syncTwittwerAutoPost, object: nil, userInfo: pageSocial.paramPageSocial)
+            }
+        }
+    }
+    
+    public func didMergeAccount(userInfo: UserInfo) {
+        self.hud.dismiss()
+        Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.mergeAccount(MergeAccountViewModel(userInfo: userInfo, authenRequest: self.viewModel.authenRequest))), animated: true)
+    }
+}
+
+extension SignInViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
+    public func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        if let appleIdCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
+            let email: String = appleIdCredential.email ?? ""
+            let givenName: String = appleIdCredential.fullName?.givenName ?? ""
+            let familyName: String = appleIdCredential.fullName?.familyName ?? ""
+            var fullName: String {
+                if !givenName.isEmpty && !familyName.isEmpty {
+                    return "\(givenName) \(familyName)"
+                } else if !givenName.isEmpty && familyName.isEmpty {
+                    return givenName
+                } else if givenName.isEmpty && !familyName.isEmpty {
+                    return familyName
+                } else {
+                    return ""
+                }
+            }
+
+            if KeychainHelper.shared.getKeychainWith(with: .appleUserId) != appleIdCredential.user {
+                KeychainHelper.shared.setKeychainWith(with: .appleUserId, value: appleIdCredential.user)
+                KeychainHelper.shared.setKeychainWith(with: .appleEmail, value: email)
+                KeychainHelper.shared.setKeychainWith(with: .appleFullName, value: fullName)
+            }
+
+            var authenRequest: AuthenRequest = AuthenRequest()
+            authenRequest.provider = .apple
+            authenRequest.socialId = KeychainHelper.shared.getKeychainWith(with: .appleUserId)
+            authenRequest.displayName = KeychainHelper.shared.getKeychainWith(with: .appleFullName)
+            authenRequest.email = KeychainHelper.shared.getKeychainWith(with: .appleEmail)
+
+            self.hud.show(in: self.view)
+            self.viewModel.authenRequest = authenRequest
+            self.viewModel.socialLogin()
+        }
+    }
+
+    public func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return self.view.window!
+    }
+}
+
+extension SignInViewController: SFSafariViewControllerDelegate, ASWebAuthenticationPresentationContextProviding {
+    func getUserProfile() {
+        self.swifter.verifyAccountCredentials(includeEntities: false, skipStatus: false, includeEmail: true, success: { json in
+            let twitterId: String = json["id_str"].string ?? ""
+            let twitterName: String = json["name"].string ?? ""
+            let twitterEmail: String = json["email"].string ?? ""
+            let twitterProfilePic: String = json["profile_image_url_https"].string?.replacingOccurrences(of: "_normal", with: "", options: .literal, range: nil) ?? ""
+            let twitterDescription: String = json["description"].string ?? ""
+            let twitterCover: String = json["profile_banner_url"].string ?? ""
+            let twitterScreenName: String = json["screen_name"].string ?? ""
+            
+            var authenRequest: AuthenRequest = AuthenRequest()
+            authenRequest.provider = .twitter
+            authenRequest.socialId = twitterId
+            authenRequest.displayName = twitterName
+            authenRequest.avatar = twitterProfilePic
+            authenRequest.email = twitterEmail
+            authenRequest.overview = twitterDescription
+            authenRequest.cover = twitterCover
+            authenRequest.userName = twitterScreenName
+            authenRequest.authToken = self.accToken?.key ?? ""
+            
+            self.hud.show(in: self.view)
+            self.viewModel.authenRequest = authenRequest
+            self.viewModel.socialLogin()
+        }) { error in
+            print("ERROR: \(error.localizedDescription)")
+        }
+    }
+    
+    public func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
+        controller.dismiss(animated: true, completion: nil)
+    }
+    
+    public func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
+        return self.view.window!
     }
 }

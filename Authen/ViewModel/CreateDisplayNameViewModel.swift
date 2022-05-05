@@ -108,6 +108,7 @@ class CreateDisplayNameViewModel {
                     
                     UserHelper.shared.updateLocalProfile(user: UserInfo(json: profile))
                     UserHelper.shared.clearSeenContent()
+                    NotifyHelper.shared.getBadges()
                     UserManager.shared.setUserRole(userRole: .user)
                     UserManager.shared.setAccessToken(token: accessToken)
                     UserManager.shared.setRefreshToken(token: refreshToken)

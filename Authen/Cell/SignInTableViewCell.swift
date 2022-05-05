@@ -192,7 +192,7 @@ class SignInTableViewCell: UITableViewCell, UITextFieldDelegate {
             self.endEditing(true)
             self.disableUI(isActive: false)
             self.hud.show(in: Utility.currentViewController().view)
-            self.viewModel.loginRequest.username = self.emailTextField.text ?? ""
+            self.viewModel.loginRequest.email = self.emailTextField.text ?? ""
             self.viewModel.loginRequest.password = self.passwordTextField.text ?? ""
             self.viewModel.login()
         }

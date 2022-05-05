@@ -75,6 +75,7 @@ class SocialLoginViewModel {
 
                         UserHelper.shared.updateLocalProfile(user: UserInfo(json: profile))
                         UserHelper.shared.clearSeenContent()
+                        NotifyHelper.shared.getBadges()
                         
                         if self.authenRequest.provider == .twitter && !registered {
                             Defaults[.syncTwitter] = false
