@@ -27,7 +27,6 @@
 
 import UIKit
 import Core
-import JVFloatLabeledTextField
 import Defaults
 import JGProgressHUD
 
@@ -35,18 +34,9 @@ class CheckEmailViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet var headlineLabel: UILabel!
     @IBOutlet var detailLabel: UILabel!
+    @IBOutlet var emailLabel: UILabel!
     @IBOutlet var emailView: UIView!
-    @IBOutlet var emailTextField: JVFloatLabeledTextField! {
-        didSet {
-            self.emailTextField.font = UIFont.asset(.regular, fontSize: .body)
-            self.emailTextField.placeholder = "Email"
-            self.emailTextField.placeholderColor = UIColor.Asset.gray
-            self.emailTextField.floatingLabelTextColor = UIColor.Asset.gray
-            self.emailTextField.floatingLabelActiveTextColor = UIColor.Asset.gray
-            self.emailTextField.floatingLabelFont = UIFont.asset(.regular, fontSize: .small)
-            self.emailTextField.textColor = UIColor.Asset.white
-        }
-    }
+    @IBOutlet var emailTextField: UITextField!
     @IBOutlet var searchButton: UIButton!
     
     var viewModel = CheckEmailViewModel()
@@ -70,6 +60,11 @@ class CheckEmailViewController: UIViewController, UITextFieldDelegate {
         self.headlineLabel.textColor = UIColor.Asset.white
         self.detailLabel.font = UIFont.asset(.regular, fontSize: .body)
         self.detailLabel.textColor = UIColor.Asset.white
+        self.emailLabel.font = UIFont.asset(.medium, fontSize: .body)
+        self.emailLabel.textColor = UIColor.Asset.white
+        self.emailTextField.font = UIFont.asset(.regular, fontSize: .overline)
+        self.emailTextField.textColor = UIColor.Asset.white
+        self.emailView.capsule(color: UIColor.Asset.darkGray)
         self.emailTextField.delegate = self
         self.emailTextField.tag = 0
         self.emailTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
@@ -83,7 +78,7 @@ class CheckEmailViewController: UIViewController, UITextFieldDelegate {
     }
     
     func setupNavBar() {
-        self.customNavigationBar(.secondary, title: "Search account")
+        self.customNavigationBar(.secondary, title: "")
     }
     
     private func setupContinueButton(isActive: Bool) {

@@ -181,34 +181,6 @@ extension SignInViewController: SignInTableViewCellDelegate {
     }
 }
 
-extension SignInViewController: SocialLoginViewModelDelegate {
-    public func didSocialLoginFinish(success: Bool) {
-        self.hud.dismiss()
-        if success {
-            self.dismiss(animated: true)
-            Defaults[.startLoadFeed] = true
-            NotificationCenter.default.post(name: .resetFeedContent, object: nil)
-            if !Defaults[.syncTwitter] {
-                var pageSocial: PageSocial = PageSocial()
-                pageSocial.provider = SocialType(rawValue: self.viewModel.authenRequest.provider.rawValue) ?? .unknow
-                pageSocial.socialId = self.viewModel.authenRequest.socialId
-                pageSocial.userName = self.viewModel.authenRequest.userName
-                pageSocial.displayName = self.viewModel.authenRequest.displayName
-                pageSocial.overview = self.viewModel.authenRequest.overview
-                pageSocial.avatar = self.viewModel.authenRequest.avatar
-                pageSocial.cover = self.viewModel.authenRequest.cover
-                pageSocial.authToken = self.viewModel.authenRequest.authToken
-                NotificationCenter.default.post(name: .syncTwittwerAutoPost, object: nil, userInfo: pageSocial.paramPageSocial)
-            }
-        }
-    }
-    
-    public func didMergeAccount(userInfo: UserInfo) {
-        self.hud.dismiss()
-        Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.mergeAccount(MergeAccountViewModel(userInfo: userInfo, authenRequest: self.viewModel.authenRequest))), animated: true)
-    }
-}
-
 extension SignInViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
     public func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         if let appleIdCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
@@ -270,7 +242,7 @@ extension SignInViewController: SFSafariViewControllerDelegate, ASWebAuthenticat
             authenRequest.overview = twitterDescription
             authenRequest.cover = twitterCover
             authenRequest.userName = twitterScreenName
-            authenRequest.authToken = self.accToken?.key ?? ""
+            authenRequest.authToken = "\(self.accToken?.key ?? "")|\(self.accToken?.secret ?? "")"
             
             self.hud.show(in: self.view)
             self.viewModel.authenRequest = authenRequest
@@ -286,5 +258,36 @@ extension SignInViewController: SFSafariViewControllerDelegate, ASWebAuthenticat
     
     public func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
         return self.view.window!
+    }
+}
+
+extension SignInViewController: SocialLoginViewModelDelegate {
+    public func didSocialLoginFinish(success: Bool) {
+        self.hud.dismiss()
+        if success {
+            self.dismiss(animated: true)
+            Defaults[.startLoadFeed] = true
+            NotificationCenter.default.post(name: .resetFeedContent, object: nil)
+            if !Defaults[.syncTwitter] {
+                var pageSocial: PageSocial = PageSocial()
+                pageSocial.provider = SocialType(rawValue: self.viewModel.authenRequest.provider.rawValue) ?? .unknow
+                pageSocial.socialId = self.viewModel.authenRequest.socialId
+                pageSocial.userName = self.viewModel.authenRequest.userName
+                pageSocial.displayName = self.viewModel.authenRequest.displayName
+                pageSocial.overview = self.viewModel.authenRequest.overview
+                pageSocial.avatar = self.viewModel.authenRequest.avatar
+                pageSocial.cover = self.viewModel.authenRequest.cover
+                pageSocial.authToken = self.viewModel.authenRequest.authToken
+                NotificationCenter.default.post(name: .syncTwittwerAutoPost, object: nil, userInfo: pageSocial.paramPageSocial)
+            }
+        }
+    }
+    
+    public func didMergeAccount(userInfo: UserInfo) {
+        self.hud.dismiss()
+        self.dismiss(animated: true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.mergeAccount(MergeAccountViewModel(userInfo: userInfo, authenRequest: self.viewModel.authenRequest))), animated: true)
+        }
     }
 }

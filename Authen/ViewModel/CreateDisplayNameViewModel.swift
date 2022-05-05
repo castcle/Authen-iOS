@@ -61,8 +61,8 @@ class CreateDisplayNameViewModel {
                 do {
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
-                    let payload = JSON(json[AuthenticationApiKey.payload.rawValue].dictionaryValue)
-                    let suggestCastcleId = payload[AuthenticationApiKey.suggestCastcleId.rawValue].stringValue
+                    let payload = JSON(json[JsonKey.payload.rawValue].dictionaryValue)
+                    let suggestCastcleId = payload[JsonKey.suggestCastcleId.rawValue].stringValue
                     self.delegate?.didSuggestCastcleIdFinish(suggestCastcleId: suggestCastcleId)
                 } catch {}
             } else {
@@ -80,8 +80,8 @@ class CreateDisplayNameViewModel {
                 do {
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
-                    let payload = JSON(json[AuthenticationApiKey.payload.rawValue].dictionaryValue)
-                    let exist = payload[AuthenticationApiKey.exist.rawValue].boolValue
+                    let payload = JSON(json[JsonKey.payload.rawValue].dictionaryValue)
+                    let exist = payload[JsonKey.exist.rawValue].boolValue
                     self.isCastcleIdExist = exist
                     self.delegate?.didCheckCastcleIdExistsFinish()
                 } catch {}
@@ -102,9 +102,9 @@ class CreateDisplayNameViewModel {
                 do {
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
-                    let accessToken = json[AuthenticationApiKey.accessToken.rawValue].stringValue
-                    let refreshToken = json[AuthenticationApiKey.refreshToken.rawValue].stringValue
-                    let profile = JSON(json[AuthenticationApiKey.profile.rawValue].dictionaryValue)
+                    let accessToken = json[JsonKey.accessToken.rawValue].stringValue
+                    let refreshToken = json[JsonKey.refreshToken.rawValue].stringValue
+                    let profile = JSON(json[JsonKey.profile.rawValue].dictionaryValue)
                     
                     UserHelper.shared.updateLocalProfile(user: UserInfo(json: profile))
                     UserHelper.shared.clearSeenContent()

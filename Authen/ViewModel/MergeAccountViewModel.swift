@@ -26,6 +26,7 @@
 //
 
 import UIKit
+import Core
 import Networking
 import SwiftyJSON
 
@@ -83,7 +84,7 @@ public class MergeAccountViewModel {
                 do {
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
-                    self.authenRequest.payload.refCode = json[AuthenticationApiKey.refCode.rawValue].stringValue
+                    self.authenRequest.payload.refCode = json[JsonKey.refCode.rawValue].stringValue
                     self.delegate?.didRequestOtpFinish(success: true)
                 } catch {}
             } else {

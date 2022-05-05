@@ -60,8 +60,8 @@ public class EnterCodeViewModel {
                 do {
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
-                    let accessToken = json[AuthenticationApiKey.accessToken.rawValue].stringValue
-                    self.authenRequest.payload.refCode = json[AuthenticationApiKey.refCode.rawValue].stringValue
+                    let accessToken = json[JsonKey.accessToken.rawValue].stringValue
+                    self.authenRequest.payload.refCode = json[JsonKey.refCode.rawValue].stringValue
                     UserManager.shared.setAccessToken(token: accessToken)
                     self.connectWithSocial()
                 } catch {}
@@ -82,7 +82,7 @@ public class EnterCodeViewModel {
                 do {
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
-                    self.authenRequest.payload.refCode = json[AuthenticationApiKey.refCode.rawValue].stringValue
+                    self.authenRequest.payload.refCode = json[JsonKey.refCode.rawValue].stringValue
                     self.delegate?.didRequestOtpFinish(success: true)
                 } catch {}
             } else {
@@ -102,10 +102,10 @@ public class EnterCodeViewModel {
                 do {
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
-                    let accessToken = json[AuthenticationApiKey.accessToken.rawValue].stringValue
-                    let refreshToken = json[AuthenticationApiKey.refreshToken.rawValue].stringValue
-                    let profile = JSON(json[AuthenticationApiKey.profile.rawValue].dictionaryValue)
-                    let pages = json[AuthenticationApiKey.pages.rawValue].arrayValue
+                    let accessToken = json[JsonKey.accessToken.rawValue].stringValue
+                    let refreshToken = json[JsonKey.refreshToken.rawValue].stringValue
+                    let profile = JSON(json[JsonKey.profile.rawValue].dictionaryValue)
+                    let pages = json[JsonKey.pages.rawValue].arrayValue
 
                     UserHelper.shared.updateLocalProfile(user: UserInfo(json: profile))
                     UserHelper.shared.clearSeenContent()

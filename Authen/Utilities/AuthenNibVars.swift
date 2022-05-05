@@ -59,7 +59,6 @@ public struct AuthenNibVars {
     
     // MARK: - CollectionViewCell
     public struct CollectionViewCell {
-        public static let signIn = "SignInCell"
         public static let email = "EmailCell"
         public static let createPassword = "CreatePasswordCell"
         public static let createDisplayName = "CreateDisplayNameCell"

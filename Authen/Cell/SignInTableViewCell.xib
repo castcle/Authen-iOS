@@ -34,16 +34,16 @@
                         <rect key="frame" x="20" y="176.5" width="280" height="50"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter your email address" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5yf-3H-GNA">
-                                <rect key="frame" x="15" y="5" width="250" height="40"/>
+                                <rect key="frame" x="20" y="5" width="240" height="40"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress" returnKeyType="next"/>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="5yf-3H-GNA" firstAttribute="leading" secondItem="iHy-iw-gz6" secondAttribute="leading" constant="15" id="1Cf-bi-fBl"/>
+                            <constraint firstItem="5yf-3H-GNA" firstAttribute="leading" secondItem="iHy-iw-gz6" secondAttribute="leading" constant="20" id="1Cf-bi-fBl"/>
                             <constraint firstItem="5yf-3H-GNA" firstAttribute="top" secondItem="iHy-iw-gz6" secondAttribute="top" constant="5" id="2Ti-f1-AEG"/>
-                            <constraint firstAttribute="trailing" secondItem="5yf-3H-GNA" secondAttribute="trailing" constant="15" id="3Qy-wm-187"/>
+                            <constraint firstAttribute="trailing" secondItem="5yf-3H-GNA" secondAttribute="trailing" constant="20" id="3Qy-wm-187"/>
                             <constraint firstAttribute="height" constant="50" id="HQt-iO-cLs"/>
                             <constraint firstAttribute="bottom" secondItem="5yf-3H-GNA" secondAttribute="bottom" constant="5" id="KwE-Qe-pSm"/>
                         </constraints>
@@ -52,7 +52,7 @@
                         <rect key="frame" x="20" y="286" width="280" height="50"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter your password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dSI-x3-VSR">
-                                <rect key="frame" x="15" y="5" width="210" height="40"/>
+                                <rect key="frame" x="20" y="5" width="205" height="40"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
                             </textField>
@@ -73,7 +73,7 @@
                             <constraint firstAttribute="trailing" secondItem="kmo-ky-rcp" secondAttribute="trailing" constant="15" id="EYd-o2-fho"/>
                             <constraint firstItem="kmo-ky-rcp" firstAttribute="centerY" secondItem="dSI-x3-VSR" secondAttribute="centerY" id="JKU-Ed-NhE"/>
                             <constraint firstItem="kmo-ky-rcp" firstAttribute="leading" secondItem="dSI-x3-VSR" secondAttribute="trailing" constant="10" id="OfX-IT-V7J"/>
-                            <constraint firstItem="dSI-x3-VSR" firstAttribute="leading" secondItem="crK-ZD-0mB" secondAttribute="leading" constant="15" id="n43-J1-2X1"/>
+                            <constraint firstItem="dSI-x3-VSR" firstAttribute="leading" secondItem="crK-ZD-0mB" secondAttribute="leading" constant="20" id="n43-J1-2X1"/>
                             <constraint firstAttribute="height" constant="50" id="rkY-aX-BDN"/>
                             <constraint firstItem="dSI-x3-VSR" firstAttribute="top" secondItem="crK-ZD-0mB" secondAttribute="top" constant="5" id="v5E-aX-FXk"/>
                         </constraints>
@@ -340,12 +340,6 @@
         </tableViewCell>
     </objects>
     <designables>
-        <designable name="5yf-3H-GNA">
-            <size key="intrinsicContentSize" width="160" height="18.5"/>
-        </designable>
-        <designable name="dSI-x3-VSR">
-            <size key="intrinsicContentSize" width="132.5" height="18.5"/>
-        </designable>
         <designable name="pbN-Nk-0mM">
             <size key="intrinsicContentSize" width="258.5" height="21.5"/>
         </designable>

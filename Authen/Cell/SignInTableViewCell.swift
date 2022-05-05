@@ -184,7 +184,7 @@ class SignInTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     @IBAction func forgotPasswordAction(_ sender: Any) {
         self.endEditing(true)
-//        Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.checkEmail), animated: true)
+        Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.checkEmail), animated: true)
     }
     
     @IBAction func loginAction(_ sender: Any) {

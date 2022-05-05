@@ -26,7 +26,9 @@
 //
 
 import UIKit
+import Core
 import Defaults
+import SwiftColor
 
 class ChangePasswordSuccessViewController: UIViewController {
 

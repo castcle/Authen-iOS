@@ -60,18 +60,19 @@ class SocialLoginViewModel {
                 do {
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
-                    let code = json[AuthenticationApiKey.code.rawValue].stringValue
+                    print(json)
+                    let code = json[JsonKey.code.rawValue].stringValue
                     if code == "3021" {
-                        let payload = JSON(json[AuthenticationApiKey.payload.rawValue].dictionaryValue)
-                        let profile = JSON(payload[AuthenticationApiKey.profile.rawValue].dictionaryValue)
+                        let payload = JSON(json[JsonKey.payload.rawValue].dictionaryValue)
+                        let profile = JSON(payload[JsonKey.profile.rawValue].dictionaryValue)
                         let userInfo = UserInfo(json: profile)
                         self.delegate?.didMergeAccount(userInfo: userInfo)
                     } else {
-                        let registered: Bool = json[AuthenticationApiKey.registered.rawValue].boolValue
-                        let accessToken = json[AuthenticationApiKey.accessToken.rawValue].stringValue
-                        let refreshToken = json[AuthenticationApiKey.refreshToken.rawValue].stringValue
-                        let profile = JSON(json[AuthenticationApiKey.profile.rawValue].dictionaryValue)
-                        let pages = json[AuthenticationApiKey.pages.rawValue].arrayValue
+                        let registered: Bool = json[JsonKey.registered.rawValue].boolValue
+                        let accessToken = json[JsonKey.accessToken.rawValue].stringValue
+                        let refreshToken = json[JsonKey.refreshToken.rawValue].stringValue
+                        let profile = JSON(json[JsonKey.profile.rawValue].dictionaryValue)
+                        let pages = json[JsonKey.pages.rawValue].arrayValue
 
                         UserHelper.shared.updateLocalProfile(user: UserInfo(json: profile))
                         UserHelper.shared.clearSeenContent()
