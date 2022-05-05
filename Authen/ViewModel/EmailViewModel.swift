@@ -38,7 +38,7 @@ class EmailViewModel {
 
     //MARK: Input
     public func checkEmailExists() {
-        self.authenticationRepository.checkEmailExists(authenRequest: self.authenRequest) { (success, exist) in
+        self.authenticationRepository.checkEmail(authenRequest: self.authenRequest) { (success, exist) in
             self.isEmailExist = exist
             self.didCheckEmailExistsFinish?()
         }

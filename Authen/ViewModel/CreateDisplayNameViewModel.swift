@@ -75,7 +75,7 @@ class CreateDisplayNameViewModel {
     
     public func checkCastcleIdExists() {
         self.state = .checkCastcleIdExists
-        self.authenticationRepository.checkCastcleIdExists(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in
+        self.authenticationRepository.checkCastcleId(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in
             if success {
                 do {
                     let rawJson = try response.mapJSON()
