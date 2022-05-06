@@ -244,7 +244,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2ir-iW-JYg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1395" y="70"/>
+            <point key="canvasLocation" x="2244" y="70"/>
         </scene>
         <!--Create Password View Controller-->
         <scene sceneID="NXe-0c-rs4">
@@ -259,7 +259,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lk2-vI-t4E" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2059" y="70"/>
+            <point key="canvasLocation" x="2908" y="70"/>
         </scene>
         <!--Create Display Name View Controller-->
         <scene sceneID="Scf-bR-Oft">
@@ -274,7 +274,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XL4-Zr-fiW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2719" y="70"/>
+            <point key="canvasLocation" x="3568" y="70"/>
         </scene>
         <!--Verify Email View Controller-->
         <scene sceneID="9We-gl-h7i">
@@ -375,7 +375,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rgr-w3-ENM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3395.625" y="69.718309859154928"/>
+            <point key="canvasLocation" x="4245" y="70"/>
         </scene>
         <!--Resend Email View Controller-->
         <scene sceneID="uz8-TX-4ug">
@@ -450,7 +450,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7rG-ZF-ugr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4066.875" y="69.718309859154928"/>
+            <point key="canvasLocation" x="4916" y="70"/>
         </scene>
         <!--Merge Account Success View Controller-->
         <scene sceneID="z3e-fQ-omi">
@@ -531,6 +531,36 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u1O-a1-iVr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1395" y="774"/>
+        </scene>
+        <!--Sign Up View Controller-->
+        <scene sceneID="LCP-fE-jtc">
+            <objects>
+                <viewController storyboardIdentifier="SignUpViewController" hidesBottomBarWhenPushed="YES" id="RFI-3p-qWG" customClass="SignUpViewController" customModule="Authen" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="QKx-4v-ofc">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" contentInsetAdjustmentBehavior="never" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="IQQ-lw-Oxb">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="uuH-Mz-6b5"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="IQQ-lw-Oxb" secondAttribute="trailing" id="JPd-BK-OFE"/>
+                            <constraint firstItem="IQQ-lw-Oxb" firstAttribute="top" secondItem="QKx-4v-ofc" secondAttribute="top" id="UeB-0r-TD9"/>
+                            <constraint firstAttribute="bottom" secondItem="IQQ-lw-Oxb" secondAttribute="bottom" id="Wk2-mV-Lko"/>
+                            <constraint firstItem="IQQ-lw-Oxb" firstAttribute="leading" secondItem="QKx-4v-ofc" secondAttribute="leading" id="ft1-qr-fjp"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="IQQ-lw-Oxb" id="Mj0-8Z-maT"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9bS-9y-pzp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1395" y="70"/>
         </scene>
     </scenes>
     <designables>

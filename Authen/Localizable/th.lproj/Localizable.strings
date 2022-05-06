@@ -64,7 +64,7 @@
 "register_check_email_alert_notice"         = "คุณจะต้องใช้ข้อมูลนี้เมื่อคุณเข้าสู่ระบบหรือหากคุณจำเป็นต้องรีเซ็ตรหัสผ่านของคุณ";
 "register_check_email_button"               = "ถัดไป";
 "register_check_email_already_account"      = "มีบัญชีผู้ใช้แล้วใช่หรือไม่?";
-"register_check_email_alert_email_invalid"  = "มีบางคนใช้อีเมลนี้แล้ว\nลองอีเมลใหม่";
+"register_check_email_alert_email_invalid"  = "มีบางคนใช้อีเมลนี้แล้ว ลองอีเมลใหม่";
 "register_check_email_alert_email_valid"    = "อีเมลนี้สามารถใช้งานได้";
 "register_check_email_alert_wrong_format"   = "ผิดรูปแบบอีเมล";
 

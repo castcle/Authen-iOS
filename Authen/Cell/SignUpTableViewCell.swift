@@ -19,38 +19,46 @@
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
 //
-//  ChangePasswordTableViewCell.swift
+//  SignUpTableViewCell.swift
 //  Authen
 //
-//  Created by Castcle Co., Ltd. on 30/8/2564 BE.
+//  Created by Castcle Co., Ltd. on 6/5/2565 BE.
 //
 
 import UIKit
 import Core
-import JVFloatLabeledTextField
-import JGProgressHUD
 
-class ChangePasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
+class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
 
-    @IBOutlet var headlineLabel: UILabel!
+    @IBOutlet var subTitleLabel: UILabel!
+    @IBOutlet var emailLabel: UILabel!
+    @IBOutlet var passwordLabel: UILabel!
+    @IBOutlet var confirmPasswordLabel: UILabel!
+    
+    @IBOutlet var emailView: UIView!
+    @IBOutlet var passwordView: UIView!
+    @IBOutlet var confirmPasswordView: UIView!
+    
+    @IBOutlet var emailTextField: UITextField!
+    @IBOutlet var passwordTextField: UITextField!
+    @IBOutlet var confirmPasswordTextField: UITextField!
+    
+    @IBOutlet var emailAlertLabel: UILabel!
+    
+    
+    
     @IBOutlet var limitCharLabel: UILabel!
     @IBOutlet var typeCharLabel: UILabel!
     @IBOutlet var passwordNotMatchLabel: UILabel!
-    @IBOutlet var applyButton: UIButton!
-    @IBOutlet var passwordLabel: UILabel!
-    @IBOutlet var confirmPasswordLabel: UILabel!
-    @IBOutlet var passwordView: UIView!
-    @IBOutlet var confirmPasswordView: UIView!
-    @IBOutlet var passwordTextField: UITextField!
-    @IBOutlet var confirmPasswordTextField: UITextField!
+//    @IBOutlet var applyButton: UIButton!
+    
     @IBOutlet var showPasswordButton: UIButton!
     @IBOutlet var showConfirmPasswordButton: UIButton!
     @IBOutlet var charCountImage: UIImageView!
     @IBOutlet var charTypeImage: UIImageView!
     @IBOutlet var passwordNotMatchImage: UIImageView!
     
-    private var viewModel = ChangePasswordViewModel(.changePassword)
-    let hud = JGProgressHUD()
+    var viewModel = SignUpViewModel()
     
     private var isCanContinue: Bool {
         self.checkCharacterCount()
@@ -71,61 +79,123 @@ class ChangePasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.setupContinueButton(isActive: self.isCanContinue)
-        self.headlineLabel.font = UIFont.asset(.regular, fontSize: .h2)
-        self.headlineLabel.textColor = UIColor.Asset.white
-        self.limitCharLabel.font = UIFont.asset(.regular, fontSize: .overline)
-        self.limitCharLabel.textColor = UIColor.Asset.gray
-        self.typeCharLabel.font = UIFont.asset(.regular, fontSize: .overline)
-        self.typeCharLabel.textColor = UIColor.Asset.gray
-        self.passwordNotMatchLabel.font = UIFont.asset(.regular, fontSize: .overline)
-        self.passwordNotMatchLabel.textColor = UIColor.Asset.gray
-        self.showPasswordButton.setImage(UIImage.init(icon: .castcle(.show), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.white).withRenderingMode(.alwaysOriginal), for: .normal)
-        self.showConfirmPasswordButton.setImage(UIImage.init(icon: .castcle(.show), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.white).withRenderingMode(.alwaysOriginal), for: .normal)
-        self.charCountImage.image = UIImage.init(icon: .castcle(.addWithCheckmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.gray)
-        self.charTypeImage.image = UIImage.init(icon: .castcle(.addWithCheckmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.gray)
-        self.passwordNotMatchImage.image = UIImage.init(icon: .castcle(.addWithCheckmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.gray)
+        
+        self.subTitleLabel.font = UIFont.asset(.regular, fontSize: .h4)
+        self.subTitleLabel.textColor = UIColor.Asset.white
         self.passwordLabel.font = UIFont.asset(.medium, fontSize: .body)
         self.passwordLabel.textColor = UIColor.Asset.white
         self.confirmPasswordLabel.font = UIFont.asset(.medium, fontSize: .body)
         self.confirmPasswordLabel.textColor = UIColor.Asset.white
-        self.passwordView.capsule(color: UIColor.Asset.darkGray)
-        self.confirmPasswordView.capsule(color: UIColor.Asset.darkGray)
+        
+        self.emailTextField.font = UIFont.asset(.regular, fontSize: .overline)
+        self.emailTextField.textColor = UIColor.Asset.white
         self.passwordTextField.font = UIFont.asset(.regular, fontSize: .overline)
         self.passwordTextField.textColor = UIColor.Asset.white
         self.passwordTextField.isSecureTextEntry = true
         self.confirmPasswordTextField.font = UIFont.asset(.regular, fontSize: .overline)
         self.confirmPasswordTextField.textColor = UIColor.Asset.white
         self.confirmPasswordTextField.isSecureTextEntry = true
+        
+        self.emailView.capsule(color: UIColor.Asset.darkGray)
+        self.passwordView.capsule(color: UIColor.Asset.darkGray)
+        self.confirmPasswordView.capsule(color: UIColor.Asset.darkGray)
+        
+        self.emailTextField.tag = 0
+        self.emailTextField.delegate = self
+        self.emailTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
         self.passwordTextField.delegate = self
-        self.passwordTextField.tag = 0
+        self.passwordTextField.tag = 1
         self.passwordTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
         self.confirmPasswordTextField.delegate = self
-        self.confirmPasswordTextField.tag = 1
+        self.confirmPasswordTextField.tag = 2
         self.confirmPasswordTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
+        
+        
+        self.emailAlertLabel.font = UIFont.asset(.regular, fontSize: .small)
+        self.emailAlertLabel.textColor = UIColor.Asset.white
+        self.emailAlertLabel.isHidden = true
+        self.limitCharLabel.font = UIFont.asset(.regular, fontSize: .overline)
+        self.limitCharLabel.textColor = UIColor.Asset.gray
+        self.typeCharLabel.font = UIFont.asset(.regular, fontSize: .overline)
+        self.typeCharLabel.textColor = UIColor.Asset.gray
+        self.passwordNotMatchLabel.font = UIFont.asset(.regular, fontSize: .overline)
+        self.passwordNotMatchLabel.textColor = UIColor.Asset.gray
+        
+        self.showPasswordButton.setImage(UIImage.init(icon: .castcle(.show), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.white).withRenderingMode(.alwaysOriginal), for: .normal)
+        self.showConfirmPasswordButton.setImage(UIImage.init(icon: .castcle(.show), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.white).withRenderingMode(.alwaysOriginal), for: .normal)
+        self.charCountImage.image = UIImage.init(icon: .castcle(.addWithCheckmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.gray)
+        self.charTypeImage.image = UIImage.init(icon: .castcle(.addWithCheckmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.gray)
+        self.passwordNotMatchImage.image = UIImage.init(icon: .castcle(.addWithCheckmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.gray)
+        
+        
+        
+        self.viewModel.didCheckEmailExistsFinish = {
+            self.emailTextField.isEnabled = true
+            if self.viewModel.isEmailExist {
+                self.emailAlertLabel.isHidden = false
+                self.emailAlertLabel.text  = Localization.registerCheckEmail.alertEmailInvalid.text
+                self.emailAlertLabel.textColor = UIColor.Asset.denger
+            } else {
+                self.emailAlertLabel.isHidden = false
+                self.emailAlertLabel.text  = Localization.registerCheckEmail.alertEmailValid.text
+                self.emailAlertLabel.textColor = UIColor.Asset.lightBlue
+            }
+        }
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
     
-    func configCell(viewModel: ChangePasswordViewModel) {
-        self.viewModel = viewModel
-        self.viewModel.delegate = self
-        self.hud.textLabel.text = "Creating"
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField.tag == 0 {
+            self.passwordTextField.becomeFirstResponder()
+        } else if textField.tag == 1 {
+            self.confirmPasswordTextField.becomeFirstResponder()
+        } else {
+            textField.resignFirstResponder()
+        }
+        return true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField.tag == 0 {
+            let email: String = textField.text ?? ""
+            if email.isEmpty {
+                self.emailAlertLabel.isHidden = true
+                self.emailAlertLabel.text  = Localization.registerCheckEmail.alertNotice.text
+                self.emailAlertLabel.textColor = UIColor.Asset.white
+            } else if email.isEmail {
+                textField.isEnabled = false
+                self.viewModel.authenRequest.payload.email = email
+                self.viewModel.checkEmailExists()
+            } else {
+                self.emailAlertLabel.isHidden = false
+                self.emailAlertLabel.text  = Localization.registerCheckEmail.alertWrongFormat.text
+                self.emailAlertLabel.textColor = UIColor.Asset.denger
+            }
+        }
+    }
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        if textField.tag == 0 {
+            self.emailAlertLabel.isHidden = true
+        } else {
+            self.setupContinueButton(isActive: self.isCanContinue)
+        }
     }
     
     private func setupContinueButton(isActive: Bool) {
-        self.applyButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .h4)
-        if isActive {
-            self.applyButton.setTitleColor(UIColor.Asset.white, for: .normal)
-            self.applyButton.setBackgroundImage(UIColor.Asset.lightBlue.toImage(), for: .normal)
-            self.applyButton.capsule(color: UIColor.clear, borderWidth: 1, borderColor: UIColor.clear)
-        } else {
-            self.applyButton.setTitleColor(UIColor.Asset.gray, for: .normal)
-            self.applyButton.setBackgroundImage(UIColor.Asset.darkGraphiteBlue.toImage(), for: .normal)
-            self.applyButton.capsule(color: UIColor.clear, borderWidth: 1, borderColor: UIColor.Asset.black)
-        }
+//        self.applyButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .h4)
+//        if isActive {
+//            self.applyButton.setTitleColor(UIColor.Asset.white, for: .normal)
+//            self.applyButton.setBackgroundImage(UIColor.Asset.lightBlue.toImage(), for: .normal)
+//            self.applyButton.capsule(color: UIColor.clear, borderWidth: 1, borderColor: UIColor.clear)
+//        } else {
+//            self.applyButton.setTitleColor(UIColor.Asset.gray, for: .normal)
+//            self.applyButton.setBackgroundImage(UIColor.Asset.darkGraphiteBlue.toImage(), for: .normal)
+//            self.applyButton.capsule(color: UIColor.clear, borderWidth: 1, borderColor: UIColor.Asset.black)
+//        }
     }
     
     private func checkCharacterCount() {
@@ -149,26 +219,13 @@ class ChangePasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
     
     private func checkPasswordNotMatch() {
-        if self.passwordTextField.text! == self.confirmPasswordTextField.text! {
+        if !(self.confirmPasswordTextField.text!.isEmpty) && (self.passwordTextField.text! == self.confirmPasswordTextField.text!) {
             self.passwordNotMatchLabel.textColor = UIColor.Asset.lightBlue
             self.passwordNotMatchImage.image = UIImage.init(icon: .castcle(.addWithCheckmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.lightBlue)
         } else {
             self.passwordNotMatchLabel.textColor = UIColor.Asset.gray
             self.passwordNotMatchImage.image = UIImage.init(icon: .castcle(.addWithCheckmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.gray)
         }
-    }
-    
-    @objc func textFieldDidChange(_ textField: UITextField) {
-        self.setupContinueButton(isActive: self.isCanContinue)
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField.tag == 0 {
-            self.confirmPasswordTextField.becomeFirstResponder()
-        } else {
-            textField.resignFirstResponder()
-        }
-        return true
     }
     
     @IBAction func showPasswordAction(_ sender: Any) {
@@ -186,32 +243,6 @@ class ChangePasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
             self.showConfirmPasswordButton.setImage(UIImage.init(icon: .castcle(.show), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.white).withRenderingMode(.alwaysOriginal), for: .normal)
         } else {
             self.showConfirmPasswordButton.setImage(UIImage.init(icon: .castcle(.show), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.lightBlue).withRenderingMode(.alwaysOriginal), for: .normal)
-        }
-    }
-    
-    @IBAction func applyAction(_ sender: Any) {
-        self.endEditing(true)
-        if self.isCanContinue {
-            self.hud.show(in: Utility.currentViewController().view)
-            self.applyButton.isEnabled = false
-            self.viewModel.authenRequest.payload.newPassword = self.passwordTextField.text ?? ""
-            self.viewModel.changePasswordSubmit()
-        }
-    }
-}
-
-extension ChangePasswordTableViewCell: ChangePasswordViewModelDelegate {
-    func didChangePasswordSubmitFinish(success: Bool) {
-        self.hud.dismiss()
-        if success {
-            if self.viewModel.changePasswordType == .createPassword {
-                let viewControllers: [UIViewController] = Utility.currentViewController().navigationController!.viewControllers as [UIViewController]
-                Utility.currentViewController().navigationController!.popToViewController(viewControllers[viewControllers.count - 4], animated: true)
-            } else {
-                Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.changePasswordSuccess(self.viewModel)), animated: true)
-            }
-        } else {
-            self.applyButton.isEnabled = true
         }
     }
 }

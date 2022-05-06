@@ -64,7 +64,7 @@
 "register_check_email_alert_notice"         = "You'll use this email when you login and when you lose your password.";
 "register_check_email_button"               = "Next";
 "register_check_email_already_account"      = "Already have an account?";
-"register_check_email_alert_email_invalid"  = "Someone already has this email address.\nTry another name.";
+"register_check_email_alert_email_invalid"  = "Someone already has this email address. Try another name.";
 "register_check_email_alert_email_valid"    = "This email address is valid.";
 "register_check_email_alert_wrong_format"   = "Wrong email format.";
 

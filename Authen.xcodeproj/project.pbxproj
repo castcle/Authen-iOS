@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B706A86528251000008B8F61 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B706A86428251000008B8F61 /* SignUpViewController.swift */; };
+		B706A8682825116F008B8F61 /* SignUpTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B706A8662825116F008B8F61 /* SignUpTableViewCell.swift */; };
+		B706A8692825116F008B8F61 /* SignUpTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B706A8672825116F008B8F61 /* SignUpTableViewCell.xib */; };
+		B706A86B282522D5008B8F61 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B706A86A282522D5008B8F61 /* SignUpViewModel.swift */; };
 		B7189ACE26EE2A6F00CB9719 /* VerifyPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7189ACD26EE2A6F00CB9719 /* VerifyPasswordViewModel.swift */; };
 		B743389B26DE2FAE004BBC05 /* Password.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B743389226DE2FAE004BBC05 /* Password.storyboard */; };
 		B743389C26DE2FAE004BBC05 /* ChangePasswordSuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B743389326DE2FAE004BBC05 /* ChangePasswordSuccessViewController.swift */; };
@@ -71,6 +75,10 @@
 		4F720079B4589EF5D8B64517 /* Pods-Authen.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Authen.release.xcconfig"; path = "Target Support Files/Pods-Authen/Pods-Authen.release.xcconfig"; sourceTree = "<group>"; };
 		9CA00CC88894B8F1AC8E622D /* Pods_Authen.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Authen.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2BDEC0B7E0B08D056D09388 /* Pods-Authen.debug (staging).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Authen.debug (staging).xcconfig"; path = "Target Support Files/Pods-Authen/Pods-Authen.debug (staging).xcconfig"; sourceTree = "<group>"; };
+		B706A86428251000008B8F61 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		B706A8662825116F008B8F61 /* SignUpTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpTableViewCell.swift; sourceTree = "<group>"; };
+		B706A8672825116F008B8F61 /* SignUpTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SignUpTableViewCell.xib; sourceTree = "<group>"; };
+		B706A86A282522D5008B8F61 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		B7189ACD26EE2A6F00CB9719 /* VerifyPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyPasswordViewModel.swift; sourceTree = "<group>"; };
 		B743389226DE2FAE004BBC05 /* Password.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Password.storyboard; sourceTree = "<group>"; };
 		B743389326DE2FAE004BBC05 /* ChangePasswordSuccessViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePasswordSuccessViewController.swift; sourceTree = "<group>"; };
@@ -184,6 +192,7 @@
 				B758AC6026F4792300A4A5FB /* MergeAccountViewModel.swift */,
 				B7EEC22A27421AA900C9F66B /* CheckEmailViewModel.swift */,
 				B798D5B4279EAB7D004F2C45 /* SocialLoginViewModel.swift */,
+				B706A86A282522D5008B8F61 /* SignUpViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -228,6 +237,8 @@
 				B7910E5726B836100097C94E /* CreateDisplayNameCell.xib */,
 				B754FD3B2800082B00ACB1D2 /* SignInTableViewCell.swift */,
 				B754FD3C2800082B00ACB1D2 /* SignInTableViewCell.xib */,
+				B706A8662825116F008B8F61 /* SignUpTableViewCell.swift */,
+				B706A8672825116F008B8F61 /* SignUpTableViewCell.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -244,6 +255,7 @@
 			isa = PBXGroup;
 			children = (
 				B7910E1926B3B83D0097C94E /* SignInViewController.swift */,
+				B706A86428251000008B8F61 /* SignUpViewController.swift */,
 				B7910E4626B7F34C0097C94E /* EmailViewController.swift */,
 				B7910E4C26B82C690097C94E /* CreatePasswordViewController.swift */,
 				B7910E5426B835DB0097C94E /* CreateDisplayNameViewController.swift */,
@@ -403,6 +415,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B7910E4B26B7FD090097C94E /* EmailCell.xib in Resources */,
+				B706A8692825116F008B8F61 /* SignUpTableViewCell.xib in Resources */,
 				B7910E0526B126090097C94E /* Authen.storyboard in Resources */,
 				B743389F26DE2FAF004BBC05 /* OldPasswordTableViewCell.xib in Resources */,
 				B743389B26DE2FAE004BBC05 /* Password.storyboard in Resources */,
@@ -472,10 +485,12 @@
 				B7910DE726AFC9E60097C94E /* Authen.swift in Sources */,
 				B798D5B5279EAB7D004F2C45 /* SocialLoginViewModel.swift in Sources */,
 				B74338A026DE2FAF004BBC05 /* OldPasswordTableViewCell.swift in Sources */,
+				B706A86528251000008B8F61 /* SignUpViewController.swift in Sources */,
 				B7D8BEC426C22D0700A8F8BA /* CreateDisplayNameViewModel.swift in Sources */,
 				B7910E1A26B3B83D0097C94E /* SignInViewController.swift in Sources */,
 				B7FF592226EB4D5E002EA174 /* LoginViewModel.swift in Sources */,
 				B796F6732824CC8C0009BDBD /* VerifyEmailOtpTableViewCell.swift in Sources */,
+				B706A8682825116F008B8F61 /* SignUpTableViewCell.swift in Sources */,
 				B7910E0C26B126A80097C94E /* AuthenOpener.swift in Sources */,
 				B743389C26DE2FAE004BBC05 /* ChangePasswordSuccessViewController.swift in Sources */,
 				B743389E26DE2FAF004BBC05 /* ChangePasswordViewController.swift in Sources */,
@@ -485,6 +500,7 @@
 				B7910E4D26B82C690097C94E /* CreatePasswordViewController.swift in Sources */,
 				B7910E4726B7F34C0097C94E /* EmailViewController.swift in Sources */,
 				B7A71D612701B72F0092F318 /* Localizable.swift in Sources */,
+				B706A86B282522D5008B8F61 /* SignUpViewModel.swift in Sources */,
 				B768499C26C3EC5100C438C5 /* ResendEmailViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -29,6 +29,9 @@ public struct AuthenNibVars {
     // MARK: - View Controller
     public struct ViewController {
         public static let signIn = "SignInViewController"
+        public static let signUp = "SignUpViewController"
+        
+        
         public static let email = "EmailViewController"
         public static let createPassword = "CreatePasswordViewController"
         public static let createDisplayName = "CreateDisplayNameViewController"
@@ -54,6 +57,7 @@ public struct AuthenNibVars {
         public static let oldPassword = "OldPasswordTableViewCell"
         public static let changePassword = "ChangePasswordTableViewCell"
         public static let signIn = "SignInTableViewCell"
+        public static let signUp = "SignUpTableViewCell"
         public static let verifyEmailOtp = "VerifyEmailOtpTableViewCell"
     }
     

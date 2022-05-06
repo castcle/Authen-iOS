@@ -22,7 +22,7 @@
 //  SignInTableViewCell.swift
 //  Authen
 //
-//  Created by Tanakorn Phoochaliaw on 8/4/2565 BE.
+//  Created by Castcle Co., Ltd. on 8/4/2565 BE.
 //
 
 import UIKit
@@ -119,7 +119,7 @@ class SignInTableViewCell: UITableViewCell, UITextFieldDelegate {
             label.customSelectedColor[signUpType] = UIColor.Asset.lightBlue
             label.handleCustomTap(for: signUpType) { element in
                 self.endEditing(true)
-//                Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.email(fromSignIn: true)), animated: true)
+                Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.signUp), animated: true)
             }
         }
         

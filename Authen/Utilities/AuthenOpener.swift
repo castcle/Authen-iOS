@@ -30,11 +30,14 @@ import Core
 
 public enum AuthenScene {
     case signIn
+    case signUp
+    
     case email(fromSignIn: Bool)
     case createPassword
     case createDisplayName
     case verifyEmail
     case resendEmail(ResendEmailViewModel)
+    
     case oldPassword
     case changePassword(ChangePasswordViewModel)
     case changePasswordSuccess(ChangePasswordViewModel)
@@ -51,6 +54,10 @@ public struct AuthenOpener {
             let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.authen, bundle: ConfigBundle.authen)
             let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.signIn) as? SignInViewController
             return vc ?? SignInViewController()
+        case .signUp:
+            let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.authen, bundle: ConfigBundle.authen)
+            let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.signUp) as? SignUpViewController
+            return vc ?? SignUpViewController()
         case .email(let fromSignIn):
             let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.authen, bundle: ConfigBundle.authen)
             let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.email) as? EmailViewController
