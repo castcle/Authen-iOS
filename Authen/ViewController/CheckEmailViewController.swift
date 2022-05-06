@@ -83,7 +83,6 @@ class CheckEmailViewController: UIViewController, UITextFieldDelegate {
     
     private func setupContinueButton(isActive: Bool) {
         self.searchButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .h4)
-        
         if isActive {
             self.searchButton.setTitleColor(UIColor.Asset.white, for: .normal)
             self.searchButton.setBackgroundImage(UIColor.Asset.lightBlue.toImage(), for: .normal)

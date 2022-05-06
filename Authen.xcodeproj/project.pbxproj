@@ -52,7 +52,6 @@
 		B7910EDE26C107590097C94E /* EmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7910EDD26C107590097C94E /* EmailViewModel.swift */; };
 		B796F6722824CC8C0009BDBD /* VerifyEmailOtpTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B796F6702824CC8C0009BDBD /* VerifyEmailOtpTableViewCell.xib */; };
 		B796F6732824CC8C0009BDBD /* VerifyEmailOtpTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B796F6712824CC8C0009BDBD /* VerifyEmailOtpTableViewCell.swift */; };
-		B796F6762824D0290009BDBD /* PasswordChangeSuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B796F6752824D0290009BDBD /* PasswordChangeSuccessViewController.swift */; };
 		B798D5B5279EAB7D004F2C45 /* SocialLoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B798D5B4279EAB7D004F2C45 /* SocialLoginViewModel.swift */; };
 		B7A71D612701B72F0092F318 /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A71D602701B72F0092F318 /* Localizable.swift */; };
 		B7A71D642701B7670092F318 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B7A71D662701B7670092F318 /* Localizable.strings */; };
@@ -118,7 +117,6 @@
 		B7910EDD26C107590097C94E /* EmailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailViewModel.swift; sourceTree = "<group>"; };
 		B796F6702824CC8C0009BDBD /* VerifyEmailOtpTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VerifyEmailOtpTableViewCell.xib; sourceTree = "<group>"; };
 		B796F6712824CC8C0009BDBD /* VerifyEmailOtpTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyEmailOtpTableViewCell.swift; sourceTree = "<group>"; };
-		B796F6752824D0290009BDBD /* PasswordChangeSuccessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordChangeSuccessViewController.swift; sourceTree = "<group>"; };
 		B798D5B4279EAB7D004F2C45 /* SocialLoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginViewModel.swift; sourceTree = "<group>"; };
 		B7A71D602701B72F0092F318 /* Localizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
 		B7A71D652701B7670092F318 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -258,7 +256,6 @@
 				B74338AB26DE765B004BBC05 /* EnterCodeViewController.swift */,
 				B758AC5E26F46D1600A4A5FB /* MergeAccountViewController.swift */,
 				B74640A127D605EA0085CEC5 /* MergeAccountSuccessViewController.swift */,
-				B796F6752824D0290009BDBD /* PasswordChangeSuccessViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -487,7 +484,6 @@
 				B743389D26DE2FAE004BBC05 /* OldPasswordViewController.swift in Sources */,
 				B7910E4D26B82C690097C94E /* CreatePasswordViewController.swift in Sources */,
 				B7910E4726B7F34C0097C94E /* EmailViewController.swift in Sources */,
-				B796F6762824D0290009BDBD /* PasswordChangeSuccessViewController.swift in Sources */,
 				B7A71D612701B72F0092F318 /* Localizable.swift in Sources */,
 				B768499C26C3EC5100C438C5 /* ResendEmailViewModel.swift in Sources */,
 			);

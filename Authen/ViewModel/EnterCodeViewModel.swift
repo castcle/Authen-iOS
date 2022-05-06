@@ -61,10 +61,14 @@ public class EnterCodeViewModel {
                 do {
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
-                    let accessToken = json[JsonKey.accessToken.rawValue].stringValue
                     self.authenRequest.payload.refCode = json[JsonKey.refCode.rawValue].stringValue
-                    UserManager.shared.setAccessToken(token: accessToken)
-                    self.connectWithSocial()
+                    if self.authenRequest.objective == .mergeAccount {
+                        let accessToken = json[JsonKey.accessToken.rawValue].stringValue
+                        UserManager.shared.setAccessToken(token: accessToken)
+                        self.connectWithSocial()
+                    } else {
+                        self.delegate?.didVerifyOtpFinish(success: true)
+                    }
                 } catch {}
             } else {
                 if isRefreshToken {

@@ -35,6 +35,7 @@ class ChangePasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBOutlet var headlineLabel: UILabel!
     @IBOutlet var limitCharLabel: UILabel!
     @IBOutlet var typeCharLabel: UILabel!
+    @IBOutlet var passwordNotMatchLabel: UILabel!
     @IBOutlet var applyButton: UIButton!
     @IBOutlet var passwordLabel: UILabel!
     @IBOutlet var confirmPasswordLabel: UILabel!
@@ -46,6 +47,7 @@ class ChangePasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBOutlet var showConfirmPasswordButton: UIButton!
     @IBOutlet var charCountImage: UIImageView!
     @IBOutlet var charTypeImage: UIImageView!
+    @IBOutlet var passwordNotMatchImage: UIImageView!
     
     private var viewModel = ChangePasswordViewModel(.changePassword)
     let hud = JGProgressHUD()
@@ -53,6 +55,7 @@ class ChangePasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
     private var isCanContinue: Bool {
         self.checkCharacterCount()
         self.checkCharacterType()
+        self.checkPasswordNotMatch()
         if self.passwordTextField.text!.isEmpty || self.confirmPasswordTextField.text!.isEmpty {
             return false
         } else if self.passwordTextField.text!.count < 6 || self.passwordTextField.text!.count > 20 {
@@ -75,8 +78,13 @@ class ChangePasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
         self.limitCharLabel.textColor = UIColor.Asset.gray
         self.typeCharLabel.font = UIFont.asset(.regular, fontSize: .overline)
         self.typeCharLabel.textColor = UIColor.Asset.gray
+        self.passwordNotMatchLabel.font = UIFont.asset(.regular, fontSize: .overline)
+        self.passwordNotMatchLabel.textColor = UIColor.Asset.gray
+        self.showPasswordButton.setImage(UIImage.init(icon: .castcle(.show), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.white).withRenderingMode(.alwaysOriginal), for: .normal)
+        self.showConfirmPasswordButton.setImage(UIImage.init(icon: .castcle(.show), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.white).withRenderingMode(.alwaysOriginal), for: .normal)
         self.charCountImage.image = UIImage.init(icon: .castcle(.addWithCheckmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.gray)
         self.charTypeImage.image = UIImage.init(icon: .castcle(.addWithCheckmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.gray)
+        self.passwordNotMatchImage.image = UIImage.init(icon: .castcle(.addWithCheckmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.gray)
         self.passwordLabel.font = UIFont.asset(.medium, fontSize: .body)
         self.passwordLabel.textColor = UIColor.Asset.white
         self.confirmPasswordLabel.font = UIFont.asset(.medium, fontSize: .body)
@@ -138,6 +146,16 @@ class ChangePasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
         } else {
             self.typeCharLabel.textColor = UIColor.Asset.gray
             self.charTypeImage.image = UIImage.init(icon: .castcle(.addWithCheckmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.gray)
+        }
+    }
+    
+    private func checkPasswordNotMatch() {
+        if self.passwordTextField.text! == self.confirmPasswordTextField.text! {
+            self.passwordNotMatchLabel.textColor = UIColor.Asset.lightBlue
+            self.passwordNotMatchImage.image = UIImage.init(icon: .castcle(.addWithCheckmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.lightBlue)
+        } else {
+            self.passwordNotMatchLabel.textColor = UIColor.Asset.gray
+            self.passwordNotMatchImage.image = UIImage.init(icon: .castcle(.addWithCheckmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.gray)
         }
     }
     
