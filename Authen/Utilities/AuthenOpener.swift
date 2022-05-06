@@ -29,7 +29,6 @@ import UIKit
 import Core
 
 public enum AuthenScene {
-//    case signUpMethod
     case signIn
     case email(fromSignIn: Bool)
     case createPassword
@@ -40,7 +39,6 @@ public enum AuthenScene {
     case changePassword(ChangePasswordViewModel)
     case changePasswordSuccess(ChangePasswordViewModel)
     case checkEmail
-    case forgotPassword
     case enterCode(EnterCodeViewModel)
     case mergeAccount(MergeAccountViewModel)
     case mergeAccountSuccess
@@ -49,10 +47,6 @@ public enum AuthenScene {
 public struct AuthenOpener {
     public static func open(_ authenScene: AuthenScene) -> UIViewController {
         switch authenScene {
-//        case .signUpMethod:
-//            let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.authen, bundle: ConfigBundle.authen)
-//            let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.signUpMethod)
-//            return vc
         case .signIn:
             let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.authen, bundle: ConfigBundle.authen)
             let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.signIn) as? SignInViewController
@@ -96,10 +90,6 @@ public struct AuthenOpener {
         case .checkEmail:
             let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.password, bundle: ConfigBundle.authen)
             let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.checkEmail)
-            return vc
-        case .forgotPassword:
-            let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.password, bundle: ConfigBundle.authen)
-            let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.forgotPassword)
             return vc
         case .enterCode(let viewModel):
             let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.password, bundle: ConfigBundle.authen)

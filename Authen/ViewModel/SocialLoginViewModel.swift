@@ -55,6 +55,7 @@ class SocialLoginViewModel {
     
     public func socialLogin() {
         self.state = .login
+        print(self.authenRequest.paramLoginWithSocial)
         self.authenticationRepository.loginWithSocial(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in
             if success {
                 do {
@@ -62,6 +63,7 @@ class SocialLoginViewModel {
                     let json = JSON(rawJson)
                     print(json)
                     let code = json[JsonKey.code.rawValue].stringValue
+                    print(response.request)
                     if code == "3021" {
                         let payload = JSON(json[JsonKey.payload.rawValue].dictionaryValue)
                         let profile = JSON(payload[JsonKey.profile.rawValue].dictionaryValue)

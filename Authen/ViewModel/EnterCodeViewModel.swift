@@ -34,6 +34,7 @@ import Defaults
 public protocol EnterCodeViewModelDelegate {
     func didVerifyOtpFinish(success: Bool)
     func didRequestOtpFinish(success: Bool)
+    func didError()
 }
 
 public class EnterCodeViewModel {

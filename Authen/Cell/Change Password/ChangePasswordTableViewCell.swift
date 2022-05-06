@@ -33,36 +33,17 @@ import JGProgressHUD
 class ChangePasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
 
     @IBOutlet var headlineLabel: UILabel!
-    @IBOutlet var passwordGuideLabel: UILabel!
     @IBOutlet var limitCharLabel: UILabel!
     @IBOutlet var typeCharLabel: UILabel!
     @IBOutlet var applyButton: UIButton!
+    @IBOutlet var passwordLabel: UILabel!
+    @IBOutlet var confirmPasswordLabel: UILabel!
     @IBOutlet var passwordView: UIView!
     @IBOutlet var confirmPasswordView: UIView!
-    @IBOutlet var passwordTextField: JVFloatLabeledTextField! {
-        didSet {
-            self.passwordTextField.font = UIFont.asset(.regular, fontSize: .body)
-            self.passwordTextField.placeholder = "Password"
-            self.passwordTextField.placeholderColor = UIColor.Asset.gray
-            self.passwordTextField.floatingLabelTextColor = UIColor.Asset.gray
-            self.passwordTextField.floatingLabelActiveTextColor = UIColor.Asset.gray
-            self.passwordTextField.floatingLabelFont = UIFont.asset(.regular, fontSize: .small)
-            self.passwordTextField.textColor = UIColor.Asset.white
-            self.passwordTextField.isSecureTextEntry = true
-        }
-    }
-    @IBOutlet var confirmPasswordTextField: JVFloatLabeledTextField! {
-        didSet {
-            self.confirmPasswordTextField.font = UIFont.asset(.regular, fontSize: .body)
-            self.confirmPasswordTextField.placeholder = "Confirm Password"
-            self.confirmPasswordTextField.placeholderColor = UIColor.Asset.gray
-            self.confirmPasswordTextField.floatingLabelTextColor = UIColor.Asset.gray
-            self.confirmPasswordTextField.floatingLabelActiveTextColor = UIColor.Asset.gray
-            self.confirmPasswordTextField.floatingLabelFont = UIFont.asset(.regular, fontSize: .small)
-            self.confirmPasswordTextField.textColor = UIColor.Asset.white
-            self.confirmPasswordTextField.isSecureTextEntry = true
-        }
-    }
+    @IBOutlet var passwordTextField: UITextField!
+    @IBOutlet var confirmPasswordTextField: UITextField!
+    @IBOutlet var showPasswordButton: UIButton!
+    @IBOutlet var showConfirmPasswordButton: UIButton!
     @IBOutlet var charCountImage: UIImageView!
     @IBOutlet var charTypeImage: UIImageView!
     
@@ -87,20 +68,27 @@ class ChangePasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.passwordView.custom(color: UIColor.Asset.darkGray, cornerRadius: 10, borderWidth: 1, borderColor: UIColor.Asset.black)
-        self.confirmPasswordView.custom(color: UIColor.Asset.darkGray, cornerRadius: 10, borderWidth: 1, borderColor: UIColor.Asset.black)
         self.setupContinueButton(isActive: self.isCanContinue)
         self.headlineLabel.font = UIFont.asset(.regular, fontSize: .h2)
         self.headlineLabel.textColor = UIColor.Asset.white
-        self.passwordGuideLabel.font = UIFont.asset(.regular, fontSize: .body)
-        self.passwordGuideLabel.textColor = UIColor.Asset.white
         self.limitCharLabel.font = UIFont.asset(.regular, fontSize: .overline)
         self.limitCharLabel.textColor = UIColor.Asset.gray
         self.typeCharLabel.font = UIFont.asset(.regular, fontSize: .overline)
         self.typeCharLabel.textColor = UIColor.Asset.gray
         self.charCountImage.image = UIImage.init(icon: .castcle(.addWithCheckmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.gray)
         self.charTypeImage.image = UIImage.init(icon: .castcle(.addWithCheckmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.gray)
-
+        self.passwordLabel.font = UIFont.asset(.medium, fontSize: .body)
+        self.passwordLabel.textColor = UIColor.Asset.white
+        self.confirmPasswordLabel.font = UIFont.asset(.medium, fontSize: .body)
+        self.confirmPasswordLabel.textColor = UIColor.Asset.white
+        self.passwordView.capsule(color: UIColor.Asset.darkGray)
+        self.confirmPasswordView.capsule(color: UIColor.Asset.darkGray)
+        self.passwordTextField.font = UIFont.asset(.regular, fontSize: .overline)
+        self.passwordTextField.textColor = UIColor.Asset.white
+        self.passwordTextField.isSecureTextEntry = true
+        self.confirmPasswordTextField.font = UIFont.asset(.regular, fontSize: .overline)
+        self.confirmPasswordTextField.textColor = UIColor.Asset.white
+        self.confirmPasswordTextField.isSecureTextEntry = true
         self.passwordTextField.delegate = self
         self.passwordTextField.tag = 0
         self.passwordTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
@@ -164,6 +152,24 @@ class ChangePasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
             textField.resignFirstResponder()
         }
         return true
+    }
+    
+    @IBAction func showPasswordAction(_ sender: Any) {
+        self.passwordTextField.isSecureTextEntry.toggle()
+        if self.passwordTextField.isSecureTextEntry {
+            self.showPasswordButton.setImage(UIImage.init(icon: .castcle(.show), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.white).withRenderingMode(.alwaysOriginal), for: .normal)
+        } else {
+            self.showPasswordButton.setImage(UIImage.init(icon: .castcle(.show), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.lightBlue).withRenderingMode(.alwaysOriginal), for: .normal)
+        }
+    }
+    
+    @IBAction func showConfirmPasswordAction(_ sender: Any) {
+        self.confirmPasswordTextField.isSecureTextEntry.toggle()
+        if self.passwordTextField.isSecureTextEntry {
+            self.showConfirmPasswordButton.setImage(UIImage.init(icon: .castcle(.show), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.white).withRenderingMode(.alwaysOriginal), for: .normal)
+        } else {
+            self.showConfirmPasswordButton.setImage(UIImage.init(icon: .castcle(.show), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.lightBlue).withRenderingMode(.alwaysOriginal), for: .normal)
+        }
     }
     
     @IBAction func applyAction(_ sender: Any) {

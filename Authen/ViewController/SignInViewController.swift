@@ -210,6 +210,7 @@ extension SignInViewController: ASAuthorizationControllerDelegate, ASAuthorizati
             authenRequest.socialId = KeychainHelper.shared.getKeychainWith(with: .appleUserId)
             authenRequest.displayName = KeychainHelper.shared.getKeychainWith(with: .appleFullName)
             authenRequest.email = KeychainHelper.shared.getKeychainWith(with: .appleEmail)
+            authenRequest.authToken = String(data: appleIdCredential.identityToken ?? Data() , encoding: .utf8) ?? ""
 
             self.hud.show(in: self.view)
             self.viewModel.authenRequest = authenRequest
