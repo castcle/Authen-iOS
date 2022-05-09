@@ -32,10 +32,7 @@ public enum AuthenScene {
     case signIn
     case signUp
     
-    case email(fromSignIn: Bool)
-    case createPassword
-    case createDisplayName
-    case verifyEmail
+    case createDisplayName(CreateDisplayNameViewModel)
     case resendEmail(ResendEmailViewModel)
     
     case oldPassword
@@ -58,23 +55,11 @@ public struct AuthenOpener {
             let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.authen, bundle: ConfigBundle.authen)
             let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.signUp) as? SignUpViewController
             return vc ?? SignUpViewController()
-        case .email(let fromSignIn):
+        case .createDisplayName(let viewModel):
             let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.authen, bundle: ConfigBundle.authen)
-            let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.email) as? EmailViewController
-            vc?.fromSignIn = fromSignIn
-            return vc ?? EmailViewController()
-        case .createPassword:
-            let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.authen, bundle: ConfigBundle.authen)
-            let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.createPassword)
-            return vc
-        case .createDisplayName:
-            let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.authen, bundle: ConfigBundle.authen)
-            let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.createDisplayName)
-            return vc
-        case .verifyEmail:
-            let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.authen, bundle: ConfigBundle.authen)
-            let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.verifyEmail)
-            return vc
+            let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.createDisplayName) as? CreateDisplayNameViewController
+            vc?.viewModel = viewModel
+            return vc ?? CreateDisplayNameViewController()
         case .resendEmail(let viewModel):
             let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.authen, bundle: ConfigBundle.authen)
             let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.resendEmail) as? ResendEmailViewController

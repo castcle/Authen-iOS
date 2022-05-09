@@ -27,45 +27,20 @@
 
 import UIKit
 import Core
-import IGListKit
 import Defaults
 
 class CreateDisplayNameViewController: UIViewController {
-
-    let collectionView: UICollectionView = {
-        let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        view.backgroundColor = UIColor.Asset.darkGraphiteBlue
-        return view
-    }()
     
-    lazy var adapter: ListAdapter = {
-        return ListAdapter(updater: ListAdapterUpdater(), viewController: self, workingRangeSize: 0)
-    }()
-    
-    enum CreateDisplayNameType: Int {
-        case displayName = 0
-    }
+    @IBOutlet var tableView: UITableView!
     
     var viewModel = CreateDisplayNameViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         self.view.backgroundColor = UIColor.Asset.darkGraphiteBlue
         self.hideKeyboardWhenTapped()
         self.setupNavBar()
-        self.collectionView.alwaysBounceVertical = true
-        self.collectionView.showsHorizontalScrollIndicator = false
-        self.collectionView.showsVerticalScrollIndicator = false
-        self.collectionView.backgroundColor = UIColor.clear
-        self.view.addSubview(self.collectionView)
-        self.adapter.collectionView = self.collectionView
-        self.adapter.dataSource = self
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        self.collectionView.frame = view.bounds
+        self.configureTableView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -74,24 +49,31 @@ class CreateDisplayNameViewController: UIViewController {
     }
     
     func setupNavBar() {
-        self.customNavigationBar(.secondary, title: "")
+        self.customNavigationBar(.secondary, title: "New User Profile")
+    }
+    
+    func configureTableView() {
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        self.tableView.register(UINib(nibName: AuthenNibVars.TableViewCell.createDisplay, bundle: ConfigBundle.authen), forCellReuseIdentifier: AuthenNibVars.TableViewCell.createDisplay)
+        self.tableView.rowHeight = UITableView.automaticDimension
+        self.tableView.estimatedRowHeight = 100
     }
 }
 
-// MARK: - ListAdapterDataSource
-extension CreateDisplayNameViewController: ListAdapterDataSource {
-    func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
-        let items: [ListDiffable] = [CreateDisplayNameType.displayName.rawValue] as [ListDiffable]
-        return items
+extension CreateDisplayNameViewController: UITableViewDelegate, UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
     }
     
-    func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
-        let section = CreateDisplayNameSectionController()
-        section.viewModel = self.viewModel
-        return section
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
     }
     
-    func emptyView(for listAdapter: ListAdapter) -> UIView? {
-        return nil
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: AuthenNibVars.TableViewCell.createDisplay, for: indexPath as IndexPath) as? CreateDisplayTableViewCell
+        cell?.backgroundColor = UIColor.clear
+        cell?.configCell(viewModel: self.viewModel)
+        return cell ?? CreateDisplayTableViewCell()
     }
 }

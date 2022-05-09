@@ -30,12 +30,7 @@ public struct AuthenNibVars {
     public struct ViewController {
         public static let signIn = "SignInViewController"
         public static let signUp = "SignUpViewController"
-        
-        
-        public static let email = "EmailViewController"
-        public static let createPassword = "CreatePasswordViewController"
         public static let createDisplayName = "CreateDisplayNameViewController"
-        public static let verifyEmail = "VerifyEmailViewController"
         public static let resendEmail = "ResendEmailViewController"
         public static let oldPassword = "OldPasswordViewController"
         public static let changePassword = "ChangePasswordViewController"
@@ -58,13 +53,11 @@ public struct AuthenNibVars {
         public static let changePassword = "ChangePasswordTableViewCell"
         public static let signIn = "SignInTableViewCell"
         public static let signUp = "SignUpTableViewCell"
+        public static let createDisplay = "CreateDisplayTableViewCell"
         public static let verifyEmailOtp = "VerifyEmailOtpTableViewCell"
     }
     
     // MARK: - CollectionViewCell
     public struct CollectionViewCell {
-        public static let email = "EmailCell"
-        public static let createPassword = "CreatePasswordCell"
-        public static let createDisplayName = "CreateDisplayNameCell"
     }
 }

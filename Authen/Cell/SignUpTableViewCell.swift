@@ -80,6 +80,8 @@ class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
         super.awakeFromNib()
         self.subTitleLabel.font = UIFont.asset(.regular, fontSize: .h4)
         self.subTitleLabel.textColor = UIColor.Asset.white
+        self.emailLabel.font = UIFont.asset(.medium, fontSize: .body)
+        self.emailLabel.textColor = UIColor.Asset.white
         self.passwordLabel.font = UIFont.asset(.medium, fontSize: .body)
         self.passwordLabel.textColor = UIColor.Asset.white
         self.confirmPasswordLabel.font = UIFont.asset(.medium, fontSize: .body)
@@ -285,5 +287,11 @@ class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
     
     @IBAction func nextAction(_ sender: Any) {
+        self.endEditing(true)
+        if self.isPasswordValid && !self.viewModel.isEmailExist && self.viewModel.isAgree {
+            Utility.currentViewController().navigationController?.setNavigationBarHidden(false, animated: true)
+            self.viewModel.authenRequest.payload.password = self.passwordTextField.text!
+            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.createDisplayName(CreateDisplayNameViewModel(authenRequest: self.viewModel.authenRequest))), animated: true)
+        }
     }
 }

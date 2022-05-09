@@ -72,7 +72,6 @@ extension SignUpViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: AuthenNibVars.TableViewCell.signUp, for: indexPath as IndexPath) as? SignUpTableViewCell
         cell?.backgroundColor = UIColor.clear
-//        cell?.delegate = self
         return cell ?? SignUpTableViewCell()
     }
 }

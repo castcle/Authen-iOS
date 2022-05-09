@@ -37,7 +37,7 @@ public protocol CreateDisplayNameViewModelDelegate {
     func didSuggestCastcleIdFinish(suggestCastcleId: String)
 }
 
-class CreateDisplayNameViewModel {
+public class CreateDisplayNameViewModel {
     
     public var delegate: CreateDisplayNameViewModelDelegate?
     var authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()
@@ -45,6 +45,7 @@ class CreateDisplayNameViewModel {
     var authenRequest: AuthenRequest = AuthenRequest()
     var notificationRequest: NotificationRequest = NotificationRequest()
     var isCastcleIdExist: Bool = true
+    var isValidateCastcleId: Bool = false
     let tokenHelper: TokenHelper = TokenHelper()
     private var state: State = .none
 
@@ -141,7 +142,7 @@ class CreateDisplayNameViewModel {
 }
 
 extension CreateDisplayNameViewModel: TokenHelperDelegate {
-    func didRefreshTokenFinish() {
+    public func didRefreshTokenFinish() {
         if self.state == .suggestCastcleId {
             self.suggestCastcleId()
         } else if self.state == .checkCastcleIdExists {
