@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="704" id="KGk-i7-Jjw" customClass="CreateDisplayTableViewCell" customModule="Authen" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="704"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="704"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="castcle-id-and-display-name" translatesAutoresizingMaskIntoConstraints="NO" id="p2B-G6-mDy">
+                        <rect key="frame" x="20" y="20" width="280" height="210"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="p2B-G6-mDy" secondAttribute="height" multiplier="4:3" id="Lc6-5p-Gjt"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create your Castcle ID and Display name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aiT-NB-UtJ">
+                        <rect key="frame" x="20" y="230" width="280" height="43"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Castcle ID will be associated with your Castcle profile. You can change your display name later." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gZ8-gn-Ja7">
+                        <rect key="frame" x="20" y="293" width="280" height="57.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cYv-Xm-oeb">
+                        <rect key="frame" x="20" y="405" width="280" height="50"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter your Castcle ID" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PkA-OH-qL6">
+                                <rect key="frame" x="20" y="5" width="240" height="40"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" returnKeyType="next" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="PkA-OH-qL6" secondAttribute="trailing" constant="20" id="aS4-Vg-yiu"/>
+                            <constraint firstItem="PkA-OH-qL6" firstAttribute="top" secondItem="cYv-Xm-oeb" secondAttribute="top" constant="5" id="gN2-MT-k6H"/>
+                            <constraint firstAttribute="bottom" secondItem="PkA-OH-qL6" secondAttribute="bottom" constant="5" id="lqf-8J-qPA"/>
+                            <constraint firstItem="PkA-OH-qL6" firstAttribute="leading" secondItem="cYv-Xm-oeb" secondAttribute="leading" constant="20" id="wkj-D0-nfr"/>
+                            <constraint firstAttribute="height" constant="50" id="zwo-6c-brw"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="You'll use this email when you login and when you lose your password." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ayl-mF-has">
+                        <rect key="frame" x="40" y="460" width="240" height="29.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Castcle ID" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e9m-tK-TkV">
+                        <rect key="frame" x="20" y="370.5" width="280" height="19.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6ro-Ba-eQM">
+                        <rect key="frame" x="20" y="534" width="280" height="50"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter your display name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Mdu-4N-x1e">
+                                <rect key="frame" x="20" y="5" width="240" height="40"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" returnKeyType="done" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Mdu-4N-x1e" firstAttribute="top" secondItem="6ro-Ba-eQM" secondAttribute="top" constant="5" id="DB1-HM-1cR"/>
+                            <constraint firstItem="Mdu-4N-x1e" firstAttribute="leading" secondItem="6ro-Ba-eQM" secondAttribute="leading" constant="20" id="HsW-2x-wX0"/>
+                            <constraint firstAttribute="bottom" secondItem="Mdu-4N-x1e" secondAttribute="bottom" constant="5" id="Ia8-xJ-GQ7"/>
+                            <constraint firstAttribute="trailing" secondItem="Mdu-4N-x1e" secondAttribute="trailing" constant="20" id="P5M-ke-hiZ"/>
+                            <constraint firstAttribute="height" constant="50" id="VhA-nh-iiG"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Display name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C3u-o5-I4q">
+                        <rect key="frame" x="20" y="499.5" width="280" height="19.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="am9-ln-QSh">
+                        <rect key="frame" x="30" y="614" width="260" height="50"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="50" id="g2s-9Z-ddC"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                        <state key="normal" title="Next"/>
+                        <connections>
+                            <action selector="nextAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="2Ln-Bi-M6n"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="6ro-Ba-eQM" secondAttribute="trailing" constant="20" id="02z-Zr-1JH"/>
+                    <constraint firstAttribute="trailing" secondItem="e9m-tK-TkV" secondAttribute="trailing" constant="20" id="13W-9y-Mio"/>
+                    <constraint firstItem="cYv-Xm-oeb" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="2Kb-qe-UZd"/>
+                    <constraint firstAttribute="trailing" secondItem="C3u-o5-I4q" secondAttribute="trailing" constant="20" id="9Py-7Z-nqb"/>
+                    <constraint firstItem="gZ8-gn-Ja7" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="9f8-3I-jsy"/>
+                    <constraint firstItem="ayl-mF-has" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="40" id="A1p-U7-G7e"/>
+                    <constraint firstItem="cYv-Xm-oeb" firstAttribute="top" secondItem="e9m-tK-TkV" secondAttribute="bottom" constant="15" id="CBI-Ec-8iD"/>
+                    <constraint firstItem="p2B-G6-mDy" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="CgU-Dt-ICs"/>
+                    <constraint firstItem="aiT-NB-UtJ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="Dik-yA-mYR"/>
+                    <constraint firstItem="C3u-o5-I4q" firstAttribute="top" secondItem="ayl-mF-has" secondAttribute="bottom" constant="10" id="ESe-qo-G1k"/>
+                    <constraint firstItem="p2B-G6-mDy" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="Foh-5A-fGW"/>
+                    <constraint firstItem="gZ8-gn-Ja7" firstAttribute="top" secondItem="aiT-NB-UtJ" secondAttribute="bottom" constant="20" id="IQg-dr-qAt"/>
+                    <constraint firstItem="e9m-tK-TkV" firstAttribute="top" secondItem="gZ8-gn-Ja7" secondAttribute="bottom" constant="20" id="JNb-wh-iRE"/>
+                    <constraint firstAttribute="trailing" secondItem="p2B-G6-mDy" secondAttribute="trailing" constant="20" id="LUy-0i-wog"/>
+                    <constraint firstItem="C3u-o5-I4q" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="Mrj-Wl-l7x"/>
+                    <constraint firstItem="am9-ln-QSh" firstAttribute="top" secondItem="6ro-Ba-eQM" secondAttribute="bottom" constant="30" id="Pdo-1f-GQN"/>
+                    <constraint firstItem="p2B-G6-mDy" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="R0m-Dd-ACq"/>
+                    <constraint firstItem="6ro-Ba-eQM" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="TMu-FU-l6l"/>
+                    <constraint firstItem="e9m-tK-TkV" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="UEu-11-qOK"/>
+                    <constraint firstItem="6ro-Ba-eQM" firstAttribute="top" secondItem="C3u-o5-I4q" secondAttribute="bottom" constant="15" id="XdH-T9-xe4"/>
+                    <constraint firstItem="am9-ln-QSh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="30" id="YAb-9m-XVb"/>
+                    <constraint firstAttribute="trailing" secondItem="ayl-mF-has" secondAttribute="trailing" constant="40" id="dRY-kX-qqK"/>
+                    <constraint firstAttribute="trailing" secondItem="gZ8-gn-Ja7" secondAttribute="trailing" constant="20" id="gvI-ix-1q3"/>
+                    <constraint firstItem="ayl-mF-has" firstAttribute="top" secondItem="cYv-Xm-oeb" secondAttribute="bottom" constant="5" id="hZn-KN-gfb"/>
+                    <constraint firstItem="aiT-NB-UtJ" firstAttribute="top" secondItem="p2B-G6-mDy" secondAttribute="bottom" id="iax-hr-N0V"/>
+                    <constraint firstAttribute="trailing" secondItem="am9-ln-QSh" secondAttribute="trailing" constant="30" id="rfF-Qt-m24"/>
+                    <constraint firstAttribute="bottom" secondItem="am9-ln-QSh" secondAttribute="bottom" constant="40" id="sHG-m0-njv"/>
+                    <constraint firstAttribute="trailing" secondItem="aiT-NB-UtJ" secondAttribute="trailing" constant="20" id="tTz-uq-QhH"/>
+                    <constraint firstAttribute="trailing" secondItem="cYv-Xm-oeb" secondAttribute="trailing" constant="20" id="uiW-Ds-vrq"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="castcleIdAlertLabel" destination="ayl-mF-has" id="HDe-9c-YzX"/>
+                <outlet property="castcleIdLabel" destination="e9m-tK-TkV" id="PTN-uS-fhp"/>
+                <outlet property="castcleIdTextField" destination="PkA-OH-qL6" id="TKu-TI-zO8"/>
+                <outlet property="castcleIdView" destination="cYv-Xm-oeb" id="VCa-np-App"/>
+                <outlet property="displayNameLabel" destination="C3u-o5-I4q" id="OBU-Zp-2mu"/>
+                <outlet property="displayNameTextField" destination="Mdu-4N-x1e" id="PHD-gP-aZG"/>
+                <outlet property="displayNameView" destination="6ro-Ba-eQM" id="fUX-Yb-19i"/>
+                <outlet property="nextButton" destination="am9-ln-QSh" id="xbL-dN-c6s"/>
+                <outlet property="subTitleLabel" destination="gZ8-gn-Ja7" id="nOi-8W-awT"/>
+                <outlet property="titleLabel" destination="aiT-NB-UtJ" id="uSw-PI-tqE"/>
+            </connections>
+            <point key="canvasLocation" x="137.68115942028987" y="322.09821428571428"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="castcle-id-and-display-name" width="421" height="298"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

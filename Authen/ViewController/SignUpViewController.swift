@@ -19,47 +19,56 @@
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
 //
-//  OldPasswordViewController.swift
+//  SignUpViewController.swift
 //  Authen
 //
-//  Created by Castcle Co., Ltd. on 30/8/2564 BE.
+//  Created by Castcle Co., Ltd. on 6/5/2565 BE.
 //
 
 import UIKit
 import Core
 import Defaults
 
-class OldPasswordViewController: UIViewController {
+class SignUpViewController: UIViewController {
 
     @IBOutlet var tableView: UITableView!
+    @IBOutlet var backButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.Asset.darkGraphiteBlue
         self.hideKeyboardWhenTapped()
-        self.setupNavBar()
         self.configureTableView()
+        self.backButton.setImage(UIImage.init(icon: .castcle(.back), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white).withRenderingMode(.alwaysOriginal), for: .normal)
+        self.backButton.setBackgroundImage(UIColor.Asset.gray.toImage(), for: .normal)
+        self.backButton.capsule()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
         Defaults[.screenId] = ""
     }
-    
-    func setupNavBar() {
-        self.customNavigationBar(.secondary, title: "Change Password")
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
     func configureTableView() {
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        self.tableView.register(UINib(nibName: AuthenNibVars.TableViewCell.oldPassword, bundle: ConfigBundle.authen), forCellReuseIdentifier: AuthenNibVars.TableViewCell.oldPassword)
+        self.tableView.register(UINib(nibName: AuthenNibVars.TableViewCell.signUp, bundle: ConfigBundle.authen), forCellReuseIdentifier: AuthenNibVars.TableViewCell.signUp)
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 100
     }
+    
+    @IBAction func backAction(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
+    }
 }
 
-extension OldPasswordViewController: UITableViewDelegate, UITableViewDataSource {
+extension SignUpViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -69,8 +78,8 @@ extension OldPasswordViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: AuthenNibVars.TableViewCell.oldPassword, for: indexPath as IndexPath) as? OldPasswordTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: AuthenNibVars.TableViewCell.signUp, for: indexPath as IndexPath) as? SignUpTableViewCell
         cell?.backgroundColor = UIColor.clear
-        return cell ?? OldPasswordTableViewCell()
+        return cell ?? SignUpTableViewCell()
     }
 }

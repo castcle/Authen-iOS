@@ -26,31 +26,34 @@
 //
 
 import UIKit
+import Core
 import Defaults
+import SwiftColor
 
 class ChangePasswordSuccessViewController: UIViewController {
 
-    @IBOutlet var successImage: UIImageView!
-    @IBOutlet var headlineLabel: UILabel!
-    @IBOutlet var homeButton: UIButton!
+    @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var subTitleLabel: UILabel!
+    @IBOutlet var confirmButton: UIButton!
     
     var viewModel = ChangePasswordViewModel(.changePassword)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.Asset.darkGraphiteBlue
-        self.headlineLabel.font = UIFont.asset(.regular, fontSize: .h3)
-        self.headlineLabel.textColor = UIColor.Asset.white
-        self.homeButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .h4)
-        self.homeButton.setTitleColor(UIColor.Asset.white, for: .normal)
-        self.homeButton.setBackgroundImage(UIColor.Asset.lightBlue.toImage(), for: .normal)
-        self.homeButton.capsule(color: UIColor.clear, borderWidth: 1, borderColor: UIColor.clear)
-        self.successImage.image = UIImage.init(icon: .castcle(.addWithCheckmark), size: CGSize(width: 100, height: 100), textColor: UIColor.Asset.lightBlue)
+        self.titleLabel.font = UIFont.asset(.regular, fontSize: .h4)
+        self.titleLabel.textColor = UIColor.Asset.white
+        self.subTitleLabel.font = UIFont.asset(.regular, fontSize: .body)
+        self.subTitleLabel.textColor = UIColor.Asset.white
+        self.confirmButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .h4)
+        self.confirmButton.setTitleColor(UIColor.Asset.white, for: .normal)
+        self.confirmButton.setBackgroundImage(UIColor.Asset.lightBlue.toImage(), for: .normal)
+        self.confirmButton.capsule(color: UIColor.clear, borderWidth: 1, borderColor: UIColor.clear)
         
         if self.viewModel.changePasswordType == .changePassword {
-            self.homeButton.setTitle("Back", for: .normal)
+            self.confirmButton.setTitle("Back", for: .normal)
         } else if self.viewModel.changePasswordType == .forgotPassword {
-            self.homeButton.setTitle("เข้าสู่ระบบ", for: .normal)
+            self.confirmButton.setTitle("Log in with Castcle", for: .normal)
         }
     }
     
@@ -65,12 +68,12 @@ class ChangePasswordSuccessViewController: UIViewController {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
-    @IBAction func homeAction(_ sender: Any) {
+    @IBAction func confirmAction(_ sender: Any) {
         let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
         if self.viewModel.changePasswordType == .changePassword {
             self.navigationController!.popToViewController(viewControllers[viewControllers.count - 4], animated: true)
         } else if self.viewModel.changePasswordType == .forgotPassword {
-            self.navigationController!.popToViewController(viewControllers[viewControllers.count - 6], animated: true)
+            self.navigationController!.popToRootViewController(animated: true)
         }
     }
 }

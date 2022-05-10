@@ -19,77 +19,70 @@
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
 //
-//  CreateDisplayNameCell.swift
+//  CreateDisplayTableViewCell.swift
 //  Authen
 //
-//  Created by Castcle Co., Ltd. on 2/8/2564 BE.
+//  Created by Castcle Co., Ltd. on 9/5/2565 BE.
 //
 
 import UIKit
 import Core
-import Networking
-import Moya
 import JGProgressHUD
 import Defaults
 
-class CreateDisplayNameCell: UICollectionViewCell, UITextFieldDelegate {
+class CreateDisplayTableViewCell: UITableViewCell, UITextFieldDelegate {
 
-    @IBOutlet var headlineLabel: UILabel!
+    @IBOutlet var titleLabel: UILabel!
     @IBOutlet var subTitleLabel: UILabel!
-    @IBOutlet var displayNameLabel: UILabel!
     @IBOutlet var castcleIdLabel: UILabel!
+    @IBOutlet var displayNameLabel: UILabel!
+    @IBOutlet var castcleIdView: UIView!
     @IBOutlet var displayNameView: UIView!
-    @IBOutlet var castcleIdPasswordView: UIView!
+    @IBOutlet var castcleIdTextField: UITextField!
+    @IBOutlet var displayNameTextField: UITextField!
+    @IBOutlet var castcleIdAlertLabel: UILabel!
     @IBOutlet var nextButton: UIButton!
-    @IBOutlet var displayNameTextfield: UITextField!
-    @IBOutlet var idTextField: UITextField!
-    @IBOutlet var checkImage: UIImageView!
-    @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
     private var viewModel = CreateDisplayNameViewModel()
     let hud = JGProgressHUD()
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.displayNameView.custom(color: UIColor.Asset.darkGray, cornerRadius: 10, borderWidth: 1, borderColor: UIColor.Asset.black)
-        self.castcleIdPasswordView.custom(color: UIColor.Asset.darkGray, cornerRadius: 10, borderWidth: 1, borderColor: UIColor.Asset.black)
-        self.headlineLabel.font = UIFont.asset(.regular, fontSize: .title)
-        self.headlineLabel.textColor = UIColor.Asset.white
-        self.subTitleLabel.font = UIFont.asset(.regular, fontSize: .h4)
+        self.titleLabel.font = UIFont.asset(.regular, fontSize: .h4)
+        self.titleLabel.textColor = UIColor.Asset.white
+        self.subTitleLabel.font = UIFont.asset(.regular, fontSize: .body)
         self.subTitleLabel.textColor = UIColor.Asset.white
-        self.displayNameLabel.font = UIFont.asset(.regular, fontSize: .body)
-        self.displayNameLabel.textColor = UIColor.Asset.white
-        self.castcleIdLabel.font = UIFont.asset(.regular, fontSize: .body)
+        self.castcleIdLabel.font = UIFont.asset(.medium, fontSize: .body)
         self.castcleIdLabel.textColor = UIColor.Asset.white
+        self.displayNameLabel.font = UIFont.asset(.medium, fontSize: .body)
+        self.displayNameLabel.textColor = UIColor.Asset.white
+        self.castcleIdTextField.font = UIFont.asset(.regular, fontSize: .overline)
+        self.castcleIdTextField.textColor = UIColor.Asset.white
+        self.displayNameTextField.font = UIFont.asset(.regular, fontSize: .overline)
+        self.displayNameTextField.textColor = UIColor.Asset.white
+        self.castcleIdView.capsule(color: UIColor.Asset.darkGray)
+        self.displayNameView.capsule(color: UIColor.Asset.darkGray)
+    
+        self.castcleIdTextField.tag = 0
+        self.castcleIdTextField.delegate = self
+        self.castcleIdTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
+        self.displayNameTextField.delegate = self
+        self.displayNameTextField.tag = 1
+        self.displayNameTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
+
+        self.castcleIdAlertLabel.font = UIFont.asset(.regular, fontSize: .small)
+        self.castcleIdAlertLabel.textColor = UIColor.Asset.denger
+        self.castcleIdAlertLabel.isHidden = true
         self.setupNextButton(isActive: false)
-        
-        self.activityIndicator.color = UIColor.Asset.lightBlue
-        self.activityIndicator.isHidden = true
-        self.checkImage.isHidden = true
-        self.checkImage.tintColor = UIColor.Asset.denger
-        
-        self.displayNameTextfield.font = UIFont.asset(.regular, fontSize: .body)
-        self.displayNameTextfield.textColor = UIColor.Asset.white
-        self.idTextField.font = UIFont.asset(.regular, fontSize: .body)
-        self.idTextField.textColor = UIColor.Asset.white
-        
-        self.displayNameTextfield.delegate = self
-        self.displayNameTextfield.tag = 0
-        self.idTextField.delegate = self
-        self.idTextField.tag = 1
-        self.idTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
+    }
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
     }
     
     func configCell(viewModel: CreateDisplayNameViewModel) {
-        self.hud.textLabel.text = "Creating"
         self.viewModel = viewModel
         self.viewModel.delegate = self
-        self.headlineLabel.text = Localization.registerDisplayName.headline.text
-        self.subTitleLabel.text = Localization.registerDisplayName.subtitle.text
-        self.displayNameLabel.text = Localization.registerDisplayName.value.text
-        self.displayNameTextfield.placeholder = Localization.registerDisplayName.value.text
-        self.castcleIdLabel.text = Localization.registerDisplayName.castcleId.text
-        self.nextButton.setTitle(Localization.registerDisplayName.button.text, for: .normal)
     }
     
     private func castcleId(displayCastcleId: String) -> String {
@@ -97,30 +90,22 @@ class CreateDisplayNameCell: UICollectionViewCell, UITextFieldDelegate {
     }
     
     private func updateUI() {
-        self.idTextField.isEnabled = true
-        self.activityIndicator.isHidden = true
-        self.activityIndicator.stopAnimating()
-
         if self.viewModel.isCastcleIdExist {
             self.setupNextButton(isActive: false)
-            self.checkImage.isHidden = false
-            self.checkImage.image = UIImage.init(icon: .castcle(.incorrect), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.denger)
-            self.idTextField.textColor = UIColor.Asset.denger
+            self.castcleIdAlertLabel.isHidden = false
+            self.castcleIdAlertLabel.text = "Castcle ID has been taken."
         } else {
-            if self.displayNameTextfield.text!.isEmpty {
+            self.castcleIdAlertLabel.isHidden = true
+            if self.displayNameTextField.text!.isEmpty {
                 self.setupNextButton(isActive: false)
             } else {
                 self.setupNextButton(isActive: true)
             }
-            self.checkImage.isHidden = false
-            self.checkImage.image = UIImage.init(icon: .castcle(.checkmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.lightBlue)
-            self.idTextField.textColor = UIColor.Asset.white
         }
     }
     
     private func setupNextButton(isActive: Bool) {
         self.nextButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .h4)
-        
         if isActive {
             self.nextButton.setTitleColor(UIColor.Asset.white, for: .normal)
             self.nextButton.setBackgroundImage(UIColor.Asset.lightBlue.toImage(), for: .normal)
@@ -132,87 +117,99 @@ class CreateDisplayNameCell: UICollectionViewCell, UITextFieldDelegate {
         }
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField.tag == 0 {
+            self.displayNameTextField.becomeFirstResponder()
+        } else {
+            textField.resignFirstResponder()
+        }
+        return true
+    }
+    
     @objc func textFieldDidChange(_ textField: UITextField) {
-        if textField.tag == 1 {
+        if textField.tag == 0 {
             let displayCastcleId = textField.text ?? ""
             let castcleId = self.castcleId(displayCastcleId: displayCastcleId)
             if !castcleId.isEmpty {
+                if castcleId.count > 30 {
+                    self.castcleIdAlertLabel.isHidden = false
+                    self.castcleIdAlertLabel.text = "Castcle ID cannot exceed 30 characters"
+                } else if !castcleId.isCastcleId {
+                    self.castcleIdAlertLabel.isHidden = false
+                    self.castcleIdAlertLabel.text = "Castcle ID cannot contain special characters"
+                } else {
+                    self.castcleIdAlertLabel.isHidden = true
+                }
                 textField.text = "@\(castcleId)"
             } else {
                 textField.text = ""
+                self.castcleIdAlertLabel.isHidden = true
             }
         }
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         self.setupNextButton(isActive: false)
-        
-        if textField.tag == 1 {
-            self.checkImage.isHidden = true
-            self.idTextField.textColor = UIColor.Asset.white
+        if textField.tag == 0 {
+            self.castcleIdAlertLabel.isHidden = true
         }
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if textField.tag == 0 {
+        if textField.tag == 1 {
             let displayName = textField.text ?? ""
             self.viewModel.authenRequest.payload.displayName = displayName
-            
             if !self.viewModel.authenRequest.payload.displayName.isEmpty && !self.viewModel.isCastcleIdExist {
                 self.setupNextButton(isActive: true)
             } else if !self.viewModel.authenRequest.payload.displayName.isEmpty && self.viewModel.isCastcleIdExist {
-                self.idTextField.isEnabled = false
-                self.activityIndicator.isHidden = false
-                self.checkImage.isHidden = true
-                self.activityIndicator.startAnimating()
+                self.hud.textLabel.text = "Loading"
+                self.hud.show(in: Utility.currentViewController().view)
+                self.castcleIdTextField.isEnabled = false
+                self.displayNameTextField.isEnabled = false
                 self.viewModel.suggestCastcleId()
             } else {
                 self.setupNextButton(isActive: false)
             }
-        } else if textField.tag == 1 {
+        } else if textField.tag == 0 {
             let idCastcle = textField.text ?? ""
             if idCastcle.isEmpty {
                 self.setupNextButton(isActive: false)
-                self.checkImage.isHidden = true
-                textField.textColor = UIColor.Asset.white
             } else {
-                textField.isEnabled = false
-                self.activityIndicator.isHidden = false
-                self.checkImage.isHidden = true
-                self.activityIndicator.startAnimating()
+                self.hud.textLabel.text = "Checking"
+                self.hud.show(in: Utility.currentViewController().view)
                 self.viewModel.authenRequest.payload.castcleId = self.castcleId(displayCastcleId: textField.text!)
+                self.castcleIdTextField.isEnabled = false
+                self.displayNameTextField.isEnabled = false
                 self.viewModel.checkCastcleIdExists()
             }
         }
     }
     
-    static func cellSize(width: CGFloat) -> CGSize {
-        return CGSize(width: width, height: 650)
-    }
-    
     @IBAction func nextAction(_ sender: Any) {
         self.endEditing(true)
-        if !self.displayNameTextfield.text!.isEmpty && !self.viewModel.isCastcleIdExist {
+        if self.viewModel.authenRequest.payload.castcleId.isCastcleId && !self.viewModel.isCastcleIdExist && self.viewModel.authenRequest.payload.castcleId.count <= 30 && !self.viewModel.authenRequest.payload.displayName.isEmpty {
+            self.hud.textLabel.text = "Creating"
             self.hud.show(in: Utility.currentViewController().view)
             self.viewModel.register()
         }
     }
 }
 
-extension CreateDisplayNameCell: CreateDisplayNameViewModelDelegate {
+extension CreateDisplayTableViewCell: CreateDisplayNameViewModelDelegate {
     func didSuggestCastcleIdFinish(suggestCastcleId: String) {
+        self.hud.dismiss()
         self.viewModel.authenRequest.payload.castcleId = suggestCastcleId
         self.viewModel.isCastcleIdExist = false
-        self.idTextField.text = "@\(suggestCastcleId)"
+        self.castcleIdTextField.isEnabled = true
+        self.displayNameTextField.isEnabled = true
+        self.castcleIdTextField.text = "@\(suggestCastcleId)"
         self.updateUI()
     }
     
     func didCheckCastcleIdExistsFinish() {
+        self.hud.dismiss()
+        self.castcleIdTextField.isEnabled = true
+        self.displayNameTextField.isEnabled = true
         self.updateUI()
     }
     
@@ -220,7 +217,7 @@ extension CreateDisplayNameCell: CreateDisplayNameViewModelDelegate {
         self.hud.dismiss()
         if success {
             Defaults[.startLoadFeed] = true
-            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.verifyEmail), animated: true)
+            NotificationCenter.default.post(name: .updateProfileDelegate, object: nil)
         }
     }
 }

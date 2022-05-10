@@ -66,13 +66,14 @@ class LoginViewModel {
                 do {
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
-                    let accessToken = json[AuthenticationApiKey.accessToken.rawValue].stringValue
-                    let refreshToken = json[AuthenticationApiKey.refreshToken.rawValue].stringValue
-                    let profile = JSON(json[AuthenticationApiKey.profile.rawValue].dictionaryValue)
-                    let pages = json[AuthenticationApiKey.pages.rawValue].arrayValue
+                    let accessToken = json[JsonKey.accessToken.rawValue].stringValue
+                    let refreshToken = json[JsonKey.refreshToken.rawValue].stringValue
+                    let profile = JSON(json[JsonKey.profile.rawValue].dictionaryValue)
+                    let pages = json[JsonKey.pages.rawValue].arrayValue
 
                     UserHelper.shared.updateLocalProfile(user: UserInfo(json: profile))
                     UserHelper.shared.clearSeenContent()
+                    NotifyHelper.shared.getBadges()
                     
                     let pageRealm = self.realm.objects(Page.self)
                     try! self.realm.write {

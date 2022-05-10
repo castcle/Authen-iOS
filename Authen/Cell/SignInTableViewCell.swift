@@ -19,36 +19,52 @@
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
 //
-//  SignInCell.swift
+//  SignInTableViewCell.swift
 //  Authen
 //
-//  Created by Castcle Co., Ltd. on 30/7/2564 BE.
+//  Created by Castcle Co., Ltd. on 8/4/2565 BE.
 //
 
 import UIKit
 import Core
-import Networking
 import ActiveLabel
-import SwiftColor
-import JVFloatLabeledTextField
-import Moya
-import SwiftyJSON
-import Defaults
 import JGProgressHUD
+import Defaults
 
-class SignInCell: UICollectionViewCell, UITextFieldDelegate {
+protocol SignInTableViewCellDelegate {
+    func didLoginWithFacebook(_ signInTableViewCell: SignInTableViewCell)
+    func didLoginWithTwitter(_ signInTableViewCell: SignInTableViewCell)
+    func didLoginWithGoogle(_ signInTableViewCell: SignInTableViewCell)
+    func didLoginWithApple(_ signInTableViewCell: SignInTableViewCell)
+}
 
-    @IBOutlet var logoImage: UIImageView!
+class SignInTableViewCell: UITableViewCell, UITextFieldDelegate {
+
+    @IBOutlet var headlineLabel: UILabel!
+    @IBOutlet var subTitleLabel: UILabel!
+    @IBOutlet var emailLabel: UILabel!
+    @IBOutlet var passwordLabel: UILabel!
+    @IBOutlet var loginSocialLabel: UILabel!
+    @IBOutlet var signInLabel: ActiveLabel!
     @IBOutlet var emailView: UIView!
     @IBOutlet var passwordView: UIView!
     @IBOutlet var forgotPasswordButton: UIButton!
     @IBOutlet var loginButton: UIButton!
     @IBOutlet var showPasswordButton: UIButton!
-    @IBOutlet var emailTextField: JVFloatLabeledTextField!
-    @IBOutlet var passwordTextField: JVFloatLabeledTextField!
-    @IBOutlet var welcomeLabel: ActiveLabel!
-    @IBOutlet var signInLabel: ActiveLabel!
+    @IBOutlet var emailTextField: UITextField!
+    @IBOutlet var passwordTextField: UITextField!
+    @IBOutlet var firstLineView: UIView!
+    @IBOutlet var seccondLineView: UIView!
+    @IBOutlet var facebookView: UIView!
+    @IBOutlet var twitterView: UIView!
+    @IBOutlet var googleView: UIView!
+    @IBOutlet var appleView: UIView!
+    @IBOutlet var facebookImage: UIImageView!
+    @IBOutlet var twitterImage: UIImageView!
+    @IBOutlet var googleImage: UIImageView!
+    @IBOutlet var appleImage: UIImageView!
     
+    public var delegate: SignInTableViewCellDelegate?
     let hud = JGProgressHUD()
     var viewModel = LoginViewModel()
     private var isCanLogin: Bool {
@@ -61,12 +77,52 @@ class SignInCell: UICollectionViewCell, UITextFieldDelegate {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.logoImage.image = UIImage.Asset.castcleLogo
-        self.emailView.custom(color: UIColor.Asset.darkGray, cornerRadius: 10, borderWidth: 1, borderColor: UIColor.Asset.black)
-        self.passwordView.custom(color: UIColor.Asset.darkGray, cornerRadius: 10, borderWidth: 1, borderColor: UIColor.Asset.black)
+        self.hud.textLabel.text = "Logging in"
+        self.headlineLabel.font = UIFont.asset(.bold, fontSize: .h2)
+        self.headlineLabel.textColor = UIColor.Asset.lightBlue
+        self.subTitleLabel.font = UIFont.asset(.regular, fontSize: .h4)
+        self.subTitleLabel.textColor = UIColor.Asset.white
+        self.emailLabel.font = UIFont.asset(.medium, fontSize: .body)
+        self.emailLabel.textColor = UIColor.Asset.white
+        self.passwordLabel.font = UIFont.asset(.medium, fontSize: .body)
+        self.passwordLabel.textColor = UIColor.Asset.white
+        self.loginSocialLabel.font = UIFont.asset(.regular, fontSize: .overline)
+        self.loginSocialLabel.textColor = UIColor.Asset.lightBlue
+        self.emailView.capsule(color: UIColor.Asset.darkGray)
+        self.passwordView.capsule(color: UIColor.Asset.darkGray)
         self.forgotPasswordButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .overline)
         self.forgotPasswordButton.setTitleColor(UIColor.Asset.white, for: .normal)
         self.showPasswordButton.setImage(UIImage.init(icon: .castcle(.show), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.white).withRenderingMode(.alwaysOriginal), for: .normal)
+        self.emailTextField.font = UIFont.asset(.regular, fontSize: .overline)
+        self.emailTextField.textColor = UIColor.Asset.white
+        self.passwordTextField.font = UIFont.asset(.regular, fontSize: .overline)
+        self.passwordTextField.textColor = UIColor.Asset.white
+        self.passwordTextField.isSecureTextEntry = true
+        self.firstLineView.backgroundColor = UIColor.Asset.lightBlue
+        self.seccondLineView.backgroundColor = UIColor.Asset.lightBlue
+        self.facebookView.capsule(color: UIColor.Asset.facebook)
+        self.twitterView.capsule(color: UIColor.Asset.twitter)
+        self.googleView.capsule(color: UIColor.Asset.white)
+        self.appleView.capsule(color: UIColor.Asset.apple)
+        self.facebookImage.image = UIImage.init(icon: .castcle(.facebook), size: CGSize(width: 23, height: 23), textColor: UIColor.Asset.white)
+        self.twitterImage.image = UIImage.init(icon: .castcle(.twitter), size: CGSize(width: 23, height: 23), textColor: UIColor.Asset.white)
+        self.googleImage.image = UIImage.Asset.googleLogo
+        self.appleImage.image = UIImage.init(icon: .castcle(.apple), size: CGSize(width: 23, height: 23), textColor: UIColor.Asset.white)
+        
+        self.signInLabel.customize { label in
+            label.font = UIFont.asset(.regular, fontSize: .body)
+            label.numberOfLines = 1
+            label.textColor = UIColor.Asset.white
+            let signUpType = ActiveType.custom(pattern: Localization.login.signUp.text)
+            label.enabledTypes = [signUpType]
+            label.customColor[signUpType] = UIColor.Asset.lightBlue
+            label.customSelectedColor[signUpType] = UIColor.Asset.lightBlue
+            label.handleCustomTap(for: signUpType) { element in
+                self.endEditing(true)
+                Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.signUp), animated: true)
+            }
+        }
+        
         self.setupLoginButton(isActive: self.isCanLogin)
         
         self.emailTextField.delegate = self
@@ -78,62 +134,9 @@ class SignInCell: UICollectionViewCell, UITextFieldDelegate {
         
         self.viewModel.delegate = self
     }
-    
-    func configCell(showSignUp: Bool) {
-        self.viewModel.showSignUp = showSignUp
-        self.hud.textLabel.text = "Loading"
-        self.welcomeLabel.text = "\(Localization.login.welcome.text) \(Localization.login.castcle.text)"
-        self.welcomeLabel.customize { label in
-            label.font = UIFont.asset(.regular, fontSize: .h2)
-            label.numberOfLines = 1
-            label.textColor = UIColor.Asset.white
-            
-            let castcleType = ActiveType.custom(pattern: Localization.login.castcle.text)
-            
-            label.enabledTypes = [castcleType]
-            label.customColor[castcleType] = UIColor.Asset.lightBlue
-            label.customSelectedColor[castcleType] = UIColor.Asset.lightBlue
-        }
-        self.signInLabel.text = "\(Localization.login.newUser.text) \(Localization.login.signUp.text)"
-        self.signInLabel.customize { label in
-            label.font = UIFont.asset(.regular, fontSize: .h4)
-            label.numberOfLines = 1
-            label.textColor = UIColor.Asset.white
-            
-            let signUpType = ActiveType.custom(pattern: Localization.login.signUp.text)
-            
-            label.enabledTypes = [signUpType]
-            label.customColor[signUpType] = UIColor.Asset.lightBlue
-            label.customSelectedColor[signUpType] = UIColor.Asset.lightBlue
-            
-            label.handleCustomTap(for: signUpType) { element in
-                self.endEditing(true)
-                Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.email(fromSignIn: true)), animated: true)
-            }
-        }
-        self.emailTextField.font = UIFont.asset(.regular, fontSize: .body)
-        self.emailTextField.placeholder = Localization.login.email.text
-        self.emailTextField.placeholderColor = UIColor.Asset.gray
-        self.emailTextField.floatingLabelTextColor = UIColor.Asset.gray
-        self.emailTextField.floatingLabelActiveTextColor = UIColor.Asset.gray
-        self.emailTextField.floatingLabelFont = UIFont.asset(.regular, fontSize: .small)
-        self.emailTextField.textColor = UIColor.Asset.white
-        self.passwordTextField.font = UIFont.asset(.regular, fontSize: .body)
-        self.passwordTextField.placeholder = Localization.login.password.text
-        self.passwordTextField.placeholderColor = UIColor.Asset.gray
-        self.passwordTextField.floatingLabelTextColor = UIColor.Asset.gray
-        self.passwordTextField.floatingLabelActiveTextColor = UIColor.Asset.gray
-        self.passwordTextField.floatingLabelFont = UIFont.asset(.regular, fontSize: .small)
-        self.passwordTextField.textColor = UIColor.Asset.white
-        self.passwordTextField.isSecureTextEntry = true
-        self.forgotPasswordButton.setTitle(Localization.login.forgotPassword.text, for: .normal)
-        self.loginButton.setTitle(Localization.login.button.text, for: .normal)
-        
-        if self.viewModel.showSignUp {
-            self.signInLabel.isHidden = false
-        } else {
-            self.signInLabel.isHidden = true
-        }
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
     }
     
     private func disableUI(isActive: Bool) {
@@ -155,10 +158,6 @@ class SignInCell: UICollectionViewCell, UITextFieldDelegate {
             self.loginButton.setTitleColor(UIColor.Asset.gray, for: .normal)
             self.loginButton.capsule(color: UIColor.Asset.darkGraphiteBlue, borderWidth: 1, borderColor: UIColor.Asset.black)
         }
-    }
-    
-    static func cellSize(width: CGFloat) -> CGSize {
-        return CGSize(width: width, height: 620)
     }
     
     @objc func textFieldDidChange(_ textField: UITextField) {
@@ -198,14 +197,30 @@ class SignInCell: UICollectionViewCell, UITextFieldDelegate {
             self.viewModel.login()
         }
     }
+    
+    @IBAction func facebookAction(_ sender: Any) {
+        self.delegate?.didLoginWithFacebook(self)
+    }
+    
+    @IBAction func twitterAction(_ sender: Any) {
+        self.delegate?.didLoginWithTwitter(self)
+    }
+    
+    @IBAction func googleAction(_ sender: Any) {
+        self.delegate?.didLoginWithGoogle(self)
+    }
+    
+    @IBAction func appleAction(_ sender: Any) {
+        self.delegate?.didLoginWithApple(self)
+    }
 }
 
-extension SignInCell: LoginViewModelDelegate {
+extension SignInTableViewCell: LoginViewModelDelegate {
     func didLoginFinish(success: Bool) {
         self.hud.dismiss()
         if success {
             Defaults[.startLoadFeed] = true
-            Utility.currentViewController().navigationController?.popToRootViewController(animated: true)
+            Utility.currentViewController().dismiss(animated: true)
         } else {
             self.disableUI(isActive: true)
         }

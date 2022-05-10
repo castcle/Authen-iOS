@@ -33,59 +33,18 @@ import JGProgressHUD
 
 class EnterCodeViewController: UIViewController {
 
-    @IBOutlet var pinView: SVPinView!
-    @IBOutlet var headlineLabel: UILabel!
-    @IBOutlet var detailLabel: UILabel!
-    @IBOutlet var noticLabel: UILabel!
-    @IBOutlet var countdownLabel: UILabel!
-    @IBOutlet var resendButton: UIButton!
+    @IBOutlet var tableView: UITableView!
     
-    var secondsRemaining = 60
     var viewModel = EnterCodeViewModel(verifyCodeType: .password)
     let hud = JGProgressHUD()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.Asset.darkGraphiteBlue
+        self.hideKeyboardWhenTapped()
+        self.configureTableView()
         self.setupNavBar()
-        self.headlineLabel.font = UIFont.asset(.regular, fontSize: .h2)
-        self.headlineLabel.textColor = UIColor.Asset.white
-        self.detailLabel.font = UIFont.asset(.regular, fontSize: .body)
-        self.detailLabel.textColor = UIColor.Asset.white
-        self.noticLabel.font = UIFont.asset(.regular, fontSize: .overline)
-        self.noticLabel.textColor = UIColor.Asset.white
-        self.countdownLabel.font = UIFont.asset(.regular, fontSize: .overline)
-        self.countdownLabel.textColor = UIColor.Asset.lightGray
-        self.resendButton.titleLabel?.font = UIFont.asset(.bold, fontSize: .body)
-        self.resendButton.setTitleColor(UIColor.Asset.lightBlue, for: .normal)
-        
-        self.pinView.backgroundColor = UIColor.clear
-        self.pinView.pinLength = 6
-        self.pinView.style = .underline
-        self.pinView.interSpace = 20
-        self.pinView.shouldSecureText = false
-        self.pinView.fieldBackgroundColor = UIColor.clear
-        self.pinView.textColor = UIColor.Asset.white
-        self.pinView.borderLineColor = UIColor.Asset.white
-        self.pinView.activeBorderLineColor = UIColor.Asset.white
-        self.pinView.borderLineThickness = 1
-        self.pinView.activeBorderLineThickness = 1
-        self.pinView.font = UIFont.asset(.bold, fontSize: .h2)
-        self.pinView.keyboardType = .numberPad
-        
-        self.pinView.didFinishCallback = { [weak self] pin in
-            guard let self = self else { return }
-            self.hud.textLabel.text = "Verifying"
-            self.hud.show(in: self.view)
-            self.viewModel.authenRequest.payload.otp = pin
-            self.viewModel.verifyOtp()
-        }
-        
-        self.countdownLabel.text = "Resend Code \(self.secondsRemaining)s"
-        self.setupCountdown()
         self.viewModel.delegate = self
-        
-        self.detailLabel.text = "We already send you an OTP to your email address \"\(self.viewModel.authenRequest.payload.email)\""
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -97,6 +56,14 @@ class EnterCodeViewController: UIViewController {
         self.customNavigationBar(.secondary, title: "")
     }
     
+    func configureTableView() {
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        self.tableView.register(UINib(nibName: AuthenNibVars.TableViewCell.verifyEmailOtp, bundle: ConfigBundle.authen), forCellReuseIdentifier: AuthenNibVars.TableViewCell.verifyEmailOtp)
+        self.tableView.rowHeight = UITableView.automaticDimension
+        self.tableView.estimatedRowHeight = 100
+    }
+
     private func gotoCreatePassword() {
         self.viewModel.authenRequest.payload.objective = .forgotPassword
         Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.changePassword(ChangePasswordViewModel(.forgotPassword, authenRequest: self.viewModel.authenRequest))), animated: true)
@@ -104,28 +71,6 @@ class EnterCodeViewController: UIViewController {
     
     private func gotoMergeSuccess() {
         Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.mergeAccountSuccess), animated: true)
-    }
-    
-    private func setupCountdown() {
-        self.countdownLabel.isHidden = false
-        self.resendButton.isHidden = true
-        self.secondsRemaining = 60
-        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { (Timer) in
-            if self.secondsRemaining > 0 {
-                self.countdownLabel.text = "Resend Code \(self.secondsRemaining)s"
-                self.secondsRemaining -= 1
-            } else {
-                Timer.invalidate()
-                self.countdownLabel.isHidden = true
-                self.resendButton.isHidden = false
-            }
-        }
-    }
-    
-    @IBAction func resendAction(_ sender: Any) {
-        self.hud.textLabel.text = "Sending"
-        self.hud.show(in: self.view)
-        self.viewModel.requestOtp()
     }
 }
 
@@ -143,8 +88,42 @@ extension EnterCodeViewController: EnterCodeViewModelDelegate {
     
     func didRequestOtpFinish(success: Bool) {
         self.hud.dismiss()
-        if success {
-            self.setupCountdown()
-        }
+    }
+    
+    func didError() {
+        self.hud.dismiss()
+    }
+}
+
+extension EnterCodeViewController: UITableViewDelegate, UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: AuthenNibVars.TableViewCell.verifyEmailOtp, for: indexPath as IndexPath) as? VerifyEmailOtpTableViewCell
+        cell?.backgroundColor = UIColor.clear
+        cell?.delegate = self
+        cell?.configCell(email: self.viewModel.authenRequest.payload.email)
+        return cell ?? VerifyEmailOtpTableViewCell()
+    }
+}
+
+extension EnterCodeViewController: VerifyEmailOtpTableViewCellDelegate {
+    func didRequestOtp(_ cell: VerifyEmailOtpTableViewCell) {
+        self.hud.textLabel.text = "Sending"
+        self.hud.show(in: self.view)
+        self.viewModel.requestOtp()
+    }
+    
+    func didConfirm(_ cell: VerifyEmailOtpTableViewCell, pin: String) {
+        self.hud.textLabel.text = "Verifying"
+        self.hud.show(in: self.view)
+        self.viewModel.authenRequest.payload.otp = pin
+        self.viewModel.verifyOtp()
     }
 }

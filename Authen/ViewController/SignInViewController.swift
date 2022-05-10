@@ -27,70 +27,268 @@
 
 import UIKit
 import Core
-import IGListKit
+import Networking
 import Defaults
+import JGProgressHUD
+import FBSDKLoginKit
+import AuthenticationServices
+import Swifter
+import SafariServices
+import GoogleSignIn
 
 class SignInViewController: UIViewController {
 
-    let collectionView: UICollectionView = {
-        let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        view.backgroundColor = UIColor.Asset.darkGraphiteBlue
-        return view
-    }()
+    @IBOutlet var tableView: UITableView!
     
-    lazy var adapter: ListAdapter = {
-        return ListAdapter(updater: ListAdapterUpdater(), viewController: self, workingRangeSize: 0)
-    }()
-    
-    enum SignInType: Int {
-        case signIn = 1
-    }
-    
-    var showSignUp: Bool = true
+    let hud = JGProgressHUD()
+    var viewModel = SocialLoginViewModel()
+    var swifter: Swifter!
+    var accToken: Credential.OAuthAccessToken?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.Asset.darkGraphiteBlue
         self.hideKeyboardWhenTapped()
-        self.collectionView.alwaysBounceVertical = true
-        self.collectionView.showsHorizontalScrollIndicator = false
-        self.collectionView.showsVerticalScrollIndicator = false
-        self.collectionView.backgroundColor = UIColor.clear
-        self.view.addSubview(self.collectionView)
-        self.adapter.collectionView = self.collectionView
-        self.adapter.dataSource = self
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        self.collectionView.frame = view.bounds
+        self.setupNavBar()
+        self.configureTableView()
+        self.viewModel.delegate = self
+        self.hud.textLabel.text = "Logging in"
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.setupNavBar()
         Defaults[.screenId] = ""
     }
     
     func setupNavBar() {
-        self.customNavigationBar(.secondary, title: Localization.login.title.text, textColor: UIColor.Asset.lightBlue)
+        self.customNavigationBar(.primary, title: "")
+        var rightButton: [UIBarButtonItem] = []
+        let rightIcon = NavBarButtonType.close.barButton
+        rightIcon.addTarget(self, action: #selector(self.closeAction), for: .touchUpInside)
+        rightButton.append(UIBarButtonItem(customView: rightIcon))
+        self.navigationItem.rightBarButtonItems = rightButton
+    }
+    
+    func configureTableView() {
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        self.tableView.register(UINib(nibName: AuthenNibVars.TableViewCell.signIn, bundle: ConfigBundle.authen), forCellReuseIdentifier: AuthenNibVars.TableViewCell.signIn)
+        self.tableView.rowHeight = UITableView.automaticDimension
+        self.tableView.estimatedRowHeight = 100
+    }
+    
+    @objc private func closeAction() {
+        self.dismiss(animated: true)
     }
 }
 
-// MARK: - ListAdapterDataSource
-extension SignInViewController: ListAdapterDataSource {
-    func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
-        let items: [ListDiffable] = [SignInType.signIn.rawValue] as [ListDiffable]
-        return items
+extension SignInViewController: UITableViewDelegate, UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
     }
     
-    func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
-        let section = SignInSectionController()
-        section.showSignUp = self.showSignUp
-        return section
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
     }
     
-    func emptyView(for listAdapter: ListAdapter) -> UIView? {
-        return nil
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: AuthenNibVars.TableViewCell.signIn, for: indexPath as IndexPath) as? SignInTableViewCell
+        cell?.backgroundColor = UIColor.clear
+        cell?.delegate = self
+        return cell ?? SignInTableViewCell()
+    }
+}
+
+extension SignInViewController: SignInTableViewCellDelegate {
+    func didLoginWithFacebook(_ signInTableViewCell: SignInTableViewCell) {
+        let loginManager = LoginManager()
+        if let _ = AccessToken.current {
+            loginManager.logOut()
+        }
+        loginManager.logIn(permissions: ["public_profile", "email"], from: self) { (result, error) in
+            guard error == nil else {
+                print(error!.localizedDescription)
+                return
+            }
+            guard let result = result, !result.isCancelled else {
+                print("User cancelled login")
+                return
+            }
+            Profile.loadCurrentProfile { (profile, error) in
+                let userId: String = profile?.userID ?? ""
+                let email: String = profile?.email ?? ""
+                let fullName: String = profile?.name ?? ""
+                let accessToken: String = AccessToken.current?.tokenString ?? ""
+                let profilePicUrl: String = "https://graph.facebook.com/\(userId)/picture?type=large&access_token=\(accessToken)"
+                var authenRequest: AuthenRequest = AuthenRequest()
+                authenRequest.provider = .facebook
+                authenRequest.socialId = userId
+                authenRequest.displayName = fullName
+                authenRequest.avatar = profilePicUrl
+                authenRequest.email = email
+                authenRequest.authToken = accessToken
+                
+                self.hud.show(in: self.view)
+                self.viewModel.authenRequest = authenRequest
+                self.viewModel.socialLogin()
+            }
+        }
+    }
+    
+    func didLoginWithTwitter(_ signInTableViewCell: SignInTableViewCell) {
+        self.swifter = Swifter(consumerKey: TwitterConstants.key, consumerSecret: TwitterConstants.secretKey)
+        self.swifter.authorize(withProvider: self, callbackURL: URL(string: TwitterConstants.callbackUrl)!) { accessToken, response in
+            self.accToken = accessToken
+            self.getUserProfile()
+        } failure: { error in
+            print("ERROR: \(error.localizedDescription)")
+        }
+    }
+    
+    func didLoginWithGoogle(_ signInTableViewCell: SignInTableViewCell) {
+        let signInConfig = GIDConfiguration.init(clientID: "399197784684-qu71doj4dn7ftksq09i7hvgeot4vbd4c.apps.googleusercontent.com")
+        GIDSignIn.sharedInstance.signIn(with: signInConfig, presenting: self) { user, error in
+            guard error == nil else { return }
+            guard let user = user else { return }
+            
+            let userId: String = user.userID ?? ""
+            let email: String = user.profile?.email ?? ""
+            let fullName: String = user.profile?.name ?? ""
+            let profilePicUrl: String = user.profile?.imageURL(withDimension: 320)?.absoluteString ?? ""
+            let accessToken: String = user.authentication.accessToken
+            
+            var authenRequest: AuthenRequest = AuthenRequest()
+            authenRequest.provider = .google
+            authenRequest.socialId = userId
+            authenRequest.displayName = fullName
+            authenRequest.avatar = profilePicUrl
+            authenRequest.email = email
+            authenRequest.authToken = accessToken
+            
+            self.hud.show(in: self.view)
+            self.viewModel.authenRequest = authenRequest
+            self.viewModel.socialLogin()
+        }
+    }
+    
+    func didLoginWithApple(_ signInTableViewCell: SignInTableViewCell) {
+        let request = ASAuthorizationAppleIDProvider().createRequest()
+        request.requestedScopes = [.email, .fullName]
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
+        authorizationController.performRequests()
+    }
+}
+
+extension SignInViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
+    public func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        if let appleIdCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
+            let email: String = appleIdCredential.email ?? ""
+            let givenName: String = appleIdCredential.fullName?.givenName ?? ""
+            let familyName: String = appleIdCredential.fullName?.familyName ?? ""
+            var fullName: String {
+                if !givenName.isEmpty && !familyName.isEmpty {
+                    return "\(givenName) \(familyName)"
+                } else if !givenName.isEmpty && familyName.isEmpty {
+                    return givenName
+                } else if givenName.isEmpty && !familyName.isEmpty {
+                    return familyName
+                } else {
+                    return ""
+                }
+            }
+
+            if KeychainHelper.shared.getKeychainWith(with: .appleUserId) != appleIdCredential.user {
+                KeychainHelper.shared.setKeychainWith(with: .appleUserId, value: appleIdCredential.user)
+                KeychainHelper.shared.setKeychainWith(with: .appleEmail, value: email)
+                KeychainHelper.shared.setKeychainWith(with: .appleFullName, value: fullName)
+            }
+
+            var authenRequest: AuthenRequest = AuthenRequest()
+            authenRequest.provider = .apple
+            authenRequest.socialId = KeychainHelper.shared.getKeychainWith(with: .appleUserId)
+            authenRequest.displayName = KeychainHelper.shared.getKeychainWith(with: .appleFullName)
+            authenRequest.email = KeychainHelper.shared.getKeychainWith(with: .appleEmail)
+            authenRequest.authToken = String(data: appleIdCredential.identityToken ?? Data() , encoding: .utf8) ?? ""
+
+            self.hud.show(in: self.view)
+            self.viewModel.authenRequest = authenRequest
+            self.viewModel.socialLogin()
+        }
+    }
+
+    public func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return self.view.window!
+    }
+}
+
+extension SignInViewController: SFSafariViewControllerDelegate, ASWebAuthenticationPresentationContextProviding {
+    func getUserProfile() {
+        self.swifter.verifyAccountCredentials(includeEntities: false, skipStatus: false, includeEmail: true, success: { json in
+            let twitterId: String = json["id_str"].string ?? ""
+            let twitterName: String = json["name"].string ?? ""
+            let twitterEmail: String = json["email"].string ?? ""
+            let twitterProfilePic: String = json["profile_image_url_https"].string?.replacingOccurrences(of: "_normal", with: "", options: .literal, range: nil) ?? ""
+            let twitterDescription: String = json["description"].string ?? ""
+            let twitterCover: String = json["profile_banner_url"].string ?? ""
+            let twitterScreenName: String = json["screen_name"].string ?? ""
+            
+            var authenRequest: AuthenRequest = AuthenRequest()
+            authenRequest.provider = .twitter
+            authenRequest.socialId = twitterId
+            authenRequest.displayName = twitterName
+            authenRequest.avatar = twitterProfilePic
+            authenRequest.email = twitterEmail
+            authenRequest.overview = twitterDescription
+            authenRequest.cover = twitterCover
+            authenRequest.userName = twitterScreenName
+            authenRequest.authToken = "\(self.accToken?.key ?? "")|\(self.accToken?.secret ?? "")"
+            
+            self.hud.show(in: self.view)
+            self.viewModel.authenRequest = authenRequest
+            self.viewModel.socialLogin()
+        }) { error in
+            print("ERROR: \(error.localizedDescription)")
+        }
+    }
+    
+    public func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
+        controller.dismiss(animated: true, completion: nil)
+    }
+    
+    public func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
+        return self.view.window!
+    }
+}
+
+extension SignInViewController: SocialLoginViewModelDelegate {
+    public func didSocialLoginFinish(success: Bool) {
+        self.hud.dismiss()
+        if success {
+            self.dismiss(animated: true)
+            Defaults[.startLoadFeed] = true
+            NotificationCenter.default.post(name: .resetFeedContent, object: nil)
+            if !Defaults[.syncTwitter] {
+                var pageSocial: PageSocial = PageSocial()
+                pageSocial.provider = SocialType(rawValue: self.viewModel.authenRequest.provider.rawValue) ?? .unknow
+                pageSocial.socialId = self.viewModel.authenRequest.socialId
+                pageSocial.userName = self.viewModel.authenRequest.userName
+                pageSocial.displayName = self.viewModel.authenRequest.displayName
+                pageSocial.overview = self.viewModel.authenRequest.overview
+                pageSocial.avatar = self.viewModel.authenRequest.avatar
+                pageSocial.cover = self.viewModel.authenRequest.cover
+                pageSocial.authToken = self.viewModel.authenRequest.authToken
+                NotificationCenter.default.post(name: .syncTwittwerAutoPost, object: nil, userInfo: pageSocial.paramPageSocial)
+            }
+        }
+    }
+    
+    public func didMergeAccount(userInfo: UserInfo) {
+        self.hud.dismiss()
+        self.dismiss(animated: true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.mergeAccount(MergeAccountViewModel(userInfo: userInfo, authenRequest: self.viewModel.authenRequest))), animated: true)
+        }
     }
 }

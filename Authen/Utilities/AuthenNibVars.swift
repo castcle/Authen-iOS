@@ -28,18 +28,14 @@
 public struct AuthenNibVars {
     // MARK: - View Controller
     public struct ViewController {
-        public static let signUpMethod = "SignUpMethodViewController"
         public static let signIn = "SignInViewController"
-        public static let email = "EmailViewController"
-        public static let createPassword = "CreatePasswordViewController"
+        public static let signUp = "SignUpViewController"
         public static let createDisplayName = "CreateDisplayNameViewController"
-        public static let verifyEmail = "VerifyEmailViewController"
         public static let resendEmail = "ResendEmailViewController"
         public static let oldPassword = "OldPasswordViewController"
         public static let changePassword = "ChangePasswordViewController"
         public static let changePasswordSuccess = "ChangePasswordSuccessViewController"
         public static let checkEmail = "CheckEmailViewController"
-        public static let forgotPassword = "ForgotPasswordViewController"
         public static let enterCode = "EnterCodeViewController"
         public static let mergeAccount = "MergeAccountViewController"
         public static let mergeAccountSuccess = "MergeAccountSuccessViewController"
@@ -55,13 +51,13 @@ public struct AuthenNibVars {
     public struct TableViewCell {
         public static let oldPassword = "OldPasswordTableViewCell"
         public static let changePassword = "ChangePasswordTableViewCell"
+        public static let signIn = "SignInTableViewCell"
+        public static let signUp = "SignUpTableViewCell"
+        public static let createDisplay = "CreateDisplayTableViewCell"
+        public static let verifyEmailOtp = "VerifyEmailOtpTableViewCell"
     }
     
     // MARK: - CollectionViewCell
     public struct CollectionViewCell {
-        public static let signIn = "SignInCell"
-        public static let email = "EmailCell"
-        public static let createPassword = "CreatePasswordCell"
-        public static let createDisplayName = "CreateDisplayNameCell"
     }
 }

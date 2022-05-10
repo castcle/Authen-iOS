@@ -19,22 +19,21 @@
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
 //
-//  EmailViewModel.swift
+//  SignUpViewModel.swift
 //  Authen
 //
-//  Created by Castcle Co., Ltd. on 9/8/2564 BE.
+//  Created by Castcle Co., Ltd. on 6/5/2565 BE.
 //
 
 import Core
 import Networking
 
-class EmailViewModel {
+class SignUpViewModel {
     
-    //MARK: Private
     private var authenticationRepository: AuthenticationRepository
     var authenRequest: AuthenRequest = AuthenRequest()
     var isEmailExist: Bool = true
-    var framSignIn: Bool = true
+    var isAgree: Bool = true
 
     //MARK: Input
     public func checkEmailExists() {
