@@ -32,12 +32,16 @@ import Defaults
 class SignUpViewController: UIViewController {
 
     @IBOutlet var tableView: UITableView!
+    @IBOutlet var backButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.Asset.darkGraphiteBlue
         self.hideKeyboardWhenTapped()
         self.configureTableView()
+        self.backButton.setImage(UIImage.init(icon: .castcle(.back), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white).withRenderingMode(.alwaysOriginal), for: .normal)
+        self.backButton.setBackgroundImage(UIColor.Asset.gray.toImage(), for: .normal)
+        self.backButton.capsule()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -57,6 +61,10 @@ class SignUpViewController: UIViewController {
         self.tableView.register(UINib(nibName: AuthenNibVars.TableViewCell.signUp, bundle: ConfigBundle.authen), forCellReuseIdentifier: AuthenNibVars.TableViewCell.signUp)
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 100
+    }
+    
+    @IBAction func backAction(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
     }
 }
 
