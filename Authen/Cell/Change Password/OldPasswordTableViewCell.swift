@@ -48,7 +48,7 @@ class OldPasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
         }
     }
     @IBOutlet var applyButton: UIButton!
-    
+
     var viewModel: VerifyPasswordViewModel = VerifyPasswordViewModel()
     let hud = JGProgressHUD()
     private var isCanContinue: Bool {
@@ -58,12 +58,12 @@ class OldPasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
             return true
         }
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         self.passwordView.custom(color: UIColor.Asset.darkGray, cornerRadius: 10, borderWidth: 1, borderColor: UIColor.Asset.black)
         self.setupContinueButton(isActive: self.isCanContinue)
-        self.headlineLabel.font = UIFont.asset(.regular, fontSize: .h2)
+        self.headlineLabel.font = UIFont.asset(.regular, fontSize: .head2)
         self.headlineLabel.textColor = UIColor.Asset.white
         self.detailLabel.font = UIFont.asset(.regular, fontSize: .body)
         self.detailLabel.textColor = UIColor.Asset.white
@@ -71,7 +71,6 @@ class OldPasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
         self.passwordTextField.delegate = self
         self.passwordTextField.tag = 0
         self.passwordTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
-        
         self.viewModel.delegate = self
         self.hud.textLabel.text = "Checking"
     }
@@ -79,10 +78,9 @@ class OldPasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
+
     private func setupContinueButton(isActive: Bool) {
-        self.applyButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .h4)
-        
+        self.applyButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .head4)
         if isActive {
             self.applyButton.setTitleColor(UIColor.Asset.white, for: .normal)
             self.applyButton.setBackgroundImage(UIColor.Asset.lightBlue.toImage(), for: .normal)
@@ -93,16 +91,16 @@ class OldPasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
             self.applyButton.capsule(color: UIColor.clear, borderWidth: 1, borderColor: UIColor.Asset.black)
         }
     }
-    
+
     @objc func textFieldDidChange(_ textField: UITextField) {
         self.setupContinueButton(isActive: self.isCanContinue)
     }
-    
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
-    
+
     @IBAction func applyAction(_ sender: Any) {
         self.endEditing(true)
         if self.isCanContinue {

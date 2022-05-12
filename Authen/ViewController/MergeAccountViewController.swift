@@ -48,18 +48,16 @@ class MergeAccountViewController: UIViewController {
     @IBOutlet var detailLabel: UILabel!
     @IBOutlet var nextIcon: UIImageView!
     @IBOutlet var mergeButton: UIButton!
-    
+
     var viewModel = MergeAccountViewModel(userInfo: UserInfo(), authenRequest: AuthenRequest())
     let hud = JGProgressHUD()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.Asset.darkGraphiteBlue
         self.setupNavBar()
-        
-        self.headlineLabel.font = UIFont.asset(.regular, fontSize: .h4)
+        self.headlineLabel.font = UIFont.asset(.regular, fontSize: .head4)
         self.headlineLabel.textColor = UIColor.Asset.white
-        
         self.detailLabel.font = UIFont.asset(.regular, fontSize: .body)
         self.detailLabel.textColor = UIColor.Asset.white
         self.socialNameLabel.font = UIFont.asset(.regular, fontSize: .overline)
@@ -70,44 +68,39 @@ class MergeAccountViewController: UIViewController {
         self.castcleNameLabel.textColor = UIColor.Asset.white
         self.castcleIdLabel.font = UIFont.asset(.regular, fontSize: .overline)
         self.castcleIdLabel.textColor = UIColor.Asset.lightGray
-        
         self.socialAvatarImage.circle(color: UIColor.Asset.white)
         self.socialAvatarImage.image = UIImage.Asset.userPlaceholder
         self.castcleAvatarImage.circle(color: UIColor.Asset.white)
         self.castcleAvatarImage.image = UIImage.Asset.userPlaceholder
-        
         self.sicialIconView.capsule(color: self.viewModel.color, borderWidth: 2, borderColor: UIColor.Asset.black)
         self.castcleIconView.capsule(color: UIColor.Asset.black, borderWidth: 2, borderColor: UIColor.Asset.black)
         self.socialIcon.image = self.viewModel.icon
         self.castcleIcon.image = UIImage.init(icon: .castcle(.logo), size: CGSize(width: 23, height: 23), textColor: UIColor.Asset.white)
         self.nextIcon.image = UIImage.init(icon: .castcle(.next), size: CGSize(width: 23, height: 23), textColor: UIColor.Asset.white)
-        
         let castcleAvatarUrl = URL(string: self.viewModel.userInfo.images.avatar.thumbnail)
         self.castcleAvatarImage.kf.setImage(with: castcleAvatarUrl, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
         self.castcleNameLabel.text = self.viewModel.userInfo.displayName
         self.castcleIdLabel.text = "@\(self.viewModel.userInfo.castcleId)"
-        
         let socialAvatarUrl = URL(string: self.viewModel.authenRequest.avatar)
         self.socialAvatarImage.kf.setImage(with: socialAvatarUrl, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
         self.socialNameLabel.text = self.viewModel.authenRequest.displayName
         self.socialIdLabel.text = ""
-        
-        self.mergeButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .h4)
+        self.mergeButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .head4)
         self.mergeButton.setTitleColor(UIColor.Asset.white, for: .normal)
         self.mergeButton.capsule(color: UIColor.Asset.lightBlue, borderWidth: 1, borderColor: UIColor.Asset.lightBlue)
         self.viewModel.delegate = self
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         Defaults[.screenId] = ""
         self.hud.textLabel.text = "Sending"
     }
-    
+
     func setupNavBar() {
         self.customNavigationBar(.secondary, title: "", textColor: UIColor.Asset.lightBlue)
     }
-    
+
     @IBAction func mergeAction(_ sender: Any) {
         self.hud.show(in: self.view)
         self.viewModel.authenRequest.objective = .mergeAccount

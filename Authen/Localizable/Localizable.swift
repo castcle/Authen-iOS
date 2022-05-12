@@ -28,9 +28,8 @@
 import Core
 
 extension Localization {
-    
     // MARK: - Authen Method
-    public enum authenMethod {
+    public enum AuthenMethod {
         case title
         case subtitle
         case subtitleUserAgreement
@@ -48,7 +47,7 @@ extension Localization {
         case docs
         case whitepaper
         case version
-        
+
         public var text: String {
             switch self {
             case .title:
@@ -88,9 +87,9 @@ extension Localization {
             }
         }
     }
-    
+
     // MARK: - Login
-    public enum login {
+    public enum Login {
         case title
         case welcome
         case castcle
@@ -100,7 +99,7 @@ extension Localization {
         case button
         case newUser
         case signUp
-        
+
         public var text: String {
             switch self {
             case .title:
@@ -124,9 +123,9 @@ extension Localization {
             }
         }
     }
-    
+
     // MARK: - Register (Check Email)
-    public enum registerCheckEmail {
+    public enum RegisterCheckEmail {
         case title
         case headline
         case welcome
@@ -137,7 +136,7 @@ extension Localization {
         case alertEmailInvalid
         case alertEmailValid
         case alertWrongFormat
-        
+
         public var text: String {
             switch self {
             case .title:
@@ -163,16 +162,16 @@ extension Localization {
             }
         }
     }
-    
+
     // MARK: - Register (Password)
-    public enum registerPassword {
+    public enum RegisterPassword {
         case headline
         case subtitle
         case value
         case retry
         case notice
         case button
-        
+
         public var text: String {
             switch self {
             case .headline:
@@ -190,15 +189,15 @@ extension Localization {
             }
         }
     }
-    
+
     // MARK: - Register (Display Name)
-    public enum registerDisplayName {
+    public enum RegisterDisplayName {
         case headline
         case subtitle
         case value
         case castcleId
         case button
-        
+
         public var text: String {
             switch self {
             case .headline:
@@ -214,16 +213,16 @@ extension Localization {
             }
         }
     }
-    
+
     // MARK: - Verify Email
-    public enum verifyEmail {
+    public enum VerifyEmail {
         case title
         case subtitle
         case notice
         case resend
         case gotoFeed
         case gotoProfileSetting
-        
+
         public var text: String {
             switch self {
             case .title:
@@ -243,12 +242,12 @@ extension Localization {
     }
 
     // MARK: - Resend Email
-    public enum resendEmail {
+    public enum ResendEmail {
         case title
         case noticeTitle
         case noticeDetail
         case button
-        
+
         public var text: String {
             switch self {
             case .title:

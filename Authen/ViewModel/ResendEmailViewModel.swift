@@ -30,21 +30,20 @@ import Networking
 import Moya
 
 public class ResendEmailViewModel {
-    
-    //MARK: Private
+
     var authenticationRepository: AuthenticationRepository
     var title: String = ""
     let tokenHelper: TokenHelper = TokenHelper()
 
-    //MARK: Input
+    // MARK: - Input
     public init(authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl(), title: String = "") {
         self.authenticationRepository = authenticationRepository
         self.title = title
         self.tokenHelper.delegate = self
     }
-    
+
     func requestLinkVerify() {
-        self.authenticationRepository.requestLinkVerify() { (success, response, isRefreshToken) in
+        self.authenticationRepository.requestLinkVerify { (success, _, isRefreshToken) in
             if !success {
                 if isRefreshToken {
                     self.tokenHelper.refreshToken()

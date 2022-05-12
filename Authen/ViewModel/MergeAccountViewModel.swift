@@ -30,18 +30,17 @@ import Core
 import Networking
 import SwiftyJSON
 
-public protocol MergeAccountViewModelDelegate {
+public protocol MergeAccountViewModelDelegate: AnyObject {
     func didRequestOtpFinish(success: Bool)
 }
 
 public class MergeAccountViewModel {
-    
     public var delegate: MergeAccountViewModelDelegate?
     var userInfo: UserInfo = UserInfo()
     var authenRequest: AuthenRequest = AuthenRequest()
     var authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()
     let tokenHelper: TokenHelper = TokenHelper()
-    
+
     var icon: UIImage {
         switch self.authenRequest.provider {
         case .facebook:
@@ -56,7 +55,7 @@ public class MergeAccountViewModel {
             return UIImage()
         }
     }
-    
+
     var color: UIColor {
         switch self.authenRequest.provider {
         case .facebook:
@@ -71,13 +70,13 @@ public class MergeAccountViewModel {
             return UIColor.clear
         }
     }
-    
+
     public init(userInfo: UserInfo, authenRequest: AuthenRequest) {
         self.userInfo = userInfo
         self.authenRequest = authenRequest
         self.tokenHelper.delegate = self
     }
-    
+
     func requestOtp() {
         self.authenticationRepository.requestOtp(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in
             if success {

@@ -37,10 +37,9 @@ class VerifyEmailViewController: UIViewController {
     @IBOutlet var resendButton: UIButton!
     @IBOutlet var feedButton: UIButton!
     @IBOutlet var profileButton: UIButton!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-
         self.view.backgroundColor = UIColor.Asset.darkGraphiteBlue
         self.headlineLabel.font = UIFont.asset(.regular, fontSize: .title)
         self.headlineLabel.textColor = UIColor.Asset.white
@@ -50,25 +49,25 @@ class VerifyEmailViewController: UIViewController {
         self.getNewEmailLabel.textColor = UIColor.Asset.white
         self.resendButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .body)
         self.resendButton.setTitleColor(UIColor.Asset.lightBlue, for: .normal)
-        self.feedButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .h4)
+        self.feedButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .head4)
         self.feedButton.setTitleColor(UIColor.Asset.lightBlue, for: .normal)
         self.feedButton.setBackgroundImage(UIColor.Asset.darkGraphiteBlue.toImage(), for: .normal)
         self.feedButton.capsule(color: UIColor.clear, borderWidth: 1, borderColor: UIColor.Asset.lightBlue)
-        self.profileButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .h4)
+        self.profileButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .head4)
         self.profileButton.setTitleColor(UIColor.Asset.white, for: .normal)
         self.profileButton.setBackgroundImage(UIColor.Asset.lightBlue.toImage(), for: .normal)
         self.profileButton.capsule(color: UIColor.clear, borderWidth: 1, borderColor: UIColor.clear)
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
-        self.headlineLabel.text = Localization.verifyEmail.title.text
-        self.subTitleLabel.text = Localization.verifyEmail.subtitle.text
-        self.getNewEmailLabel.text = Localization.verifyEmail.notice.text
-        self.resendButton.setTitle(Localization.verifyEmail.resend.text, for: .normal)
-        self.feedButton.setTitle(Localization.verifyEmail.gotoFeed.text, for: .normal)
-        self.profileButton.setTitle(Localization.verifyEmail.gotoProfileSetting.text, for: .normal)
+        self.headlineLabel.text = Localization.VerifyEmail.title.text
+        self.subTitleLabel.text = Localization.VerifyEmail.subtitle.text
+        self.getNewEmailLabel.text = Localization.VerifyEmail.notice.text
+        self.resendButton.setTitle(Localization.VerifyEmail.resend.text, for: .normal)
+        self.feedButton.setTitle(Localization.VerifyEmail.gotoFeed.text, for: .normal)
+        self.profileButton.setTitle(Localization.VerifyEmail.gotoProfileSetting.text, for: .normal)
         Defaults[.screenId] = ""
     }
 
@@ -76,15 +75,15 @@ class VerifyEmailViewController: UIViewController {
         super.viewWillDisappear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
-    
+
     @IBAction func resendAction(_ sender: Any) {
         Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.resendEmail(ResendEmailViewModel())), animated: true)
     }
-    
+
     @IBAction func feedAction(_ sender: Any) {
         self.navigationController?.popToRootViewController(animated: true)
     }
-    
+
     @IBAction func profileAction(_ sender: Any) {
         NotificationCenter.default.post(name: .updateProfileDelegate, object: nil)
     }

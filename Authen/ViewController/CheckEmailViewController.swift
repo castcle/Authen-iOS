@@ -38,7 +38,7 @@ class CheckEmailViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var emailView: UIView!
     @IBOutlet var emailTextField: UITextField!
     @IBOutlet var searchButton: UIButton!
-    
+
     var viewModel = CheckEmailViewModel()
     let hud = JGProgressHUD()
     private var isCanContinue: Bool {
@@ -48,7 +48,7 @@ class CheckEmailViewController: UIViewController, UITextFieldDelegate {
             return true
         }
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.Asset.darkGraphiteBlue
@@ -56,7 +56,7 @@ class CheckEmailViewController: UIViewController, UITextFieldDelegate {
         self.setupNavBar()
         self.emailView.custom(color: UIColor.Asset.darkGray, cornerRadius: 10, borderWidth: 1, borderColor: UIColor.Asset.black)
         self.setupContinueButton(isActive: self.isCanContinue)
-        self.headlineLabel.font = UIFont.asset(.regular, fontSize: .h2)
+        self.headlineLabel.font = UIFont.asset(.regular, fontSize: .head2)
         self.headlineLabel.textColor = UIColor.Asset.white
         self.detailLabel.font = UIFont.asset(.regular, fontSize: .body)
         self.detailLabel.textColor = UIColor.Asset.white
@@ -71,18 +71,18 @@ class CheckEmailViewController: UIViewController, UITextFieldDelegate {
         self.viewModel.delegate = self
         self.hud.textLabel.text = "Searching"
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         Defaults[.screenId] = ""
     }
-    
+
     func setupNavBar() {
         self.customNavigationBar(.secondary, title: "")
     }
-    
+
     private func setupContinueButton(isActive: Bool) {
-        self.searchButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .h4)
+        self.searchButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .head4)
         if isActive {
             self.searchButton.setTitleColor(UIColor.Asset.white, for: .normal)
             self.searchButton.setBackgroundImage(UIColor.Asset.lightBlue.toImage(), for: .normal)
@@ -93,16 +93,16 @@ class CheckEmailViewController: UIViewController, UITextFieldDelegate {
             self.searchButton.capsule(color: UIColor.clear, borderWidth: 1, borderColor: UIColor.Asset.black)
         }
     }
-    
+
     @objc func textFieldDidChange(_ textField: UITextField) {
         self.setupContinueButton(isActive: self.isCanContinue)
     }
-    
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
-    
+
     @IBAction func searchAction(_ sender: Any) {
         self.view.endEditing(true)
         if self.isCanContinue {

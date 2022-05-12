@@ -40,13 +40,13 @@ public struct AuthenNibVars {
         public static let mergeAccount = "MergeAccountViewController"
         public static let mergeAccountSuccess = "MergeAccountSuccessViewController"
     }
-    
+
     // MARK: - View
     public struct Storyboard {
         public static let authen = "Authen"
         public static let password = "Password"
     }
-    
+
     // MARK: - TableViewCell
     public struct TableViewCell {
         public static let oldPassword = "OldPasswordTableViewCell"
@@ -56,7 +56,7 @@ public struct AuthenNibVars {
         public static let createDisplay = "CreateDisplayTableViewCell"
         public static let verifyEmailOtp = "VerifyEmailOtpTableViewCell"
     }
-    
+
     // MARK: - CollectionViewCell
     public struct CollectionViewCell {
     }

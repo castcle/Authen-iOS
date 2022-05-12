@@ -31,10 +31,8 @@ import Core
 public enum AuthenScene {
     case signIn
     case signUp
-    
     case createDisplayName(CreateDisplayNameViewModel)
     case resendEmail(ResendEmailViewModel)
-    
     case oldPassword
     case changePassword(ChangePasswordViewModel)
     case changePasswordSuccess(ChangePasswordViewModel)
@@ -49,54 +47,54 @@ public struct AuthenOpener {
         switch authenScene {
         case .signIn:
             let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.authen, bundle: ConfigBundle.authen)
-            let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.signIn) as? SignInViewController
-            return vc ?? SignInViewController()
+            let viewController = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.signIn) as? SignInViewController
+            return viewController ?? SignInViewController()
         case .signUp:
             let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.authen, bundle: ConfigBundle.authen)
-            let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.signUp) as? SignUpViewController
-            return vc ?? SignUpViewController()
+            let viewController = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.signUp) as? SignUpViewController
+            return viewController ?? SignUpViewController()
         case .createDisplayName(let viewModel):
             let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.authen, bundle: ConfigBundle.authen)
-            let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.createDisplayName) as? CreateDisplayNameViewController
-            vc?.viewModel = viewModel
-            return vc ?? CreateDisplayNameViewController()
+            let viewController = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.createDisplayName) as? CreateDisplayNameViewController
+            viewController?.viewModel = viewModel
+            return viewController ?? CreateDisplayNameViewController()
         case .resendEmail(let viewModel):
             let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.authen, bundle: ConfigBundle.authen)
-            let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.resendEmail) as? ResendEmailViewController
-            vc?.viewModel = viewModel
-            return vc ?? ResendEmailViewController()
+            let viewController = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.resendEmail) as? ResendEmailViewController
+            viewController?.viewModel = viewModel
+            return viewController ?? ResendEmailViewController()
         case .oldPassword:
             let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.password, bundle: ConfigBundle.authen)
-            let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.oldPassword)
-            return vc
+            let viewController = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.oldPassword)
+            return viewController
         case .changePassword(let viewModel):
             let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.password, bundle: ConfigBundle.authen)
-            let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.changePassword) as? ChangePasswordViewController
-            vc?.viewModel = viewModel
-            return vc ?? ChangePasswordViewController()
+            let viewController = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.changePassword) as? ChangePasswordViewController
+            viewController?.viewModel = viewModel
+            return viewController ?? ChangePasswordViewController()
         case .changePasswordSuccess(let viewModel):
             let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.password, bundle: ConfigBundle.authen)
-            let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.changePasswordSuccess) as? ChangePasswordSuccessViewController
-            vc?.viewModel = viewModel
-            return vc ?? ChangePasswordSuccessViewController()
+            let viewController = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.changePasswordSuccess) as? ChangePasswordSuccessViewController
+            viewController?.viewModel = viewModel
+            return viewController ?? ChangePasswordSuccessViewController()
         case .checkEmail:
             let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.password, bundle: ConfigBundle.authen)
-            let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.checkEmail)
-            return vc
+            let viewController = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.checkEmail)
+            return viewController
         case .enterCode(let viewModel):
             let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.password, bundle: ConfigBundle.authen)
-            let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.enterCode) as? EnterCodeViewController
-            vc?.viewModel = viewModel
-            return vc ?? EnterCodeViewController()
+            let viewController = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.enterCode) as? EnterCodeViewController
+            viewController?.viewModel = viewModel
+            return viewController ?? EnterCodeViewController()
         case .mergeAccount(let viewModel):
             let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.authen, bundle: ConfigBundle.authen)
-            let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.mergeAccount) as? MergeAccountViewController
-            vc?.viewModel = viewModel
-            return vc ?? MergeAccountViewController()
+            let viewController = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.mergeAccount) as? MergeAccountViewController
+            viewController?.viewModel = viewModel
+            return viewController ?? MergeAccountViewController()
         case .mergeAccountSuccess:
             let storyboard: UIStoryboard = UIStoryboard(name: AuthenNibVars.Storyboard.authen, bundle: ConfigBundle.authen)
-            let vc = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.mergeAccountSuccess) as? MergeAccountSuccessViewController
-            return vc ?? MergeAccountSuccessViewController()
+            let viewController = storyboard.instantiateViewController(withIdentifier: AuthenNibVars.ViewController.mergeAccountSuccess) as? MergeAccountSuccessViewController
+            return viewController ?? MergeAccountSuccessViewController()
         }
     }
 }

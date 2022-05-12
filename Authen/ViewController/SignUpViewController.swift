@@ -33,7 +33,7 @@ class SignUpViewController: UIViewController {
 
     @IBOutlet var tableView: UITableView!
     @IBOutlet var backButton: UIButton!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.Asset.darkGraphiteBlue
@@ -43,7 +43,7 @@ class SignUpViewController: UIViewController {
         self.backButton.setBackgroundImage(UIColor.Asset.gray.toImage(), for: .normal)
         self.backButton.capsule()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
@@ -54,7 +54,7 @@ class SignUpViewController: UIViewController {
         super.viewWillDisappear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
-    
+
     func configureTableView() {
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -62,7 +62,7 @@ class SignUpViewController: UIViewController {
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 100
     }
-    
+
     @IBAction func backAction(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
@@ -72,11 +72,11 @@ extension SignUpViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: AuthenNibVars.TableViewCell.signUp, for: indexPath as IndexPath) as? SignUpTableViewCell
         cell?.backgroundColor = UIColor.clear

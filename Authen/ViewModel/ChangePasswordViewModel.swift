@@ -35,7 +35,7 @@ public enum ChangePasswordType {
     case createPassword
 }
 
-public protocol ChangePasswordViewModelDelegate {
+public protocol ChangePasswordViewModelDelegate: AnyObject {
     func didChangePasswordSubmitFinish(success: Bool)
 }
 
@@ -47,16 +47,16 @@ public class ChangePasswordViewModel {
     var userRepository: UserRepository = UserRepositoryImpl()
     let tokenHelper: TokenHelper = TokenHelper()
     var state: State = .none
-    
+
     public init(_ changePasswordType: ChangePasswordType, authenRequest: AuthenRequest = AuthenRequest()) {
         self.changePasswordType = changePasswordType
         self.authenRequest = authenRequest
         self.tokenHelper.delegate = self
     }
-    
+
     public func changePasswordSubmit() {
         self.state = .updatePassword
-        self.authenticationRepository.changePasswordSubmit(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in
+        self.authenticationRepository.changePasswordSubmit(authenRequest: self.authenRequest) { (success, _, isRefreshToken) in
             if success {
                 if self.changePasswordType == .createPassword {
                     self.getMe()
@@ -72,10 +72,10 @@ public class ChangePasswordViewModel {
             }
         }
     }
-    
+
     private func getMe() {
         self.state = .getMe
-        self.userRepository.getMe() { (success, response, isRefreshToken) in
+        self.userRepository.getMe { (success, response, isRefreshToken) in
             if success {
                 do {
                     let rawJson = try response.mapJSON()

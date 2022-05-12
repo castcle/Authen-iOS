@@ -29,23 +29,23 @@ import Core
 import Networking
 
 class SignUpViewModel {
-    
+
     private var authenticationRepository: AuthenticationRepository
     var authenRequest: AuthenRequest = AuthenRequest()
     var isEmailExist: Bool = true
     var isAgree: Bool = true
 
-    //MARK: Input
+    // MARK: - Input
     public func checkEmailExists() {
-        self.authenticationRepository.checkEmail(authenRequest: self.authenRequest) { (success, exist) in
+        self.authenticationRepository.checkEmail(authenRequest: self.authenRequest) { (_, exist) in
             self.isEmailExist = exist
             self.didCheckEmailExistsFinish?()
         }
     }
-    
-    //MARK: Output
-    var didCheckEmailExistsFinish: (() -> ())?
-    
+
+    // MARK: - Output
+    var didCheckEmailExistsFinish: (() -> Void)?
+
     public init(authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()) {
         self.authenticationRepository = authenticationRepository
     }

@@ -39,12 +39,12 @@ import GoogleSignIn
 class SignInViewController: UIViewController {
 
     @IBOutlet var tableView: UITableView!
-    
+
     let hud = JGProgressHUD()
     var viewModel = SocialLoginViewModel()
     var swifter: Swifter!
     var accToken: Credential.OAuthAccessToken?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.Asset.darkGraphiteBlue
@@ -54,12 +54,12 @@ class SignInViewController: UIViewController {
         self.viewModel.delegate = self
         self.hud.textLabel.text = "Logging in"
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         Defaults[.screenId] = ""
     }
-    
+
     func setupNavBar() {
         self.customNavigationBar(.primary, title: "")
         var rightButton: [UIBarButtonItem] = []
@@ -68,7 +68,7 @@ class SignInViewController: UIViewController {
         rightButton.append(UIBarButtonItem(customView: rightIcon))
         self.navigationItem.rightBarButtonItems = rightButton
     }
-    
+
     func configureTableView() {
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -76,7 +76,7 @@ class SignInViewController: UIViewController {
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 100
     }
-    
+
     @objc private func closeAction() {
         self.dismiss(animated: true)
     }
@@ -86,11 +86,11 @@ extension SignInViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: AuthenNibVars.TableViewCell.signIn, for: indexPath as IndexPath) as? SignInTableViewCell
         cell?.backgroundColor = UIColor.clear
@@ -102,7 +102,7 @@ extension SignInViewController: UITableViewDelegate, UITableViewDataSource {
 extension SignInViewController: SignInTableViewCellDelegate {
     func didLoginWithFacebook(_ signInTableViewCell: SignInTableViewCell) {
         let loginManager = LoginManager()
-        if let _ = AccessToken.current {
+        if AccessToken.current != nil {
             loginManager.logOut()
         }
         loginManager.logIn(permissions: ["public_profile", "email"], from: self) { (result, error) in
@@ -114,7 +114,7 @@ extension SignInViewController: SignInTableViewCellDelegate {
                 print("User cancelled login")
                 return
             }
-            Profile.loadCurrentProfile { (profile, error) in
+            Profile.loadCurrentProfile { (profile, _) in
                 let userId: String = profile?.userID ?? ""
                 let email: String = profile?.email ?? ""
                 let fullName: String = profile?.name ?? ""
@@ -127,36 +127,33 @@ extension SignInViewController: SignInTableViewCellDelegate {
                 authenRequest.avatar = profilePicUrl
                 authenRequest.email = email
                 authenRequest.authToken = accessToken
-                
                 self.hud.show(in: self.view)
                 self.viewModel.authenRequest = authenRequest
                 self.viewModel.socialLogin()
             }
         }
     }
-    
+
     func didLoginWithTwitter(_ signInTableViewCell: SignInTableViewCell) {
         self.swifter = Swifter(consumerKey: TwitterConstants.key, consumerSecret: TwitterConstants.secretKey)
-        self.swifter.authorize(withProvider: self, callbackURL: URL(string: TwitterConstants.callbackUrl)!) { accessToken, response in
+        self.swifter.authorize(withProvider: self, callbackURL: URL(string: TwitterConstants.callbackUrl)!) { accessToken, _ in
             self.accToken = accessToken
             self.getUserProfile()
         } failure: { error in
             print("ERROR: \(error.localizedDescription)")
         }
     }
-    
+
     func didLoginWithGoogle(_ signInTableViewCell: SignInTableViewCell) {
         let signInConfig = GIDConfiguration.init(clientID: "399197784684-qu71doj4dn7ftksq09i7hvgeot4vbd4c.apps.googleusercontent.com")
         GIDSignIn.sharedInstance.signIn(with: signInConfig, presenting: self) { user, error in
             guard error == nil else { return }
             guard let user = user else { return }
-            
             let userId: String = user.userID ?? ""
             let email: String = user.profile?.email ?? ""
             let fullName: String = user.profile?.name ?? ""
             let profilePicUrl: String = user.profile?.imageURL(withDimension: 320)?.absoluteString ?? ""
             let accessToken: String = user.authentication.accessToken
-            
             var authenRequest: AuthenRequest = AuthenRequest()
             authenRequest.provider = .google
             authenRequest.socialId = userId
@@ -164,13 +161,12 @@ extension SignInViewController: SignInTableViewCellDelegate {
             authenRequest.avatar = profilePicUrl
             authenRequest.email = email
             authenRequest.authToken = accessToken
-            
             self.hud.show(in: self.view)
             self.viewModel.authenRequest = authenRequest
             self.viewModel.socialLogin()
         }
     }
-    
+
     func didLoginWithApple(_ signInTableViewCell: SignInTableViewCell) {
         let request = ASAuthorizationAppleIDProvider().createRequest()
         request.requestedScopes = [.email, .fullName]
@@ -210,7 +206,7 @@ extension SignInViewController: ASAuthorizationControllerDelegate, ASAuthorizati
             authenRequest.socialId = KeychainHelper.shared.getKeychainWith(with: .appleUserId)
             authenRequest.displayName = KeychainHelper.shared.getKeychainWith(with: .appleFullName)
             authenRequest.email = KeychainHelper.shared.getKeychainWith(with: .appleEmail)
-            authenRequest.authToken = String(data: appleIdCredential.identityToken ?? Data() , encoding: .utf8) ?? ""
+            authenRequest.authToken = String(data: appleIdCredential.identityToken ?? Data(), encoding: .utf8) ?? ""
 
             self.hud.show(in: self.view)
             self.viewModel.authenRequest = authenRequest
@@ -233,7 +229,6 @@ extension SignInViewController: SFSafariViewControllerDelegate, ASWebAuthenticat
             let twitterDescription: String = json["description"].string ?? ""
             let twitterCover: String = json["profile_banner_url"].string ?? ""
             let twitterScreenName: String = json["screen_name"].string ?? ""
-            
             var authenRequest: AuthenRequest = AuthenRequest()
             authenRequest.provider = .twitter
             authenRequest.socialId = twitterId
@@ -244,19 +239,16 @@ extension SignInViewController: SFSafariViewControllerDelegate, ASWebAuthenticat
             authenRequest.cover = twitterCover
             authenRequest.userName = twitterScreenName
             authenRequest.authToken = "\(self.accToken?.key ?? "")|\(self.accToken?.secret ?? "")"
-            
             self.hud.show(in: self.view)
             self.viewModel.authenRequest = authenRequest
             self.viewModel.socialLogin()
-        }) { error in
-            print("ERROR: \(error.localizedDescription)")
-        }
+        })
     }
-    
+
     public func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
         controller.dismiss(animated: true, completion: nil)
     }
-    
+
     public func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
         return self.view.window!
     }
@@ -283,7 +275,7 @@ extension SignInViewController: SocialLoginViewModelDelegate {
             }
         }
     }
-    
+
     public func didMergeAccount(userInfo: UserInfo) {
         self.hud.dismiss()
         self.dismiss(animated: true)

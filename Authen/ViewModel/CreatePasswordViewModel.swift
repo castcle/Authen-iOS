@@ -29,14 +29,9 @@ import Core
 import Networking
 
 class CreatePasswordViewModel {
-    
-    //MARK: Private
+
     var authenRequest: AuthenRequest = AuthenRequest()
 
-    //MARK: Input
-    
-    //MARK: Output
-    
     public init(authenRequest: AuthenRequest = AuthenRequest()) {
         self.authenRequest = authenRequest
     }

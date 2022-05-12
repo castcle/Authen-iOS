@@ -36,48 +36,46 @@ class ResendEmailViewController: UIViewController {
     @IBOutlet var subTitleLabel: UILabel!
     @IBOutlet var firstLabel: ActiveLabel!
     @IBOutlet var resendButton: UIButton!
-    
+
     var viewModel = ResendEmailViewModel()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-
         self.view.backgroundColor = UIColor.Asset.darkGraphiteBlue
         self.setupNavBar()
         self.headlineLabel.font = UIFont.asset(.regular, fontSize: .title)
         self.headlineLabel.textColor = UIColor.Asset.white
         self.subTitleLabel.font = UIFont.asset(.bold, fontSize: .body)
         self.subTitleLabel.textColor = UIColor.Asset.white
-        self.resendButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .h4)
+        self.resendButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .head4)
         self.resendButton.setTitleColor(UIColor.Asset.white, for: .normal)
         self.resendButton.setBackgroundImage(UIColor.Asset.lightBlue.toImage(), for: .normal)
         self.resendButton.capsule(color: UIColor.clear, borderWidth: 1, borderColor: UIColor.clear)
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.headlineLabel.text = Localization.resendEmail.title.text
-        self.subTitleLabel.text = Localization.resendEmail.noticeTitle.text
-        let noticeDetail = (Localization.resendEmail.noticeDetail.text).replacingOccurrences(of: "%@", with: UserManager.shared.email)
+        self.headlineLabel.text = Localization.ResendEmail.title.text
+        self.subTitleLabel.text = Localization.ResendEmail.noticeTitle.text
+        let noticeDetail = (Localization.ResendEmail.noticeDetail.text).replacingOccurrences(of: "%@", with: UserManager.shared.email)
         self.firstLabel.text = noticeDetail
         self.firstLabel.customize { label in
             label.font = UIFont.asset(.regular, fontSize: .body)
             label.numberOfLines = 0
             label.textColor = UIColor.Asset.white
-            
             let emailType = ActiveType.custom(pattern: UserManager.shared.email)
             label.enabledTypes = [emailType]
             label.customColor[emailType] = UIColor.Asset.lightBlue
             label.customSelectedColor[emailType] = UIColor.Asset.lightBlue
         }
-        self.resendButton.setTitle(Localization.resendEmail.button.text, for: .normal)
+        self.resendButton.setTitle(Localization.ResendEmail.button.text, for: .normal)
         Defaults[.screenId] = ""
     }
-    
+
     func setupNavBar() {
         self.customNavigationBar(.secondary, title: self.viewModel.title)
     }
-    
+
     @IBAction func resendAction(_ sender: Any) {
         self.viewModel.requestLinkVerify()
     }

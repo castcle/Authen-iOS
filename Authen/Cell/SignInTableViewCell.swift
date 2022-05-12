@@ -31,7 +31,7 @@ import ActiveLabel
 import JGProgressHUD
 import Defaults
 
-protocol SignInTableViewCellDelegate {
+protocol SignInTableViewCellDelegate: AnyObject {
     func didLoginWithFacebook(_ signInTableViewCell: SignInTableViewCell)
     func didLoginWithTwitter(_ signInTableViewCell: SignInTableViewCell)
     func didLoginWithGoogle(_ signInTableViewCell: SignInTableViewCell)
@@ -63,7 +63,7 @@ class SignInTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBOutlet var twitterImage: UIImageView!
     @IBOutlet var googleImage: UIImageView!
     @IBOutlet var appleImage: UIImageView!
-    
+
     public var delegate: SignInTableViewCellDelegate?
     let hud = JGProgressHUD()
     var viewModel = LoginViewModel()
@@ -74,13 +74,13 @@ class SignInTableViewCell: UITableViewCell, UITextFieldDelegate {
             return true
         }
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         self.hud.textLabel.text = "Logging in"
-        self.headlineLabel.font = UIFont.asset(.bold, fontSize: .h2)
+        self.headlineLabel.font = UIFont.asset(.bold, fontSize: .head2)
         self.headlineLabel.textColor = UIColor.Asset.lightBlue
-        self.subTitleLabel.font = UIFont.asset(.regular, fontSize: .h4)
+        self.subTitleLabel.font = UIFont.asset(.regular, fontSize: .head4)
         self.subTitleLabel.textColor = UIColor.Asset.white
         self.emailLabel.font = UIFont.asset(.medium, fontSize: .body)
         self.emailLabel.textColor = UIColor.Asset.white
@@ -93,13 +93,46 @@ class SignInTableViewCell: UITableViewCell, UITextFieldDelegate {
         self.forgotPasswordButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .overline)
         self.forgotPasswordButton.setTitleColor(UIColor.Asset.white, for: .normal)
         self.showPasswordButton.setImage(UIImage.init(icon: .castcle(.show), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.white).withRenderingMode(.alwaysOriginal), for: .normal)
+        self.firstLineView.backgroundColor = UIColor.Asset.lightBlue
+        self.seccondLineView.backgroundColor = UIColor.Asset.lightBlue
+        self.signInLabel.customize { label in
+            label.font = UIFont.asset(.regular, fontSize: .body)
+            label.numberOfLines = 1
+            label.textColor = UIColor.Asset.white
+            let signUpType = ActiveType.custom(pattern: Localization.Login.signUp.text)
+            label.enabledTypes = [signUpType]
+            label.customColor[signUpType] = UIColor.Asset.lightBlue
+            label.customSelectedColor[signUpType] = UIColor.Asset.lightBlue
+            label.handleCustomTap(for: signUpType) { _ in
+                self.endEditing(true)
+                Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.signUp), animated: true)
+            }
+        }
+        self.setupLoginButton(isActive: self.isCanLogin)
+        self.setupTextField()
+        self.setupSocialView()
+        self.viewModel.delegate = self
+    }
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+    }
+
+    private func setupTextField() {
         self.emailTextField.font = UIFont.asset(.regular, fontSize: .overline)
         self.emailTextField.textColor = UIColor.Asset.white
         self.passwordTextField.font = UIFont.asset(.regular, fontSize: .overline)
         self.passwordTextField.textColor = UIColor.Asset.white
         self.passwordTextField.isSecureTextEntry = true
-        self.firstLineView.backgroundColor = UIColor.Asset.lightBlue
-        self.seccondLineView.backgroundColor = UIColor.Asset.lightBlue
+        self.emailTextField.delegate = self
+        self.emailTextField.tag = 0
+        self.emailTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
+        self.passwordTextField.delegate = self
+        self.passwordTextField.tag = 1
+        self.passwordTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
+    }
+
+    private func setupSocialView() {
         self.facebookView.capsule(color: UIColor.Asset.facebook)
         self.twitterView.capsule(color: UIColor.Asset.twitter)
         self.googleView.capsule(color: UIColor.Asset.white)
@@ -108,37 +141,8 @@ class SignInTableViewCell: UITableViewCell, UITextFieldDelegate {
         self.twitterImage.image = UIImage.init(icon: .castcle(.twitter), size: CGSize(width: 23, height: 23), textColor: UIColor.Asset.white)
         self.googleImage.image = UIImage.Asset.googleLogo
         self.appleImage.image = UIImage.init(icon: .castcle(.apple), size: CGSize(width: 23, height: 23), textColor: UIColor.Asset.white)
-        
-        self.signInLabel.customize { label in
-            label.font = UIFont.asset(.regular, fontSize: .body)
-            label.numberOfLines = 1
-            label.textColor = UIColor.Asset.white
-            let signUpType = ActiveType.custom(pattern: Localization.login.signUp.text)
-            label.enabledTypes = [signUpType]
-            label.customColor[signUpType] = UIColor.Asset.lightBlue
-            label.customSelectedColor[signUpType] = UIColor.Asset.lightBlue
-            label.handleCustomTap(for: signUpType) { element in
-                self.endEditing(true)
-                Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.signUp), animated: true)
-            }
-        }
-        
-        self.setupLoginButton(isActive: self.isCanLogin)
-        
-        self.emailTextField.delegate = self
-        self.emailTextField.tag = 0
-        self.emailTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
-        self.passwordTextField.delegate = self
-        self.passwordTextField.tag = 1
-        self.passwordTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
-        
-        self.viewModel.delegate = self
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
-    
     private func disableUI(isActive: Bool) {
         if isActive {
             self.emailTextField.isEnabled = true
@@ -148,9 +152,9 @@ class SignInTableViewCell: UITableViewCell, UITextFieldDelegate {
             self.passwordTextField.isEnabled = false
         }
     }
-    
+
     private func setupLoginButton(isActive: Bool) {
-        self.loginButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .h4)
+        self.loginButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .head4)
         if isActive {
             self.loginButton.setTitleColor(UIColor.Asset.white, for: .normal)
             self.loginButton.capsule(color: UIColor.Asset.lightBlue, borderWidth: 1, borderColor: UIColor.Asset.lightBlue)
@@ -159,11 +163,11 @@ class SignInTableViewCell: UITableViewCell, UITextFieldDelegate {
             self.loginButton.capsule(color: UIColor.Asset.darkGraphiteBlue, borderWidth: 1, borderColor: UIColor.Asset.black)
         }
     }
-    
+
     @objc func textFieldDidChange(_ textField: UITextField) {
         self.setupLoginButton(isActive: self.isCanLogin)
     }
-    
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField.tag == 0 {
             self.passwordTextField.becomeFirstResponder()
@@ -172,7 +176,7 @@ class SignInTableViewCell: UITableViewCell, UITextFieldDelegate {
         }
         return true
     }
-    
+
     @IBAction func showPasswordAction(_ sender: Any) {
         self.passwordTextField.isSecureTextEntry.toggle()
         if self.passwordTextField.isSecureTextEntry {
@@ -181,12 +185,12 @@ class SignInTableViewCell: UITableViewCell, UITextFieldDelegate {
             self.showPasswordButton.setImage(UIImage.init(icon: .castcle(.show), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.lightBlue).withRenderingMode(.alwaysOriginal), for: .normal)
         }
     }
-    
+
     @IBAction func forgotPasswordAction(_ sender: Any) {
         self.endEditing(true)
         Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.checkEmail), animated: true)
     }
-    
+
     @IBAction func loginAction(_ sender: Any) {
         if self.isCanLogin {
             self.endEditing(true)
@@ -197,19 +201,19 @@ class SignInTableViewCell: UITableViewCell, UITextFieldDelegate {
             self.viewModel.login()
         }
     }
-    
+
     @IBAction func facebookAction(_ sender: Any) {
         self.delegate?.didLoginWithFacebook(self)
     }
-    
+
     @IBAction func twitterAction(_ sender: Any) {
         self.delegate?.didLoginWithTwitter(self)
     }
-    
+
     @IBAction func googleAction(_ sender: Any) {
         self.delegate?.didLoginWithGoogle(self)
     }
-    
+
     @IBAction func appleAction(_ sender: Any) {
         self.delegate?.didLoginWithApple(self)
     }

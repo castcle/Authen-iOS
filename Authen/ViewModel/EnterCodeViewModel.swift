@@ -31,7 +31,7 @@ import SwiftyJSON
 import RealmSwift
 import Defaults
 
-public protocol EnterCodeViewModelDelegate {
+public protocol EnterCodeViewModelDelegate: AnyObject {
     func didVerifyOtpFinish(success: Bool)
     func didRequestOtpFinish(success: Bool)
     func didError()
@@ -46,14 +46,13 @@ public class EnterCodeViewModel {
     var notificationRequest: NotificationRequest = NotificationRequest()
     let tokenHelper: TokenHelper = TokenHelper()
     private var state: State = .none
-    private let realm = try! Realm()
-    
+
     public init(verifyCodeType: VerifyCodeType, authenRequest: AuthenRequest = AuthenRequest()) {
         self.verifyCodeType = verifyCodeType
         self.authenRequest = authenRequest
         self.tokenHelper.delegate = self
     }
-    
+
     func verifyOtp() {
         self.state = .verifyOtp
         self.authenticationRepository.verificationOtp(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in
@@ -79,7 +78,7 @@ public class EnterCodeViewModel {
             }
         }
     }
-    
+
     func requestOtp() {
         self.state = .requestOtp
         self.authenticationRepository.requestOtp(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in
@@ -99,12 +98,13 @@ public class EnterCodeViewModel {
             }
         }
     }
-    
+
     func connectWithSocial() {
         self.state = .connectSocial
         self.authenticationRepository.connectWithSocial(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in
             if success {
                 do {
+                    let realm = try Realm()
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
                     let accessToken = json[JsonKey.accessToken.rawValue].stringValue
@@ -115,15 +115,14 @@ public class EnterCodeViewModel {
                     UserHelper.shared.updateLocalProfile(user: UserInfo(json: profile))
                     UserHelper.shared.clearSeenContent()
                     NotifyHelper.shared.getBadges()
-                    
-                    let pageRealm = self.realm.objects(Page.self)
-                    try! self.realm.write {
-                        self.realm.delete(pageRealm)
+
+                    let pageRealm = realm.objects(Page.self)
+                    try realm.write {
+                        realm.delete(pageRealm)
                     }
-                    
-                    pages.forEach { page in
-                        let pageInfo = UserInfo(json: page)
-                        try! self.realm.write {
+                    try realm.write {
+                        pages.forEach { page in
+                            let pageInfo = UserInfo(json: page)
                             let pageTemp = Page()
                             pageTemp.id = pageInfo.id
                             pageTemp.castcleId = pageInfo.castcleId
@@ -134,7 +133,7 @@ public class EnterCodeViewModel {
                             pageTemp.official = pageInfo.verified.official
                             pageTemp.isSyncTwitter = !pageInfo.syncSocial.twitter.socialId.isEmpty
                             pageTemp.isSyncFacebook = !pageInfo.syncSocial.facebook.socialId.isEmpty
-                            self.realm.add(pageTemp, update: .modified)
+                            realm.add(pageTemp, update: .modified)
                         }
                     }
                     UserManager.shared.setUserRole(userRole: .user)
@@ -154,12 +153,12 @@ public class EnterCodeViewModel {
             }
         }
     }
-    
+
     private func registerNotificationToken() {
         self.state = .registerToken
         self.notificationRequest.uuid = Defaults[.deviceUuid]
         self.notificationRequest.firebaseToken = Defaults[.firebaseToken]
-        self.notificationRepository.registerToken(notificationRequest: self.notificationRequest) { (success, response, isRefreshToken) in
+        self.notificationRepository.registerToken(notificationRequest: self.notificationRequest) { (success, _, isRefreshToken) in
             if !success {
                 if isRefreshToken {
                     self.tokenHelper.refreshToken()

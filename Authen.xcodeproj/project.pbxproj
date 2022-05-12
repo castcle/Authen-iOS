@@ -31,7 +31,6 @@
 		B758AC6326F47F8600A4A5FB /* EnterCodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B758AC6226F47F8600A4A5FB /* EnterCodeViewModel.swift */; };
 		B768499C26C3EC5100C438C5 /* ResendEmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768499B26C3EC5100C438C5 /* ResendEmailViewModel.swift */; };
 		B789821626DF49530057D7CC /* ChangePasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B789821526DF49530057D7CC /* ChangePasswordViewModel.swift */; };
-		B7910DE726AFC9E60097C94E /* Authen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7910DE626AFC9E60097C94E /* Authen.swift */; };
 		B7910DEC26AFCD880097C94E /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7910DEB26AFCD880097C94E /* Core.framework */; };
 		B7910E0526B126090097C94E /* Authen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B7910E0426B126090097C94E /* Authen.storyboard */; };
 		B7910E0A26B1268E0097C94E /* AuthenNibVars.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7910E0926B1268E0097C94E /* AuthenNibVars.swift */; };
@@ -90,7 +89,6 @@
 		B768499B26C3EC5100C438C5 /* ResendEmailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResendEmailViewModel.swift; sourceTree = "<group>"; };
 		B787962B26C6623E00FECC21 /* Share.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Share.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B789821526DF49530057D7CC /* ChangePasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewModel.swift; sourceTree = "<group>"; };
-		B7910DE626AFC9E60097C94E /* Authen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authen.swift; sourceTree = "<group>"; };
 		B7910DEB26AFCD880097C94E /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7910E0426B126090097C94E /* Authen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Authen.storyboard; sourceTree = "<group>"; };
 		B7910E0926B1268E0097C94E /* AuthenNibVars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenNibVars.swift; sourceTree = "<group>"; };
@@ -174,14 +172,6 @@
 				B706A86A282522D5008B8F61 /* SignUpViewModel.swift */,
 			);
 			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		B7910DE326AFC9A40097C94E /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				B7910DE626AFC9E60097C94E /* Authen.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		B7910E0826B1266C0097C94E /* Utilities */ = {
@@ -284,7 +274,6 @@
 				B7910EB626BD0C030097C94E /* ViewController */,
 				B7910E2126B418340097C94E /* Cell */,
 				B7910E0826B1266C0097C94E /* Utilities */,
-				B7910DE326AFC9A40097C94E /* Model */,
 			);
 			path = Authen;
 			sourceTree = "<group>";
@@ -435,7 +424,6 @@
 				B7910E5D26B83FEB0097C94E /* VerifyEmailViewController.swift in Sources */,
 				B789821626DF49530057D7CC /* ChangePasswordViewModel.swift in Sources */,
 				B7189ACE26EE2A6F00CB9719 /* VerifyPasswordViewModel.swift in Sources */,
-				B7910DE726AFC9E60097C94E /* Authen.swift in Sources */,
 				B798D5B5279EAB7D004F2C45 /* SocialLoginViewModel.swift in Sources */,
 				B74338A026DE2FAF004BBC05 /* OldPasswordTableViewCell.swift in Sources */,
 				B706A86528251000008B8F61 /* SignUpViewController.swift in Sources */,

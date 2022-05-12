@@ -32,9 +32,9 @@ import Defaults
 class ChangePasswordViewController: UIViewController {
 
     @IBOutlet var tableView: UITableView!
-    
+
     var viewModel = ChangePasswordViewModel(.changePassword)
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.Asset.darkGraphiteBlue
@@ -42,22 +42,22 @@ class ChangePasswordViewController: UIViewController {
         self.setupNavBar()
         self.configureTableView()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         Defaults[.screenId] = ""
     }
-    
+
     func setupNavBar() {
         self.customNavigationBar(.secondary, title: "Create Password")
     }
-    
+
     func configureTableView() {
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        
+
         self.tableView.register(UINib(nibName: AuthenNibVars.TableViewCell.changePassword, bundle: ConfigBundle.authen), forCellReuseIdentifier: AuthenNibVars.TableViewCell.changePassword)
-        
+
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 100
     }
@@ -67,11 +67,11 @@ extension ChangePasswordViewController: UITableViewDelegate, UITableViewDataSour
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: AuthenNibVars.TableViewCell.changePassword, for: indexPath as IndexPath) as? ChangePasswordTableViewCell
         cell?.backgroundColor = UIColor.clear

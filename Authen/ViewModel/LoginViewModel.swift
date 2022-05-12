@@ -31,12 +31,12 @@ import SwiftyJSON
 import Defaults
 import RealmSwift
 
-public protocol LoginViewModelDelegate {
+public protocol LoginViewModelDelegate: AnyObject {
     func didLoginFinish(success: Bool)
 }
 
 class LoginViewModel {
-    
+
     public var delegate: LoginViewModelDelegate?
     var authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()
     var notificationRepository: NotificationRepository = NotificationRepositoryImpl()
@@ -45,25 +45,25 @@ class LoginViewModel {
     let tokenHelper: TokenHelper = TokenHelper()
     var viewState: ViewState = .none
     var showSignUp: Bool = true
-    private let realm = try! Realm()
-    
+
     enum ViewState {
         case login
         case registerToken
         case none
     }
 
-    //MARK: Input
+    // MARK: - Input
     public init(loginRequest: LoginRequest = LoginRequest()) {
         self.loginRequest = loginRequest
         self.tokenHelper.delegate = self
     }
-    
+
     public func login() {
         self.viewState = .login
         self.authenticationRepository.login(loginRequest: self.loginRequest) { (success, response, isRefreshToken) in
             if success {
                 do {
+                    let realm = try Realm()
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
                     let accessToken = json[JsonKey.accessToken.rawValue].stringValue
@@ -74,15 +74,14 @@ class LoginViewModel {
                     UserHelper.shared.updateLocalProfile(user: UserInfo(json: profile))
                     UserHelper.shared.clearSeenContent()
                     NotifyHelper.shared.getBadges()
-                    
-                    let pageRealm = self.realm.objects(Page.self)
-                    try! self.realm.write {
-                        self.realm.delete(pageRealm)
+
+                    let pageRealm = realm.objects(Page.self)
+                    try realm.write {
+                        realm.delete(pageRealm)
                     }
-                    
-                    pages.forEach { page in
-                        let pageInfo = UserInfo(json: page)
-                        try! self.realm.write {
+                    try realm.write {
+                        pages.forEach { page in
+                            let pageInfo = UserInfo(json: page)
                             let pageTemp = Page()
                             pageTemp.id = pageInfo.id
                             pageTemp.castcleId = pageInfo.castcleId
@@ -93,7 +92,7 @@ class LoginViewModel {
                             pageTemp.official = pageInfo.verified.official
                             pageTemp.isSyncTwitter = !pageInfo.syncSocial.twitter.socialId.isEmpty
                             pageTemp.isSyncFacebook = !pageInfo.syncSocial.facebook.socialId.isEmpty
-                            self.realm.add(pageTemp, update: .modified)
+                            realm.add(pageTemp, update: .modified)
                         }
                     }
                     UserManager.shared.setUserRole(userRole: .user)
@@ -111,12 +110,12 @@ class LoginViewModel {
             }
         }
     }
-    
+
     private func registerNotificationToken() {
         self.viewState = .registerToken
         self.notificationRequest.uuid = Defaults[.deviceUuid]
         self.notificationRequest.firebaseToken = Defaults[.firebaseToken]
-        self.notificationRepository.registerToken(notificationRequest: self.notificationRequest) { (success, response, isRefreshToken) in
+        self.notificationRepository.registerToken(notificationRequest: self.notificationRequest) { (success, _, isRefreshToken) in
             if !success {
                 if isRefreshToken {
                     self.tokenHelper.refreshToken()

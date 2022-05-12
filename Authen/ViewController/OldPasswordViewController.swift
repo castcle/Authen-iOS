@@ -32,7 +32,7 @@ import Defaults
 class OldPasswordViewController: UIViewController {
 
     @IBOutlet var tableView: UITableView!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.Asset.darkGraphiteBlue
@@ -40,16 +40,16 @@ class OldPasswordViewController: UIViewController {
         self.setupNavBar()
         self.configureTableView()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         Defaults[.screenId] = ""
     }
-    
+
     func setupNavBar() {
         self.customNavigationBar(.secondary, title: "Change Password")
     }
-    
+
     func configureTableView() {
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -63,11 +63,11 @@ extension OldPasswordViewController: UITableViewDelegate, UITableViewDataSource 
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: AuthenNibVars.TableViewCell.oldPassword, for: indexPath as IndexPath) as? OldPasswordTableViewCell
         cell?.backgroundColor = UIColor.clear

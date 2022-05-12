@@ -35,31 +35,31 @@ class MergeAccountSuccessViewController: UIViewController {
     @IBOutlet var headlineLabel: UILabel!
     @IBOutlet var detailLabel: UILabel!
     @IBOutlet var homeButton: UIButton!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupNavBar()
         self.view.backgroundColor = UIColor.Asset.darkGraphiteBlue
-        self.headlineLabel.font = UIFont.asset(.regular, fontSize: .h4)
+        self.headlineLabel.font = UIFont.asset(.regular, fontSize: .head4)
         self.headlineLabel.textColor = UIColor.Asset.white
         self.detailLabel.font = UIFont.asset(.regular, fontSize: .body)
         self.detailLabel.textColor = UIColor.Asset.white
-        self.homeButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .h4)
+        self.homeButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .head4)
         self.homeButton.setTitleColor(UIColor.Asset.white, for: .normal)
         self.homeButton.setBackgroundImage(UIColor.Asset.lightBlue.toImage(), for: .normal)
         self.homeButton.capsule(color: UIColor.clear, borderWidth: 1, borderColor: UIColor.clear)
 
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         Defaults[.screenId] = ""
     }
-    
+
     func setupNavBar() {
         self.customNavigationBar(.secondary, title: "Merge email")
     }
-    
+
     @IBAction func homeAction(_ sender: Any) {
         Defaults[.startLoadFeed] = true
         self.navigationController!.popToRootViewController(animated: true)

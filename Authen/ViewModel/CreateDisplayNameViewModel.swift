@@ -31,14 +31,13 @@ import Moya
 import SwiftyJSON
 import Defaults
 
-public protocol CreateDisplayNameViewModelDelegate {
+public protocol CreateDisplayNameViewModelDelegate: AnyObject {
     func didRegisterFinish(success: Bool)
     func didCheckCastcleIdExistsFinish()
     func didSuggestCastcleIdFinish(suggestCastcleId: String)
 }
 
 public class CreateDisplayNameViewModel {
-    
     public var delegate: CreateDisplayNameViewModelDelegate?
     var authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()
     var notificationRepository: NotificationRepository = NotificationRepositoryImpl()
@@ -49,12 +48,12 @@ public class CreateDisplayNameViewModel {
     let tokenHelper: TokenHelper = TokenHelper()
     private var state: State = .none
 
-    //MARK: Input
+    // MARK: - Input
     public init(authenRequest: AuthenRequest = AuthenRequest()) {
         self.authenRequest = authenRequest
         self.tokenHelper.delegate = self
     }
-    
+
     public func suggestCastcleId() {
         self.state = .suggestCastcleId
         self.authenticationRepository.suggestCastcleId(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in
@@ -73,7 +72,7 @@ public class CreateDisplayNameViewModel {
             }
         }
     }
-    
+
     public func checkCastcleIdExists() {
         self.state = .checkCastcleIdExists
         self.authenticationRepository.checkCastcleId(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in
@@ -95,7 +94,7 @@ public class CreateDisplayNameViewModel {
             }
         }
     }
-    
+
     public func register() {
         self.state = .register
         self.authenticationRepository.register(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in
@@ -106,7 +105,7 @@ public class CreateDisplayNameViewModel {
                     let accessToken = json[JsonKey.accessToken.rawValue].stringValue
                     let refreshToken = json[JsonKey.refreshToken.rawValue].stringValue
                     let profile = JSON(json[JsonKey.profile.rawValue].dictionaryValue)
-                    
+
                     UserHelper.shared.updateLocalProfile(user: UserInfo(json: profile))
                     UserHelper.shared.clearSeenContent()
                     NotifyHelper.shared.getBadges()
@@ -126,12 +125,12 @@ public class CreateDisplayNameViewModel {
             }
         }
     }
-    
+
     private func registerNotificationToken() {
         self.state = .registerToken
         self.notificationRequest.uuid = Defaults[.deviceUuid]
         self.notificationRequest.firebaseToken = Defaults[.firebaseToken]
-        self.notificationRepository.registerToken(notificationRequest: self.notificationRequest) { (success, response, isRefreshToken) in
+        self.notificationRepository.registerToken(notificationRequest: self.notificationRequest) { (success, _, isRefreshToken) in
             if !success {
                 if isRefreshToken {
                     self.tokenHelper.refreshToken()

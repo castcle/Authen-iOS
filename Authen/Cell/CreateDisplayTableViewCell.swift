@@ -42,13 +42,13 @@ class CreateDisplayTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBOutlet var displayNameTextField: UITextField!
     @IBOutlet var castcleIdAlertLabel: UILabel!
     @IBOutlet var nextButton: UIButton!
-    
+
     private var viewModel = CreateDisplayNameViewModel()
     let hud = JGProgressHUD()
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.titleLabel.font = UIFont.asset(.regular, fontSize: .h4)
+        self.titleLabel.font = UIFont.asset(.regular, fontSize: .head4)
         self.titleLabel.textColor = UIColor.Asset.white
         self.subTitleLabel.font = UIFont.asset(.regular, fontSize: .body)
         self.subTitleLabel.textColor = UIColor.Asset.white
@@ -62,14 +62,12 @@ class CreateDisplayTableViewCell: UITableViewCell, UITextFieldDelegate {
         self.displayNameTextField.textColor = UIColor.Asset.white
         self.castcleIdView.capsule(color: UIColor.Asset.darkGray)
         self.displayNameView.capsule(color: UIColor.Asset.darkGray)
-    
         self.castcleIdTextField.tag = 0
         self.castcleIdTextField.delegate = self
         self.castcleIdTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
         self.displayNameTextField.delegate = self
         self.displayNameTextField.tag = 1
         self.displayNameTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
-
         self.castcleIdAlertLabel.font = UIFont.asset(.regular, fontSize: .small)
         self.castcleIdAlertLabel.textColor = UIColor.Asset.denger
         self.castcleIdAlertLabel.isHidden = true
@@ -79,16 +77,16 @@ class CreateDisplayTableViewCell: UITableViewCell, UITextFieldDelegate {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
+
     func configCell(viewModel: CreateDisplayNameViewModel) {
         self.viewModel = viewModel
         self.viewModel.delegate = self
     }
-    
+
     private func castcleId(displayCastcleId: String) -> String {
         return displayCastcleId.replacingOccurrences(of: "@", with: "")
     }
-    
+
     private func updateUI() {
         if self.viewModel.isCastcleIdExist {
             self.setupNextButton(isActive: false)
@@ -103,9 +101,9 @@ class CreateDisplayTableViewCell: UITableViewCell, UITextFieldDelegate {
             }
         }
     }
-    
+
     private func setupNextButton(isActive: Bool) {
-        self.nextButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .h4)
+        self.nextButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .head4)
         if isActive {
             self.nextButton.setTitleColor(UIColor.Asset.white, for: .normal)
             self.nextButton.setBackgroundImage(UIColor.Asset.lightBlue.toImage(), for: .normal)
@@ -116,7 +114,7 @@ class CreateDisplayTableViewCell: UITableViewCell, UITextFieldDelegate {
             self.nextButton.capsule(color: UIColor.clear, borderWidth: 1, borderColor: UIColor.Asset.black)
         }
     }
-    
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField.tag == 0 {
             self.displayNameTextField.becomeFirstResponder()
@@ -125,7 +123,7 @@ class CreateDisplayTableViewCell: UITableViewCell, UITextFieldDelegate {
         }
         return true
     }
-    
+
     @objc func textFieldDidChange(_ textField: UITextField) {
         if textField.tag == 0 {
             let displayCastcleId = textField.text ?? ""
@@ -147,14 +145,14 @@ class CreateDisplayTableViewCell: UITableViewCell, UITextFieldDelegate {
             }
         }
     }
-    
+
     func textFieldDidBeginEditing(_ textField: UITextField) {
         self.setupNextButton(isActive: false)
         if textField.tag == 0 {
             self.castcleIdAlertLabel.isHidden = true
         }
     }
-    
+
     func textFieldDidEndEditing(_ textField: UITextField) {
         if textField.tag == 1 {
             let displayName = textField.text ?? ""
@@ -184,7 +182,7 @@ class CreateDisplayTableViewCell: UITableViewCell, UITextFieldDelegate {
             }
         }
     }
-    
+
     @IBAction func nextAction(_ sender: Any) {
         self.endEditing(true)
         if self.viewModel.authenRequest.payload.castcleId.isCastcleId && !self.viewModel.isCastcleIdExist && self.viewModel.authenRequest.payload.castcleId.count <= 30 && !self.viewModel.authenRequest.payload.displayName.isEmpty {
@@ -205,14 +203,14 @@ extension CreateDisplayTableViewCell: CreateDisplayNameViewModelDelegate {
         self.castcleIdTextField.text = "@\(suggestCastcleId)"
         self.updateUI()
     }
-    
+
     func didCheckCastcleIdExistsFinish() {
         self.hud.dismiss()
         self.castcleIdTextField.isEnabled = true
         self.displayNameTextField.isEnabled = true
         self.updateUI()
     }
-    
+
     func didRegisterFinish(success: Bool) {
         self.hud.dismiss()
         if success {

@@ -31,13 +31,12 @@ import SwiftyJSON
 import Defaults
 import RealmSwift
 
-public protocol SocialLoginViewModelDelegate {
+public protocol SocialLoginViewModelDelegate: AnyObject {
     func didSocialLoginFinish(success: Bool)
     func didMergeAccount(userInfo: UserInfo)
 }
 
 class SocialLoginViewModel {
-    
     public var delegate: SocialLoginViewModelDelegate?
     var authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()
     var notificationRepository: NotificationRepository = NotificationRepositoryImpl()
@@ -45,19 +44,19 @@ class SocialLoginViewModel {
     var notificationRequest: NotificationRequest = NotificationRequest()
     let tokenHelper: TokenHelper = TokenHelper()
     var state: State = .none
-    private let realm = try! Realm()
 
-    //MARK: Input
+    // MARK: - Input
     public init(authenRequest: AuthenRequest = AuthenRequest()) {
         self.authenRequest = authenRequest
         self.tokenHelper.delegate = self
     }
-    
+
     public func socialLogin() {
         self.state = .login
         self.authenticationRepository.loginWithSocial(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in
             if success {
                 do {
+                    let realm = try Realm()
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
                     let code = json[JsonKey.code.rawValue].stringValue
@@ -76,21 +75,20 @@ class SocialLoginViewModel {
                         UserHelper.shared.updateLocalProfile(user: UserInfo(json: profile))
                         UserHelper.shared.clearSeenContent()
                         NotifyHelper.shared.getBadges()
-                        
+
                         if self.authenRequest.provider == .twitter && !registered {
                             Defaults[.syncTwitter] = false
                         } else {
                             Defaults[.syncTwitter] = true
                         }
-                        
-                        let pageRealm = self.realm.objects(Page.self)
-                        try! self.realm.write {
-                            self.realm.delete(pageRealm)
+
+                        let pageRealm = realm.objects(Page.self)
+                        try realm.write {
+                            realm.delete(pageRealm)
                         }
-                        
-                        pages.forEach { page in
-                            let pageInfo = UserInfo(json: page)
-                            try! self.realm.write {
+                        try realm.write {
+                            pages.forEach { page in
+                                let pageInfo = UserInfo(json: page)
                                 let pageTemp = Page()
                                 pageTemp.id = pageInfo.id
                                 pageTemp.castcleId = pageInfo.castcleId
@@ -101,7 +99,7 @@ class SocialLoginViewModel {
                                 pageTemp.official = pageInfo.verified.official
                                 pageTemp.isSyncTwitter = !pageInfo.syncSocial.twitter.socialId.isEmpty
                                 pageTemp.isSyncFacebook = !pageInfo.syncSocial.facebook.socialId.isEmpty
-                                self.realm.add(pageTemp, update: .modified)
+                                realm.add(pageTemp, update: .modified)
                             }
                         }
                         UserManager.shared.setUserRole(userRole: .user)
@@ -120,12 +118,12 @@ class SocialLoginViewModel {
             }
         }
     }
-    
+
     private func registerNotificationToken() {
         self.state = .registerToken
         self.notificationRequest.uuid = Defaults[.deviceUuid]
         self.notificationRequest.firebaseToken = Defaults[.firebaseToken]
-        self.notificationRepository.registerToken(notificationRequest: self.notificationRequest) { (success, response, isRefreshToken) in
+        self.notificationRepository.registerToken(notificationRequest: self.notificationRequest) { (success, _, isRefreshToken) in
             if !success {
                 if isRefreshToken {
                     self.tokenHelper.refreshToken()

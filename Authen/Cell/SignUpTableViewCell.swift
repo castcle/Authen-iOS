@@ -56,9 +56,9 @@ class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBOutlet var signLabel: ActiveLabel!
     @IBOutlet var agreeView: UIView!
     @IBOutlet var agreeIcon: UIImageView!
-    
+
     var viewModel = SignUpViewModel()
-    
+
     private var isPasswordValid: Bool {
         self.checkCharacterCount()
         self.checkCharacterType()
@@ -75,10 +75,10 @@ class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
             return true
         }
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.subTitleLabel.font = UIFont.asset(.regular, fontSize: .h4)
+        self.subTitleLabel.font = UIFont.asset(.regular, fontSize: .head4)
         self.subTitleLabel.textColor = UIColor.Asset.white
         self.emailLabel.font = UIFont.asset(.medium, fontSize: .body)
         self.emailLabel.textColor = UIColor.Asset.white
@@ -97,7 +97,7 @@ class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
         self.emailView.capsule(color: UIColor.Asset.darkGray)
         self.passwordView.capsule(color: UIColor.Asset.darkGray)
         self.confirmPasswordView.capsule(color: UIColor.Asset.darkGray)
-        
+
         self.emailTextField.tag = 0
         self.emailTextField.delegate = self
         self.emailTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
@@ -107,7 +107,7 @@ class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
         self.confirmPasswordTextField.delegate = self
         self.confirmPasswordTextField.tag = 2
         self.confirmPasswordTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
-        
+
         self.emailAlertLabel.font = UIFont.asset(.regular, fontSize: .small)
         self.emailAlertLabel.textColor = UIColor.Asset.white
         self.emailAlertLabel.isHidden = true
@@ -125,7 +125,7 @@ class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
         self.agreeView.custom(color: UIColor.Asset.white, cornerRadius: 2.0)
         self.setupContinueButton(isPasswordValid: false)
         self.setupAgreeView()
-        
+
         self.signLabel.customize { label in
             label.font = UIFont.asset(.regular, fontSize: .body)
             label.numberOfLines = 1
@@ -134,12 +134,12 @@ class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
             label.enabledTypes = [signInType]
             label.customColor[signInType] = UIColor.Asset.lightBlue
             label.customSelectedColor[signInType] = UIColor.Asset.lightGray
-            label.handleCustomTap(for: signInType) { element in
+            label.handleCustomTap(for: signInType) { _ in
                 self.endEditing(true)
                 Utility.currentViewController().navigationController?.popViewController(animated: true)
             }
         }
-        
+
         self.termLabel.customize { label in
             label.font = UIFont.asset(.regular, fontSize: .overline)
             label.numberOfLines = 1
@@ -148,22 +148,22 @@ class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
             label.enabledTypes = [termType]
             label.customColor[termType] = UIColor.Asset.lightBlue
             label.customSelectedColor[termType] = UIColor.Asset.lightGray
-            label.handleCustomTap(for: termType) { element in
+            label.handleCustomTap(for: termType) { _ in
                 self.endEditing(true)
                 Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(URL(string: Environment.userAgreement)!)), animated: true)
             }
         }
-        
+
         self.viewModel.didCheckEmailExistsFinish = {
             self.emailTextField.isEnabled = true
             self.setupContinueButton(isPasswordValid: self.isPasswordValid)
             if self.viewModel.isEmailExist {
                 self.emailAlertLabel.isHidden = false
-                self.emailAlertLabel.text  = Localization.registerCheckEmail.alertEmailInvalid.text
+                self.emailAlertLabel.text  = Localization.RegisterCheckEmail.alertEmailInvalid.text
                 self.emailAlertLabel.textColor = UIColor.Asset.denger
             } else {
                 self.emailAlertLabel.isHidden = false
-                self.emailAlertLabel.text  = Localization.registerCheckEmail.alertEmailValid.text
+                self.emailAlertLabel.text  = Localization.RegisterCheckEmail.alertEmailValid.text
                 self.emailAlertLabel.textColor = UIColor.Asset.lightBlue
             }
         }
@@ -172,7 +172,7 @@ class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField.tag == 0 {
             self.passwordTextField.becomeFirstResponder()
@@ -183,13 +183,13 @@ class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
         }
         return true
     }
-    
+
     func textFieldDidEndEditing(_ textField: UITextField) {
         if textField.tag == 0 {
             let email: String = textField.text ?? ""
             if email.isEmpty {
                 self.emailAlertLabel.isHidden = true
-                self.emailAlertLabel.text  = Localization.registerCheckEmail.alertNotice.text
+                self.emailAlertLabel.text  = Localization.RegisterCheckEmail.alertNotice.text
                 self.emailAlertLabel.textColor = UIColor.Asset.white
             } else if email.isEmail {
                 textField.isEnabled = false
@@ -197,12 +197,12 @@ class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
                 self.viewModel.checkEmailExists()
             } else {
                 self.emailAlertLabel.isHidden = false
-                self.emailAlertLabel.text  = Localization.registerCheckEmail.alertWrongFormat.text
+                self.emailAlertLabel.text  = Localization.RegisterCheckEmail.alertWrongFormat.text
                 self.emailAlertLabel.textColor = UIColor.Asset.denger
             }
         }
     }
-    
+
     @objc func textFieldDidChange(_ textField: UITextField) {
         if textField.tag == 0 {
             self.emailAlertLabel.isHidden = true
@@ -210,9 +210,9 @@ class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
             self.setupContinueButton(isPasswordValid: self.isPasswordValid)
         }
     }
-    
+
     private func setupContinueButton(isPasswordValid: Bool) {
-        self.nextButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .h4)
+        self.nextButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .head4)
         if isPasswordValid && !self.viewModel.isEmailExist && self.viewModel.isAgree {
             self.nextButton.setTitleColor(UIColor.Asset.white, for: .normal)
             self.nextButton.setBackgroundImage(UIColor.Asset.lightBlue.toImage(), for: .normal)
@@ -223,7 +223,7 @@ class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
             self.nextButton.capsule(color: UIColor.clear, borderWidth: 1, borderColor: UIColor.Asset.black)
         }
     }
-    
+
     private func setupAgreeView() {
         if self.viewModel.isAgree {
             self.agreeIcon.image = UIImage.init(icon: .castcle(.checkmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.lightBlue)
@@ -231,7 +231,7 @@ class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
             self.agreeIcon.image = UIImage()
         }
     }
-    
+
     private func checkCharacterCount() {
         if self.passwordTextField.text!.count < 6 || self.passwordTextField.text!.count > 20 {
             self.limitCharLabel.textColor = UIColor.Asset.gray
@@ -241,7 +241,7 @@ class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
             self.charCountImage.image = UIImage.init(icon: .castcle(.addWithCheckmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.lightBlue)
         }
     }
-    
+
     private func checkCharacterType() {
         if self.passwordTextField.text!.isPassword {
             self.typeCharLabel.textColor = UIColor.Asset.lightBlue
@@ -251,7 +251,7 @@ class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
             self.charTypeImage.image = UIImage.init(icon: .castcle(.addWithCheckmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.gray)
         }
     }
-    
+
     private func checkPasswordNotMatch() {
         if !(self.confirmPasswordTextField.text!.isEmpty) && (self.passwordTextField.text! == self.confirmPasswordTextField.text!) {
             self.passwordNotMatchLabel.textColor = UIColor.Asset.lightBlue
@@ -261,7 +261,7 @@ class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
             self.passwordNotMatchImage.image = UIImage.init(icon: .castcle(.addWithCheckmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.gray)
         }
     }
-    
+
     @IBAction func showPasswordAction(_ sender: Any) {
         self.passwordTextField.isSecureTextEntry.toggle()
         if self.passwordTextField.isSecureTextEntry {
@@ -270,7 +270,7 @@ class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
             self.showPasswordButton.setImage(UIImage.init(icon: .castcle(.show), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.lightBlue).withRenderingMode(.alwaysOriginal), for: .normal)
         }
     }
-    
+
     @IBAction func showConfirmPasswordAction(_ sender: Any) {
         self.confirmPasswordTextField.isSecureTextEntry.toggle()
         if self.confirmPasswordTextField.isSecureTextEntry {
@@ -279,13 +279,13 @@ class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
             self.showConfirmPasswordButton.setImage(UIImage.init(icon: .castcle(.show), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.lightBlue).withRenderingMode(.alwaysOriginal), for: .normal)
         }
     }
-    
+
     @IBAction func agreeAction(_ sender: Any) {
         self.viewModel.isAgree.toggle()
         self.setupContinueButton(isPasswordValid: self.isPasswordValid)
         self.setupAgreeView()
     }
-    
+
     @IBAction func nextAction(_ sender: Any) {
         self.endEditing(true)
         if self.isPasswordValid && !self.viewModel.isEmailExist && self.viewModel.isAgree {

@@ -34,10 +34,10 @@ import JGProgressHUD
 class EnterCodeViewController: UIViewController {
 
     @IBOutlet var tableView: UITableView!
-    
+
     var viewModel = EnterCodeViewModel(verifyCodeType: .password)
     let hud = JGProgressHUD()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.Asset.darkGraphiteBlue
@@ -46,16 +46,16 @@ class EnterCodeViewController: UIViewController {
         self.setupNavBar()
         self.viewModel.delegate = self
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         Defaults[.screenId] = ""
     }
-    
+
     func setupNavBar() {
         self.customNavigationBar(.secondary, title: "")
     }
-    
+
     func configureTableView() {
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -68,7 +68,7 @@ class EnterCodeViewController: UIViewController {
         self.viewModel.authenRequest.payload.objective = .forgotPassword
         Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.changePassword(ChangePasswordViewModel(.forgotPassword, authenRequest: self.viewModel.authenRequest))), animated: true)
     }
-    
+
     private func gotoMergeSuccess() {
         Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.mergeAccountSuccess), animated: true)
     }
@@ -85,11 +85,11 @@ extension EnterCodeViewController: EnterCodeViewModelDelegate {
             }
         }
     }
-    
+
     func didRequestOtpFinish(success: Bool) {
         self.hud.dismiss()
     }
-    
+
     func didError() {
         self.hud.dismiss()
     }
@@ -99,11 +99,11 @@ extension EnterCodeViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: AuthenNibVars.TableViewCell.verifyEmailOtp, for: indexPath as IndexPath) as? VerifyEmailOtpTableViewCell
         cell?.backgroundColor = UIColor.clear
@@ -119,7 +119,7 @@ extension EnterCodeViewController: VerifyEmailOtpTableViewCellDelegate {
         self.hud.show(in: self.view)
         self.viewModel.requestOtp()
     }
-    
+
     func didConfirm(_ cell: VerifyEmailOtpTableViewCell, pin: String) {
         self.hud.textLabel.text = "Verifying"
         self.hud.show(in: self.view)

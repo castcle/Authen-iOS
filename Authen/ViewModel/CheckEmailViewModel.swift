@@ -29,7 +29,7 @@ import Core
 import Networking
 import SwiftyJSON
 
-public protocol CheckEmailViewModelDelegate {
+public protocol CheckEmailViewModelDelegate: AnyObject {
     func didRequestOtpFinish(success: Bool)
 }
 
@@ -42,7 +42,7 @@ class CheckEmailViewModel {
     public init() {
         self.tokenHelper.delegate = self
     }
-    
+
     func requestOtp() {
         self.authenticationRepository.requestOtp(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in
             if success {

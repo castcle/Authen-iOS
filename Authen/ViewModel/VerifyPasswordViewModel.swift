@@ -29,23 +29,22 @@ import Core
 import Networking
 import SwiftyJSON
 
-public protocol VerifyPasswordViewModelDelegate {
+public protocol VerifyPasswordViewModelDelegate: AnyObject {
     func didVerificationPasswordFinish(success: Bool)
 }
 
 class VerifyPasswordViewModel {
-    
+
     public var delegate: VerifyPasswordViewModelDelegate?
-    
     var authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()
     var authenRequest: AuthenRequest = AuthenRequest()
     let tokenHelper: TokenHelper = TokenHelper()
 
-    //MARK: Input
+    // MARK: - Input
     public init() {
         self.tokenHelper.delegate = self
     }
-    
+
     public func verifyPassword() {
         self.authenRequest.objective = .changePassword
         self.authenticationRepository.verifyPassword(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in

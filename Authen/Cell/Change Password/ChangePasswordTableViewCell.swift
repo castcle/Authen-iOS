@@ -48,10 +48,10 @@ class ChangePasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBOutlet var charCountImage: UIImageView!
     @IBOutlet var charTypeImage: UIImageView!
     @IBOutlet var passwordNotMatchImage: UIImageView!
-    
+
     private var viewModel = ChangePasswordViewModel(.changePassword)
     let hud = JGProgressHUD()
-    
+
     private var isCanContinue: Bool {
         self.checkCharacterCount()
         self.checkCharacterType()
@@ -68,11 +68,11 @@ class ChangePasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
             return true
         }
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         self.setupContinueButton(isActive: self.isCanContinue)
-        self.headlineLabel.font = UIFont.asset(.regular, fontSize: .h2)
+        self.headlineLabel.font = UIFont.asset(.regular, fontSize: .head2)
         self.headlineLabel.textColor = UIColor.Asset.white
         self.limitCharLabel.font = UIFont.asset(.regular, fontSize: .overline)
         self.limitCharLabel.textColor = UIColor.Asset.gray
@@ -108,15 +108,15 @@ class ChangePasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
+
     func configCell(viewModel: ChangePasswordViewModel) {
         self.viewModel = viewModel
         self.viewModel.delegate = self
         self.hud.textLabel.text = "Creating"
     }
-    
+
     private func setupContinueButton(isActive: Bool) {
-        self.applyButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .h4)
+        self.applyButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .head4)
         if isActive {
             self.applyButton.setTitleColor(UIColor.Asset.white, for: .normal)
             self.applyButton.setBackgroundImage(UIColor.Asset.lightBlue.toImage(), for: .normal)
@@ -127,7 +127,7 @@ class ChangePasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
             self.applyButton.capsule(color: UIColor.clear, borderWidth: 1, borderColor: UIColor.Asset.black)
         }
     }
-    
+
     private func checkCharacterCount() {
         if self.passwordTextField.text!.count < 6 || self.passwordTextField.text!.count > 20 {
             self.limitCharLabel.textColor = UIColor.Asset.gray
@@ -137,7 +137,7 @@ class ChangePasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
             self.charCountImage.image = UIImage.init(icon: .castcle(.addWithCheckmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.lightBlue)
         }
     }
-    
+
     private func checkCharacterType() {
         if self.passwordTextField.text!.isPassword {
             self.typeCharLabel.textColor = UIColor.Asset.lightBlue
@@ -147,7 +147,7 @@ class ChangePasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
             self.charTypeImage.image = UIImage.init(icon: .castcle(.addWithCheckmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.gray)
         }
     }
-    
+
     private func checkPasswordNotMatch() {
         if self.passwordTextField.text! == self.confirmPasswordTextField.text! {
             self.passwordNotMatchLabel.textColor = UIColor.Asset.lightBlue
@@ -157,11 +157,11 @@ class ChangePasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
             self.passwordNotMatchImage.image = UIImage.init(icon: .castcle(.addWithCheckmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.gray)
         }
     }
-    
+
     @objc func textFieldDidChange(_ textField: UITextField) {
         self.setupContinueButton(isActive: self.isCanContinue)
     }
-    
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField.tag == 0 {
             self.confirmPasswordTextField.becomeFirstResponder()
@@ -170,7 +170,7 @@ class ChangePasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
         }
         return true
     }
-    
+
     @IBAction func showPasswordAction(_ sender: Any) {
         self.passwordTextField.isSecureTextEntry.toggle()
         if self.passwordTextField.isSecureTextEntry {
@@ -179,7 +179,7 @@ class ChangePasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
             self.showPasswordButton.setImage(UIImage.init(icon: .castcle(.show), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.lightBlue).withRenderingMode(.alwaysOriginal), for: .normal)
         }
     }
-    
+
     @IBAction func showConfirmPasswordAction(_ sender: Any) {
         self.confirmPasswordTextField.isSecureTextEntry.toggle()
         if self.confirmPasswordTextField.isSecureTextEntry {
@@ -188,7 +188,7 @@ class ChangePasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
             self.showConfirmPasswordButton.setImage(UIImage.init(icon: .castcle(.show), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.lightBlue).withRenderingMode(.alwaysOriginal), for: .normal)
         }
     }
-    
+
     @IBAction func applyAction(_ sender: Any) {
         self.endEditing(true)
         if self.isCanContinue {
