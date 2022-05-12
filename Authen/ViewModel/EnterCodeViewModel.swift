@@ -120,22 +120,7 @@ public class EnterCodeViewModel {
                     try realm.write {
                         realm.delete(pageRealm)
                     }
-                    try realm.write {
-                        pages.forEach { page in
-                            let pageInfo = UserInfo(json: page)
-                            let pageTemp = Page()
-                            pageTemp.id = pageInfo.id
-                            pageTemp.castcleId = pageInfo.castcleId
-                            pageTemp.displayName = pageInfo.displayName
-                            pageTemp.avatar = pageInfo.images.avatar.thumbnail
-                            pageTemp.cover = pageInfo.images.cover.fullHd
-                            pageTemp.overview = pageInfo.overview
-                            pageTemp.official = pageInfo.verified.official
-                            pageTemp.isSyncTwitter = !pageInfo.syncSocial.twitter.socialId.isEmpty
-                            pageTemp.isSyncFacebook = !pageInfo.syncSocial.facebook.socialId.isEmpty
-                            realm.add(pageTemp, update: .modified)
-                        }
-                    }
+                    UserHelper.shared.updatePage(pages: pages)
                     UserManager.shared.setUserRole(userRole: .user)
                     UserManager.shared.setAccessToken(token: accessToken)
                     UserManager.shared.setRefreshToken(token: refreshToken)
@@ -159,10 +144,8 @@ public class EnterCodeViewModel {
         self.notificationRequest.uuid = Defaults[.deviceUuid]
         self.notificationRequest.firebaseToken = Defaults[.firebaseToken]
         self.notificationRepository.registerToken(notificationRequest: self.notificationRequest) { (success, _, isRefreshToken) in
-            if !success {
-                if isRefreshToken {
-                    self.tokenHelper.refreshToken()
-                }
+            if !success && isRefreshToken {
+                self.tokenHelper.refreshToken()
             }
         }
     }
