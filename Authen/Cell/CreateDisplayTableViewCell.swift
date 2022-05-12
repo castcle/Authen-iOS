@@ -48,7 +48,7 @@ class CreateDisplayTableViewCell: UITableViewCell, UITextFieldDelegate {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.titleLabel.font = UIFont.asset(.regular, fontSize: .head4)
+        self.titleLabel.font = UIFont.asset(.bold, fontSize: .head4)
         self.titleLabel.textColor = UIColor.Asset.white
         self.subTitleLabel.font = UIFont.asset(.regular, fontSize: .body)
         self.subTitleLabel.textColor = UIColor.Asset.white
@@ -156,10 +156,10 @@ class CreateDisplayTableViewCell: UITableViewCell, UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         if textField.tag == 1 {
             let displayName = textField.text ?? ""
-            self.viewModel.authenRequest.payload.displayName = displayName
-            if !self.viewModel.authenRequest.payload.displayName.isEmpty && !self.viewModel.isCastcleIdExist {
+            self.viewModel.authenRequest.displayName = displayName
+            if !self.viewModel.authenRequest.displayName.isEmpty && !self.viewModel.isCastcleIdExist {
                 self.setupNextButton(isActive: true)
-            } else if !self.viewModel.authenRequest.payload.displayName.isEmpty && self.viewModel.isCastcleIdExist {
+            } else if !self.viewModel.authenRequest.displayName.isEmpty && self.viewModel.isCastcleIdExist {
                 self.hud.textLabel.text = "Loading"
                 self.hud.show(in: Utility.currentViewController().view)
                 self.castcleIdTextField.isEnabled = false
@@ -175,7 +175,7 @@ class CreateDisplayTableViewCell: UITableViewCell, UITextFieldDelegate {
             } else {
                 self.hud.textLabel.text = "Checking"
                 self.hud.show(in: Utility.currentViewController().view)
-                self.viewModel.authenRequest.payload.castcleId = self.castcleId(displayCastcleId: textField.text!)
+                self.viewModel.authenRequest.castcleId = self.castcleId(displayCastcleId: textField.text!)
                 self.castcleIdTextField.isEnabled = false
                 self.displayNameTextField.isEnabled = false
                 self.viewModel.checkCastcleIdExists()
@@ -185,7 +185,7 @@ class CreateDisplayTableViewCell: UITableViewCell, UITextFieldDelegate {
 
     @IBAction func nextAction(_ sender: Any) {
         self.endEditing(true)
-        if self.viewModel.authenRequest.payload.castcleId.isCastcleId && !self.viewModel.isCastcleIdExist && self.viewModel.authenRequest.payload.castcleId.count <= 30 && !self.viewModel.authenRequest.payload.displayName.isEmpty {
+        if self.viewModel.authenRequest.castcleId.isCastcleId && !self.viewModel.isCastcleIdExist && self.viewModel.authenRequest.castcleId.count <= 30 && !self.viewModel.authenRequest.displayName.isEmpty {
             self.hud.textLabel.text = "Creating"
             self.hud.show(in: Utility.currentViewController().view)
             self.viewModel.register()
@@ -196,7 +196,7 @@ class CreateDisplayTableViewCell: UITableViewCell, UITextFieldDelegate {
 extension CreateDisplayTableViewCell: CreateDisplayNameViewModelDelegate {
     func didSuggestCastcleIdFinish(suggestCastcleId: String) {
         self.hud.dismiss()
-        self.viewModel.authenRequest.payload.castcleId = suggestCastcleId
+        self.viewModel.authenRequest.castcleId = suggestCastcleId
         self.viewModel.isCastcleIdExist = false
         self.castcleIdTextField.isEnabled = true
         self.displayNameTextField.isEnabled = true

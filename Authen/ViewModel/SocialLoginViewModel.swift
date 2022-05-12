@@ -46,8 +46,7 @@ class SocialLoginViewModel {
     var state: State = .none
 
     // MARK: - Input
-    public init(authenRequest: AuthenRequest = AuthenRequest()) {
-        self.authenRequest = authenRequest
+    public init() {
         self.tokenHelper.delegate = self
     }
 

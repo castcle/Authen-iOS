@@ -193,7 +193,7 @@ class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
                 self.emailAlertLabel.textColor = UIColor.Asset.white
             } else if email.isEmail {
                 textField.isEnabled = false
-                self.viewModel.authenRequest.payload.email = email
+                self.viewModel.authenRequest.email = email
                 self.viewModel.checkEmailExists()
             } else {
                 self.emailAlertLabel.isHidden = false
@@ -290,7 +290,7 @@ class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
         self.endEditing(true)
         if self.isPasswordValid && !self.viewModel.isEmailExist && self.viewModel.isAgree {
             Utility.currentViewController().navigationController?.setNavigationBarHidden(false, animated: true)
-            self.viewModel.authenRequest.payload.password = self.passwordTextField.text!
+            self.viewModel.authenRequest.password = self.passwordTextField.text!
             Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.createDisplayName(CreateDisplayNameViewModel(authenRequest: self.viewModel.authenRequest))), animated: true)
         }
     }
