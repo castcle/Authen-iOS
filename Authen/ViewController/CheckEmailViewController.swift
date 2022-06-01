@@ -85,12 +85,10 @@ class CheckEmailViewController: UIViewController, UITextFieldDelegate {
         self.searchButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .head4)
         if isActive {
             self.searchButton.setTitleColor(UIColor.Asset.white, for: .normal)
-            self.searchButton.setBackgroundImage(UIColor.Asset.lightBlue.toImage(), for: .normal)
-            self.searchButton.capsule(color: UIColor.clear, borderWidth: 1, borderColor: UIColor.clear)
+            self.searchButton.capsule(color: UIColor.Asset.lightBlue, borderWidth: 1, borderColor: UIColor.clear)
         } else {
-            self.searchButton.setTitleColor(UIColor.Asset.gray, for: .normal)
-            self.searchButton.setBackgroundImage(UIColor.Asset.darkGraphiteBlue.toImage(), for: .normal)
-            self.searchButton.capsule(color: UIColor.clear, borderWidth: 1, borderColor: UIColor.Asset.black)
+            self.searchButton.setTitleColor(UIColor.Asset.white, for: .normal)
+            self.searchButton.capsule(color: UIColor.Asset.gray, borderWidth: 1, borderColor: UIColor.Asset.black)
         }
     }
 
@@ -108,9 +106,8 @@ class CheckEmailViewController: UIViewController, UITextFieldDelegate {
         if self.isCanContinue {
             self.hud.show(in: self.view)
             self.viewModel.authenRequest.objective = .forgotPassword
-            self.viewModel.authenRequest.channel = .email
-            self.viewModel.authenRequest.payload.email = self.emailTextField.text ?? ""
-            self.viewModel.requestOtp()
+            self.viewModel.authenRequest.email = self.emailTextField.text ?? ""
+            self.viewModel.requestOtpWithEmail()
         }
     }
 }

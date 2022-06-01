@@ -106,7 +106,8 @@ class OldPasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
         if self.isCanContinue {
             self.hud.show(in: Utility.currentViewController().view)
             self.applyButton.isEnabled = false
-            self.viewModel.authenRequest.payload.password = self.passwordTextField.text ?? ""
+            self.viewModel.authenRequest.email = UserManager.shared.email
+            self.viewModel.authenRequest.password = self.passwordTextField.text ?? ""
             self.viewModel.verifyPassword()
         }
     }

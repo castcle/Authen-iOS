@@ -54,9 +54,9 @@ public class ChangePasswordViewModel {
         self.tokenHelper.delegate = self
     }
 
-    public func changePasswordSubmit() {
+    public func changePassword() {
         self.state = .updatePassword
-        self.authenticationRepository.changePasswordSubmit(authenRequest: self.authenRequest) { (success, _, isRefreshToken) in
+        self.authenticationRepository.changePassword(authenRequest: self.authenRequest) { (success, _, isRefreshToken) in
             if success {
                 if self.changePasswordType == .createPassword {
                     self.getMe()
@@ -99,7 +99,7 @@ public class ChangePasswordViewModel {
 extension ChangePasswordViewModel: TokenHelperDelegate {
     public func didRefreshTokenFinish() {
         if self.state == .updatePassword {
-            self.changePasswordSubmit()
+            self.changePassword()
         } else if self.state == .getMe {
             self.getMe()
         }

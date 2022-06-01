@@ -52,7 +52,7 @@ class VerifyPasswordViewModel {
                 do {
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
-                    self.authenRequest.payload.refCode = json[JsonKey.refCode.rawValue].stringValue
+                    self.authenRequest.refCode = json[JsonKey.refCode.rawValue].stringValue
                     self.delegate?.didVerificationPasswordFinish(success: true)
                 } catch {}
             } else {

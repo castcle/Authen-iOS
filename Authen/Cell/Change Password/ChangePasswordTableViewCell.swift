@@ -194,8 +194,8 @@ class ChangePasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
         if self.isCanContinue {
             self.hud.show(in: Utility.currentViewController().view)
             self.applyButton.isEnabled = false
-            self.viewModel.authenRequest.payload.newPassword = self.passwordTextField.text ?? ""
-            self.viewModel.changePasswordSubmit()
+            self.viewModel.authenRequest.newPassword = self.passwordTextField.text ?? ""
+            self.viewModel.changePassword()
         }
     }
 }

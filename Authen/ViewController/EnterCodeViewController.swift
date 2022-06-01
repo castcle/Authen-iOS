@@ -108,7 +108,11 @@ extension EnterCodeViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: AuthenNibVars.TableViewCell.verifyEmailOtp, for: indexPath as IndexPath) as? VerifyEmailOtpTableViewCell
         cell?.backgroundColor = UIColor.clear
         cell?.delegate = self
-        cell?.configCell(email: self.viewModel.authenRequest.payload.email)
+        if self.viewModel.verifyCodeType == .password {
+            cell?.configCell(email: self.viewModel.authenRequest.email)
+        } else if self.viewModel.verifyCodeType == .mergeAccount {
+            cell?.configCell(email: self.viewModel.authenRequest.payload.email)
+        }
         return cell ?? VerifyEmailOtpTableViewCell()
     }
 }
@@ -117,13 +121,22 @@ extension EnterCodeViewController: VerifyEmailOtpTableViewCellDelegate {
     func didRequestOtp(_ cell: VerifyEmailOtpTableViewCell) {
         self.hud.textLabel.text = "Sending"
         self.hud.show(in: self.view)
-        self.viewModel.requestOtp()
+        if self.viewModel.verifyCodeType == .password {
+            self.viewModel.requestOtpWithEmail()
+        } else if self.viewModel.verifyCodeType == .mergeAccount {
+            self.viewModel.requestOtp()
+        }
     }
 
     func didConfirm(_ cell: VerifyEmailOtpTableViewCell, pin: String) {
         self.hud.textLabel.text = "Verifying"
         self.hud.show(in: self.view)
-        self.viewModel.authenRequest.payload.otp = pin
-        self.viewModel.verifyOtp()
+        if self.viewModel.verifyCodeType == .password {
+            self.viewModel.authenRequest.otp = pin
+            self.viewModel.verifyOtpWithEmail()
+        } else if self.viewModel.verifyCodeType == .mergeAccount {
+            self.viewModel.authenRequest.payload.otp = pin
+            self.viewModel.verifyOtp()
+        }
     }
 }

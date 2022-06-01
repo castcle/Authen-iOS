@@ -79,6 +79,32 @@ public class EnterCodeViewModel {
         }
     }
 
+    func verifyOtpWithEmail() {
+        self.state = .verifyOtpWithEmail
+        self.authenticationRepository.verificationOtpWithEmail(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in
+            if success {
+                do {
+                    let rawJson = try response.mapJSON()
+                    let json = JSON(rawJson)
+                    self.authenRequest.refCode = json[JsonKey.refCode.rawValue].stringValue
+                    if self.authenRequest.objective == .mergeAccount {
+                        let accessToken = json[JsonKey.accessToken.rawValue].stringValue
+                        UserManager.shared.setAccessToken(token: accessToken)
+                        self.connectWithSocial()
+                    } else {
+                        self.delegate?.didVerifyOtpFinish(success: true)
+                    }
+                } catch {}
+            } else {
+                if isRefreshToken {
+                    self.tokenHelper.refreshToken()
+                } else {
+                    self.delegate?.didVerifyOtpFinish(success: false)
+                }
+            }
+        }
+    }
+
     func requestOtp() {
         self.state = .requestOtp
         self.authenticationRepository.requestOtp(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in
@@ -87,6 +113,26 @@ public class EnterCodeViewModel {
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
                     self.authenRequest.payload.refCode = json[JsonKey.refCode.rawValue].stringValue
+                    self.delegate?.didRequestOtpFinish(success: true)
+                } catch {}
+            } else {
+                if isRefreshToken {
+                    self.tokenHelper.refreshToken()
+                } else {
+                    self.delegate?.didRequestOtpFinish(success: false)
+                }
+            }
+        }
+    }
+
+    func requestOtpWithEmail() {
+        self.state = .requestOtpWithEmail
+        self.authenticationRepository.requestOtpWithEmail(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in
+            if success {
+                do {
+                    let rawJson = try response.mapJSON()
+                    let json = JSON(rawJson)
+                    self.authenRequest.refCode = json[JsonKey.refCode.rawValue].stringValue
                     self.delegate?.didRequestOtpFinish(success: true)
                 } catch {}
             } else {
@@ -155,8 +201,12 @@ extension EnterCodeViewModel: TokenHelperDelegate {
     public func didRefreshTokenFinish() {
         if self.state == .verifyOtp {
             self.verifyOtp()
+        } else if self.state == .verifyOtpWithEmail {
+            self.verifyOtpWithEmail()
         } else if self.state == .requestOtp {
             self.requestOtp()
+        } else if self.state == .requestOtpWithEmail {
+            self.requestOtpWithEmail()
         } else if self.state == .connectSocial {
             self.connectWithSocial()
         } else if self.state == .registerToken {
