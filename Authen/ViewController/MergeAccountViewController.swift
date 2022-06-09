@@ -105,8 +105,8 @@ class MergeAccountViewController: UIViewController {
         self.hud.show(in: self.view)
         self.viewModel.authenRequest.objective = .mergeAccount
         self.viewModel.authenRequest.channel = .email
-        self.viewModel.authenRequest.payload.email = self.viewModel.userInfo.email
-        self.viewModel.requestOtp()
+        self.viewModel.authenRequest.email = self.viewModel.userInfo.email
+        self.viewModel.requestOtpWithEmail()
     }
 }
 
