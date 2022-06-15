@@ -117,7 +117,7 @@ extension OldPasswordTableViewCell: VerifyPasswordViewModelDelegate {
     func didVerificationPasswordFinish(success: Bool) {
         self.hud.dismiss()
         if success {
-            self.viewModel.authenRequest.payload.objective = .changePassword
+            self.viewModel.authenRequest.objective = .changePassword
             Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.changePassword(ChangePasswordViewModel(.changePassword, authenRequest: self.viewModel.authenRequest))), animated: true)
         } else {
             self.applyButton.isEnabled = true

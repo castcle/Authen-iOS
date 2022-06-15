@@ -112,7 +112,7 @@ public class CreateDisplayNameViewModel {
                     UserManager.shared.setUserRole(userRole: .user)
                     UserManager.shared.setAccessToken(token: accessToken)
                     UserManager.shared.setRefreshToken(token: refreshToken)
-                    Defaults[.email] = self.authenRequest.payload.email
+                    Defaults[.email] = self.authenRequest.email
                     self.registerNotificationToken()
                     self.delegate?.didRegisterFinish(success: true)
                 } catch {}

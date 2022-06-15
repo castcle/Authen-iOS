@@ -65,7 +65,7 @@ class EnterCodeViewController: UIViewController {
     }
 
     private func gotoCreatePassword() {
-        self.viewModel.authenRequest.payload.objective = .forgotPassword
+        self.viewModel.authenRequest.objective = .forgotPassword
         Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.changePassword(ChangePasswordViewModel(.forgotPassword, authenRequest: self.viewModel.authenRequest))), animated: true)
     }
 
