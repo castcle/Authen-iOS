@@ -139,7 +139,7 @@ class ChangePasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
 
     private func checkCharacterType() {
-        if self.passwordTextField.text!.isPassword {
+        if self.passwordTextField.text!.isMatchChar {
             self.typeCharLabel.textColor = UIColor.Asset.lightBlue
             self.charTypeImage.image = UIImage.init(icon: .castcle(.addWithCheckmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.lightBlue)
         } else {
@@ -159,6 +159,8 @@ class ChangePasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
 
     @objc func textFieldDidChange(_ textField: UITextField) {
+        let textValue = textField.text ?? ""
+        textField.text = textValue.substringWithRange(range: 250)
         self.setupContinueButton(isActive: self.isCanContinue)
     }
 

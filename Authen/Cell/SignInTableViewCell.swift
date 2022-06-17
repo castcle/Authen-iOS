@@ -165,6 +165,8 @@ class SignInTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
 
     @objc func textFieldDidChange(_ textField: UITextField) {
+        let textValue = textField.text ?? ""
+        textField.text = textValue.substringWithRange(range: 250)
         self.setupLoginButton(isActive: self.isCanLogin)
     }
 
