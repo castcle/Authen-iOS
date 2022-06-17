@@ -160,7 +160,7 @@ class SignInTableViewCell: UITableViewCell, UITextFieldDelegate {
             self.loginButton.capsule(color: UIColor.Asset.lightBlue, borderWidth: 1, borderColor: UIColor.Asset.lightBlue)
         } else {
             self.loginButton.setTitleColor(UIColor.Asset.white, for: .normal)
-            self.loginButton.capsule(color: UIColor.Asset.gray, borderWidth: 1, borderColor: UIColor.Asset.black)
+            self.loginButton.capsule(color: UIColor.Asset.gray, borderWidth: 1, borderColor: UIColor.Asset.gray)
         }
     }
 

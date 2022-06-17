@@ -119,7 +119,7 @@ extension SignInViewController: SignInTableViewCellDelegate {
                 let email: String = profile?.email ?? ""
                 let fullName: String = profile?.name ?? ""
                 let accessToken: String = AccessToken.current?.tokenString ?? ""
-                let profilePicUrl: String = "https://graph.facebook.com/\(userId)/picture?type=large&access_token=\(accessToken)"
+                let profilePicUrl: String = ConstantUrl.facebookAvatar(userId, accessToken).path
                 var authenRequest: AuthenRequest = AuthenRequest()
                 authenRequest.provider = .facebook
                 authenRequest.socialId = userId

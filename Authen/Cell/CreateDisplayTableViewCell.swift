@@ -71,7 +71,7 @@ class CreateDisplayTableViewCell: UITableViewCell, UITextFieldDelegate {
         self.castcleIdAlertLabel.font = UIFont.asset(.regular, fontSize: .small)
         self.castcleIdAlertLabel.textColor = UIColor.Asset.denger
         self.castcleIdAlertLabel.isHidden = true
-        self.setupNextButton(isActive: false)
+        self.nextButton.activeButton(isActive: false)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -89,29 +89,16 @@ class CreateDisplayTableViewCell: UITableViewCell, UITextFieldDelegate {
 
     private func updateUI() {
         if self.viewModel.isCastcleIdExist {
-            self.setupNextButton(isActive: false)
+            self.nextButton.activeButton(isActive: false)
             self.castcleIdAlertLabel.isHidden = false
             self.castcleIdAlertLabel.text = "Castcle ID has been taken."
         } else {
             self.castcleIdAlertLabel.isHidden = true
             if self.displayNameTextField.text!.isEmpty {
-                self.setupNextButton(isActive: false)
+                self.nextButton.activeButton(isActive: false)
             } else {
-                self.setupNextButton(isActive: true)
+                self.nextButton.activeButton(isActive: true)
             }
-        }
-    }
-
-    private func setupNextButton(isActive: Bool) {
-        self.nextButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .head4)
-        if isActive {
-            self.nextButton.setTitleColor(UIColor.Asset.white, for: .normal)
-            self.nextButton.setBackgroundImage(UIColor.Asset.lightBlue.toImage(), for: .normal)
-            self.nextButton.capsule(color: UIColor.clear, borderWidth: 1, borderColor: UIColor.clear)
-        } else {
-            self.nextButton.setTitleColor(UIColor.Asset.gray, for: .normal)
-            self.nextButton.setBackgroundImage(UIColor.Asset.darkGraphiteBlue.toImage(), for: .normal)
-            self.nextButton.capsule(color: UIColor.clear, borderWidth: 1, borderColor: UIColor.Asset.black)
         }
     }
 
@@ -147,7 +134,7 @@ class CreateDisplayTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
 
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        self.setupNextButton(isActive: false)
+        self.nextButton.activeButton(isActive: false)
         if textField.tag == 0 {
             self.castcleIdAlertLabel.isHidden = true
         }
@@ -158,7 +145,7 @@ class CreateDisplayTableViewCell: UITableViewCell, UITextFieldDelegate {
             let displayName = textField.text ?? ""
             self.viewModel.authenRequest.displayName = displayName
             if !self.viewModel.authenRequest.displayName.isEmpty && !self.viewModel.isCastcleIdExist {
-                self.setupNextButton(isActive: true)
+                self.nextButton.activeButton(isActive: true)
             } else if !self.viewModel.authenRequest.displayName.isEmpty && self.viewModel.isCastcleIdExist {
                 self.hud.textLabel.text = "Loading"
                 self.hud.show(in: Utility.currentViewController().view)
@@ -166,12 +153,12 @@ class CreateDisplayTableViewCell: UITableViewCell, UITextFieldDelegate {
                 self.displayNameTextField.isEnabled = false
                 self.viewModel.suggestCastcleId()
             } else {
-                self.setupNextButton(isActive: false)
+                self.nextButton.activeButton(isActive: false)
             }
         } else if textField.tag == 0 {
             let idCastcle = textField.text ?? ""
             if idCastcle.isEmpty {
-                self.setupNextButton(isActive: false)
+                self.nextButton.activeButton(isActive: false)
             } else {
                 self.hud.textLabel.text = "Checking"
                 self.hud.show(in: Utility.currentViewController().view)

@@ -78,32 +78,19 @@ class VerifyEmailOtpTableViewCell: UITableViewCell {
             guard let self = self else { return }
             if pin.count == 6 {
                 self.pin = pin
-                self.setupNextButton(isActive: true)
+                self.confirmButton.activeButton(isActive: true)
             } else {
-                self.setupNextButton(isActive: false)
+                self.confirmButton.activeButton(isActive: false)
             }
         }
 
         self.countdownLabel.text = "Request code again \(self.secondsToTime(seconds: self.secondsRemaining)) sec"
         self.setupCountdown()
-        self.setupNextButton(isActive: false)
+        self.confirmButton.activeButton(isActive: false)
     }
 
     func configCell(email: String) {
         self.subTitleLabel.text = "You will receive a 6 digit code to reset you password.  Verification code will be sent to \(email)"
-    }
-
-    private func setupNextButton(isActive: Bool) {
-        self.confirmButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .head4)
-        if isActive {
-            self.confirmButton.setTitleColor(UIColor.Asset.white, for: .normal)
-            self.confirmButton.setBackgroundImage(UIColor.Asset.lightBlue.toImage(), for: .normal)
-            self.confirmButton.capsule(color: UIColor.clear, borderWidth: 1, borderColor: UIColor.clear)
-        } else {
-            self.confirmButton.setTitleColor(UIColor.Asset.gray, for: .normal)
-            self.confirmButton.setBackgroundImage(UIColor.Asset.darkGraphiteBlue.toImage(), for: .normal)
-            self.confirmButton.capsule(color: UIColor.clear, borderWidth: 1, borderColor: UIColor.Asset.black)
-        }
     }
 
     private func secondsToTime(seconds: Int) -> String {
