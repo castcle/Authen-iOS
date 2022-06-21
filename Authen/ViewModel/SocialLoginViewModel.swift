@@ -55,7 +55,6 @@ class SocialLoginViewModel {
         self.authenticationRepository.loginWithSocial(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in
             if success {
                 do {
-                    let realm = try Realm()
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
                     let code = json[JsonKey.code.rawValue].stringValue
@@ -79,11 +78,6 @@ class SocialLoginViewModel {
                             Defaults[.syncTwitter] = false
                         } else {
                             Defaults[.syncTwitter] = true
-                        }
-
-                        let pageRealm = realm.objects(Page.self)
-                        try realm.write {
-                            realm.delete(pageRealm)
                         }
                         UserHelper.shared.updatePage(pages: pages)
                         UserManager.shared.setUserRole(userRole: .user)

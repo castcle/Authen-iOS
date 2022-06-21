@@ -63,22 +63,15 @@ class LoginViewModel {
         self.authenticationRepository.login(loginRequest: self.loginRequest) { (success, response, isRefreshToken) in
             if success {
                 do {
-                    let realm = try Realm()
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
                     let accessToken = json[JsonKey.accessToken.rawValue].stringValue
                     let refreshToken = json[JsonKey.refreshToken.rawValue].stringValue
                     let profile = JSON(json[JsonKey.profile.rawValue].dictionaryValue)
                     let pages = json[JsonKey.pages.rawValue].arrayValue
-
                     UserHelper.shared.updateLocalProfile(user: UserInfo(json: profile))
                     UserHelper.shared.clearSeenContent()
                     NotifyHelper.shared.getBadges()
-
-                    let pageRealm = realm.objects(Page.self)
-                    try realm.write {
-                        realm.delete(pageRealm)
-                    }
                     UserHelper.shared.updatePage(pages: pages)
                     UserManager.shared.setUserRole(userRole: .user)
                     UserManager.shared.setAccessToken(token: accessToken)
