@@ -110,7 +110,7 @@ class MergeAccountViewController: UIViewController {
 }
 
 extension MergeAccountViewController: MergeAccountViewModelDelegate {
-    func didRequestOtpFinish(success: Bool) {
+    func didRequestOtpFinish(_ mergeAccountViewModel: MergeAccountViewModel, success: Bool) {
         self.hud.dismiss()
         if success {
             Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.enterCode(EnterCodeViewModel(verifyCodeType: .mergeAccount, authenRequest: self.viewModel.authenRequest))), animated: true)

@@ -75,7 +75,7 @@ class EnterCodeViewController: UIViewController {
 }
 
 extension EnterCodeViewController: EnterCodeViewModelDelegate {
-    func didVerifyOtpFinish(success: Bool) {
+    func didVerifyOtpFinish(_ enterCodeViewModel: EnterCodeViewModel, success: Bool) {
         self.hud.dismiss()
         if success {
             if self.viewModel.verifyCodeType == .password {
@@ -86,11 +86,11 @@ extension EnterCodeViewController: EnterCodeViewModelDelegate {
         }
     }
 
-    func didRequestOtpFinish(success: Bool) {
+    func didRequestOtpFinish(_ enterCodeViewModel: EnterCodeViewModel, success: Bool) {
         self.hud.dismiss()
     }
 
-    func didError() {
+    func didError(_ enterCodeViewModel: EnterCodeViewModel) {
         self.hud.dismiss()
     }
 }

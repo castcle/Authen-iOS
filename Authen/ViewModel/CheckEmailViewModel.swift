@@ -29,8 +29,8 @@ import Core
 import Networking
 import SwiftyJSON
 
-public protocol CheckEmailViewModelDelegate: AnyObject {
-    func didRequestOtpFinish(success: Bool)
+protocol CheckEmailViewModelDelegate: AnyObject {
+    func didRequestOtpFinish(_ checkEmailViewModel: CheckEmailViewModel, success: Bool)
 }
 
 class CheckEmailViewModel {
@@ -44,19 +44,20 @@ class CheckEmailViewModel {
     }
 
     func requestOtpWithEmail() {
+        
         self.authenticationRepository.requestOtpWithEmail(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in
             if success {
                 do {
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
                     self.authenRequest.refCode = json[JsonKey.refCode.rawValue].stringValue
-                    self.delegate?.didRequestOtpFinish(success: true)
+                    self.delegate?.didRequestOtpFinish(self, success: true)
                 } catch {}
             } else {
                 if isRefreshToken {
                     self.tokenHelper.refreshToken()
                 } else {
-                    self.delegate?.didRequestOtpFinish(success: false)
+                    self.delegate?.didRequestOtpFinish(self, success: false)
                 }
             }
         }

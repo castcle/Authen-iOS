@@ -113,7 +113,7 @@ class CheckEmailViewController: UIViewController, UITextFieldDelegate {
 }
 
 extension CheckEmailViewController: CheckEmailViewModelDelegate {
-    func didRequestOtpFinish(success: Bool) {
+    func didRequestOtpFinish(_ checkEmailViewModel: CheckEmailViewModel, success: Bool) {
         self.hud.dismiss()
         if success {
             Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.enterCode(EnterCodeViewModel(verifyCodeType: .password, authenRequest: self.viewModel.authenRequest))), animated: true)

@@ -31,7 +31,7 @@ import Networking
 import SwiftyJSON
 
 public protocol MergeAccountViewModelDelegate: AnyObject {
-    func didRequestOtpFinish(success: Bool)
+    func didRequestOtpFinish(_ mergeAccountViewModel: MergeAccountViewModel, success: Bool)
 }
 
 public class MergeAccountViewModel {
@@ -84,13 +84,13 @@ public class MergeAccountViewModel {
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
                     self.authenRequest.refCode = json[JsonKey.refCode.rawValue].stringValue
-                    self.delegate?.didRequestOtpFinish(success: true)
+                    self.delegate?.didRequestOtpFinish(self, success: true)
                 } catch {}
             } else {
                 if isRefreshToken {
                     self.tokenHelper.refreshToken()
                 } else {
-                    self.delegate?.didRequestOtpFinish(success: false)
+                    self.delegate?.didRequestOtpFinish(self, success: false)
                 }
             }
         }
