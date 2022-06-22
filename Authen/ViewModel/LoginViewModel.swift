@@ -65,17 +65,7 @@ class LoginViewModel {
                 do {
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
-                    let accessToken = json[JsonKey.accessToken.rawValue].stringValue
-                    let refreshToken = json[JsonKey.refreshToken.rawValue].stringValue
-                    let profile = JSON(json[JsonKey.profile.rawValue].dictionaryValue)
-                    let pages = json[JsonKey.pages.rawValue].arrayValue
-                    UserHelper.shared.updateLocalProfile(user: UserInfo(json: profile))
-                    UserHelper.shared.clearSeenContent()
-                    NotifyHelper.shared.getBadges()
-                    UserHelper.shared.updatePage(pages: pages)
-                    UserManager.shared.setUserRole(userRole: .user)
-                    UserManager.shared.setAccessToken(token: accessToken)
-                    UserManager.shared.setRefreshToken(token: refreshToken)
+                    UserHelper.shared.setupDataUserLogin(json: json)
                     self.registerNotificationToken()
                     self.delegate?.didLoginFinish(success: true)
                 } catch {}
