@@ -32,9 +32,9 @@ import RealmSwift
 import Defaults
 
 public protocol EnterCodeViewModelDelegate: AnyObject {
-    func didVerifyOtpFinish(_ enterCodeViewModel: EnterCodeViewModel, success: Bool)
-    func didRequestOtpFinish(_ enterCodeViewModel: EnterCodeViewModel, success: Bool)
-    func didError(_ enterCodeViewModel: EnterCodeViewModel)
+    func enterCodeDidVerifyOtpFinish(success: Bool)
+    func enterCodeDidRequestOtpFinish(success: Bool)
+    func enterCodeDidError()
 }
 
 public class EnterCodeViewModel {
@@ -66,14 +66,14 @@ public class EnterCodeViewModel {
                         UserManager.shared.setAccessToken(token: accessToken)
                         self.connectWithSocial()
                     } else {
-                        self.delegate?.didVerifyOtpFinish(self, success: true)
+                        self.delegate?.enterCodeDidVerifyOtpFinish(success: true)
                     }
                 } catch {}
             } else {
                 if isRefreshToken {
                     self.tokenHelper.refreshToken()
                 } else {
-                    self.delegate?.didVerifyOtpFinish(self, success: false)
+                    self.delegate?.enterCodeDidVerifyOtpFinish(success: false)
                 }
             }
         }
@@ -81,20 +81,19 @@ public class EnterCodeViewModel {
 
     func requestOtpWithEmail() {
         self.state = .requestOtpWithEmail
-        
         self.authenticationRepository.requestOtpWithEmail(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in
             if success {
                 do {
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
                     self.authenRequest.refCode = json[JsonKey.refCode.rawValue].stringValue
-                    self.delegate?.didRequestOtpFinish(self, success: true)
+                    self.delegate?.enterCodeDidRequestOtpFinish(success: true)
                 } catch {}
             } else {
                 if isRefreshToken {
                     self.tokenHelper.refreshToken()
                 } else {
-                    self.delegate?.didRequestOtpFinish(self, success: false)
+                    self.delegate?.enterCodeDidRequestOtpFinish(success: false)
                 }
             }
         }
@@ -119,15 +118,15 @@ public class EnterCodeViewModel {
                     UserManager.shared.setAccessToken(token: accessToken)
                     UserManager.shared.setRefreshToken(token: refreshToken)
                     self.registerNotificationToken()
-                    self.delegate?.didVerifyOtpFinish(self, success: true)
+                    self.delegate?.enterCodeDidVerifyOtpFinish(success: true)
                 } catch {
-                    self.delegate?.didVerifyOtpFinish(self, success: false)
+                    self.delegate?.enterCodeDidVerifyOtpFinish(success: false)
                 }
             } else {
                 if isRefreshToken {
                     self.tokenHelper.refreshToken()
                 } else {
-                    self.delegate?.didVerifyOtpFinish(self, success: false)
+                    self.delegate?.enterCodeDidVerifyOtpFinish(success: false)
                 }
             }
         }

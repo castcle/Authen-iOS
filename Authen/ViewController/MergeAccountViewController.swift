@@ -72,9 +72,9 @@ class MergeAccountViewController: UIViewController {
         self.socialAvatarImage.image = UIImage.Asset.userPlaceholder
         self.castcleAvatarImage.circle(color: UIColor.Asset.white)
         self.castcleAvatarImage.image = UIImage.Asset.userPlaceholder
-        self.sicialIconView.capsule(color: self.viewModel.color, borderWidth: 2, borderColor: UIColor.Asset.black)
+        self.sicialIconView.capsule(color: self.viewModel.authenRequest.provider.color, borderWidth: 2, borderColor: UIColor.Asset.black)
         self.castcleIconView.capsule(color: UIColor.Asset.black, borderWidth: 2, borderColor: UIColor.Asset.black)
-        self.socialIcon.image = self.viewModel.icon
+        self.socialIcon.image = self.viewModel.authenRequest.provider.icon
         self.castcleIcon.image = UIImage.init(icon: .castcle(.logo), size: CGSize(width: 23, height: 23), textColor: UIColor.Asset.white)
         self.nextIcon.image = UIImage.init(icon: .castcle(.next), size: CGSize(width: 23, height: 23), textColor: UIColor.Asset.white)
         let castcleAvatarUrl = URL(string: self.viewModel.userInfo.images.avatar.thumbnail)
@@ -110,7 +110,7 @@ class MergeAccountViewController: UIViewController {
 }
 
 extension MergeAccountViewController: MergeAccountViewModelDelegate {
-    func didRequestOtpFinish(_ mergeAccountViewModel: MergeAccountViewModel, success: Bool) {
+    func mergeAccountDidRequestOtpFinish(success: Bool) {
         self.hud.dismiss()
         if success {
             Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.enterCode(EnterCodeViewModel(verifyCodeType: .mergeAccount, authenRequest: self.viewModel.authenRequest))), animated: true)
