@@ -330,7 +330,7 @@
                 <outlet property="passwordTextField" destination="dSI-x3-VSR" id="Ucf-hQ-P3v"/>
                 <outlet property="passwordView" destination="crK-ZD-0mB" id="tti-dJ-OeQ"/>
                 <outlet property="seccondLineView" destination="zqQ-2G-K6E" id="yxv-yV-qy2"/>
-                <outlet property="showPasswordButton" destination="kmo-ky-rcp" id="Omm-cW-XFi"/>
+                <outlet property="showPasswordSignInButton" destination="kmo-ky-rcp" id="JsS-Ao-dfj"/>
                 <outlet property="signInLabel" destination="pbN-Nk-0mM" id="Udc-fD-W0x"/>
                 <outlet property="subTitleLabel" destination="e6n-14-GZ3" id="Oub-fT-9gh"/>
                 <outlet property="twitterImage" destination="U0O-Rn-NQY" id="oYU-fE-LJ4"/>
