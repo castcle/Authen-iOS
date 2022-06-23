@@ -71,6 +71,9 @@ class SocialLoginViewModel {
                         } else {
                             Defaults[.syncTwitter] = true
                         }
+                        if !registered {
+                            AdjustHelper.shared.sendAdjustAnalytic(eventType: .registration, userId: UserManager.shared.id, chennel: self.getAdjustChennel())
+                        }
                         self.registerNotificationToken()
                         self.delegate?.didSocialLoginFinish(success: true)
                     }
@@ -82,6 +85,20 @@ class SocialLoginViewModel {
                     self.delegate?.didSocialLoginFinish(success: false)
                 }
             }
+        }
+    }
+
+    private func getAdjustChennel() -> AdjustChennel {
+        if self.authenRequest.provider == .facebook {
+            return .facebook
+        } else if self.authenRequest.provider == .twitter {
+            return .twitter
+        } else if self.authenRequest.provider == .google {
+            return .google
+        } else if self.authenRequest.provider == .apple {
+            return .apple
+        } else {
+            return .unkown
         }
     }
 
