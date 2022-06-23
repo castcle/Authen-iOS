@@ -113,6 +113,7 @@ public class CreateDisplayNameViewModel {
                     UserManager.shared.setAccessToken(token: accessToken)
                     UserManager.shared.setRefreshToken(token: refreshToken)
                     Defaults[.email] = self.authenRequest.payload.email
+                    AdjustHelper.shared.sendAdjustAnalytic(eventType: .registration, userId: UserManager.shared.id, chennel: .email)
                     self.registerNotificationToken()
                     self.delegate?.didRegisterFinish(success: true)
                 } catch {}

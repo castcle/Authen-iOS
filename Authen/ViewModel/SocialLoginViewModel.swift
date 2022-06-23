@@ -89,6 +89,9 @@ class SocialLoginViewModel {
                         UserManager.shared.setUserRole(userRole: .user)
                         UserManager.shared.setAccessToken(token: accessToken)
                         UserManager.shared.setRefreshToken(token: refreshToken)
+                        if !registered {
+                            AdjustHelper.shared.sendAdjustAnalytic(eventType: .registration, userId: UserManager.shared.id, chennel: self.getAdjustChennel())
+                        }
                         self.registerNotificationToken()
                         self.delegate?.didSocialLoginFinish(success: true)
                     }
@@ -100,6 +103,20 @@ class SocialLoginViewModel {
                     self.delegate?.didSocialLoginFinish(success: false)
                 }
             }
+        }
+    }
+
+    private func getAdjustChennel() -> AdjustChennel {
+        if self.authenRequest.provider == .facebook {
+            return .facebook
+        } else if self.authenRequest.provider == .twitter {
+            return .twitter
+        } else if self.authenRequest.provider == .google {
+            return .google
+        } else if self.authenRequest.provider == .apple {
+            return .apple
+        } else {
+            return .unkown
         }
     }
 
