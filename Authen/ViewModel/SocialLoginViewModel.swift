@@ -72,7 +72,9 @@ class SocialLoginViewModel {
                             Defaults[.syncTwitter] = true
                         }
                         if !registered {
-                            AdjustHelper.shared.sendAdjustAnalytic(eventType: .registration, userId: UserManager.shared.id, chennel: self.getAdjustChennel())
+                            self.sendAnalytics(eventType: .registration)
+                        } else {
+                            self.sendAnalytics(eventType: .login)
                         }
                         self.registerNotificationToken()
                         self.delegate?.didSocialLoginFinish(success: true)
@@ -88,7 +90,15 @@ class SocialLoginViewModel {
         }
     }
 
-    private func getAdjustChennel() -> AdjustChennel {
+    private func sendAnalytics(eventType: TrackingEventType) {
+        let item = Analytic()
+        item.accountId = UserManager.shared.accountId
+        item.userId = UserManager.shared.id
+        item.channel = self.getTrackingChennel().rawValue
+        TrackingAnalyticHelper.shared.sendTrackingAnalytic(eventType: eventType, item: item)
+    }
+
+    private func getTrackingChennel() -> TrackingChennel {
         if self.authenRequest.provider == .facebook {
             return .facebook
         } else if self.authenRequest.provider == .twitter {

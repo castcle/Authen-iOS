@@ -104,7 +104,8 @@ public class CreateDisplayNameViewModel {
                     let json = JSON(rawJson)
                     UserHelper.shared.setupDataUserLogin(json: json)
                     Defaults[.email] = self.authenRequest.email
-                    AdjustHelper.shared.sendAdjustAnalytic(eventType: .registration, userId: UserManager.shared.id, chennel: .email)
+                    self.sendAnalytics()
+                    
                     self.registerNotificationToken()
                     self.delegate?.didRegisterFinish(success: true)
                 } catch {}
@@ -116,6 +117,14 @@ public class CreateDisplayNameViewModel {
                 }
             }
         }
+    }
+
+    private func sendAnalytics() {
+        let item = Analytic()
+        item.accountId = UserManager.shared.accountId
+        item.userId = UserManager.shared.id
+        item.channel = TrackingChennel.email.rawValue
+        TrackingAnalyticHelper.shared.sendTrackingAnalytic(eventType: .registration, item: item)
     }
 
     private func registerNotificationToken() {
