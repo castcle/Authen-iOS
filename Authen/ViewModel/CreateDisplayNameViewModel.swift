@@ -105,7 +105,6 @@ public class CreateDisplayNameViewModel {
                     UserHelper.shared.setupDataUserLogin(json: json)
                     Defaults[.email] = self.authenRequest.email
                     self.sendAnalytics()
-                    
                     self.registerNotificationToken()
                     self.delegate?.didRegisterFinish(success: true)
                 } catch {}
