@@ -83,6 +83,7 @@ class LoginViewModel {
                     UserManager.shared.setUserRole(userRole: .user)
                     UserManager.shared.setAccessToken(token: accessToken)
                     UserManager.shared.setRefreshToken(token: refreshToken)
+                    self.sendAnalytics()
                     self.registerNotificationToken()
                     self.delegate?.didLoginFinish(success: true)
                 } catch {}
@@ -94,6 +95,14 @@ class LoginViewModel {
                 }
             }
         }
+    }
+
+    private func sendAnalytics() {
+        let item = Analytic()
+        item.accountId = UserManager.shared.accountId
+        item.userId = UserManager.shared.id
+        item.channel = TrackingChennel.email.rawValue
+        TrackingAnalyticHelper.shared.sendTrackingAnalytic(eventType: .login, item: item)
     }
 
     private func registerNotificationToken() {

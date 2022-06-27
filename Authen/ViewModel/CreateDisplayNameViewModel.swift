@@ -113,7 +113,7 @@ public class CreateDisplayNameViewModel {
                     UserManager.shared.setAccessToken(token: accessToken)
                     UserManager.shared.setRefreshToken(token: refreshToken)
                     Defaults[.email] = self.authenRequest.payload.email
-                    AdjustHelper.shared.sendAdjustAnalytic(eventType: .registration, userId: UserManager.shared.id, chennel: .email)
+                    self.sendAnalytics()
                     self.registerNotificationToken()
                     self.delegate?.didRegisterFinish(success: true)
                 } catch {}
@@ -125,6 +125,14 @@ public class CreateDisplayNameViewModel {
                 }
             }
         }
+    }
+
+    private func sendAnalytics() {
+        let item = Analytic()
+        item.accountId = UserManager.shared.accountId
+        item.userId = UserManager.shared.id
+        item.channel = TrackingChennel.email.rawValue
+        TrackingAnalyticHelper.shared.sendTrackingAnalytic(eventType: .registration, item: item)
     }
 
     private func registerNotificationToken() {
