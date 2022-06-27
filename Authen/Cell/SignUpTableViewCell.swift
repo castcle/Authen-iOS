@@ -140,15 +140,22 @@ class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
 
         self.termSignUpLabel.customize { label in
             label.font = UIFont.asset(.regular, fontSize: .overline)
-            label.numberOfLines = 1
+            label.numberOfLines = 0
             label.textColor = UIColor.Asset.white
-            let termType = ActiveType.custom(pattern: "Castcle Terms of Service")
-            label.enabledTypes = [termType]
+            let termType = ActiveType.custom(pattern: "Castcle Terms and Agreement")
+            let policyType = ActiveType.custom(pattern: "Privacy Policy")
+            label.enabledTypes = [termType, policyType]
             label.customColor[termType] = UIColor.Asset.lightBlue
+            label.customColor[policyType] = UIColor.Asset.lightBlue
             label.customSelectedColor[termType] = UIColor.Asset.lightGray
+            label.customSelectedColor[policyType] = UIColor.Asset.lightGray
             label.handleCustomTap(for: termType) { _ in
                 self.endEditing(true)
                 Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(URL(string: Environment.userAgreement)!)), animated: true)
+            }
+            label.handleCustomTap(for: policyType) { _ in
+                self.endEditing(true)
+                Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(URL(string: Environment.privacyPolicy)!)), animated: true)
             }
         }
 
