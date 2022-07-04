@@ -66,6 +66,7 @@ class LoginViewModel {
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
                     UserHelper.shared.setupDataUserLogin(json: json)
+                    self.sendAnalytics()
                     self.registerNotificationToken()
                     self.delegate?.didLoginFinish(success: true)
                 } catch {}
@@ -77,6 +78,14 @@ class LoginViewModel {
                 }
             }
         }
+    }
+
+    private func sendAnalytics() {
+        let item = Analytic()
+        item.accountId = UserManager.shared.accountId
+        item.userId = UserManager.shared.id
+        item.channel = TrackingChennel.email.rawValue
+        TrackingAnalyticHelper.shared.sendTrackingAnalytic(eventType: .login, item: item)
     }
 
     private func registerNotificationToken() {
