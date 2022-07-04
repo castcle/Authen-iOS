@@ -50,7 +50,7 @@ class SignInTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBOutlet var passwordView: UIView!
     @IBOutlet var forgotPasswordButton: UIButton!
     @IBOutlet var loginButton: UIButton!
-    @IBOutlet var showPasswordButton: UIButton!
+    @IBOutlet var showPasswordSignInButton: UIButton!
     @IBOutlet var emailTextField: UITextField!
     @IBOutlet var passwordTextField: UITextField!
     @IBOutlet var firstLineView: UIView!
@@ -92,7 +92,7 @@ class SignInTableViewCell: UITableViewCell, UITextFieldDelegate {
         self.passwordView.capsule(color: UIColor.Asset.darkGray)
         self.forgotPasswordButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .overline)
         self.forgotPasswordButton.setTitleColor(UIColor.Asset.white, for: .normal)
-        self.showPasswordButton.setImage(UIImage.init(icon: .castcle(.show), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.white).withRenderingMode(.alwaysOriginal), for: .normal)
+        self.showPasswordSignInButton.setImage(UIImage.init(icon: .castcle(.show), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.white).withRenderingMode(.alwaysOriginal), for: .normal)
         self.firstLineView.backgroundColor = UIColor.Asset.lightBlue
         self.seccondLineView.backgroundColor = UIColor.Asset.lightBlue
         self.signInLabel.customize { label in
@@ -159,12 +159,14 @@ class SignInTableViewCell: UITableViewCell, UITextFieldDelegate {
             self.loginButton.setTitleColor(UIColor.Asset.white, for: .normal)
             self.loginButton.capsule(color: UIColor.Asset.lightBlue, borderWidth: 1, borderColor: UIColor.Asset.lightBlue)
         } else {
-            self.loginButton.setTitleColor(UIColor.Asset.gray, for: .normal)
-            self.loginButton.capsule(color: UIColor.Asset.darkGraphiteBlue, borderWidth: 1, borderColor: UIColor.Asset.black)
+            self.loginButton.setTitleColor(UIColor.Asset.white, for: .normal)
+            self.loginButton.capsule(color: UIColor.Asset.gray, borderWidth: 1, borderColor: UIColor.Asset.gray)
         }
     }
 
     @objc func textFieldDidChange(_ textField: UITextField) {
+        let textValue = textField.text ?? ""
+        textField.text = textValue.substringWithRange(range: 250)
         self.setupLoginButton(isActive: self.isCanLogin)
     }
 
@@ -180,9 +182,9 @@ class SignInTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBAction func showPasswordAction(_ sender: Any) {
         self.passwordTextField.isSecureTextEntry.toggle()
         if self.passwordTextField.isSecureTextEntry {
-            self.showPasswordButton.setImage(UIImage.init(icon: .castcle(.show), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.white).withRenderingMode(.alwaysOriginal), for: .normal)
+            self.showPasswordSignInButton.setImage(UIImage.init(icon: .castcle(.show), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.white).withRenderingMode(.alwaysOriginal), for: .normal)
         } else {
-            self.showPasswordButton.setImage(UIImage.init(icon: .castcle(.show), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.lightBlue).withRenderingMode(.alwaysOriginal), for: .normal)
+            self.showPasswordSignInButton.setImage(UIImage.init(icon: .castcle(.show), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.lightBlue).withRenderingMode(.alwaysOriginal), for: .normal)
         }
     }
 

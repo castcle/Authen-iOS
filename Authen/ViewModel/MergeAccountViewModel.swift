@@ -31,7 +31,7 @@ import Networking
 import SwiftyJSON
 
 public protocol MergeAccountViewModelDelegate: AnyObject {
-    func didRequestOtpFinish(success: Bool)
+    func mergeAccountDidRequestOtpFinish(success: Bool)
 }
 
 public class MergeAccountViewModel {
@@ -41,56 +41,26 @@ public class MergeAccountViewModel {
     var authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()
     let tokenHelper: TokenHelper = TokenHelper()
 
-    var icon: UIImage {
-        switch self.authenRequest.provider {
-        case .facebook:
-            return UIImage.init(icon: .castcle(.facebook), size: CGSize(width: 23, height: 23), textColor: UIColor.Asset.white)
-        case .twitter:
-            return UIImage.init(icon: .castcle(.twitter), size: CGSize(width: 23, height: 23), textColor: UIColor.Asset.white)
-        case .google:
-            return UIImage.Asset.googleLogo
-        case .apple:
-            return UIImage.init(icon: .castcle(.apple), size: CGSize(width: 23, height: 23), textColor: UIColor.Asset.white)
-        default:
-            return UIImage()
-        }
-    }
-
-    var color: UIColor {
-        switch self.authenRequest.provider {
-        case .facebook:
-            return UIColor.Asset.facebook
-        case .twitter:
-            return UIColor.Asset.twitter
-        case .google:
-            return UIColor.Asset.white
-        case .apple:
-            return UIColor.Asset.apple
-        default:
-            return UIColor.clear
-        }
-    }
-
     public init(userInfo: UserInfo, authenRequest: AuthenRequest) {
         self.userInfo = userInfo
         self.authenRequest = authenRequest
         self.tokenHelper.delegate = self
     }
 
-    func requestOtp() {
-        self.authenticationRepository.requestOtp(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in
+    func requestOtpWithEmail() {
+        self.authenticationRepository.requestOtpWithEmail(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in
             if success {
                 do {
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
-                    self.authenRequest.payload.refCode = json[JsonKey.refCode.rawValue].stringValue
-                    self.delegate?.didRequestOtpFinish(success: true)
+                    self.authenRequest.refCode = json[JsonKey.refCode.rawValue].stringValue
+                    self.delegate?.mergeAccountDidRequestOtpFinish(success: true)
                 } catch {}
             } else {
                 if isRefreshToken {
                     self.tokenHelper.refreshToken()
                 } else {
-                    self.delegate?.didRequestOtpFinish(success: false)
+                    self.delegate?.mergeAccountDidRequestOtpFinish(success: false)
                 }
             }
         }
@@ -99,6 +69,6 @@ public class MergeAccountViewModel {
 
 extension MergeAccountViewModel: TokenHelperDelegate {
     public func didRefreshTokenFinish() {
-        self.requestOtp()
+        self.requestOtpWithEmail()
     }
 }

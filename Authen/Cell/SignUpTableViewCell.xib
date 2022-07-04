@@ -69,7 +69,7 @@
                                     <constraint firstAttribute="width" constant="30" id="aSk-cD-jnv"/>
                                 </constraints>
                                 <connections>
-                                    <action selector="showPasswordAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="KE5-5S-6eF"/>
+                                    <action selector="showPasswordSignUpAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="jEV-CD-2cC"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -97,7 +97,7 @@
                             <constraint firstAttribute="height" constant="20" id="pDq-es-qOq"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Use at least 6 to 20 characters" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nNG-qv-De2">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Use at least 6 characters" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nNG-qv-De2">
                         <rect key="frame" x="65" y="537" width="225" height="17"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <nil key="textColor"/>
@@ -110,7 +110,7 @@
                             <constraint firstAttribute="height" constant="20" id="a27-yy-h70"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Use number, lowercase and uppercase letters" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dQC-mT-sTY">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Use lowercase and uppercase letters" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dQC-mT-sTY">
                         <rect key="frame" x="65" y="563.5" width="225" height="33.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <nil key="textColor"/>
@@ -131,7 +131,7 @@
                                     <constraint firstAttribute="height" constant="30" id="Wl0-kc-387"/>
                                 </constraints>
                                 <connections>
-                                    <action selector="showConfirmPasswordAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Rfd-FM-h2r"/>
+                                    <action selector="showConfirmPasswordSignUpAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="jqm-Tb-vvX"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -192,7 +192,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <connections>
-                                    <action selector="agreeAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Q1f-Bd-3Ib"/>
+                                    <action selector="agreeSignUpAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="7GM-qS-PXZ"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -210,8 +210,8 @@
                             <constraint firstItem="HV6-DJ-4NW" firstAttribute="leading" secondItem="e8m-rR-3cy" secondAttribute="leading" id="ztt-sf-o62"/>
                         </constraints>
                     </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="I agree with Castcle Terms of Service" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cyh-ct-NDL" customClass="ActiveLabel" customModule="ActiveLabel">
-                        <rect key="frame" x="55" y="763" width="239.5" height="17"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="I agree with Castcle Terms and Agreement  and Privacy Policy" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cyh-ct-NDL" customClass="ActiveLabel" customModule="ActiveLabel">
+                        <rect key="frame" x="55" y="755" width="245" height="33.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -269,6 +269,7 @@
                     <constraint firstAttribute="trailing" secondItem="ffL-cn-VeL" secondAttribute="trailing" constant="20" id="fdQ-i1-hjA"/>
                     <constraint firstAttribute="trailing" secondItem="gLP-q6-apJ" secondAttribute="trailing" constant="20" id="kkQ-OI-tSp"/>
                     <constraint firstItem="gLP-q6-apJ" firstAttribute="top" secondItem="c1b-PX-zjf" secondAttribute="bottom" constant="20" id="l9q-xj-8Wp"/>
+                    <constraint firstAttribute="trailing" secondItem="Cyh-ct-NDL" secondAttribute="trailing" constant="20" id="lFz-0z-vZU"/>
                     <constraint firstItem="zFb-IF-yNr" firstAttribute="top" secondItem="4iP-kf-cIx" secondAttribute="bottom" constant="5" id="lti-42-8F2"/>
                     <constraint firstAttribute="trailing" secondItem="OCs-4a-k2w" secondAttribute="trailing" constant="20" id="nQN-JB-EQ9"/>
                     <constraint firstAttribute="trailing" secondItem="nNG-qv-De2" secondAttribute="trailing" constant="30" id="oG3-0w-8Lw"/>
@@ -281,35 +282,38 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="agreeIcon" destination="HV6-DJ-4NW" id="HWJ-2v-lbF"/>
-                <outlet property="agreeView" destination="e8m-rR-3cy" id="ew4-iJ-BhL"/>
-                <outlet property="charCountImage" destination="v3w-ER-c0i" id="7zl-zh-PgF"/>
-                <outlet property="charTypeImage" destination="gaO-qv-zcI" id="8wu-8B-PA0"/>
-                <outlet property="confirmPasswordLabel" destination="tbR-Ta-yws" id="PiI-Dg-SCt"/>
-                <outlet property="confirmPasswordTextField" destination="CAO-eY-0Bp" id="8Xj-Ti-yH4"/>
-                <outlet property="confirmPasswordView" destination="8J8-FN-IBT" id="vdS-J0-dPh"/>
-                <outlet property="emailAlertLabel" destination="zFb-IF-yNr" id="off-uL-w6M"/>
-                <outlet property="emailLabel" destination="jlU-j5-gYp" id="xmo-Nl-sA0"/>
-                <outlet property="emailTextField" destination="4Ov-RN-zli" id="rND-wM-ISy"/>
-                <outlet property="emailView" destination="4iP-kf-cIx" id="F5R-Zg-ATo"/>
-                <outlet property="limitCharLabel" destination="nNG-qv-De2" id="3Vj-6e-he6"/>
+                <outlet property="agreeSignUpIcon" destination="HV6-DJ-4NW" id="Ou6-Wg-a68"/>
+                <outlet property="agreeSignUpView" destination="e8m-rR-3cy" id="cJL-ex-6DF"/>
+                <outlet property="charCountSignUpImage" destination="v3w-ER-c0i" id="bmc-n2-jp0"/>
+                <outlet property="charTypeSignUpImage" destination="gaO-qv-zcI" id="ORT-6v-UPa"/>
+                <outlet property="confirmPasswordSignUpLabel" destination="tbR-Ta-yws" id="8Kf-v3-ibS"/>
+                <outlet property="confirmPasswordSignUpTextField" destination="CAO-eY-0Bp" id="5pU-wN-nbn"/>
+                <outlet property="confirmPasswordSignUpView" destination="8J8-FN-IBT" id="Umj-NB-CxB"/>
+                <outlet property="emailAlertSignUpLabel" destination="zFb-IF-yNr" id="MRX-Cz-Hag"/>
+                <outlet property="emailSignUpLabel" destination="jlU-j5-gYp" id="J5C-n3-pNP"/>
+                <outlet property="emailSignUpTextField" destination="4Ov-RN-zli" id="OlS-0E-o7I"/>
+                <outlet property="emailSignUpView" destination="4iP-kf-cIx" id="3Rb-gB-SGb"/>
+                <outlet property="limitCharSignUpLabel" destination="nNG-qv-De2" id="ykb-cK-Y0k"/>
                 <outlet property="nextButton" destination="LBF-xq-q2a" id="Gaf-Y7-Its"/>
-                <outlet property="passwordLabel" destination="ipR-cE-Djw" id="5zF-nG-Jdb"/>
-                <outlet property="passwordNotMatchImage" destination="kps-cx-2fN" id="tM1-zI-AWf"/>
-                <outlet property="passwordNotMatchLabel" destination="T8o-Ip-0fA" id="hnp-uv-OtP"/>
-                <outlet property="passwordTextField" destination="wrc-VV-an1" id="vCu-Rf-Na5"/>
-                <outlet property="passwordView" destination="ffL-cn-VeL" id="JOn-na-Qpn"/>
-                <outlet property="showConfirmPasswordButton" destination="lad-rF-LNz" id="i7k-DL-e0f"/>
-                <outlet property="showPasswordButton" destination="jfE-V0-M2m" id="i1R-te-Qm8"/>
-                <outlet property="signLabel" destination="OCs-4a-k2w" id="aUw-Aw-66A"/>
-                <outlet property="subTitleLabel" destination="gLP-q6-apJ" id="2IL-Bb-JEy"/>
-                <outlet property="termLabel" destination="Cyh-ct-NDL" id="JEf-zQ-oEV"/>
-                <outlet property="typeCharLabel" destination="dQC-mT-sTY" id="GQP-KJ-3r5"/>
+                <outlet property="passwordNotMatchSignUpImage" destination="kps-cx-2fN" id="3sk-6b-mvX"/>
+                <outlet property="passwordNotMatchSignUpLabel" destination="T8o-Ip-0fA" id="giQ-Lj-dkF"/>
+                <outlet property="passwordSignUpLabel" destination="ipR-cE-Djw" id="yvp-4k-E53"/>
+                <outlet property="passwordSignUpTextField" destination="wrc-VV-an1" id="RlQ-st-DxW"/>
+                <outlet property="passwordSignUpView" destination="ffL-cn-VeL" id="3Yg-fL-Ma7"/>
+                <outlet property="showConfirmPasswordSignUpButton" destination="lad-rF-LNz" id="aLP-3J-9ez"/>
+                <outlet property="showPasswordSignUpButton" destination="jfE-V0-M2m" id="RfR-Sp-kdI"/>
+                <outlet property="signLabel" destination="OCs-4a-k2w" id="6QJ-hS-svH"/>
+                <outlet property="subtitleSignUpLabel" destination="gLP-q6-apJ" id="nJc-gI-TXo"/>
+                <outlet property="termSignUpLabel" destination="Cyh-ct-NDL" id="hAX-Pf-FLK"/>
+                <outlet property="typeCharSignUpLabel" destination="dQC-mT-sTY" id="lVJ-Ol-MRy"/>
             </connections>
             <point key="canvasLocation" x="137.68115942028987" y="431.25"/>
         </tableViewCell>
     </objects>
     <designables>
+        <designable name="Cyh-ct-NDL">
+            <size key="intrinsicContentSize" width="398" height="17"/>
+        </designable>
         <designable name="OCs-4a-k2w">
             <size key="intrinsicContentSize" width="234" height="19.5"/>
         </designable>

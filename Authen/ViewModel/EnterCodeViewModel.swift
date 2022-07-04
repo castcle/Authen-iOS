@@ -32,9 +32,9 @@ import RealmSwift
 import Defaults
 
 public protocol EnterCodeViewModelDelegate: AnyObject {
-    func didVerifyOtpFinish(success: Bool)
-    func didRequestOtpFinish(success: Bool)
-    func didError()
+    func enterCodeDidVerifyOtpFinish(success: Bool)
+    func enterCodeDidRequestOtpFinish(success: Bool)
+    func enterCodeDidError()
 }
 
 public class EnterCodeViewModel {
@@ -53,47 +53,47 @@ public class EnterCodeViewModel {
         self.tokenHelper.delegate = self
     }
 
-    func verifyOtp() {
-        self.state = .verifyOtp
-        self.authenticationRepository.verificationOtp(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in
+    func verifyOtpWithEmail() {
+        self.state = .verifyOtpWithEmail
+        self.authenticationRepository.verificationOtpWithEmail(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in
             if success {
                 do {
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
-                    self.authenRequest.payload.refCode = json[JsonKey.refCode.rawValue].stringValue
+                    self.authenRequest.refCode = json[JsonKey.refCode.rawValue].stringValue
                     if self.authenRequest.objective == .mergeAccount {
                         let accessToken = json[JsonKey.accessToken.rawValue].stringValue
                         UserManager.shared.setAccessToken(token: accessToken)
                         self.connectWithSocial()
                     } else {
-                        self.delegate?.didVerifyOtpFinish(success: true)
+                        self.delegate?.enterCodeDidVerifyOtpFinish(success: true)
                     }
                 } catch {}
             } else {
                 if isRefreshToken {
                     self.tokenHelper.refreshToken()
                 } else {
-                    self.delegate?.didVerifyOtpFinish(success: false)
+                    self.delegate?.enterCodeDidVerifyOtpFinish(success: false)
                 }
             }
         }
     }
 
-    func requestOtp() {
-        self.state = .requestOtp
-        self.authenticationRepository.requestOtp(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in
+    func requestOtpWithEmail() {
+        self.state = .requestOtpWithEmail
+        self.authenticationRepository.requestOtpWithEmail(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in
             if success {
                 do {
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
-                    self.authenRequest.payload.refCode = json[JsonKey.refCode.rawValue].stringValue
-                    self.delegate?.didRequestOtpFinish(success: true)
+                    self.authenRequest.refCode = json[JsonKey.refCode.rawValue].stringValue
+                    self.delegate?.enterCodeDidRequestOtpFinish(success: true)
                 } catch {}
             } else {
                 if isRefreshToken {
                     self.tokenHelper.refreshToken()
                 } else {
-                    self.delegate?.didRequestOtpFinish(success: false)
+                    self.delegate?.enterCodeDidRequestOtpFinish(success: false)
                 }
             }
         }
@@ -104,36 +104,19 @@ public class EnterCodeViewModel {
         self.authenticationRepository.connectWithSocial(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in
             if success {
                 do {
-                    let realm = try Realm()
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
-                    let accessToken = json[JsonKey.accessToken.rawValue].stringValue
-                    let refreshToken = json[JsonKey.refreshToken.rawValue].stringValue
-                    let profile = JSON(json[JsonKey.profile.rawValue].dictionaryValue)
-                    let pages = json[JsonKey.pages.rawValue].arrayValue
-
-                    UserHelper.shared.updateLocalProfile(user: UserInfo(json: profile))
-                    UserHelper.shared.clearSeenContent()
-                    NotifyHelper.shared.getBadges()
-
-                    let pageRealm = realm.objects(Page.self)
-                    try realm.write {
-                        realm.delete(pageRealm)
-                    }
-                    UserHelper.shared.updatePage(pages: pages)
-                    UserManager.shared.setUserRole(userRole: .user)
-                    UserManager.shared.setAccessToken(token: accessToken)
-                    UserManager.shared.setRefreshToken(token: refreshToken)
+                    UserHelper.shared.setupDataUserLogin(json: json)
                     self.registerNotificationToken()
-                    self.delegate?.didVerifyOtpFinish(success: true)
+                    self.delegate?.enterCodeDidVerifyOtpFinish(success: true)
                 } catch {
-                    self.delegate?.didVerifyOtpFinish(success: false)
+                    self.delegate?.enterCodeDidVerifyOtpFinish(success: false)
                 }
             } else {
                 if isRefreshToken {
                     self.tokenHelper.refreshToken()
                 } else {
-                    self.delegate?.didVerifyOtpFinish(success: false)
+                    self.delegate?.enterCodeDidVerifyOtpFinish(success: false)
                 }
             }
         }
@@ -153,10 +136,10 @@ public class EnterCodeViewModel {
 
 extension EnterCodeViewModel: TokenHelperDelegate {
     public func didRefreshTokenFinish() {
-        if self.state == .verifyOtp {
-            self.verifyOtp()
-        } else if self.state == .requestOtp {
-            self.requestOtp()
+        if self.state == .verifyOtpWithEmail {
+            self.verifyOtpWithEmail()
+        } else if self.state == .requestOtpWithEmail {
+            self.requestOtpWithEmail()
         } else if self.state == .connectSocial {
             self.connectWithSocial()
         } else if self.state == .registerToken {

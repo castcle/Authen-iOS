@@ -71,7 +71,7 @@ class ChangePasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.setupContinueButton(isActive: self.isCanContinue)
+        self.applyButton.activeButton(isActive: self.isCanContinue)
         self.headlineLabel.font = UIFont.asset(.regular, fontSize: .head2)
         self.headlineLabel.textColor = UIColor.Asset.white
         self.limitCharLabel.font = UIFont.asset(.regular, fontSize: .overline)
@@ -115,19 +115,6 @@ class ChangePasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
         self.hud.textLabel.text = "Creating"
     }
 
-    private func setupContinueButton(isActive: Bool) {
-        self.applyButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .head4)
-        if isActive {
-            self.applyButton.setTitleColor(UIColor.Asset.white, for: .normal)
-            self.applyButton.setBackgroundImage(UIColor.Asset.lightBlue.toImage(), for: .normal)
-            self.applyButton.capsule(color: UIColor.clear, borderWidth: 1, borderColor: UIColor.clear)
-        } else {
-            self.applyButton.setTitleColor(UIColor.Asset.gray, for: .normal)
-            self.applyButton.setBackgroundImage(UIColor.Asset.darkGraphiteBlue.toImage(), for: .normal)
-            self.applyButton.capsule(color: UIColor.clear, borderWidth: 1, borderColor: UIColor.Asset.black)
-        }
-    }
-
     private func checkCharacterCount() {
         if self.passwordTextField.text!.count < 6 || self.passwordTextField.text!.count > 20 {
             self.limitCharLabel.textColor = UIColor.Asset.gray
@@ -139,7 +126,7 @@ class ChangePasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
 
     private func checkCharacterType() {
-        if self.passwordTextField.text!.isPassword {
+        if self.passwordTextField.text!.isMatchChar {
             self.typeCharLabel.textColor = UIColor.Asset.lightBlue
             self.charTypeImage.image = UIImage.init(icon: .castcle(.addWithCheckmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.lightBlue)
         } else {
@@ -159,7 +146,9 @@ class ChangePasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
 
     @objc func textFieldDidChange(_ textField: UITextField) {
-        self.setupContinueButton(isActive: self.isCanContinue)
+        let textValue = textField.text ?? ""
+        textField.text = textValue.substringWithRange(range: 250)
+        self.applyButton.activeButton(isActive: self.isCanContinue)
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -194,8 +183,8 @@ class ChangePasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
         if self.isCanContinue {
             self.hud.show(in: Utility.currentViewController().view)
             self.applyButton.isEnabled = false
-            self.viewModel.authenRequest.payload.newPassword = self.passwordTextField.text ?? ""
-            self.viewModel.changePasswordSubmit()
+            self.viewModel.authenRequest.newPassword = self.passwordTextField.text ?? ""
+            self.viewModel.changePassword()
         }
     }
 }

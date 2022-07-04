@@ -65,7 +65,7 @@ class EnterCodeViewController: UIViewController {
     }
 
     private func gotoCreatePassword() {
-        self.viewModel.authenRequest.payload.objective = .forgotPassword
+        self.viewModel.authenRequest.objective = .forgotPassword
         Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.changePassword(ChangePasswordViewModel(.forgotPassword, authenRequest: self.viewModel.authenRequest))), animated: true)
     }
 
@@ -75,7 +75,7 @@ class EnterCodeViewController: UIViewController {
 }
 
 extension EnterCodeViewController: EnterCodeViewModelDelegate {
-    func didVerifyOtpFinish(success: Bool) {
+    func enterCodeDidVerifyOtpFinish(success: Bool) {
         self.hud.dismiss()
         if success {
             if self.viewModel.verifyCodeType == .password {
@@ -86,11 +86,11 @@ extension EnterCodeViewController: EnterCodeViewModelDelegate {
         }
     }
 
-    func didRequestOtpFinish(success: Bool) {
+    func enterCodeDidRequestOtpFinish(success: Bool) {
         self.hud.dismiss()
     }
 
-    func didError() {
+    func enterCodeDidError() {
         self.hud.dismiss()
     }
 }
@@ -108,7 +108,7 @@ extension EnterCodeViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: AuthenNibVars.TableViewCell.verifyEmailOtp, for: indexPath as IndexPath) as? VerifyEmailOtpTableViewCell
         cell?.backgroundColor = UIColor.clear
         cell?.delegate = self
-        cell?.configCell(email: self.viewModel.authenRequest.payload.email)
+        cell?.configCell(email: self.viewModel.authenRequest.email)
         return cell ?? VerifyEmailOtpTableViewCell()
     }
 }
@@ -117,13 +117,13 @@ extension EnterCodeViewController: VerifyEmailOtpTableViewCellDelegate {
     func didRequestOtp(_ cell: VerifyEmailOtpTableViewCell) {
         self.hud.textLabel.text = "Sending"
         self.hud.show(in: self.view)
-        self.viewModel.requestOtp()
+        self.viewModel.requestOtpWithEmail()
     }
 
     func didConfirm(_ cell: VerifyEmailOtpTableViewCell, pin: String) {
         self.hud.textLabel.text = "Verifying"
         self.hud.show(in: self.view)
-        self.viewModel.authenRequest.payload.otp = pin
-        self.viewModel.verifyOtp()
+        self.viewModel.authenRequest.otp = pin
+        self.viewModel.verifyOtpWithEmail()
     }
 }

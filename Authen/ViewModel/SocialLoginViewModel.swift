@@ -55,7 +55,6 @@ class SocialLoginViewModel {
         self.authenticationRepository.loginWithSocial(authenRequest: self.authenRequest) { (success, response, isRefreshToken) in
             if success {
                 do {
-                    let realm = try Realm()
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
                     let code = json[JsonKey.code.rawValue].stringValue
@@ -66,29 +65,12 @@ class SocialLoginViewModel {
                         self.delegate?.didMergeAccount(userInfo: userInfo)
                     } else {
                         let registered: Bool = json[JsonKey.registered.rawValue].boolValue
-                        let accessToken = json[JsonKey.accessToken.rawValue].stringValue
-                        let refreshToken = json[JsonKey.refreshToken.rawValue].stringValue
-                        let profile = JSON(json[JsonKey.profile.rawValue].dictionaryValue)
-                        let pages = json[JsonKey.pages.rawValue].arrayValue
-
-                        UserHelper.shared.updateLocalProfile(user: UserInfo(json: profile))
-                        UserHelper.shared.clearSeenContent()
-                        NotifyHelper.shared.getBadges()
-
+                        UserHelper.shared.setupDataUserLogin(json: json)
                         if self.authenRequest.provider == .twitter && !registered {
                             Defaults[.syncTwitter] = false
                         } else {
                             Defaults[.syncTwitter] = true
                         }
-
-                        let pageRealm = realm.objects(Page.self)
-                        try realm.write {
-                            realm.delete(pageRealm)
-                        }
-                        UserHelper.shared.updatePage(pages: pages)
-                        UserManager.shared.setUserRole(userRole: .user)
-                        UserManager.shared.setAccessToken(token: accessToken)
-                        UserManager.shared.setRefreshToken(token: refreshToken)
                         if !registered {
                             self.sendAnalytics(eventType: .registration)
                         } else {
@@ -135,10 +117,8 @@ class SocialLoginViewModel {
         self.notificationRequest.uuid = Defaults[.deviceUuid]
         self.notificationRequest.firebaseToken = Defaults[.firebaseToken]
         self.notificationRepository.registerToken(notificationRequest: self.notificationRequest) { (success, _, isRefreshToken) in
-            if !success {
-                if isRefreshToken {
-                    self.tokenHelper.refreshToken()
-                }
+            if !success && isRefreshToken {
+                self.tokenHelper.refreshToken()
             }
         }
     }

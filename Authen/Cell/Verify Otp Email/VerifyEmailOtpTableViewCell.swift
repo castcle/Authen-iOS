@@ -78,39 +78,19 @@ class VerifyEmailOtpTableViewCell: UITableViewCell {
             guard let self = self else { return }
             if pin.count == 6 {
                 self.pin = pin
-                self.setupNextButton(isActive: true)
+                self.confirmButton.activeButton(isActive: true)
             } else {
-                self.setupNextButton(isActive: false)
+                self.confirmButton.activeButton(isActive: false)
             }
         }
 
-        self.countdownLabel.text = "Request code again \(self.secondsToTime(seconds: self.secondsRemaining)) sec"
+        self.countdownLabel.text = "Request code again \(self.secondsRemaining.secondsToTime()) sec"
         self.setupCountdown()
-        self.setupNextButton(isActive: false)
+        self.confirmButton.activeButton(isActive: false)
     }
 
     func configCell(email: String) {
         self.subTitleLabel.text = "You will receive a 6 digit code to reset you password.  Verification code will be sent to \(email)"
-    }
-
-    private func setupNextButton(isActive: Bool) {
-        self.confirmButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .head4)
-        if isActive {
-            self.confirmButton.setTitleColor(UIColor.Asset.white, for: .normal)
-            self.confirmButton.setBackgroundImage(UIColor.Asset.lightBlue.toImage(), for: .normal)
-            self.confirmButton.capsule(color: UIColor.clear, borderWidth: 1, borderColor: UIColor.clear)
-        } else {
-            self.confirmButton.setTitleColor(UIColor.Asset.gray, for: .normal)
-            self.confirmButton.setBackgroundImage(UIColor.Asset.darkGraphiteBlue.toImage(), for: .normal)
-            self.confirmButton.capsule(color: UIColor.clear, borderWidth: 1, borderColor: UIColor.Asset.black)
-        }
-    }
-
-    private func secondsToTime(seconds: Int) -> String {
-        let (minuteValue, secondValue) = ((seconds % 3600) / 60, (seconds % 3600) % 60)
-        let minuteString =  minuteValue < 10 ? "0\(minuteValue)" : "\(minuteValue)"
-        let secondString =  secondValue < 10 ? "0\(secondValue)" : "\(secondValue)"
-        return "\(minuteString):\(secondString)"
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -123,7 +103,7 @@ class VerifyEmailOtpTableViewCell: UITableViewCell {
         self.secondsRemaining = 300
         Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { (timer) in
             if self.secondsRemaining > 0 {
-                self.countdownLabel.text = "Request code again \(self.secondsToTime(seconds: self.secondsRemaining)) sec"
+                self.countdownLabel.text = "Request code again \(self.secondsRemaining.secondsToTime()) sec"
                 self.secondsRemaining -= 1
             } else {
                 timer.invalidate()

@@ -102,17 +102,8 @@ public class CreateDisplayNameViewModel {
                 do {
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
-                    let accessToken = json[JsonKey.accessToken.rawValue].stringValue
-                    let refreshToken = json[JsonKey.refreshToken.rawValue].stringValue
-                    let profile = JSON(json[JsonKey.profile.rawValue].dictionaryValue)
-
-                    UserHelper.shared.updateLocalProfile(user: UserInfo(json: profile))
-                    UserHelper.shared.clearSeenContent()
-                    NotifyHelper.shared.getBadges()
-                    UserManager.shared.setUserRole(userRole: .user)
-                    UserManager.shared.setAccessToken(token: accessToken)
-                    UserManager.shared.setRefreshToken(token: refreshToken)
-                    Defaults[.email] = self.authenRequest.payload.email
+                    UserHelper.shared.setupDataUserLogin(json: json)
+                    Defaults[.email] = self.authenRequest.email
                     self.sendAnalytics()
                     self.registerNotificationToken()
                     self.delegate?.didRegisterFinish(success: true)
@@ -140,10 +131,8 @@ public class CreateDisplayNameViewModel {
         self.notificationRequest.uuid = Defaults[.deviceUuid]
         self.notificationRequest.firebaseToken = Defaults[.firebaseToken]
         self.notificationRepository.registerToken(notificationRequest: self.notificationRequest) { (success, _, isRefreshToken) in
-            if !success {
-                if isRefreshToken {
-                    self.tokenHelper.refreshToken()
-                }
+            if !success && isRefreshToken {
+                self.tokenHelper.refreshToken()
             }
         }
     }

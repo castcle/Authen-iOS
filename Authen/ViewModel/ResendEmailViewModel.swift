@@ -44,10 +44,8 @@ public class ResendEmailViewModel {
 
     func requestLinkVerify() {
         self.authenticationRepository.requestLinkVerify { (success, _, isRefreshToken) in
-            if !success {
-                if isRefreshToken {
-                    self.tokenHelper.refreshToken()
-                }
+            if !success && isRefreshToken {
+                self.tokenHelper.refreshToken()
             }
         }
     }

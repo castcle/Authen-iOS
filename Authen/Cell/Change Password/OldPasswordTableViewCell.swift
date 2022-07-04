@@ -62,7 +62,7 @@ class OldPasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.passwordView.custom(color: UIColor.Asset.darkGray, cornerRadius: 10, borderWidth: 1, borderColor: UIColor.Asset.black)
-        self.setupContinueButton(isActive: self.isCanContinue)
+        self.applyButton.activeButton(isActive: self.isCanContinue)
         self.headlineLabel.font = UIFont.asset(.regular, fontSize: .head2)
         self.headlineLabel.textColor = UIColor.Asset.white
         self.detailLabel.font = UIFont.asset(.regular, fontSize: .body)
@@ -79,21 +79,8 @@ class OldPasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
         super.setSelected(selected, animated: animated)
     }
 
-    private func setupContinueButton(isActive: Bool) {
-        self.applyButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .head4)
-        if isActive {
-            self.applyButton.setTitleColor(UIColor.Asset.white, for: .normal)
-            self.applyButton.setBackgroundImage(UIColor.Asset.lightBlue.toImage(), for: .normal)
-            self.applyButton.capsule(color: UIColor.clear, borderWidth: 1, borderColor: UIColor.clear)
-        } else {
-            self.applyButton.setTitleColor(UIColor.Asset.gray, for: .normal)
-            self.applyButton.setBackgroundImage(UIColor.Asset.darkGraphiteBlue.toImage(), for: .normal)
-            self.applyButton.capsule(color: UIColor.clear, borderWidth: 1, borderColor: UIColor.Asset.black)
-        }
-    }
-
     @objc func textFieldDidChange(_ textField: UITextField) {
-        self.setupContinueButton(isActive: self.isCanContinue)
+        self.applyButton.activeButton(isActive: self.isCanContinue)
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -106,7 +93,8 @@ class OldPasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
         if self.isCanContinue {
             self.hud.show(in: Utility.currentViewController().view)
             self.applyButton.isEnabled = false
-            self.viewModel.authenRequest.payload.password = self.passwordTextField.text ?? ""
+            self.viewModel.authenRequest.email = UserManager.shared.email
+            self.viewModel.authenRequest.password = self.passwordTextField.text ?? ""
             self.viewModel.verifyPassword()
         }
     }
@@ -116,7 +104,7 @@ extension OldPasswordTableViewCell: VerifyPasswordViewModelDelegate {
     func didVerificationPasswordFinish(success: Bool) {
         self.hud.dismiss()
         if success {
-            self.viewModel.authenRequest.payload.objective = .changePassword
+            self.viewModel.authenRequest.objective = .changePassword
             Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.changePassword(ChangePasswordViewModel(.changePassword, authenRequest: self.viewModel.authenRequest))), animated: true)
         } else {
             self.applyButton.isEnabled = true
