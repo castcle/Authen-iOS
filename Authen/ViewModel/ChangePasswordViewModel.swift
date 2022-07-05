@@ -60,6 +60,9 @@ public class ChangePasswordViewModel {
             if success {
                 if self.changePasswordType == .createPassword {
                     self.getMe()
+                } else if self.changePasswordType == .forgotPassword {
+                    self.delegate?.didChangePasswordSubmitFinish(success: true)
+                    self.sendAnalytics()
                 } else {
                     self.delegate?.didChangePasswordSubmitFinish(success: true)
                 }
@@ -93,6 +96,13 @@ public class ChangePasswordViewModel {
                 }
             }
         }
+    }
+
+    private func sendAnalytics() {
+        let item = Analytic()
+        item.accountId = UserManager.shared.accountId
+        item.userId = UserManager.shared.id
+        TrackingAnalyticHelper.shared.sendTrackingAnalytic(eventType: .resetPassword, item: item)
     }
 }
 
