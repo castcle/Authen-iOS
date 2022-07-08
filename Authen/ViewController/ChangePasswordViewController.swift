@@ -27,6 +27,7 @@
 
 import UIKit
 import Core
+import Networking
 import Defaults
 
 class ChangePasswordViewController: UIViewController {
@@ -45,19 +46,36 @@ class ChangePasswordViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        Defaults[.screenId] = ""
+        if self.viewModel.changePasswordType == .forgotPassword {
+            Defaults[.screenId] = ScreenId.resetPassword.rawValue
+        } else {
+            Defaults[.screenId] = ""
+        }
     }
 
     func setupNavBar() {
         self.customNavigationBar(.secondary, title: "Create Password")
     }
 
+    public override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if self.viewModel.changePasswordType == .forgotPassword {
+            EngagementHelper().sendCastcleAnalytic(event: .onScreenView, screen: .resetPassword)
+            self.sendAnalytics()
+        }
+    }
+
+    private func sendAnalytics() {
+        let item = Analytic()
+        item.accountId = UserManager.shared.accountId
+        item.userId = UserManager.shared.id
+        TrackingAnalyticHelper.shared.sendTrackingAnalytic(eventType: .viewResetPassword, item: item)
+    }
+
     func configureTableView() {
         self.tableView.delegate = self
         self.tableView.dataSource = self
-
         self.tableView.register(UINib(nibName: AuthenNibVars.TableViewCell.changePassword, bundle: ConfigBundle.authen), forCellReuseIdentifier: AuthenNibVars.TableViewCell.changePassword)
-
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 100
     }
