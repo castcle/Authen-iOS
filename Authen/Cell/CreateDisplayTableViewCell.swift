@@ -60,8 +60,8 @@ class CreateDisplayTableViewCell: UITableViewCell, UITextFieldDelegate {
         self.castcleIdTextField.textColor = UIColor.Asset.white
         self.displayNameTextField.font = UIFont.asset(.regular, fontSize: .overline)
         self.displayNameTextField.textColor = UIColor.Asset.white
-        self.castcleIdView.capsule(color: UIColor.Asset.darkGray)
-        self.displayNameView.capsule(color: UIColor.Asset.darkGray)
+        self.castcleIdView.capsule(color: UIColor.Asset.cellBackground)
+        self.displayNameView.capsule(color: UIColor.Asset.cellBackground)
         self.castcleIdTextField.tag = 0
         self.castcleIdTextField.delegate = self
         self.castcleIdTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)

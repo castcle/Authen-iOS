@@ -54,7 +54,7 @@ class CheckEmailViewController: UIViewController, UITextFieldDelegate {
         self.view.backgroundColor = UIColor.Asset.darkGraphiteBlue
         self.hideKeyboardWhenTapped()
         self.setupNavBar()
-        self.emailView.custom(color: UIColor.Asset.darkGray, cornerRadius: 10, borderWidth: 1, borderColor: UIColor.Asset.black)
+        self.emailView.custom(color: UIColor.Asset.cellBackground, cornerRadius: 10, borderWidth: 1, borderColor: UIColor.Asset.black)
         self.setupContinueButton(isActive: self.isCanContinue)
         self.headlineLabel.font = UIFont.asset(.regular, fontSize: .head2)
         self.headlineLabel.textColor = UIColor.Asset.white
@@ -64,7 +64,7 @@ class CheckEmailViewController: UIViewController, UITextFieldDelegate {
         self.emailLabel.textColor = UIColor.Asset.white
         self.emailTextField.font = UIFont.asset(.regular, fontSize: .overline)
         self.emailTextField.textColor = UIColor.Asset.white
-        self.emailView.capsule(color: UIColor.Asset.darkGray)
+        self.emailView.capsule(color: UIColor.Asset.cellBackground)
         self.emailTextField.delegate = self
         self.emailTextField.tag = 0
         self.emailTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)

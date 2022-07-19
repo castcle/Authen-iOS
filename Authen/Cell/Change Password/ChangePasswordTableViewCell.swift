@@ -89,8 +89,8 @@ class ChangePasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
         self.passwordLabel.textColor = UIColor.Asset.white
         self.confirmPasswordLabel.font = UIFont.asset(.medium, fontSize: .body)
         self.confirmPasswordLabel.textColor = UIColor.Asset.white
-        self.passwordView.capsule(color: UIColor.Asset.darkGray)
-        self.confirmPasswordView.capsule(color: UIColor.Asset.darkGray)
+        self.passwordView.capsule(color: UIColor.Asset.cellBackground)
+        self.confirmPasswordView.capsule(color: UIColor.Asset.cellBackground)
         self.passwordTextField.font = UIFont.asset(.regular, fontSize: .overline)
         self.passwordTextField.textColor = UIColor.Asset.white
         self.passwordTextField.isSecureTextEntry = true

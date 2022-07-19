@@ -94,9 +94,9 @@ class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
         self.confirmPasswordSignUpTextField.font = UIFont.asset(.regular, fontSize: .overline)
         self.confirmPasswordSignUpTextField.textColor = UIColor.Asset.white
         self.confirmPasswordSignUpTextField.isSecureTextEntry = true
-        self.emailSignUpView.capsule(color: UIColor.Asset.darkGray)
-        self.passwordSignUpView.capsule(color: UIColor.Asset.darkGray)
-        self.confirmPasswordSignUpView.capsule(color: UIColor.Asset.darkGray)
+        self.emailSignUpView.capsule(color: UIColor.Asset.cellBackground)
+        self.passwordSignUpView.capsule(color: UIColor.Asset.cellBackground)
+        self.confirmPasswordSignUpView.capsule(color: UIColor.Asset.cellBackground)
         self.emailSignUpTextField.tag = 0
         self.emailSignUpTextField.delegate = self
         self.emailSignUpTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)

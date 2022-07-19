@@ -88,8 +88,8 @@ class SignInTableViewCell: UITableViewCell, UITextFieldDelegate {
         self.passwordLabel.textColor = UIColor.Asset.white
         self.loginSocialLabel.font = UIFont.asset(.regular, fontSize: .overline)
         self.loginSocialLabel.textColor = UIColor.Asset.lightBlue
-        self.emailView.capsule(color: UIColor.Asset.darkGray)
-        self.passwordView.capsule(color: UIColor.Asset.darkGray)
+        self.emailView.capsule(color: UIColor.Asset.cellBackground)
+        self.passwordView.capsule(color: UIColor.Asset.cellBackground)
         self.forgotPasswordButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .overline)
         self.forgotPasswordButton.setTitleColor(UIColor.Asset.white, for: .normal)
         self.showPasswordSignInButton.setImage(UIImage.init(icon: .castcle(.show), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.white).withRenderingMode(.alwaysOriginal), for: .normal)
