@@ -27,6 +27,7 @@
 
 import UIKit
 import Core
+import Component
 import Networking
 import Defaults
 import JGProgressHUD
@@ -44,6 +45,11 @@ class SignInViewController: UIViewController {
     var viewModel = SocialLoginViewModel()
     var swifter: Swifter!
     var accToken: Credential.OAuthAccessToken?
+
+    enum SignInViewControllerSection: Int, CaseIterable {
+        case signIn = 0
+        case castcleAbout
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,6 +79,7 @@ class SignInViewController: UIViewController {
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.register(UINib(nibName: AuthenNibVars.TableViewCell.signIn, bundle: ConfigBundle.authen), forCellReuseIdentifier: AuthenNibVars.TableViewCell.signIn)
+        self.tableView.register(UINib(nibName: ComponentNibVars.TableViewCell.about, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.about)
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 100
     }
@@ -88,14 +95,24 @@ extension SignInViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return SignInViewControllerSection.allCases.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: AuthenNibVars.TableViewCell.signIn, for: indexPath as IndexPath) as? SignInTableViewCell
-        cell?.backgroundColor = UIColor.clear
-        cell?.delegate = self
-        return cell ?? SignInTableViewCell()
+        switch indexPath.row {
+        case SignInViewControllerSection.signIn.rawValue:
+            let cell = tableView.dequeueReusableCell(withIdentifier: AuthenNibVars.TableViewCell.signIn, for: indexPath as IndexPath) as? SignInTableViewCell
+            cell?.backgroundColor = UIColor.clear
+            cell?.delegate = self
+            return cell ?? SignInTableViewCell()
+        case SignInViewControllerSection.castcleAbout.rawValue:
+            let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.about, for: indexPath as IndexPath) as? AboutTableViewCell
+            cell?.backgroundColor = UIColor.clear
+            cell?.configCell()
+            return cell ?? AboutTableViewCell()
+        default:
+            return UITableViewCell()
+        }
     }
 }
 
