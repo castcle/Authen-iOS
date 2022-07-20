@@ -116,32 +116,41 @@ class ChangePasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
 
     private func checkCharacterCount() {
-        if self.passwordTextField.text!.count < 6 || self.passwordTextField.text!.count > 20 {
+        if self.passwordTextField.text!.isEmpty {
             self.limitCharLabel.textColor = UIColor.Asset.gray
-            self.charCountImage.image = UIImage.init(icon: .castcle(.addWithCheckmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.gray)
+            self.charCountImage.image = UIImage.init(icon: .castcle(.checkmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.gray)
+        } else if self.passwordTextField.text!.count < 6 || self.passwordTextField.text!.count > 20 {
+            self.limitCharLabel.textColor = UIColor.Asset.denger
+            self.charCountImage.image = UIImage.init(icon: .castcle(.incorrect), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.denger)
         } else {
             self.limitCharLabel.textColor = UIColor.Asset.lightBlue
-            self.charCountImage.image = UIImage.init(icon: .castcle(.addWithCheckmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.lightBlue)
+            self.charCountImage.image = UIImage.init(icon: .castcle(.checkmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white)
         }
     }
 
     private func checkCharacterType() {
-        if self.passwordTextField.text!.isMatchChar {
-            self.typeCharLabel.textColor = UIColor.Asset.lightBlue
-            self.charTypeImage.image = UIImage.init(icon: .castcle(.addWithCheckmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.lightBlue)
-        } else {
+        if self.passwordTextField.text!.isEmpty {
             self.typeCharLabel.textColor = UIColor.Asset.gray
-            self.charTypeImage.image = UIImage.init(icon: .castcle(.addWithCheckmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.gray)
+            self.charTypeImage.image = UIImage.init(icon: .castcle(.checkmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.gray)
+        } else if !self.passwordTextField.text!.isMatchChar {
+            self.typeCharLabel.textColor = UIColor.Asset.denger
+            self.charTypeImage.image = UIImage.init(icon: .castcle(.incorrect), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.denger)
+        } else {
+            self.typeCharLabel.textColor = UIColor.Asset.lightBlue
+            self.charTypeImage.image = UIImage.init(icon: .castcle(.checkmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white)
         }
     }
 
     private func checkPasswordNotMatch() {
-        if self.passwordTextField.text! == self.confirmPasswordTextField.text! {
-            self.passwordNotMatchLabel.textColor = UIColor.Asset.lightBlue
-            self.passwordNotMatchImage.image = UIImage.init(icon: .castcle(.addWithCheckmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.lightBlue)
-        } else {
+        if self.confirmPasswordTextField.text!.isEmpty {
             self.passwordNotMatchLabel.textColor = UIColor.Asset.gray
-            self.passwordNotMatchImage.image = UIImage.init(icon: .castcle(.addWithCheckmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.gray)
+            self.passwordNotMatchImage.image = UIImage.init(icon: .castcle(.checkmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.gray)
+        } else if self.passwordTextField.text! != self.confirmPasswordTextField.text! {
+            self.passwordNotMatchLabel.textColor = UIColor.Asset.denger
+            self.passwordNotMatchImage.image = UIImage.init(icon: .castcle(.incorrect), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.denger)
+        } else {
+            self.passwordNotMatchLabel.textColor = UIColor.Asset.lightBlue
+            self.passwordNotMatchImage.image = UIImage.init(icon: .castcle(.checkmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white)
         }
     }
 
