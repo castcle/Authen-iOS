@@ -67,8 +67,6 @@ class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
             return false
         } else if self.passwordSignUpTextField.text!.count < 6 || self.passwordSignUpTextField.text!.count > 250 {
             return false
-        } else if !self.passwordSignUpTextField.text!.isPassword {
-            return false
         } else if self.passwordSignUpTextField.text != self.confirmPasswordSignUpTextField.text {
             return false
         } else {
@@ -295,7 +293,9 @@ class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
 
     @IBAction func nextAction(_ sender: Any) {
         self.endEditing(true)
-        if self.isPasswordValid && !self.viewModel.isEmailExist && self.viewModel.isAgree {
+        if !self.passwordSignUpTextField.text!.isPassword {
+            ApiHelper.displayError(error: "The password contains characters that are not allowed.")
+        } else if self.isPasswordValid && !self.viewModel.isEmailExist && self.viewModel.isAgree {
             Utility.currentViewController().navigationController?.setNavigationBarHidden(false, animated: true)
             self.viewModel.authenRequest.password = self.passwordSignUpTextField.text!
             Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.createDisplayName(CreateDisplayNameViewModel(authenRequest: self.viewModel.authenRequest))), animated: true)

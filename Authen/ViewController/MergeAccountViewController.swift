@@ -80,7 +80,7 @@ class MergeAccountViewController: UIViewController {
         let castcleAvatarUrl = URL(string: self.viewModel.userInfo.images.avatar.thumbnail)
         self.castcleAvatarImage.kf.setImage(with: castcleAvatarUrl, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
         self.castcleNameLabel.text = self.viewModel.userInfo.displayName
-        self.castcleIdLabel.text = "@\(self.viewModel.userInfo.castcleId)"
+        self.castcleIdLabel.text = self.viewModel.userInfo.castcleId
         let socialAvatarUrl = URL(string: self.viewModel.authenRequest.avatar)
         self.socialAvatarImage.kf.setImage(with: socialAvatarUrl, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
         self.socialNameLabel.text = self.viewModel.authenRequest.displayName

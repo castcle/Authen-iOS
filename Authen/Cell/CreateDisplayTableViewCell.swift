@@ -83,17 +83,12 @@ class CreateDisplayTableViewCell: UITableViewCell, UITextFieldDelegate {
         self.viewModel.delegate = self
     }
 
-    private func castcleId(displayCastcleId: String) -> String {
-        return displayCastcleId.replacingOccurrences(of: "@", with: "")
-    }
-
     private func updateUI() {
         if self.viewModel.isCastcleIdExist {
             self.nextButton.activeButton(isActive: false)
             self.castcleIdAlertLabel.isHidden = false
             self.castcleIdAlertLabel.text = "Castcle ID has been taken."
         } else {
-            self.castcleIdAlertLabel.isHidden = true
             if self.displayNameTextField.text!.isEmpty {
                 self.nextButton.activeButton(isActive: false)
             } else {
@@ -114,18 +109,21 @@ class CreateDisplayTableViewCell: UITableViewCell, UITextFieldDelegate {
     @objc func textFieldDidChange(_ textField: UITextField) {
         if textField.tag == 0 {
             let displayCastcleId = textField.text ?? ""
-            let castcleId = self.castcleId(displayCastcleId: displayCastcleId)
-            if !castcleId.isEmpty {
+            let rawCastcleId = displayCastcleId.toRawCastcleId
+            if displayCastcleId == "@" {
+                self.castcleIdAlertLabel.isHidden = true
+            } else if !rawCastcleId.isEmpty {
+                let castcleId = rawCastcleId.toCastcleId
                 if castcleId.count > 30 {
                     self.castcleIdAlertLabel.isHidden = false
                     self.castcleIdAlertLabel.text = "Castcle ID cannot exceed 30 characters"
-                } else if !castcleId.isCastcleId {
+                } else if !rawCastcleId.isCastcleId {
                     self.castcleIdAlertLabel.isHidden = false
                     self.castcleIdAlertLabel.text = "Castcle ID cannot contain special characters"
                 } else {
                     self.castcleIdAlertLabel.isHidden = true
                 }
-                textField.text = "@\(castcleId)"
+                textField.text = castcleId
             } else {
                 textField.text = ""
                 self.castcleIdAlertLabel.isHidden = true
@@ -157,12 +155,13 @@ class CreateDisplayTableViewCell: UITableViewCell, UITextFieldDelegate {
             }
         } else if textField.tag == 0 {
             let idCastcle = textField.text ?? ""
-            if idCastcle.isEmpty {
+            if idCastcle.isEmpty || idCastcle == "@" {
+                self.viewModel.isCastcleIdExist = true
                 self.nextButton.activeButton(isActive: false)
             } else {
                 self.hud.textLabel.text = "Checking"
                 self.hud.show(in: Utility.currentViewController().view)
-                self.viewModel.authenRequest.castcleId = self.castcleId(displayCastcleId: textField.text!)
+                self.viewModel.authenRequest.castcleId = textField.text!.toCastcleId
                 self.castcleIdTextField.isEnabled = false
                 self.displayNameTextField.isEnabled = false
                 self.viewModel.checkCastcleIdExists()
@@ -182,12 +181,13 @@ class CreateDisplayTableViewCell: UITableViewCell, UITextFieldDelegate {
 
 extension CreateDisplayTableViewCell: CreateDisplayNameViewModelDelegate {
     func didSuggestCastcleIdFinish(suggestCastcleId: String) {
+        let castcleId = suggestCastcleId.toCastcleId
         self.hud.dismiss()
-        self.viewModel.authenRequest.castcleId = suggestCastcleId
+        self.viewModel.authenRequest.castcleId = castcleId
         self.viewModel.isCastcleIdExist = false
         self.castcleIdTextField.isEnabled = true
         self.displayNameTextField.isEnabled = true
-        self.castcleIdTextField.text = "@\(suggestCastcleId)"
+        self.castcleIdTextField.text = castcleId
         self.updateUI()
     }
 
