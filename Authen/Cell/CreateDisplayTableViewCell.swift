@@ -117,7 +117,7 @@ class CreateDisplayTableViewCell: UITableViewCell, UITextFieldDelegate {
                 if castcleId.count > 30 {
                     self.castcleIdAlertLabel.isHidden = false
                     self.castcleIdAlertLabel.text = "Castcle ID cannot exceed 30 characters"
-                } else if !rawCastcleId.isCastcleId {
+                } else if !castcleId.isCastcleId {
                     self.castcleIdAlertLabel.isHidden = false
                     self.castcleIdAlertLabel.text = "Castcle ID cannot contain special characters"
                 } else {
