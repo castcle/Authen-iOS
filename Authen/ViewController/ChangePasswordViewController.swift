@@ -54,7 +54,7 @@ class ChangePasswordViewController: UIViewController {
     }
 
     func setupNavBar() {
-        self.customNavigationBar(.secondary, title: "Create Password")
+        self.customNavigationBar(.secondary, title: "Password")
     }
 
     public override func viewDidAppear(_ animated: Bool) {

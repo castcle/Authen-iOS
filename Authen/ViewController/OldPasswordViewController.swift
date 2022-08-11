@@ -47,7 +47,7 @@ class OldPasswordViewController: UIViewController {
     }
 
     func setupNavBar() {
-        self.customNavigationBar(.secondary, title: "Change Password")
+        self.customNavigationBar(.secondary, title: "Password")
     }
 
     func configureTableView() {
