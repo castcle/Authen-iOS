@@ -43,14 +43,8 @@ class LoginViewModel {
     var loginRequest: LoginRequest = LoginRequest()
     var notificationRequest: NotificationRequest = NotificationRequest()
     let tokenHelper: TokenHelper = TokenHelper()
-    var viewState: ViewState = .none
+    var state: State = .none
     var showSignUp: Bool = true
-
-    enum ViewState {
-        case login
-        case registerToken
-        case none
-    }
 
     // MARK: - Input
     public init(loginRequest: LoginRequest = LoginRequest()) {
@@ -59,7 +53,15 @@ class LoginViewModel {
     }
 
     public func login() {
-        self.viewState = .login
+        if UserManager.shared.role == "guest" {
+            self.loginWithEmail()
+        } else {
+            self.guestLogin()
+        }
+    }
+
+    private func loginWithEmail() {
+        self.state = .login
         self.authenticationRepository.login(loginRequest: self.loginRequest) { (success, response, isRefreshToken) in
             if success {
                 do {
@@ -80,6 +82,15 @@ class LoginViewModel {
         }
     }
 
+    private func guestLogin() {
+        self.state = .guestLogin
+        self.authenticationRepository.guestLogin(uuid: Defaults[.deviceUuid]) { (success) in
+            if success {
+                self.loginWithEmail()
+            }
+        }
+    }
+
     private func sendAnalytics() {
         let item = Analytic()
         item.accountId = UserManager.shared.accountId
@@ -89,7 +100,7 @@ class LoginViewModel {
     }
 
     private func registerNotificationToken() {
-        self.viewState = .registerToken
+        self.state = .registerToken
         self.notificationRequest.uuid = Defaults[.deviceUuid]
         self.notificationRequest.firebaseToken = Defaults[.firebaseToken]
         self.notificationRepository.registerToken(notificationRequest: self.notificationRequest) { (success, _, isRefreshToken) in
@@ -102,9 +113,9 @@ class LoginViewModel {
 
 extension LoginViewModel: TokenHelperDelegate {
     func didRefreshTokenFinish() {
-        if self.viewState == .login {
+        if self.state == .login {
             self.login()
-        } else if self.viewState == .registerToken {
+        } else if self.state == .registerToken {
             self.registerNotificationToken()
         }
     }
