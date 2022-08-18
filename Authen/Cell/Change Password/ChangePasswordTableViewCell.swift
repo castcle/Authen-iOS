@@ -190,7 +190,7 @@ class ChangePasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBAction func applyAction(_ sender: Any) {
         self.endEditing(true)
         if self.isCanContinue {
-            self.hud.show(in: Utility.currentViewController().view)
+            self.hud.show(in: (Utility.currentViewController().navigationController?.view)!)
             self.applyButton.isEnabled = false
             self.viewModel.authenRequest.newPassword = self.passwordTextField.text ?? ""
             self.viewModel.changePassword()
