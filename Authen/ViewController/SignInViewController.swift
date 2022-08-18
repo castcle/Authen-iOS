@@ -30,7 +30,6 @@ import Core
 import Component
 import Networking
 import Defaults
-import JGProgressHUD
 import FBSDKLoginKit
 import AuthenticationServices
 import Swifter
@@ -41,7 +40,6 @@ class SignInViewController: UIViewController {
 
     @IBOutlet var tableView: UITableView!
 
-    let hud = JGProgressHUD()
     var viewModel = SocialLoginViewModel()
     var swifter: Swifter!
     var accToken: Credential.OAuthAccessToken?
@@ -58,7 +56,6 @@ class SignInViewController: UIViewController {
         self.setupNavBar()
         self.configureTableView()
         self.viewModel.delegate = self
-        self.hud.textLabel.text = "Logging in"
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -144,7 +141,7 @@ extension SignInViewController: SignInTableViewCellDelegate {
                 authenRequest.avatar = profilePicUrl
                 authenRequest.email = email
                 authenRequest.authToken = accessToken
-                self.hud.show(in: self.view)
+                CCLoading.shared.show(text: "Logging in")
                 self.viewModel.authenRequest = authenRequest
                 self.viewModel.socialLogin()
             }
@@ -178,7 +175,7 @@ extension SignInViewController: SignInTableViewCellDelegate {
             authenRequest.avatar = profilePicUrl
             authenRequest.email = email
             authenRequest.authToken = accessToken
-            self.hud.show(in: self.view)
+            CCLoading.shared.show(text: "Logging in")
             self.viewModel.authenRequest = authenRequest
             self.viewModel.socialLogin()
         }
@@ -224,8 +221,7 @@ extension SignInViewController: ASAuthorizationControllerDelegate, ASAuthorizati
             authenRequest.displayName = KeychainHelper.shared.getKeychainWith(with: .appleFullName)
             authenRequest.email = KeychainHelper.shared.getKeychainWith(with: .appleEmail)
             authenRequest.authToken = String(data: appleIdCredential.identityToken ?? Data(), encoding: .utf8) ?? ""
-
-            self.hud.show(in: self.view)
+            CCLoading.shared.show(text: "Logging in")
             self.viewModel.authenRequest = authenRequest
             self.viewModel.socialLogin()
         }
@@ -256,7 +252,7 @@ extension SignInViewController: SFSafariViewControllerDelegate, ASWebAuthenticat
             authenRequest.cover = twitterCover
             authenRequest.userName = twitterScreenName
             authenRequest.authToken = "\(self.accToken?.key ?? "")|\(self.accToken?.secret ?? "")"
-            self.hud.show(in: self.view)
+            CCLoading.shared.show(text: "Logging in")
             self.viewModel.authenRequest = authenRequest
             self.viewModel.socialLogin()
         })
@@ -273,7 +269,7 @@ extension SignInViewController: SFSafariViewControllerDelegate, ASWebAuthenticat
 
 extension SignInViewController: SocialLoginViewModelDelegate {
     public func didSocialLoginFinish(success: Bool) {
-        self.hud.dismiss()
+        CCLoading.shared.dismiss()
         if success {
             self.dismiss(animated: true)
             Defaults[.startLoadFeed] = true
@@ -294,7 +290,7 @@ extension SignInViewController: SocialLoginViewModelDelegate {
     }
 
     public func didMergeAccount(userInfo: UserInfo) {
-        self.hud.dismiss()
+        CCLoading.shared.dismiss()
         self.dismiss(animated: true)
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.mergeAccount(MergeAccountViewModel(userInfo: userInfo, authenRequest: self.viewModel.authenRequest))), animated: true)

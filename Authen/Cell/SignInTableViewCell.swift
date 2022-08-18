@@ -27,8 +27,8 @@
 
 import UIKit
 import Core
+import Component
 import ActiveLabel
-import JGProgressHUD
 import Defaults
 
 protocol SignInTableViewCellDelegate: AnyObject {
@@ -65,7 +65,6 @@ class SignInTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBOutlet var appleImage: UIImageView!
 
     public var delegate: SignInTableViewCellDelegate?
-    let hud = JGProgressHUD()
     var viewModel = LoginViewModel()
     private var isCanLogin: Bool {
         if self.emailTextField.text!.isEmpty || self.passwordTextField.text!.isEmpty {
@@ -77,7 +76,6 @@ class SignInTableViewCell: UITableViewCell, UITextFieldDelegate {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.hud.textLabel.text = "Logging in"
         self.headlineLabel.font = UIFont.asset(.bold, fontSize: .head2)
         self.headlineLabel.textColor = UIColor.Asset.lightBlue
         self.subTitleLabel.font = UIFont.asset(.regular, fontSize: .head4)
@@ -197,7 +195,7 @@ class SignInTableViewCell: UITableViewCell, UITextFieldDelegate {
         if self.isCanLogin {
             self.endEditing(true)
             self.disableUI(isActive: false)
-            self.hud.show(in: Utility.currentViewController().view)
+            CCLoading.shared.show(text: "Logging in")
             self.viewModel.loginRequest.email = self.emailTextField.text ?? ""
             self.viewModel.loginRequest.password = self.passwordTextField.text ?? ""
             self.viewModel.login()
@@ -223,7 +221,7 @@ class SignInTableViewCell: UITableViewCell, UITextFieldDelegate {
 
 extension SignInTableViewCell: LoginViewModelDelegate {
     func didLoginFinish(success: Bool) {
-        self.hud.dismiss()
+        CCLoading.shared.dismiss()
         if success {
             Defaults[.startLoadFeed] = true
             Utility.currentViewController().dismiss(animated: true)
