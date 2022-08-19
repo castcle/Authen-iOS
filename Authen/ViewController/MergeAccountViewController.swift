@@ -27,10 +27,10 @@
 
 import UIKit
 import Core
+import Component
 import Networking
 import Defaults
 import Kingfisher
-import JGProgressHUD
 
 class MergeAccountViewController: UIViewController {
 
@@ -50,7 +50,6 @@ class MergeAccountViewController: UIViewController {
     @IBOutlet var mergeButton: UIButton!
 
     var viewModel = MergeAccountViewModel(userInfo: UserInfo(), authenRequest: AuthenRequest())
-    let hud = JGProgressHUD()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -94,7 +93,6 @@ class MergeAccountViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         Defaults[.screenId] = ""
-        self.hud.textLabel.text = "Sending"
     }
 
     func setupNavBar() {
@@ -102,7 +100,7 @@ class MergeAccountViewController: UIViewController {
     }
 
     @IBAction func mergeAction(_ sender: Any) {
-        self.hud.show(in: self.view)
+        CCLoading.shared.show(text: "Sending")
         self.viewModel.authenRequest.objective = .mergeAccount
         self.viewModel.authenRequest.email = self.viewModel.userInfo.email
         self.viewModel.requestOtpWithEmail()
@@ -111,7 +109,7 @@ class MergeAccountViewController: UIViewController {
 
 extension MergeAccountViewController: MergeAccountViewModelDelegate {
     func mergeAccountDidRequestOtpFinish(success: Bool) {
-        self.hud.dismiss()
+        CCLoading.shared.dismiss()
         if success {
             Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.enterCode(EnterCodeViewModel(verifyCodeType: .mergeAccount, authenRequest: self.viewModel.authenRequest))), animated: true)
         }

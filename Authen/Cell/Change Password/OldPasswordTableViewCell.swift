@@ -27,8 +27,8 @@
 
 import UIKit
 import Core
+import Component
 import JVFloatLabeledTextField
-import JGProgressHUD
 
 class OldPasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
 
@@ -41,7 +41,6 @@ class OldPasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBOutlet var applyButton: UIButton!
 
     var viewModel: VerifyPasswordViewModel = VerifyPasswordViewModel()
-    let hud = JGProgressHUD()
     private var isCanContinue: Bool {
         if self.passwordTextField.text!.isEmpty {
             return false
@@ -66,7 +65,6 @@ class OldPasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
         self.passwordTextField.tag = 0
         self.passwordTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
         self.viewModel.delegate = self
-        self.hud.textLabel.text = "Checking"
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -85,7 +83,7 @@ class OldPasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBAction func applyAction(_ sender: Any) {
         self.endEditing(true)
         if self.isCanContinue {
-            self.hud.show(in: Utility.currentViewController().view)
+            CCLoading.shared.show(text: "Checking")
             self.applyButton.isEnabled = false
             self.viewModel.authenRequest.email = UserManager.shared.email
             self.viewModel.authenRequest.password = self.passwordTextField.text ?? ""
@@ -105,7 +103,7 @@ class OldPasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
 
 extension OldPasswordTableViewCell: VerifyPasswordViewModelDelegate {
     func didVerificationPasswordFinish(success: Bool) {
-        self.hud.dismiss()
+        CCLoading.shared.dismiss()
         if success {
             self.viewModel.authenRequest.objective = .changePassword
             Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.changePassword(ChangePasswordViewModel(.changePassword, authenRequest: self.viewModel.authenRequest))), animated: true)

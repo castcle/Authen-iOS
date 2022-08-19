@@ -27,7 +27,7 @@
 
 import UIKit
 import Core
-import JGProgressHUD
+import Component
 import Defaults
 
 class CreateDisplayTableViewCell: UITableViewCell, UITextFieldDelegate {
@@ -44,7 +44,6 @@ class CreateDisplayTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBOutlet var nextButton: UIButton!
 
     private var viewModel = CreateDisplayNameViewModel()
-    let hud = JGProgressHUD()
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -145,8 +144,7 @@ class CreateDisplayTableViewCell: UITableViewCell, UITextFieldDelegate {
             if !self.viewModel.authenRequest.displayName.isEmpty && !self.viewModel.isCastcleIdExist {
                 self.nextButton.activeButton(isActive: true)
             } else if !self.viewModel.authenRequest.displayName.isEmpty && self.viewModel.isCastcleIdExist {
-                self.hud.textLabel.text = "Loading"
-                self.hud.show(in: Utility.currentViewController().view)
+                CCLoading.shared.show(text: "Loading")
                 self.castcleIdTextField.isEnabled = false
                 self.displayNameTextField.isEnabled = false
                 self.viewModel.suggestCastcleId()
@@ -159,8 +157,7 @@ class CreateDisplayTableViewCell: UITableViewCell, UITextFieldDelegate {
                 self.viewModel.isCastcleIdExist = true
                 self.nextButton.activeButton(isActive: false)
             } else {
-                self.hud.textLabel.text = "Checking"
-                self.hud.show(in: Utility.currentViewController().view)
+                CCLoading.shared.show(text: "Checking")
                 self.viewModel.authenRequest.castcleId = textField.text!.toCastcleId
                 self.castcleIdTextField.isEnabled = false
                 self.displayNameTextField.isEnabled = false
@@ -172,8 +169,7 @@ class CreateDisplayTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBAction func nextAction(_ sender: Any) {
         self.endEditing(true)
         if self.viewModel.authenRequest.castcleId.isCastcleId && !self.viewModel.isCastcleIdExist && self.viewModel.authenRequest.castcleId.count <= 30 && !self.viewModel.authenRequest.displayName.isEmpty {
-            self.hud.textLabel.text = "Creating"
-            self.hud.show(in: Utility.currentViewController().view)
+            CCLoading.shared.show(text: "Creating")
             self.viewModel.register()
         }
     }
@@ -182,7 +178,7 @@ class CreateDisplayTableViewCell: UITableViewCell, UITextFieldDelegate {
 extension CreateDisplayTableViewCell: CreateDisplayNameViewModelDelegate {
     func didSuggestCastcleIdFinish(suggestCastcleId: String) {
         let castcleId = suggestCastcleId.toCastcleId
-        self.hud.dismiss()
+        CCLoading.shared.dismiss()
         self.viewModel.authenRequest.castcleId = castcleId
         self.viewModel.isCastcleIdExist = false
         self.castcleIdTextField.isEnabled = true
@@ -192,14 +188,14 @@ extension CreateDisplayTableViewCell: CreateDisplayNameViewModelDelegate {
     }
 
     func didCheckCastcleIdExistsFinish() {
-        self.hud.dismiss()
+        CCLoading.shared.dismiss()
         self.castcleIdTextField.isEnabled = true
         self.displayNameTextField.isEnabled = true
         self.updateUI()
     }
 
     func didRegisterFinish(success: Bool) {
-        self.hud.dismiss()
+        CCLoading.shared.dismiss()
         if success {
             Defaults[.startLoadFeed] = true
             NotificationCenter.default.post(name: .updateProfileDelegate, object: nil)

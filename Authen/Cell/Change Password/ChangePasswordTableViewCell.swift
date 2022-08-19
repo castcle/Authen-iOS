@@ -27,8 +27,8 @@
 
 import UIKit
 import Core
+import Component
 import JVFloatLabeledTextField
-import JGProgressHUD
 
 class ChangePasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
 
@@ -50,7 +50,6 @@ class ChangePasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBOutlet var passwordNotMatchImage: UIImageView!
 
     private var viewModel = ChangePasswordViewModel(.changePassword)
-    let hud = JGProgressHUD()
 
     private var isCanContinue: Bool {
         self.checkCharacterCount()
@@ -112,7 +111,6 @@ class ChangePasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
     func configCell(viewModel: ChangePasswordViewModel) {
         self.viewModel = viewModel
         self.viewModel.delegate = self
-        self.hud.textLabel.text = "Creating"
     }
 
     private func checkCharacterCount() {
@@ -190,7 +188,7 @@ class ChangePasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBAction func applyAction(_ sender: Any) {
         self.endEditing(true)
         if self.isCanContinue {
-            self.hud.show(in: (Utility.currentViewController().navigationController?.view)!)
+            CCLoading.shared.show(text: "Creating")
             self.applyButton.isEnabled = false
             self.viewModel.authenRequest.newPassword = self.passwordTextField.text ?? ""
             self.viewModel.changePassword()
@@ -200,7 +198,7 @@ class ChangePasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
 
 extension ChangePasswordTableViewCell: ChangePasswordViewModelDelegate {
     func didChangePasswordSubmitFinish(success: Bool) {
-        self.hud.dismiss()
+        CCLoading.shared.dismiss()
         if success {
             if self.viewModel.changePasswordType == .createPassword {
                 let viewControllers: [UIViewController] = Utility.currentViewController().navigationController!.viewControllers as [UIViewController]

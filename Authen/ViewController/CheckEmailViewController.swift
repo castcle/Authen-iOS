@@ -27,8 +27,8 @@
 
 import UIKit
 import Core
+import Component
 import Defaults
-import JGProgressHUD
 
 class CheckEmailViewController: UIViewController, UITextFieldDelegate {
 
@@ -40,7 +40,6 @@ class CheckEmailViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var searchButton: UIButton!
 
     var viewModel = CheckEmailViewModel()
-    let hud = JGProgressHUD()
     private var isCanContinue: Bool {
         if self.emailTextField.text!.isEmpty {
             return false
@@ -69,7 +68,6 @@ class CheckEmailViewController: UIViewController, UITextFieldDelegate {
         self.emailTextField.tag = 0
         self.emailTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
         self.viewModel.delegate = self
-        self.hud.textLabel.text = "Searching"
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -104,7 +102,7 @@ class CheckEmailViewController: UIViewController, UITextFieldDelegate {
     @IBAction func searchAction(_ sender: Any) {
         self.view.endEditing(true)
         if self.isCanContinue {
-            self.hud.show(in: self.view)
+            CCLoading.shared.show(text: "Searching")
             self.viewModel.authenRequest.objective = .forgotPassword
             self.viewModel.authenRequest.email = self.emailTextField.text ?? ""
             self.viewModel.requestOtpWithEmail()
@@ -114,7 +112,7 @@ class CheckEmailViewController: UIViewController, UITextFieldDelegate {
 
 extension CheckEmailViewController: CheckEmailViewModelDelegate {
     func checkEmailDidRequestOtpFinish(success: Bool) {
-        self.hud.dismiss()
+        CCLoading.shared.dismiss()
         if success {
             Utility.currentViewController().navigationController?.pushViewController(AuthenOpener.open(.enterCode(EnterCodeViewModel(verifyCodeType: .password, authenRequest: self.viewModel.authenRequest))), animated: true)
         }

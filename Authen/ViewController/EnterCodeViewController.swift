@@ -27,16 +27,15 @@
 
 import UIKit
 import Core
+import Component
 import SVPinView
 import Defaults
-import JGProgressHUD
 
 class EnterCodeViewController: UIViewController {
 
     @IBOutlet var tableView: UITableView!
 
     var viewModel = EnterCodeViewModel(verifyCodeType: .password)
-    let hud = JGProgressHUD()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,7 +75,7 @@ class EnterCodeViewController: UIViewController {
 
 extension EnterCodeViewController: EnterCodeViewModelDelegate {
     func enterCodeDidVerifyOtpFinish(success: Bool) {
-        self.hud.dismiss()
+        CCLoading.shared.dismiss()
         if success {
             if self.viewModel.verifyCodeType == .password {
                 self.gotoCreatePassword()
@@ -87,11 +86,11 @@ extension EnterCodeViewController: EnterCodeViewModelDelegate {
     }
 
     func enterCodeDidRequestOtpFinish(success: Bool) {
-        self.hud.dismiss()
+        CCLoading.shared.dismiss()
     }
 
     func enterCodeDidError() {
-        self.hud.dismiss()
+        CCLoading.shared.dismiss()
     }
 }
 
@@ -115,14 +114,12 @@ extension EnterCodeViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension EnterCodeViewController: VerifyEmailOtpTableViewCellDelegate {
     func didRequestOtp(_ cell: VerifyEmailOtpTableViewCell) {
-        self.hud.textLabel.text = "Sending"
-        self.hud.show(in: self.view)
+        CCLoading.shared.show(text: "Sending")
         self.viewModel.requestOtpWithEmail()
     }
 
     func didConfirm(_ cell: VerifyEmailOtpTableViewCell, pin: String) {
-        self.hud.textLabel.text = "Verifying"
-        self.hud.show(in: self.view)
+        CCLoading.shared.show(text: "Verifying")
         self.viewModel.authenRequest.otp = pin
         self.viewModel.verifyOtpWithEmail()
     }
