@@ -33,7 +33,7 @@ class SignUpViewModel {
     private var authenticationRepository: AuthenticationRepository
     var authenRequest: AuthenRequest = AuthenRequest()
     var isEmailExist: Bool = true
-    var isAgree: Bool = true
+    var isAgree: Bool = false
 
     // MARK: - Input
     public func checkEmailExists() {

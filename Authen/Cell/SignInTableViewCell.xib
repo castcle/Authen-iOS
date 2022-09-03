@@ -81,7 +81,7 @@
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gaP-Rt-RSc">
                         <rect key="frame" x="184" y="356" width="116" height="29.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <state key="normal" title="Forgot Password?"/>
+                        <state key="normal" title="Forgot password?"/>
                         <connections>
                             <action selector="forgotPasswordAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="ajn-2a-0qT"/>
                         </connections>
